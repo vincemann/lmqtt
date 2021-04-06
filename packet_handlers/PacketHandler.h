@@ -9,7 +9,7 @@
 template <class P>
 class PacketHandler{
 public:
-    virtual void handle(P *pPacket) = 0;
+    virtual void handle(P* packet) = 0;
 };
 
 #endif //LMQTT__SERVER_PACKETHANDLER_H

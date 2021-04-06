@@ -7,22 +7,25 @@
 #include <string.h>
 #include "parser/PacketParser.h"
 #include "packets/ConnectPacket.h"
+#include "packet_factories/ConnectPacketFactory.h"
+#include "packet_handlers/ConnectPacketHandler.h"
 
 #define PORT 8080
 int main(int argc, char const *argv[])
 {
+    std::map<PacketType,ConnectPacketFactory*> factories;
+    ConnectPacketFactory* connect_packet_factory = new ConnectPacketFactory;
+    factories.insert(std::make_pair(CONNECT,connect_packet_factory));
+    ConnectPacketHandler* connect_packet_handler = new ConnectPacketHandler;
 
-    ConnectPacketFactory connect_packet_factory = new ConnectPacketFactory
-    _packet_factories.insert(std::make_pair(CONNECT,connect_packet_factory))
 
+    PacketParser* parser = new PacketParser(&factories);
 
-    PacketParser* parser = new PacketParser;
     int server_fd, conn_socket;
     struct sockaddr_in address;
     int opt = 1;
     int addrlen = sizeof(address);
-    char buffer[1024] = {0};
-    char *hello = "Hello from server", valread;
+    char *answer = "Packet received";
 
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
@@ -60,9 +63,9 @@ int main(int argc, char const *argv[])
         perror("accept");
         exit(EXIT_FAILURE);
     }
-    ConnectPacket* con_packet = parser->read_next<*ConnectPacket>(conn_socket);
+    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>(parser->read_next(conn_socket));
+    connect_packet_handler->handle(con_packet);
 
-
-    send(conn_socket , hello , strlen(hello) , 0 );
+    send(conn_socket , answer , strlen(answer) , 0 );
     return 0;
 }

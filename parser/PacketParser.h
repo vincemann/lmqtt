@@ -8,16 +8,18 @@
 #define LMQTT__SERVER_PACKETPARSER_H
 
 #include "../packets/RawPacket.h"
+#include "../packet_factories/ConnectPacketFactory.h"
 #include <map>
 
 class PacketParser{
 private:
+//    struct Private;
     std::map<PacketType,ConnectPacketFactory*> *_packet_factories;
 public:
-    PacketParser(std::map<PacketType,ConnectPacketFactory*> & factories);
+    PacketParser(std::map<PacketType,ConnectPacketFactory*> * factories);
 
-    template<class P>
-    virtual P read_next(int socket_fd);
+    //template<class P = const RawPacket&>
+    virtual RawPacket* read_next(int socket_fd);
 };
 
 

@@ -10,7 +10,7 @@
 
 class ConnectPacketFactory {
 public:
-    ConnectPacket create(RawPacket* raw_packet);
+    ConnectPacket* create(RawPacket* raw_packet);
 };
 
 

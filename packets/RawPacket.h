@@ -13,22 +13,26 @@ class RawPacket
 {
 public:
 
-    RawPacket(PacketType type, bool[4] specificFlags,
+    RawPacket(PacketType type, unsigned char specificFlags,
               unsigned int length, char *data);
+    // dynamic cast needs class to be polymorphic, thus needs at least one
+    // virtual method
+    // https://stackoverflow.com/questions/15114093/getting-source-type-is-not-polymorphic-when-trying-to-use-dynamic-cast
+    virtual ~RawPacket() = default;
 
-    PacketType getType() const {
+    PacketType getType() {
         return type;
     }
 
-    bool[4] getSpecificFlags() const {
+    unsigned char getSpecificFlags(){
         return specificFlags;
     }
 
-    unsigned int getLength() const {
+    unsigned int getLength() {
         return length;
     }
 
-    char *getData() const {
+    char *getData() {
         return data;
     }
 
@@ -37,7 +41,7 @@ private:
     // fixed header
     PacketType type;
     // 4 bits
-    bool[4] specificFlags;
+    unsigned char specificFlags;
     unsigned int length;
     // variable header + payload
     char* data;
