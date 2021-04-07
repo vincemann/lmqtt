@@ -5,8 +5,8 @@
 #ifndef LMQTT__SERVER_CONNECTPACKETFACTORY_H
 #define LMQTT__SERVER_CONNECTPACKETFACTORY_H
 
-#include "../packets/ConnectPacket.h"
-#include "../packets/RawPacket.h"
+#include "../../packets/ConnectPacket.h"
+#include "../../packets/RawPacket.h"
 
 class ConnectPacketFactory {
 public:

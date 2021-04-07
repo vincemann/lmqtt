@@ -6,11 +6,11 @@
 #ifndef LMQTT__SERVER_PARSEREXCEPTION_H
 #define LMQTT__SERVER_PARSEREXCEPTION_H
 
-class ParserException : public std::exception{
+class PacketParsingException : public std::exception{
 private:
-    const char* m_msg;
+    const char* _msg;
 public:
-    ParserException(const char* msg);
+    PacketParsingException(const char* msg);
     const char * what () const throw ();
 };
 

@@ -7,10 +7,10 @@
 #include <unistd.h>
 #include <map>
 
-#include "PacketParser.h"
-#include "../packet_factories/ConnectPacketFactory.h"
-#include "ParserException.h"
-#include "../PacketType.h"
+#include "PacketReceiver.h"
+#include "factories/ConnectPacketFactory.h"
+#include "PacketParsingException.h"
+#include "../packets/PacketType.h"
 
 
 static unsigned create_mask(unsigned a, unsigned b)
@@ -23,8 +23,8 @@ static unsigned create_mask(unsigned a, unsigned b)
 }
 
 
-static void err(char* msg){
-    throw new ParserException(msg);
+static void err(const char* msg){
+    throw new PacketParsingException(msg);
 }
 
 
@@ -35,7 +35,7 @@ static PacketType eval_packet_type( unsigned char fixed_header_buf[]){
         case 1:
             return PacketType::CONNECT;
     }
-    err("unknown packet type");
+    err("unknown packet _type");
 }
 
 static unsigned char eval_specific_flags(/*bool[4] result,*/ unsigned char fixed_header_buf[]){
@@ -52,7 +52,7 @@ static unsigned int eval_length(int socket_fd){
     // for now just support small sizes
     unsigned char length_fixed_header_buf[1];
     if(read(socket_fd, length_fixed_header_buf, 1) != 1){
-        err("Cant read length fixed header");
+        err("Cant read _length fixed header");
     }
     return length_fixed_header_buf[0];
 }
@@ -61,25 +61,25 @@ static unsigned int eval_length(int socket_fd){
 
 
 
-PacketParser::PacketParser(std::map<PacketType,ConnectPacketFactory*> * factories): _packet_factories(factories) {
+PacketReceiver::PacketReceiver(std::map<PacketType,ConnectPacketFactory*> * factories): _packet_factories(factories) {
 //   this->_packet_factories=factories;
 }
 
-RawPacket* PacketParser::read_next(int socket_fd) {
+RawPacket* PacketReceiver::read_next(int socket_fd) {
     // read fixed header
     unsigned char control_fixed_header_buf[1];
     if(read(socket_fd, control_fixed_header_buf, 1) != 1){
         err("Cant read mqtt control fixed header");
     }
 
-//    bool[4] specific_flags;
+//    bool[4] _specific_flags;
     unsigned char specific_flags =eval_specific_flags(control_fixed_header_buf);
     PacketType packet_type =eval_packet_type(control_fixed_header_buf);
     int length =eval_length(socket_fd);
 
     char data_buf[length];
     if(read(socket_fd, data_buf, length) != length){
-        err("Cant read packet data");
+        err("Cant read packet _data");
     }
 
 

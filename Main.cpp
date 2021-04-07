@@ -1,13 +1,12 @@
-// Server side C/C++ program to demonstrate Socket programming
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
-#include "parser/PacketParser.h"
+#include "parser/PacketReceiver.h"
 #include "packets/ConnectPacket.h"
-#include "packet_factories/ConnectPacketFactory.h"
+#include "parser/factories/ConnectPacketFactory.h"
 #include "packet_handlers/ConnectPacketHandler.h"
 
 #define PORT 8080
@@ -19,7 +18,7 @@ int main(int argc, char const *argv[])
     ConnectPacketHandler* connect_packet_handler = new ConnectPacketHandler;
 
 
-    PacketParser* parser = new PacketParser(&factories);
+    PacketReceiver* parser = new PacketReceiver(&factories);
 
     int server_fd, conn_socket;
     struct sockaddr_in address;

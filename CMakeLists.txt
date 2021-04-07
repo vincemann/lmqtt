@@ -3,7 +3,33 @@ project(lmqtt__server)
 
 set(CMAKE_CXX_STANDARD 17)
 
+add_subdirectory(client)
 
-add_executable(lmqtt__server Main.cpp packets/RawPacket.h PacketType.h packet_handlers/ConnectPacketHandler.h packet_handlers/PacketHandler.h packets/ConnectPacket.h parser/PacketParser.cpp parser/PacketParser.h parser/ParserException.cpp parser/ParserException.h packet_factories/ConnectPacketFactory.cpp packet_factories/ConnectPacketFactory.h packets/RawPacket.cpp packets/ConnectPacket.cpp)
+add_executable(lmqtt__server
+        Main.cpp
 
-target_include_directories(lmqtt__server PRIVATE packet_handlers parser packets packet_factories)
+        packets/RawPacket.h
+        packets/RawPacket.cpp
+        packets/PacketType.h
+        packets/ConnectPacket.h
+        packets/ConnectPacket.cpp
+
+        parser/PacketReceiver.h
+        parser/PacketReceiver.cpp
+        parser/PacketParsingException.h
+        parser/PacketParsingException.cpp
+
+        parser/factories/ConnectPacketFactory.h
+        parser/factories/ConnectPacketFactory.cpp
+
+        packet_handlers/PacketHandler.h
+        packet_handlers/ConnectPacketHandler.h
+        packet_handlers/ConnectPacketHandler.cpp
+
+        parser/PacketSender.cpp parser/PacketSender.h)
+
+target_include_directories(lmqtt__server PRIVATE
+        packet_handlers
+        parser
+        packets
+        packet_factories)
