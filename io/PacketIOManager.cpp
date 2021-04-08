@@ -57,22 +57,22 @@ static unsigned char eval_specific_flags(/*bool[4] result,*/ unsigned char fixed
 //    }
 }
 
-static unsigned int eval_packet_length(int socket_fd){
+static unsigned int eval_packet_length(int _conn_fd){
     // for now just support small sizes
     unsigned char length_fixed_header_buf[1];
-    if(read(socket_fd, length_fixed_header_buf, 1) != 1){
+    if(read(_conn_fd, length_fixed_header_buf, 1) != 1){
         err("Cant read _length fixed header");
     }
     return length_fixed_header_buf[0];
 }
 
-PacketIOManager::PacketIOManager(std::map<PacketType,PacketParser*> * parsers): _packet_parsers(parsers) {
-//   this->_packet_parsers=parsers;
+PacketIOManager::PacketIOManager(std::map<PacketType,PacketParser*> * parsers, int conn_fd)
+: _packet_parsers(parsers), _conn_fd(conn_fd) {
 }
 
-void PacketIOManager::send(const RawPacket &packet, int socket_fd) {
+void PacketIOManager::send_packet(const RawPacket &packet) {
 
-    // send first fixed header byte
+    // send_packet first fixed header byte
     // needs to be reversed bc specs want network endianess on byte level
     unsigned char control_fixed_header [] = {
             Utils::reverse_bits(
@@ -80,27 +80,28 @@ void PacketIOManager::send(const RawPacket &packet, int socket_fd) {
                     | eval_packet_type_value(packet.getType())
             )
     };
-    if (write(socket_fd,&control_fixed_header,1) != 1){
-        err("cant send control_fixed_header");
+    if (write(_conn_fd,&control_fixed_header,1) != 1){
+        err("cant send_packet control_fixed_header");
     }
-    // send length
+    // send_packet length
     unsigned char len = packet.getLength();
     unsigned char length_fixed_header [] = { len };
-    if (write(socket_fd,&length_fixed_header,1) != 1){
-        err("cant send length_fixed_header");
+    if (write(_conn_fd,&length_fixed_header,1) != 1){
+        err("cant send_packet length_fixed_header");
     }
-    // send data
-    if (write(socket_fd,packet.getData(),packet.getLength()) != packet.getLength()){
-        err("cant send packet data");
+    // send_packet data
+    if (write(_conn_fd,packet.getData(),packet.getLength()) != packet.getLength()){
+        err("cant send_packet packet data");
     }
+    _packets_sent.insert(packet);
 
 }
 
 
-RawPacket* PacketIOManager::read_next(int socket_fd) {
+RawPacket* PacketIOManager::read_packet() {
     // read fixed header
     unsigned char control_fixed_header_buf[1];
-    if(read(socket_fd, control_fixed_header_buf, 1) != 1){
+    if(read(_conn_fd, control_fixed_header_buf, 1) != 1){
         err("Cant read mqtt control fixed header");
     }
     unsigned char first_byte = control_fixed_header_buf[0];
@@ -113,20 +114,29 @@ RawPacket* PacketIOManager::read_next(int socket_fd) {
     Utils::print_bits(specific_flags);
 
     PacketType packet_type =eval_packet_type(first_byte);
-    int length = eval_packet_length(socket_fd);
+    int length = eval_packet_length(_conn_fd);
     printf("packet len: %d\n",length);
 
     char data_buf[length];
-    if(read(socket_fd, data_buf, length) != length){
+    if(read(_conn_fd, data_buf, length) != length){
         err("Cant read packet data");
     }
 
     printf("packet data: %s\n",data_buf);
 
 
-    RawPacket* rawPacket = new RawPacket(packet_type,specific_flags,length,data_buf);
+    RawPacket* raw_packet = new RawPacket(packet_type, specific_flags, length, data_buf);
     PacketParser *parser  = _packet_parsers->at(packet_type);
-    return parser->parse(rawPacket);
+    RawPacket* parsed_packet = parser->parse(raw_packet);
+    _packets_received.insert(parsed_packet);
+}
+
+const std::list<RawPacket *> &PacketIOManager::getPacketsReceived() const {
+    return _packets_received;
+}
+
+const std::list<RawPacket *> &PacketIOManager::getPacketsSent() const {
+    return _packets_sent;
 }
 
 

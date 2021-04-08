@@ -14,8 +14,7 @@
 
 #define PORT 8080
 
-Session *g_session = 0;
-
+Session *g_session;
 
 static int wait_for_connection(){
     int server_fd, conn_socket;
@@ -75,11 +74,11 @@ int main(int argc, char const *argv[])
     ConnectPacketHandler* connect_packet_handler = new ConnectPacketHandler;
     handlers.insert(std::make_pair(CONNECT,connect_packet_handler));
 
-    PacketIOManager packet_io (&parsers);
+    int conn_fd = wait_for_connection();
+    PacketIOManager packet_io (&parsers, conn_fd);
+    g_session = new Session(packet_io);
 
-    int conn_socket = wait_for_connection();
-
-    RawPacket* packet = packet_io.read_next(conn_socket);
+    RawPacket* packet = packet_io.read_packet(conn_fd);
 //    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>();
     PacketHandler* handler = handlers.at(packet->getType());
     handler->handle(packet);

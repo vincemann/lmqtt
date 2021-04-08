@@ -3,3 +3,12 @@
 //
 
 #include "Session.h"
+
+
+Session *g_session = 0;
+
+Session::Session(PacketIOManager &ioManager) : io_manager(ioManager) {}
+
+PacketIOManager &Session::getIoManager() const {
+    return io_manager;
+}

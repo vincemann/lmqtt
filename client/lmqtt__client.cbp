@@ -68,6 +68,12 @@
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/PacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/exception/IllegalSessionStateException.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/exception/IllegalSessionStateException.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/PacketIOManager.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>

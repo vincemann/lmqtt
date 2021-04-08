@@ -49,7 +49,7 @@ int main(int argc, char const *argv[])
 
     char* data = "connect me pls";
     ConnectPacket con_packet (strlen(data),data);
-    packet_io.send(con_packet, conn_fd);
+    packet_io.send_packet(con_packet, conn_fd);
 
     return 0;
 }
