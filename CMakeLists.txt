@@ -14,22 +14,22 @@ add_executable(lmqtt__server
         packets/ConnectPacket.h
         packets/ConnectPacket.cpp
 
-        parser/PacketReceiver.h
-        parser/PacketReceiver.cpp
-        parser/PacketParsingException.h
-        parser/PacketParsingException.cpp
+        io/PacketIOManager.h
+        io/PacketIOManager.cpp
+        io/exception/PacketIOException.h
+        io/exception/PacketIOException.cpp
 
-        parser/factories/ConnectPacketFactory.h
-        parser/factories/ConnectPacketFactory.cpp
+        io/parsers/ConnectPacketParser.h
+        io/parsers/ConnectPacketParser.cpp
 
-        packet_handlers/PacketHandler.h
-        packet_handlers/ConnectPacketHandler.h
-        packet_handlers/ConnectPacketHandler.cpp
+        handlers/PacketHandler.h
+        handlers/ConnectPacketHandler.h
+        handlers/ConnectPacketHandler.cpp
 
-        parser/PacketSender.cpp parser/PacketSender.h util/Utils.cpp util/Utils.h)
+        util/Utils.cpp util/Utils.h Session.cpp Session.h io/parsers/PacketParser.h io/exception/PacketParsingException.cpp io/exception/PacketParsingException.h)
 
 target_include_directories(lmqtt__server PRIVATE
-        packet_handlers
-        parser
+        handlers
+        io
         packets
         packet_factories)

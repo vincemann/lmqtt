@@ -9,8 +9,7 @@
 
 class ConnectPacket : public RawPacket{
 public:
-    ConnectPacket(PacketType type,  unsigned char specific_flags,
-                  unsigned int length, char *data);
+    ConnectPacket(unsigned int length, char *data);
 };
 
 #endif //LMQTT__SERVER_CONNECTPACKET_H

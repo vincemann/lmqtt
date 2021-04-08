@@ -9,6 +9,7 @@
 namespace Utils {
     unsigned char reverse_bits(unsigned char num);
     void print_bits(unsigned char val);
+    unsigned create_bit_mask(unsigned a, unsigned b);
 };
 
 

@@ -25,3 +25,12 @@ void Utils::print_bits(unsigned char val) {
     std::bitset<8> bits(val);
     std::cout << bits << '\n';
 }
+
+unsigned Utils::create_bit_mask(unsigned a, unsigned b)
+{
+    unsigned r = 0;
+    for (unsigned i=a; i<=b; i++)
+        r |= 1 << i;
+
+    return r;
+}

@@ -7,9 +7,9 @@
 #include "PacketHandler.h"
 #include "../packets/ConnectPacket.h"
 
-class ConnectPacketHandler : public PacketHandler<ConnectPacket>{
+class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
 
 public:
-    void handle(ConnectPacket *packet);
+    void handle(RawPacket *packet);
 };
 #endif //LMQTT__SERVER_CONNECTPACKETHANDLER_H

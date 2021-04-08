@@ -6,7 +6,6 @@
 #include "ConnectPacket.h"
 
 
-ConnectPacket::ConnectPacket(PacketType type, unsigned char specificFlags,
-                             unsigned int length, char *data)
-        : RawPacket(type, specificFlags, length, data) {}
+ConnectPacket::ConnectPacket(unsigned int length, char *data)
+        : RawPacket(CONNECT, 0, length, data) {}
 

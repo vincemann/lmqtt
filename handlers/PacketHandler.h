@@ -6,10 +6,11 @@
 #define LMQTT__SERVER_PACKETHANDLER_H
 #include "../packets/RawPacket.h"
 
-template <class P>
+//template <class P>
 class PacketHandler{
 public:
-    virtual void handle(P* packet) = 0;
+//    virtual void handle(P* packet) = 0;
+    virtual void handle(RawPacket* packet) = 0;
 };
 
 #endif //LMQTT__SERVER_PACKETHANDLER_H

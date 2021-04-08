@@ -24,8 +24,8 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../packet_handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../parser"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../handlers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../io"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../packets"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../packet_factories"/>
 				</Compiler>
@@ -43,8 +43,8 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../packet_handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../parser"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../handlers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../io"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../packets"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/client/../packet_factories"/>
 				</Compiler>
@@ -59,13 +59,40 @@
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/client/Client.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packet_handlers/ConnectPacketHandler.cpp">
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/ConnectPacketHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packet_handlers/ConnectPacketHandler.h">
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/ConnectPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packet_handlers/PacketHandler.h">
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/PacketHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/PacketIOManager.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/PacketIOManager.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/exception/PacketIOException.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/exception/PacketIOException.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/exception/PacketParsingException.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/exception/PacketParsingException.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/parsers/ConnectPacketParser.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/parsers/ConnectPacketParser.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/parsers/PacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/ConnectPacket.cpp">
@@ -81,30 +108,6 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/RawPacket.h">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/PacketParsingException.cpp">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/PacketParsingException.h">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/PacketReceiver.cpp">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/PacketReceiver.h">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/PacketSender.cpp">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/PacketSender.h">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/factories/ConnectPacketFactory.cpp">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/factories/ConnectPacketFactory.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/util/Utils.cpp">

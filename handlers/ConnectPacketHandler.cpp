@@ -6,7 +6,7 @@
 #include "ConnectPacketHandler.h"
 #include <stdio.h>
 
-void ConnectPacketHandler::handle(ConnectPacket *packet) {
+void ConnectPacketHandler::handle(RawPacket *packet) {
     printf("handling connect packet:\n");
 }
 

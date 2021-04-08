@@ -4,27 +4,24 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
-#include "parser/PacketReceiver.h"
+#include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
-#include "parser/factories/ConnectPacketFactory.h"
-#include "packet_handlers/ConnectPacketHandler.h"
+#include "io/parsers/PacketParser.h"
+#include "io/parsers/ConnectPacketParser.h"
+#include "handlers/ConnectPacketHandler.h"
+#include "handlers/PacketHandler.h"
+#include "Session.h"
 
 #define PORT 8080
-int main(int argc, char const *argv[])
-{
-    std::map<PacketType,ConnectPacketFactory*> factories;
-    ConnectPacketFactory* connect_packet_factory = new ConnectPacketFactory;
-    factories.insert(std::make_pair(CONNECT,connect_packet_factory));
-    ConnectPacketHandler* connect_packet_handler = new ConnectPacketHandler;
+
+Session *g_session = 0;
 
 
-    PacketReceiver* parser = new PacketReceiver(&factories);
-
+static int wait_for_connection(){
     int server_fd, conn_socket;
     struct sockaddr_in address;
     int opt = 1;
     int addrlen = sizeof(address);
-    char *answer = "Packet received";
 
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
@@ -57,14 +54,35 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     }
     if ((conn_socket = accept(server_fd, (struct sockaddr *)&address,
-                             (socklen_t*)&addrlen))<0)
+                              (socklen_t*)&addrlen))<0)
     {
         perror("accept");
         exit(EXIT_FAILURE);
     }
-    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>(parser->read_next(conn_socket));
-    connect_packet_handler->handle(con_packet);
+    return conn_socket;
+}
 
-    send(conn_socket , answer , strlen(answer) , 0 );
+
+int main(int argc, char const *argv[])
+{
+    // PARSERS
+    std::map<PacketType,PacketParser*> parsers;
+    ConnectPacketParser* connect_packet_factory = new ConnectPacketParser;
+    parsers.insert(std::make_pair(CONNECT,connect_packet_factory));
+
+    // HANDLERS
+    std::map<PacketType,PacketHandler*> handlers;
+    ConnectPacketHandler* connect_packet_handler = new ConnectPacketHandler;
+    handlers.insert(std::make_pair(CONNECT,connect_packet_handler));
+
+    PacketIOManager packet_io (&parsers);
+
+    int conn_socket = wait_for_connection();
+
+    RawPacket* packet = packet_io.read_next(conn_socket);
+//    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>();
+    PacketHandler* handler = handlers.at(packet->getType());
+    handler->handle(packet);
+
     return 0;
 }
