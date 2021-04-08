@@ -114,10 +114,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/Main.cpp">
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/Server.cpp">
 			<Option target="lmqtt__server"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/client/Main.cpp">
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/client/Client.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packet_handlers/ConnectPacketHandler.cpp">
@@ -181,6 +181,14 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/parser/factories/ConnectPacketFactory.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/util/Utils.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/util/Utils.h">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>

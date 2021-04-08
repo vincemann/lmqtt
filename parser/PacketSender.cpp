@@ -7,6 +7,7 @@
 #include "PacketSender.h"
 #include "../packets/RawPacket.h"
 #include "PacketParsingException.h"
+#include "../util/Utils.h"
 
 
 static void err(const char* msg){
@@ -21,10 +22,18 @@ static unsigned char eval_packet_type_bits(PacketType packetType){
     err("unknown packet type");
 }
 
+
+
 void PacketSender::send(const RawPacket &packet) {
 
     // send first fixed header byte
-    unsigned char control_fixed_header [] = { packet.getSpecificFlags() & eval_packet_type_bits(packet.getType()) };
+    // needs to be reversed bc specs want network endianess on byte level
+    unsigned char control_fixed_header [] = {
+            Utils::reverse_bits(
+                    packet.getSpecificFlags()
+                            | eval_packet_type_bits(packet.getType())
+            )
+    };
     if (write(_socket_fd,&control_fixed_header,1) != 1){
         err("cant send control_fixed_header");
     }

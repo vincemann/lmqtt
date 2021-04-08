@@ -40,7 +40,7 @@ int main(int argc, char const *argv[])
     char* data = "connect me pls";
     ConnectPacket con_packet (CONNECT,0,strlen(data),data);
     PacketSender packet_sender (sock);
-    packet_sender.send(&con_packet);
+    packet_sender.send(con_packet);
 
     return 0;
 }

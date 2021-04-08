@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 add_executable(lmqtt__client
-        Main.cpp
+        Client.cpp
 
         ../packets/RawPacket.h
         ../packets/RawPacket.cpp
@@ -25,7 +25,7 @@ add_executable(lmqtt__client
         ../packet_handlers/ConnectPacketHandler.h
         ../packet_handlers/ConnectPacketHandler.cpp
 
-        ../parser/PacketSender.cpp ../parser/PacketSender.h)
+        ../parser/PacketSender.cpp ../parser/PacketSender.h ../util/Utils.cpp ../util/Utils.h)
 
 target_include_directories(lmqtt__client PRIVATE
         ../packet_handlers
