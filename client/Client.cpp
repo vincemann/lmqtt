@@ -43,13 +43,13 @@ static int connect_to_server(){
 int main(int argc, char const *argv[])
 {
     std::map<PacketType,PacketParser*> parsers;
-    PacketIOManager packet_io (&parsers);
 
     int conn_fd = connect_to_server();
+    PacketIOManager packet_io (&parsers,conn_fd);
 
     char* data = "connect me pls";
     ConnectPacket con_packet (strlen(data),data);
-    packet_io.send_packet(con_packet, conn_fd);
+    packet_io.send_packet(con_packet);
 
     return 0;
 }

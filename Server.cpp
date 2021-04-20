@@ -78,7 +78,7 @@ int main(int argc, char const *argv[])
     PacketIOManager packet_io (&parsers, conn_fd);
     g_session = new Session(packet_io);
 
-    RawPacket* packet = packet_io.read_packet(conn_fd);
+    RawPacket* packet = packet_io.read_packet();
 //    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>();
     PacketHandler* handler = handlers.at(packet->getType());
     handler->handle(packet);

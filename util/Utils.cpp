@@ -34,3 +34,11 @@ unsigned Utils::create_bit_mask(unsigned a, unsigned b)
 
     return r;
 }
+
+void Utils::extractSubArray(char *srcArray, char *subArray, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        subArray[i] = srcArray[i];
+    }
+}

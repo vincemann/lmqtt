@@ -6,11 +6,11 @@
 
 #include <unistd.h>
 #include <map>
+#include <stdio.h>
 
 #include "PacketIOManager.h"
 #include "exception/PacketIOException.h"
 #include "../packets/PacketType.h"
-#include <stdio.h>
 #include "../util/Utils.h"
 
 
