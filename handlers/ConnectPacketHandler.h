@@ -6,10 +6,12 @@
 #define LMQTT__SERVER_CONNECTPACKETHANDLER_H
 #include "PacketHandler.h"
 #include "../packets/ConnectPacket.h"
+#include "../Session.h"
 
 class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
 
 public:
+    ConnectPacketHandler(Session &session);
     void handle(RawPacket *packet);
 };
 #endif //LMQTT__SERVER_CONNECTPACKETHANDLER_H

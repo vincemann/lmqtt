@@ -6,10 +6,56 @@
 #define LMQTT__SERVER_CONNECTPACKET_H
 
 #include "RawPacket.h"
+#include "RawPacket.h"
 
-class ConnectPacket : public RawPacket{
+class ConnectPacket : RawPacket{
 public:
-    ConnectPacket(unsigned int length, char *data);
+    ConnectPacket(RawPacket *rawPacket, unsigned char cleanSession, unsigned char willFlag,
+                  unsigned char willQos, unsigned char willRetain, unsigned char passwordFlag,
+                  unsigned char usernameFlag, unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg,
+                  unsigned char *username, unsigned char *password);
+
+    ConnectPacket(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos, unsigned char willRetain,
+                  unsigned char passwordFlag, unsigned char usernameFlag, unsigned char *clientId,
+                  unsigned char *willTopic, unsigned char *willMsg, unsigned char *username, unsigned char *password);
+
+    unsigned char getCleanSession() const;
+
+    unsigned char getWillFlag() const;
+
+    unsigned char getWillQos() const;
+
+    unsigned char getWillRetain() const;
+
+    unsigned char getPasswordFlag() const;
+
+    unsigned char getUsernameFlag() const;
+
+    unsigned char *getClientId() const;
+
+    unsigned char *getWillTopic() const;
+
+    unsigned char *getWillMsg() const;
+
+    unsigned char *getUsername() const;
+
+    unsigned char *getPassword() const;
+
+    virtual ~ConnectPacket();
+
+private:
+    unsigned char cleanSession,
+    unsigned char willFlag,
+    unsigned char willQos,
+    unsigned char willRetain,
+    unsigned char passwordFlag,
+    unsigned char usernameFlag,
+    unsigned char *clientId,
+    unsigned char *willTopic,
+    unsigned char *willMsg,
+    unsigned char *username,
+    unsigned char *password
+
 };
 
 #endif //LMQTT__SERVER_CONNECTPACKET_H

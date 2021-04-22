@@ -8,17 +8,24 @@
 #define LMQTT__SERVER_RAWPACKET_H
 
 #include "PacketType.h"
+#include "RawPacket.h"
 
 class RawPacket
 {
 public:
+    RawPacket(unsigned char specificFlags, char *data, unsigned int length, PacketType type)
+    : _specific_flags(specificFlags), _data(data), _length(length), _type(type) {}
 
-    RawPacket(PacketType type, unsigned char specificFlags,
-              unsigned int length, char *data);
+    RawPacket(RawPacket *rawPacket)
+    : _specific_flags(rawPacket->specificFlags), _data( rawPacket->data), _length( rawPacket->_length), _type(rawPacket->_type) {}
+
+    RawPacket(){}
     // dynamic cast needs class to be polymorphic, thus needs at least one
     // virtual method
     // https://stackoverflow.com/questions/15114093/getting-source-type-is-not-polymorphic-when-trying-to-use-dynamic-cast
-    virtual ~RawPacket() = default;
+    virtual ~RawPacket(){
+        delete _data;
+    }
 
     PacketType getType() const {
         return _type;
@@ -32,19 +39,18 @@ public:
         return _length;
     }
 
-    char *getData() const {
+    unsigned char *getData() const {
         return _data;
     }
 
 
 private:
-    // fixed header
-    PacketType _type;
     // 4 bits
     unsigned char _specific_flags;
-    unsigned int _length;
     // variable header + payload
     char* _data;
+    unsigned int _length;
+    PacketType _type;
 };
 
 #endif //LMQTT__SERVER_RAWPACKET_H

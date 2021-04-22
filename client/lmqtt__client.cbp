@@ -65,6 +65,9 @@
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/ConnectPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/PacketHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/PacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>

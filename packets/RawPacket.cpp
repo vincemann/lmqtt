@@ -7,7 +7,7 @@
 RawPacket::RawPacket(PacketType type,
                      unsigned char specificFlags,
                      unsigned int length,
-                     char *data) :
+                     unsigned char *data) :
         _type(type),
         _specific_flags(specificFlags),
         _length(length),

@@ -26,7 +26,7 @@ static unsigned char eval_packet_type_value(PacketType packetType){
         case CONNECT:
             return 1;
     }
-    err("unknown packet type");
+    err("unknown packet _type");
 }
 
 
@@ -35,9 +35,9 @@ static PacketType eval_packet_type( unsigned char fixed_header_byte){
     unsigned char packet_type_val = Utils::reverse_bits(mask & fixed_header_byte);
 
 
-    printf("packet type bits:\n");
+    printf("packet _type bits:\n");
     Utils::print_bits(packet_type_val);
-    printf("packet type resulting number: %d\n",packet_type_val);
+    printf("packet _type resulting number: %d\n",packet_type_val);
 
 
     switch (packet_type_val) {
@@ -66,9 +66,6 @@ static unsigned int eval_packet_length(int _conn_fd){
     return length_fixed_header_buf[0];
 }
 
-PacketIOManager::PacketIOManager(std::map<PacketType,PacketParser*> * parsers, int conn_fd)
-: _packet_parsers(parsers), _conn_fd(conn_fd) {
-}
 
 void PacketIOManager::send_packet(const RawPacket &packet) {
 
@@ -93,7 +90,7 @@ void PacketIOManager::send_packet(const RawPacket &packet) {
     if (write(_conn_fd,packet.getData(),packet.getLength()) != packet.getLength()){
         err("cant send_packet packet data");
     }
-    _packets_sent.insert(packet);
+    _session.modifyPacketsSent().insert(packet);
 
 }
 
@@ -128,16 +125,16 @@ RawPacket* PacketIOManager::read_packet() {
     RawPacket* raw_packet = new RawPacket(packet_type, specific_flags, length, data_buf);
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsed_packet = parser->parse(raw_packet);
-    _packets_received.insert(parsed_packet);
+    _session.modifyPacketsReceived().insert(parsed_packet);
 }
 
-const std::list<RawPacket *> &PacketIOManager::getPacketsReceived() const {
-    return _packets_received;
-}
 
-const std::list<RawPacket *> &PacketIOManager::getPacketsSent() const {
-    return _packets_sent;
-}
+
+PacketIOManager::PacketIOManager(const Session &session, int connFd,
+                                 std::map<PacketType, PacketParser *> *packetParsers) : _session(session),
+                                                                                        _conn_fd(connFd),
+                                                                                        _packet_parsers(
+                                                                                                packetParsers) {}
 
 
 

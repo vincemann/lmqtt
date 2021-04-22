@@ -44,10 +44,14 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/lmqtt__server"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/handlers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/handlers/exception"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/exception"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/parsers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/util"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packets"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packet_factories"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 lmqtt__server"/>
@@ -63,10 +67,14 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/lmqtt__server"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/handlers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/handlers/exception"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/exception"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/parsers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/util"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packets"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packet_factories"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 lmqtt__server/fast"/>
@@ -131,6 +139,10 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/ConnectPacketHandler.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/handlers/PacketHandler.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>

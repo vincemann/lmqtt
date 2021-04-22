@@ -26,10 +26,15 @@ add_executable(lmqtt__server
         handlers/ConnectPacketHandler.h
         handlers/ConnectPacketHandler.cpp
 
-        util/Utils.cpp util/Utils.h Session.cpp Session.h io/parsers/PacketParser.h io/exception/PacketParsingException.cpp io/exception/PacketParsingException.h handlers/exception/IllegalSessionStateException.cpp handlers/exception/IllegalSessionStateException.h io/parsers/PacketParser.cpp)
+        util/Utils.cpp util/Utils.h Session.cpp Session.h io/parsers/PacketParser.h io/exception/PacketParsingException.cpp io/exception/PacketParsingException.h handlers/exception/IllegalSessionStateException.cpp handlers/exception/IllegalSessionStateException.h io/parsers/PacketParser.cpp handlers/PacketHandler.cpp)
 
-target_include_directories(lmqtt__server PRIVATE
+include_directories(lmqtt__server
         handlers
+        handlers/exception
         io
-        packets
-        packet_factories)
+        io/exception
+        io/parsers
+        util
+        packets)
+
+

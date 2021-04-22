@@ -66,19 +66,19 @@ int main(int argc, char const *argv[])
 {
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
-    ConnectPacketParser* connect_packet_factory = new ConnectPacketParser;
-    parsers.insert(std::make_pair(CONNECT,connect_packet_factory));
+    ConnectPacketParser* connectPacketParser = new ConnectPacketParser;
+    parsers.insert(std::make_pair(CONNECT, connectPacketParser));
 
     // HANDLERS
     std::map<PacketType,PacketHandler*> handlers;
-    ConnectPacketHandler* connect_packet_handler = new ConnectPacketHandler;
-    handlers.insert(std::make_pair(CONNECT,connect_packet_handler));
+    ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler;
+    handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
 
     int conn_fd = wait_for_connection();
-    PacketIOManager packet_io (&parsers, conn_fd);
-    g_session = new Session(packet_io);
+    Session session = new Session
+    PacketIOManager packetIO (&parsers, conn_fd);
 
-    RawPacket* packet = packet_io.read_packet();
+    RawPacket* packet = packetIO.read_packet();
 //    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>();
     PacketHandler* handler = handlers.at(packet->getType());
     handler->handle(packet);

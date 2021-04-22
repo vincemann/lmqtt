@@ -7,13 +7,19 @@
 
 #include "io/PacketIOManager.h"
 
-extern Session *g_session;
-
 class Session {
-    PacketIOManager& io_manager;
+
 public:
-    Session(PacketIOManager &ioManager);
-    PacketIOManager &getIoManager() const;
+    const std::list<RawPacket *> &getPacketsSent() const;
+    const std::list<RawPacket *> &getPacketsReceived() const;
+
+    // todo add PacketIOManager as Friend, so he can call these methods
+private:
+    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsSent();
+    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsReceived();
+    std::list<RawPacket*> _packets_sent;
+    std::list<RawPacket*> _packets_received;
+
 };
 
 

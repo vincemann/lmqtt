@@ -8,6 +8,7 @@
 #include "../../packets/ConnectPacket.h"
 #include "../../packets/RawPacket.h"
 #include "PacketParser.h"
+#include "../../packets/RawPacket.h"
 
 class ConnectPacketParser : public PacketParser/*<ConnectPacket>*/{
 public:

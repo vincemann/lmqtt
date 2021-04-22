@@ -5,6 +5,10 @@
 #ifndef LMQTT__SERVER_PACKETPARSER_H
 #define LMQTT__SERVER_PACKETPARSER_H
 
+#include "../../packets/RawPacket.h"
+#include "../../packets/RawPacket.h"
+
+//todo add template
 //template <class P>
 class PacketParser {
 public:
