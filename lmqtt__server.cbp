@@ -218,7 +218,7 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/exception/PacketCreationException.cpp">
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/exception/PacketParsingException.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>

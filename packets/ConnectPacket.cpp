@@ -50,7 +50,7 @@ unsigned char *ConnectPacket::getPassword() const {
     return password;
 }
 
-ConnectPacket::~ConnectPacket() : ~RawPacket() {
+ConnectPacket::~ConnectPacket(){
     delete clientId;
     delete willTopic;
     delete willMsg;
@@ -59,41 +59,41 @@ ConnectPacket::~ConnectPacket() : ~RawPacket() {
     delete protocolName;
 }
 
-ConnectPacket::ConnectPacket(RawPacket *rawPacket, unsigned char protocolLevel, unsigned char *protocolName,
-                             unsigned char reservedBit, unsigned char cleanSession, unsigned char willFlag,
-                             unsigned char willQos, unsigned char willRetain, unsigned char passwordFlag,
-                             unsigned char usernameFlag, unsigned char *clientId, unsigned char *willTopic,
-                             unsigned char *willMsg, unsigned char *username, unsigned char *password) : RawPacket(
-        rawPacket), protocolLevel(protocolLevel), protocolName(protocolName), reservedBit(reservedBit), cleanSession(
-        cleanSession), willFlag(willFlag), willQos(willQos), willRetain(willRetain), passwordFlag(passwordFlag),
-                                                                                                         usernameFlag(
-                                                                                                                 usernameFlag),
-                                                                                                         clientId(
-                                                                                                                 clientId),
-                                                                                                         willTopic(
-                                                                                                                 willTopic),
-                                                                                                         willMsg(willMsg),
-                                                                                                         username(
-                                                                                                                 username),
-                                                                                                         password(
-                                                                                                                 password) {}
-
-ConnectPacket::ConnectPacket(unsigned char protocolLevel, unsigned char *protocolName, unsigned char reservedBit,
-                             unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
-                             unsigned char willRetain, unsigned char passwordFlag, unsigned char usernameFlag,
-                             unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg,
-                             unsigned char *username, unsigned char *password) : protocolLevel(protocolLevel),
-                                                                                 protocolName(protocolName),
-                                                                                 reservedBit(reservedBit),
-                                                                                 cleanSession(cleanSession),
-                                                                                 willFlag(willFlag), willQos(willQos),
-                                                                                 willRetain(willRetain),
-                                                                                 passwordFlag(passwordFlag),
-                                                                                 usernameFlag(usernameFlag),
-                                                                                 clientId(clientId),
-                                                                                 willTopic(willTopic), willMsg(willMsg),
-                                                                                 username(username),
-                                                                                 password(password) {}
+//ConnectPacket::ConnectPacket(RawPacket *rawPacket, unsigned char protocolLevel, unsigned char *protocolName,
+//                             unsigned char reservedBit, unsigned char cleanSession, unsigned char willFlag,
+//                             unsigned char willQos, unsigned char willRetain, unsigned char passwordFlag,
+//                             unsigned char usernameFlag, unsigned char *clientId, unsigned char *willTopic,
+//                             unsigned char *willMsg, unsigned char *username, unsigned char *password) : RawPacket(
+//        rawPacket), protocolLevel(protocolLevel), protocolName(protocolName), reservedBit(reservedBit), cleanSession(
+//        cleanSession), willFlag(willFlag), willQos(willQos), willRetain(willRetain), passwordFlag(passwordFlag),
+//                                                                                                         usernameFlag(
+//                                                                                                                 usernameFlag),
+//                                                                                                         clientId(
+//                                                                                                                 clientId),
+//                                                                                                         willTopic(
+//                                                                                                                 willTopic),
+//                                                                                                         willMsg(willMsg),
+//                                                                                                         username(
+//                                                                                                                 username),
+//                                                                                                         password(
+//                                                                                                                 password) {}
+//
+//ConnectPacket::ConnectPacket(unsigned char protocolLevel, unsigned char *protocolName, unsigned char reservedBit,
+//                             unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
+//                             unsigned char willRetain, unsigned char passwordFlag, unsigned char usernameFlag,
+//                             unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg,
+//                             unsigned char *username, unsigned char *password) : protocolLevel(protocolLevel),
+//                                                                                 protocolName(protocolName),
+//                                                                                 reservedBit(reservedBit),
+//                                                                                 cleanSession(cleanSession),
+//                                                                                 willFlag(willFlag), willQos(willQos),
+//                                                                                 willRetain(willRetain),
+//                                                                                 passwordFlag(passwordFlag),
+//                                                                                 usernameFlag(usernameFlag),
+//                                                                                 clientId(clientId),
+//                                                                                 willTopic(willTopic), willMsg(willMsg),
+//                                                                                 username(username),
+//                                                                                 password(password) {}
 
 unsigned char ConnectPacket::getProtocolLevel() const {
     return protocolLevel;

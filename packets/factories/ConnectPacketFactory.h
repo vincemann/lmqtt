@@ -8,7 +8,13 @@
 #include "../RawPacket.h"
 
 class ConnectPacketFactory : PacketFactory {
-    ConnectPacket *create(RawPacket *raw_packet);
+    ConnectPacket *create(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
+                          unsigned char willRetain,
+                          unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg, unsigned char *username,
+                          unsigned char *password);
+    ConnectPacket *create(unsigned char cleanSession,unsigned char *clientId,
+                          unsigned char *username,
+                          unsigned char *password);
 };
 
 

@@ -122,7 +122,7 @@
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/PacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/exception/PacketCreationException.cpp">
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/exception/PacketParsingException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/exception/PacketParsingException.h">

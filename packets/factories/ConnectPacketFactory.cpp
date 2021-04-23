@@ -9,6 +9,14 @@
 #include "../../handlers/ConnectPacketHandler.h"
 #include "../../util/Utils.h"
 
+
+
+
+ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned char *clientId, unsigned char *username,
+                                            unsigned char *password) {
+    return create(cleanSession,0,0,0,clientId,0,0,username,password);
+}
+
 // give me ConnectPacket with raw packet null and i will gen raw packet ready to send
 ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
                                         unsigned char willRetain,
@@ -74,8 +82,10 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
                       &connectFlags,clientId,willTopic,
                       willMsg,username,password,0xf});
 
-    printf("payload:%s\n",payload)
+    printf("payload:%." << payloadLen << "s\n",payload)
 
     RawPacket rawPacket = new RawPacket(specificFlags,payload,payloadLen,CONNECT);
     return new ConnectPacket(rawPacket,protocolName,protocolLevel,0,cleanSession,willFlag,willQos,willRetain,passwordFlag,usernameFlag,clientId,willTopic,willMsg,username,password);
 }
+
+

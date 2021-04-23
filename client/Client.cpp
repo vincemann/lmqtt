@@ -57,9 +57,7 @@ int main(int argc, char const *argv[])
     char* clientId = "niceClientId";
     char* username = "gil";
     char* password = "passw0rd"
-    ConnectPacket conPacket(0,0,0,0,1,1,clientId,0,0,username,password);
-    // todo factory should take args of conpacket constructor and not unfinished conpacket...
-    RawPacket finConPacket = connectPacketFactory.create(con_packet);
+    RawPacket* finConPacket = connectPacketFactory.create(0,clientId,username,password);
     packetIoManager.send_packet(finConPacket);
     return 0;
 }

@@ -15,18 +15,18 @@
 
 class PacketIOManager{
 public:
-    PacketIOManager(const Session &session, int connFd, std::map<PacketType, PacketParser *> *packetParsers);
+    PacketIOManager(Session *session, int connFd, std::map<PacketType, PacketParser *> *packetParsers);
 
     //template<class P = const RawPacket&>
     virtual RawPacket* read_packet();
-    void send_packet(const RawPacket &packet);
+    void send_packet(RawPacket *packet);
     // only packet io manager can write to these lists
 
 private:
 //    struct Private;
-    Session _session;
+    Session* _session;
     int _conn_fd;
-    std::map<PacketType,PacketParser*> *_packet_parsers;
+    std::map<PacketType,PacketParser*>* _packet_parsers;
 };
 
 

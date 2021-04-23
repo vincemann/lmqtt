@@ -44,23 +44,25 @@ public:
 
     unsigned char getReservedBit() const;
 
-    virtual ~ConnectPacket();
+    ~ConnectPacket();
+
+
 
 private:
     unsigned char *protocolName;
     unsigned char protocolLevel;
     unsigned char reservedBit;
-    unsigned char cleanSession,
-    unsigned char willFlag,
-    unsigned char willQos,
-    unsigned char willRetain,
-    unsigned char passwordFlag,
-    unsigned char usernameFlag,
-    unsigned char *clientId,
-    unsigned char *willTopic,
-    unsigned char *willMsg,
-    unsigned char *username,
-    unsigned char *password
+    unsigned char cleanSession;
+    unsigned char willFlag;
+    unsigned char willQos;
+    unsigned char willRetain;
+    unsigned char passwordFlag;
+    unsigned char usernameFlag;
+    unsigned char *clientId;
+    unsigned char *willTopic;
+    unsigned char *willMsg;
+    unsigned char *username;
+    unsigned char *password;
 
 };
 

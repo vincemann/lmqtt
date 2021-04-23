@@ -5,10 +5,10 @@
 
 #include "PacketCreationException.h"
 
-PacketParsingException::PacketCreationException(const char *msg) {
+PacketCreationException::PacketCreationException(const char *msg) {
     _msg=msg;
 }
 
-const char *PacketParsingException::what() const throw() {
+const char *PacketCreationException::what() const throw() {
     return _msg;
 }

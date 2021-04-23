@@ -10,7 +10,7 @@
 #include "exception/IllegalSessionStateException.h"
 #include "../packets/RawPacket.h"
 
-ConnectPacketHandler::ConnectPacketHandler(Session &session) : PacketHandler(session) {}
+ConnectPacketHandler::ConnectPacketHandler(Session *session) : PacketHandler(session) {}
 
 void ConnectPacketHandler::handle(RawPacket *packet) {
     printf("handling connect packet:\n");

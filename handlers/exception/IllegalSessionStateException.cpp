@@ -4,10 +4,10 @@
 
 #include "IllegalSessionStateException.h"
 
-PacketParsingException::PacketParsingException(const char *msg) {
+IllegalSessionStateException::IllegalSessionStateException(const char *msg) {
     _msg=msg;
 }
 
-const char *PacketParsingException::what() const throw() {
+const char *IllegalSessionStateException::what() const throw() {
     return _msg;
 }

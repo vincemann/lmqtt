@@ -67,30 +67,30 @@ static unsigned int eval_packet_length(int _conn_fd){
 }
 
 
-void PacketIOManager::send_packet(const RawPacket &packet) {
+void PacketIOManager::send_packet(RawPacket *packet) {
 
     // send_packet first fixed header byte
     // needs to be reversed bc specs want network endianess on byte level
     unsigned char control_fixed_header [] = {
             Utils::reverse_bits(
-                    packet.getSpecificFlags()
-                    | eval_packet_type_value(packet.getType())
+                    packet->getSpecificFlags()
+                    | eval_packet_type_value(packet->getType())
             )
     };
     if (write(_conn_fd,&control_fixed_header,1) != 1){
         err("cant send_packet control_fixed_header");
     }
     // send_packet length
-    unsigned char len = packet.getLength();
+    unsigned char len = packet->getLength();
     unsigned char length_fixed_header [] = { len };
     if (write(_conn_fd,&length_fixed_header,1) != 1){
         err("cant send_packet length_fixed_header");
     }
     // send_packet data
-    if (write(_conn_fd,packet.getData(),packet.getLength()) != packet.getLength()){
+    if (write(_conn_fd,packet->getData(),packet->getLength()) != packet->getLength()){
         err("cant send_packet packet data");
     }
-    _session.modifyPacketsSent().insert(packet);
+    _session->getPacketsSent()->insert(packet);
 
 }
 
@@ -105,7 +105,7 @@ RawPacket* PacketIOManager::read_packet() {
     printf("fixed header first byte:\n");
     Utils::print_bits(first_byte);
 
-//    bool[4] _specific_flags;
+//    bool[4] _specificFlags;
     unsigned char specific_flags =eval_specific_flags(first_byte);
     printf("specific flags:\n");
     Utils::print_bits(specific_flags);
@@ -125,12 +125,12 @@ RawPacket* PacketIOManager::read_packet() {
     RawPacket* raw_packet = new RawPacket(packet_type, specific_flags, length, data_buf);
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsed_packet = parser->parse(raw_packet);
-    _session.modifyPacketsReceived().insert(parsed_packet);
+    _session->getPacketsReceived()->insert(parsed_packet);
 }
 
 
 
-PacketIOManager::PacketIOManager(const Session &session, int connFd,
+PacketIOManager::PacketIOManager(Session *session, int connFd,
                                  std::map<PacketType, PacketParser *> *packetParsers) : _session(session),
                                                                                         _conn_fd(connFd),
                                                                                         _packet_parsers(

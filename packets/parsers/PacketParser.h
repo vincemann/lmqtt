@@ -6,7 +6,8 @@
 #define LMQTT__SERVER_PACKETPARSER_H
 
 #include "../RawPacket.h"
-#include "../RawPacket.h"
+#include "../../util/Utils.h"
+#include "exception/PacketParsingException.h"
 
 //todo add template
 //template <class P>

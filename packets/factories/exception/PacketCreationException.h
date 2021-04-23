@@ -3,8 +3,8 @@
 //
 
 
-#ifndef LMQTT__SERVER_PACKETPARSINGEXCEPTION_H
-#define LMQTT__SERVER_PACKETPARSINGEXCEPTION_H
+#ifndef LMQTT__SERVER_PACKETCREATIONEXCEPTION_H
+#define LMQTT__SERVER_PACKETCREATIONEXCEPTION_H
 
 #include <exception>
 
@@ -13,8 +13,8 @@ class PacketCreationException  : public std::exception {
 private:
     const char* _msg;
 public:
-    PacketParsingException(const char* msg);
+    PacketCreationException(const char* msg);
     const char * what () const throw ();
 };
 
-#endif //LMQTT__SERVER_PACKETPARSINGEXCEPTION_H
+#endif //LMQTT__SERVER_PACKETCREATIONEXCEPTION_H

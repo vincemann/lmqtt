@@ -7,18 +7,20 @@
 
 #include "io/PacketIOManager.h"
 
+#include <list>
+
 class Session {
 
 public:
-    const std::list<RawPacket *> &getPacketsSent() const;
-    const std::list<RawPacket *> &getPacketsReceived() const;
+    std::list<RawPacket *> *getPacketsSent() const;
+    std::list<RawPacket *> *getPacketsReceived() const;
 
     // todo add PacketIOManager as Friend, so he can call these methods
 private:
-    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsSent();
-    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsReceived();
-    std::list<RawPacket*> _packets_sent;
-    std::list<RawPacket*> _packets_received;
+//    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsSent();
+//    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsReceived();
+    std::list<RawPacket*>* _packets_sent;
+    std::list<RawPacket*>* _packets_received;
 
 };
 

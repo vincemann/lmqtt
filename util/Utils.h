@@ -11,7 +11,6 @@ namespace Utils {
     void print_bits(unsigned char val);
     unsigned create_bit_mask(unsigned a, unsigned b);
     void extractSubArray(char *srcArray, char *subArray, int n);
-    char* remove_nullbytes_except_last(char* str, char find, char replace)
 };
 
 

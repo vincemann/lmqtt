@@ -5,4 +5,4 @@
 #include "PacketHandler.h"
 
 
-PacketHandler::PacketHandler(const Session &session) : _session(session) {}
+PacketHandler::PacketHandler(Session *session) : _session(session) {}

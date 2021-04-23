@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include "exception/PacketCreationException.h"
 
@@ -19,15 +20,15 @@ class PacketFactory {
 
     // call like that:
     // memcpyStrings(dst,(char*[]){val1,val2,val3,val4,0xf});
-    static void memcpyStrings(char* dst, char* values){
+    static void memcpyStrings(char* dst, char** values, int argCount){
         unsigned int offset = 0;
         // pointer cant have value 0xf, so its a acceptable end condition
-        while (*values != 0xf){
-            char *value = *values++;
+        for (int i = 0; i < argCount; ++i) {
+            char *value = values[i];
             if (value == 0){
                 continue;
             }
-            memcpy(dst+offset,strlen(value),value);
+            memcpy(dst+offset,value,strlen(value));
             offset += strlen(value);
         }
     }
@@ -42,11 +43,11 @@ class PacketFactory {
             throw new PacketCreationException("utf8 payload too long");
         }
         len = (unsigned short) len;
-        char* pData = malloc(len + 2);
+        char* pData = (char*)malloc(sizeof(char) * (len + 2));
         // add len
         memcpy(pData, &len, 2);
         // add pData
-        strncpy(pData+2,pPayload,len)
+        strncpy(pData+2,pPayload,len);
         return pData;
     }
 };

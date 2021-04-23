@@ -14,17 +14,11 @@
 class RawPacket
 {
 public:
-    RawPacket(unsigned char specificFlags,unsigned char *data, unsigned int length, PacketType type)
-    : _specific_flags(specificFlags), _data(data), _length(length), _type(type) {}
+    RawPacket(unsigned char specificFlags,unsigned char *data, unsigned int length, PacketType type);
 
-    RawPacket(RawPacket *rawPacket)
-    : _specific_flags(rawPacket->specificFlags), _data( rawPacket->data), _length( rawPacket->_length), _type(rawPacket->_type) {}
-
+    RawPacket(RawPacket *rawPacket);
     RawPacket(){}
-    // dynamic cast needs class to be polymorphic, thus needs at least one
-    // virtual method
-    // https://stackoverflow.com/questions/15114093/getting-source-type-is-not-polymorphic-when-trying-to-use-dynamic-cast
-    virtual ~RawPacket(){
+    ~RawPacket(){
         delete _data;
     }
 
@@ -33,7 +27,7 @@ public:
     }
 
     unsigned char getSpecificFlags() const {
-        return _specific_flags;
+        return _specificFlags;
     }
 
     unsigned int getLength() const {
@@ -45,29 +39,12 @@ public:
     }
 
 
-protected:
-    friend void PacketFactory::setSpecificFlags(unsigned char specificFlags) {
-        _specific_flags = specificFlags;
-    }
-
-    friend void PacketFactory::setData(char *data) {
-        _data = data;
-    }
-
-    friend void PacketFactory::setLength(unsigned int length) {
-        _length = length;
-    }
-
-    friend void PacketFactory::setType(PacketType type) {
-        _type = type;
-    }
-
 private:
 
     // 4 bits
-    unsigned char _specific_flags;
+    unsigned char _specificFlags;
     // variable header + payload
-    char* _data;
+    unsigned char* _data;
     unsigned int _length;
     PacketType _type;
 
