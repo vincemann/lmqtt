@@ -92,8 +92,8 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     }
 
 
-    return new ConnectPacket(pRawPacket, protocolName, protocolLevel, reservedBit,
+    return new ConnectPacket(pRawPacket, protocolLevel,protocolName, reservedBit,
                              cleanSessionFlag, willFlag, willQos,
                              willRetainFlag, passwordFlag, usernameFlag,
-                             clientId, NULL, 0);
+                             clientId, willTopic, willMsg, username,password);
 }

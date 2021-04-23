@@ -10,14 +10,54 @@
 // give me ConnectPacket with raw packet null and i will gen raw packet ready to send
 RawPacket *ConnectPacketFactory::create(RawPacket *raw_packet) {
     ConnectPacket* connectPacket = dynamic_cast<ConnectPacket*>(raw_packet);
-    RawPacket resultPacket = new RawPacket();
     // IO Manager puts this into packet for me
-    resultPacket.setType(CONNECT);
-    resultPacket.setSpecificFlags(0);
+    connectPacket.setType(CONNECT);
+    connectPacket.setSpecificFlags(0);
 
-    char* protocolName = PacketFactory::createUtf8Payload("MQTT");
-    char protocolLevel = 4;
+    unsigned char* protocolName = PacketFactory::createUtf8Payload("MQTT");
+    unsigned char protocolLevel = 4;
 
+    unsigned char connectFlags = connectPacket->getReservedBit() |
+            (connectPacket->getCleanSession() << 1)  |
+            (connectPacket->getWillFlag() << 2 ) |
+            (connectPacket->getWillQos() << 4 ) |
+            (connectPacket->getWillRetain() << 5 ) |
+            (connectPacket->getPasswordFlag() << 6 ) |
+            (connectPacket->getUsernameFlag() << 7 ) |;
 
-    return NULL;
+    unsigned char* clientId = PacketFactory::createUtf8Payload(connectPacket->getClientId());
+
+    unsigned char* willTopic = 0;
+    unsigned char* willMsg = 0;
+    if (connectPacket->getWillFlag()){
+        willTopic = PacketFactory::createUtf8Payload(connectPacket->getWillTopic());
+        willMsg = PacketFactory::createUtf8Payload(connectPacket->getWillMsg());
+    }
+
+    unsigned char* username = 0;
+    if (connectPacket->getUsernameFlag()){
+        username = PacketFactory::createUtf8Payload(connectPacket->getUsername());
+    }
+
+    unsigned char* password = 0;
+    if (connectPacket->getPasswordFlag()){
+        password = PacketFactory::createUtf8Payload(connectPacket->getPassword());
+    }
+
+    unsigned int payloadLen =
+            strlen(protocolName) +
+            1 +
+            1 +
+            strlen(clientId) +
+            strlen(willTopic) +
+            strlen(willMsg) +
+            strlen(username) +
+            strlen(password);
+    unsigned char payload[payloadLen];
+    snprintf(payload,payloadLen,"%s%c%c%s%s%s%s%s",
+             protocolName,protocolLevel,clientId,
+             willTopic,willMsg,username,password);
+
+    connectPacket->setData(payload);
+    return connectPacket;
 }

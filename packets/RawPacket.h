@@ -44,6 +44,7 @@ public:
         return _data;
     }
 
+
 protected:
     friend void PacketFactory::setSpecificFlags(unsigned char specificFlags) {
         _specific_flags = specificFlags;

@@ -9,11 +9,13 @@
 #include "../packets/ConnectPacket.h"
 #include "../packets/PacketType.h"
 #include "../io/PacketIOManager.h"
+#include "../packets/factories/PacketFactory.h"
+#include "../packets/factories/ConnectPacketFactory.h"
 
 
 #define PORT 8080
 
-static int connect_to_server(){
+static int connectToServer(){
     int conn_fd = 0;
     struct sockaddr_in serv_addr;
     if ((conn_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -43,13 +45,21 @@ static int connect_to_server(){
 int main(int argc, char const *argv[])
 {
     std::map<PacketType,PacketParser*> parsers;
+    std::map<PacketType,PacketFactory*> factories;
 
-    int conn_fd = connect_to_server();
-    PacketIOManager packet_io (&parsers,conn_fd);
+    ConnectPacketFactory connectPacketFactory;
+    factories.insert(std::make_pair(CONNECT, &connectPacketFactory));
+
+    int conn_fd = connectToServer();
+    PacketIOManager packetIoManager (&parsers, conn_fd);
 
     char* data = "connect me pls";
-    ConnectPacket con_packet(strlen(data), data, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0);
-    packet_io.send_packet(con_packet);
-
+    char* clientId = "niceClientId";
+    char* username = "gil";
+    char* password = "passw0rd"
+    ConnectPacket conPacket(0,0,0,0,1,1,clientId,0,0,username,password);
+    // todo factory should take args of conpacket constructor and not unfinished conpacket...
+    RawPacket finConPacket = connectPacketFactory.create(con_packet);
+    packetIoManager.send_packet(finConPacket);
     return 0;
 }
