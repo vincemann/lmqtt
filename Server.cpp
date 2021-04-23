@@ -14,8 +14,6 @@
 
 #define PORT 8080
 
-Session *g_session;
-
 static int wait_for_connection(){
     int server_fd, conn_socket;
     struct sockaddr_in address;

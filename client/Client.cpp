@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
     PacketIOManager packet_io (&parsers,conn_fd);
 
     char* data = "connect me pls";
-    ConnectPacket con_packet (strlen(data),data);
+    ConnectPacket con_packet(strlen(data), data, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0);
     packet_io.send_packet(con_packet);
 
     return 0;

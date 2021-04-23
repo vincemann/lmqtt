@@ -49,7 +49,7 @@
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/handlers/exception"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/parsers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packets/parsers"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/util"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packets"/>
 				</Compiler>
@@ -72,7 +72,7 @@
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/handlers/exception"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/io/parsers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packets/parsers"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/util"/>
 					<Add directory="/home/vince/CLionProjects/lmqtt+-server/packets"/>
 				</Compiler>
@@ -174,30 +174,6 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/exception/PacketParsingException.cpp">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/exception/PacketParsingException.h">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/parsers/ConnectPacketParser.cpp">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/parsers/ConnectPacketParser.h">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/parsers/PacketParser.cpp">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/io/parsers/PacketParser.h">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/ConnectPacket.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
@@ -215,6 +191,38 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/RawPacket.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/factories/ConnectPacketFactory.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/factories/ConnectPacketFactory.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/factories/PacketFactory.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/ConnectPacketParser.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/ConnectPacketParser.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/PacketParser.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/exception/PacketCreationException.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/packets/parsers/exception/PacketParsingException.h">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>

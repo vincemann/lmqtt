@@ -3,32 +3,13 @@
 //
 
 #include "ConnectPacketParser.h"
-#include "../../packets/ConnectPacket.h"
-#include "../exception/PacketParsingException.h"
+#include "../ConnectPacket.h"
+#include "exception/PacketParsingException.h"
 #include "../../util/Utils.h"
 
 #include <stdio.h>
 #include <string.h>
 
-static char *extractUtf8Payload(char *p, bool incrementPointer = true) {
-    // todo check for wrong encoding chars -> close connection
-    unsigned short len = getUf8PayloadLen(p);
-    char payload[len + 1];
-    Utils::extractSubArray(p, payload, len);
-    // check for null bytes
-    for (int i = 0; i < len - 1; ++i) {
-        char c = payload[i];
-        if (c == '\0') {
-            throw new PacketParsingException("payload must not contain nullbytes");
-        }
-    }
-    // add trailing null byte
-    payload[len] = '\0';
-    if (incrementPointer) {
-        p += len;
-    }
-    return strdup(payload);
-}
 
 RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     if (pRawPacket->getSpecificFlags() != 0) {
@@ -37,7 +18,7 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     }
     unsigned char *pData = pRawPacket->getData()
     // extract variable header
-    unsigned  char *protocolName = extractUtf8Payload(pData, false);
+    unsigned  char *protocolName = PacketParser::extractUtf8Payload(pData, false);
     printf("protocolName:%s\n", protocolName)
 
     // todo all those checks put into ConnectPacketHandler
@@ -75,12 +56,12 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     // now comes payload
     // in this order Client Identifier, Will Topic, Will Message, User Name, Password
     // depends on variable header bits
-    unsigned char *clientId = extractUtf8Payload(pData);
+    unsigned char *clientId = PacketParser::extractUtf8Payload(pData);
     printf("clientId:%s\n", clientId);
 
     char *willTopic = 0;
     if (willFlag) {
-        willTopic = extractUtf8Payload(pData);
+        willTopic = PacketParser::extractUtf8Payload(pData);
         printf("willTopic:%s\n",willTopic)
 
     }
@@ -90,15 +71,15 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     unsigned char *willTopic = 0;
     unsigned char *willMsg = 0;
     if (willFlag) {
-        willTopic = extractUtf8Payload(pData);
-        willMsg = extractUtf8Payload(pData);
+        willTopic = PacketParser::extractUtf8Payload(pData);
+        willMsg = PacketParser::extractUtf8Payload(pData);
         printf("willTopic:%s\n",willTopic)
         printf("willMsg:%s\n",willMsg)
     }
 
     unsigned char *username = 0;
     if (usernameFlag) {
-        username = extractUtf8Payload(pData);
+        username = PacketParser::extractUtf8Payload(pData);
         printf("username:%s\n",username)
 
     }
@@ -106,14 +87,13 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
 
     unsigned char *password = 0;
     if (passwordFlag) {
-        password = extractUtf8Payload(pData);
+        password = PacketParser::extractUtf8Payload(pData);
         printf("password:%s\n",password)
     }
 
 
-    return new ConnectPacket(pRawPacket->getLength(),pRawPacket->getType(),protocolName, protocolLevel, reservedBit,
+    return new ConnectPacket(pRawPacket, protocolName, protocolLevel, reservedBit,
                              cleanSessionFlag, willFlag, willQos,
                              willRetainFlag, passwordFlag, usernameFlag,
-                             clientId, willTopic, willMsg, username, password
-    );
+                             clientId, NULL, 0);
 }

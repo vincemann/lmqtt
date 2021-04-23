@@ -5,10 +5,10 @@
 #ifndef LMQTT__SERVER_CONNECTPACKETPARSER_H
 #define LMQTT__SERVER_CONNECTPACKETPARSER_H
 
-#include "../../packets/ConnectPacket.h"
-#include "../../packets/RawPacket.h"
+#include "../ConnectPacket.h"
+#include "../RawPacket.h"
 #include "PacketParser.h"
-#include "../../packets/RawPacket.h"
+#include "../RawPacket.h"
 
 class ConnectPacketParser : public PacketParser/*<ConnectPacket>*/{
 public:

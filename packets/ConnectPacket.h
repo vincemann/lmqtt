@@ -10,12 +10,14 @@
 
 class ConnectPacket : RawPacket{
 public:
-    ConnectPacket(RawPacket *rawPacket, unsigned char cleanSession, unsigned char willFlag,
-                  unsigned char willQos, unsigned char willRetain, unsigned char passwordFlag,
-                  unsigned char usernameFlag, unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg,
-                  unsigned char *username, unsigned char *password);
+    ConnectPacket(RawPacket *rawPacket, unsigned char protocolLevel, unsigned char *protocolName,
+                  unsigned char reservedBit, unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
+                  unsigned char willRetain, unsigned char passwordFlag, unsigned char usernameFlag,
+                  unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg, unsigned char *username,
+                  unsigned char *password);
 
-    ConnectPacket(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos, unsigned char willRetain,
+    ConnectPacket(unsigned char protocolLevel, unsigned char *protocolName, unsigned char reservedBit,
+                  unsigned char cleanSession, unsigned char willFlag, unsigned char willQos, unsigned char willRetain,
                   unsigned char passwordFlag, unsigned char usernameFlag, unsigned char *clientId,
                   unsigned char *willTopic, unsigned char *willMsg, unsigned char *username, unsigned char *password);
 
@@ -41,9 +43,18 @@ public:
 
     unsigned char *getPassword() const;
 
+    unsigned char getProtocolLevel() const;
+
+    unsigned char *getProtocolName() const;
+
+    unsigned char getReservedBit() const;
+
     virtual ~ConnectPacket();
 
 private:
+    unsigned char protocolLevel;
+    unsigned char *protocolName;
+    unsigned char reservedBit;
     unsigned char cleanSession,
     unsigned char willFlag,
     unsigned char willQos,

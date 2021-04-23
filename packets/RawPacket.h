@@ -9,6 +9,7 @@
 
 #include "PacketType.h"
 #include "RawPacket.h"
+#include "factories/PacketFactory.h"
 
 class RawPacket
 {
@@ -43,14 +44,33 @@ public:
         return _data;
     }
 
+protected:
+    friend void PacketFactory::setSpecificFlags(unsigned char specificFlags) {
+        _specific_flags = specificFlags;
+    }
+
+    friend void PacketFactory::setData(char *data) {
+        _data = data;
+    }
+
+    friend void PacketFactory::setLength(unsigned int length) {
+        _length = length;
+    }
+
+    friend void PacketFactory::setType(PacketType type) {
+        _type = type;
+    }
 
 private:
+
     // 4 bits
     unsigned char _specific_flags;
     // variable header + payload
     char* _data;
     unsigned int _length;
     PacketType _type;
+
+
 };
 
 #endif //LMQTT__SERVER_RAWPACKET_H
