@@ -10,21 +10,11 @@
 
 class ConnectPacket : RawPacket{
 public:
-    ConnectPacket(RawPacket *rawPacket, unsigned char protocolLevel, unsigned char *protocolName,
+    ConnectPacket(RawPacket *rawPacket, unsigned char *protocolName, unsigned char protocolLevel,
                   unsigned char reservedBit, unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
                   unsigned char willRetain, unsigned char passwordFlag, unsigned char usernameFlag,
                   unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg, unsigned char *username,
                   unsigned char *password);
-
-    ConnectPacket(unsigned char protocolLevel, unsigned char *protocolName, unsigned char reservedBit,
-                  unsigned char cleanSession, unsigned char willFlag, unsigned char willQos, unsigned char willRetain,
-                  unsigned char passwordFlag, unsigned char usernameFlag, unsigned char *clientId,
-                  unsigned char *willTopic, unsigned char *willMsg, unsigned char *username, unsigned char *password);
-
-    // todo improve constructor to automatically set flags depending on string vals
-    ConnectPacket(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos, unsigned char willRetain,
-                  unsigned char passwordFlag, unsigned char usernameFlag, unsigned char *clientId,
-                  unsigned char *willTopic, unsigned char *willMsg, unsigned char *username, unsigned char *password);
 
     unsigned char getCleanSession() const;
 
@@ -57,8 +47,8 @@ public:
     virtual ~ConnectPacket();
 
 private:
-    unsigned char protocolLevel;
     unsigned char *protocolName;
+    unsigned char protocolLevel;
     unsigned char reservedBit;
     unsigned char cleanSession,
     unsigned char willFlag,

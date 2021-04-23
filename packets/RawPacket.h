@@ -14,7 +14,7 @@
 class RawPacket
 {
 public:
-    RawPacket(unsigned char specificFlags, char *data, unsigned int length, PacketType type)
+    RawPacket(unsigned char specificFlags,unsigned char *data, unsigned int length, PacketType type)
     : _specific_flags(specificFlags), _data(data), _length(length), _type(type) {}
 
     RawPacket(RawPacket *rawPacket)

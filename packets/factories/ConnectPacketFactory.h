@@ -8,7 +8,7 @@
 #include "../RawPacket.h"
 
 class ConnectPacketFactory : PacketFactory {
-    virtual RawPacket *create(RawPacket *raw_packet);
+    ConnectPacket *create(RawPacket *raw_packet);
 };
 
 
