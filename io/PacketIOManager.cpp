@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <map>
 #include <stdio.h>
+#include <list>
 
 #include "PacketIOManager.h"
 #include "exception/PacketIOException.h"
@@ -67,9 +68,9 @@ static unsigned int eval_packet_length(int _conn_fd){
 }
 
 
-void PacketIOManager::send_packet(RawPacket *packet) {
+void PacketIOManager::sendPacket(RawPacket *packet) {
 
-    // send_packet first fixed header byte
+    // sendPacket first fixed header byte
     // needs to be reversed bc specs want network endianess on byte level
     unsigned char control_fixed_header [] = {
             Utils::reverse_bits(
@@ -78,17 +79,17 @@ void PacketIOManager::send_packet(RawPacket *packet) {
             )
     };
     if (write(_conn_fd,&control_fixed_header,1) != 1){
-        err("cant send_packet control_fixed_header");
+        err("cant sendPacket control_fixed_header");
     }
-    // send_packet length
+    // sendPacket length
     unsigned char len = packet->getLength();
     unsigned char length_fixed_header [] = { len };
     if (write(_conn_fd,&length_fixed_header,1) != 1){
-        err("cant send_packet length_fixed_header");
+        err("cant sendPacket length_fixed_header");
     }
-    // send_packet data
+    // sendPacket data
     if (write(_conn_fd,packet->getData(),packet->getLength()) != packet->getLength()){
-        err("cant send_packet packet data");
+        err("cant sendPacket packet data");
     }
     _session->getPacketsSent()->insert(packet);
 

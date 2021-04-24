@@ -19,7 +19,7 @@ public:
 
     //template<class P = const RawPacket&>
     virtual RawPacket* read_packet();
-    void send_packet(RawPacket *packet);
+    void sendPacket(RawPacket *packet);
     // only packet io manager can write to these lists
 
 private:

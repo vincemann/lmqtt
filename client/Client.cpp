@@ -58,6 +58,6 @@ int main(int argc, char const *argv[])
     char* username = "gil";
     char* password = "passw0rd"
     RawPacket* finConPacket = connectPacketFactory.create(0,clientId,username,password);
-    packetIoManager.send_packet(finConPacket);
+    packetIoManager.sendPacket(finConPacket);
     return 0;
 }
