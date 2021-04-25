@@ -8,6 +8,7 @@
 #include "../PacketType.h"
 #include "../../handlers/ConnectPacketHandler.h"
 #include "../../util/Utils.h"
+#include "../Payload.h"
 
 
 
@@ -22,8 +23,6 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
                                         char *clientId, char *willTopic, char *willMsg, char *username,
                                         char *password) {
 
-    // 3 minutes
-    unsigned short keepAlive = 180;
     unsigned char specificFlags = 0;
 
     unsigned char passwordFlag = 0;
@@ -37,8 +36,9 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
     }
 
 
-    char* protocolName = PacketFactory::createUtf8Payload("MQTT");
+    Payload* protocolNamePayload = PacketFactory::createUtf8Payload("MQTT");
     unsigned char protocolLevel = 4;
+    Payload* protocolLevelPayload = new Payload(protocolLevel,1);
 
     unsigned char reservedBit = 0;
     unsigned char connectFlags = reservedBit |
@@ -49,40 +49,35 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
             (passwordFlag << 6 ) |
             (usernameFlag << 7 );
 
-    char* clientIdPayload = PacketFactory::createUtf8Payload(clientId);
+    // 3 minutes
+    unsigned short keepAlive = 180;
+    Payload* keepAlivePayload = new Payload(keepAlive,sizeof(unsigned short));
 
-    char* willTopicPayload = 0;
-    char* willMsgPayload = 0;
+    Payload* connectFlagsPayload = new Payload(connectFlags,1);
+    Payload* clientIdPayload = PacketFactory::createUtf8Payload(clientId);
+
+    Payload* willTopicPayload = 0;
+    Payload* willMsgPayload = 0;
     if (willFlag){
         willTopicPayload = PacketFactory::createUtf8Payload(willTopic);
         willMsgPayload = PacketFactory::createUtf8Payload(willMsg);
     }
 
-    char* usernamePayload = 0;
+    Payload* usernamePayload = 0;
     if (usernameFlag){
         usernamePayload = PacketFactory::createUtf8Payload(username);
     }
 
-    char* passwordPayload = 0;
+    Payload* passwordPayload = 0;
     if (passwordFlag){
         passwordPayload = PacketFactory::createUtf8Payload(password);
     }
 
-    unsigned int payloadLen =
-            strlen(protocolName)+
-            1 +
-            1 +
-            strlen(clientIdPayload) +
-            strlen(willTopicPayload) +
-            strlen(willMsgPayload) +
-            strlen(usernamePayload) +
-            strlen(passwordPayload);
-    unsigned char payload[payloadLen];
-
-    const void* toMerge[] = {protocolName, &protocolLevel,
-                             &connectFlags, clientId, willTopic,
-                             willMsg, username, password};
-    PacketFactory::memcpyMergeStrings(payload, toMerge, 8);
+    int* payloadLen = 0;
+    const Payload* toMerge[] = {protocolNamePayload, protocolLevelPayload,
+                             connectFlagsPayload, clientIdPayload, willTopicPayload,
+                             willMsgPayload, usernamePayload, passwordPayload};
+    unsigned char* payload = PacketFactory::mergePayloads(payloadLen, toMerge, 8);
 
     printf("payload:%.*s", payloadLen, (char*) payload);
 

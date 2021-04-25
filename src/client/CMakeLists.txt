@@ -48,7 +48,7 @@ add_executable(lmqtt__client
         ../packets/factories/ConnectPacketFactory.cpp
         ../packets/factories/ConnectPacketFactory.h
 
-        )
+        ../packets/Payload.cpp ../packets/Payload.h)
 
 
 #target_include_directories(lmqtt__client PRIVATE

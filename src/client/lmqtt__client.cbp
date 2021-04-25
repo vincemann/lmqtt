@@ -104,6 +104,12 @@
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/PacketType.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/Payload.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/Payload.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/RawPacket.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
