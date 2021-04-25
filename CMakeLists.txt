@@ -2,50 +2,53 @@ cmake_minimum_required(VERSION 3.17)
 project(lmqtt__server)
 
 set(CMAKE_CXX_STANDARD 17)
+#set (CMAKE_CXX_STANDARD 11)
 
-add_subdirectory(client)
+add_subdirectory(src/client)
+
+include_directories(./src/handlers)
+include_directories(./src/handlers/exception)
+include_directories(./src/io)
+include_directories(./src/io/exception)
+include_directories(./src/packets/parsers)
+include_directories(./src/util)
+include_directories(./src/packets)
+include_directories(lmqtt__server)
 
 add_executable(lmqtt__server
-        Server.cpp
+        src/Server.cpp
 
-        packets/RawPacket.h
-        packets/RawPacket.cpp
-        packets/PacketType.h
-        packets/ConnectPacket.h
-        packets/ConnectPacket.cpp
+        src/packets/RawPacket.h
+        src/packets/RawPacket.cpp
+        src/packets/PacketType.h
+        src/packets/ConnectPacket.h
+        src/packets/ConnectPacket.cpp
 
-        io/PacketIOManager.h
-        io/PacketIOManager.cpp
-        io/exception/PacketIOException.h
-        io/exception/PacketIOException.cpp
+        src/io/PacketIOManager.h
+        src/io/PacketIOManager.cpp
+        src/io/exception/PacketIOException.h
+        src/io/exception/PacketIOException.cpp
 
-        packets/parsers/ConnectPacketParser.h
-        packets/parsers/ConnectPacketParser.cpp
+        src/packets/parsers/ConnectPacketParser.h
+        src/packets/parsers/ConnectPacketParser.cpp
 
-        handlers/PacketHandler.h
-        handlers/ConnectPacketHandler.h
-        handlers/ConnectPacketHandler.cpp
+        src/handlers/PacketHandler.h
+        src/handlers/ConnectPacketHandler.h
+        src/handlers/ConnectPacketHandler.cpp
 
-        util/Utils.cpp util/Utils.h
-        Session.cpp
-        Session.h
-        packets/parsers/PacketParser.h
-        packets/parsers/exception/PacketParsingException.cpp
+        src/util/Utils.cpp src/util/Utils.h
+        src/Session.cpp
+        src/Session.h
+        src/packets/parsers/PacketParser.h
+        src/packets/parsers/exception/PacketParsingException.cpp
 
-        packets/parsers/exception/PacketParsingException.h
-        handlers/exception/IllegalSessionStateException.cpp
-        handlers/exception/IllegalSessionStateException.h
-        handlers/PacketHandler.cpp packets/factories/PacketFactory.h
-        packets/factories/ConnectPacketFactory.cpp
-        packets/factories/ConnectPacketFactory.h)
+        src/packets/parsers/exception/PacketParsingException.h
+        src/handlers/exception/IllegalSessionStateException.cpp
+        src/handlers/exception/IllegalSessionStateException.h
+        src/handlers/PacketHandler.cpp src/packets/factories/PacketFactory.h
+        src/packets/factories/ConnectPacketFactory.cpp
+        src/packets/factories/ConnectPacketFactory.h)
 
-include_directories(lmqtt__server
-        handlers
-        handlers/exception
-        io
-        io/exception
-        packets/parsers
-        util
-        packets)
+
 
 

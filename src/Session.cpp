@@ -6,13 +6,7 @@
 #include <list>
 
 
-const std::list<RawPacket *> *Session::getPacketsSent() const {
-    return _packets_sent;
-}
 
-const std::list<RawPacket *> *Session::getPacketsReceived() const {
-    return _packets_received;
-}
 
 //std::list<RawPacket *> &PacketIOManager::modifyPacketsSent() {
 //    return _packets_sent;
@@ -23,3 +17,10 @@ const std::list<RawPacket *> *Session::getPacketsReceived() const {
 //}
 
 
+std::list<RawPacket *> *Session::getPacketsSent() const {
+    return _packets_sent;
+}
+
+std::list<RawPacket *> *Session::getPacketsReceived() const {
+    return _packets_received;
+}

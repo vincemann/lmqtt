@@ -24,7 +24,7 @@ public:
 
 private:
 //    struct Private;
-    Session* _session;
+    Session *_session;
     int _conn_fd;
     std::map<PacketType,PacketParser*>* _packet_parsers;
 };

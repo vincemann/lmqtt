@@ -31,7 +31,7 @@ static unsigned char eval_packet_type_value(PacketType packetType){
 }
 
 
-static PacketType eval_packet_type( unsigned char fixed_header_byte){
+static PacketType evalPacketType(unsigned char fixed_header_byte){
     unsigned char mask = Utils::create_bit_mask(4, 7);
     unsigned char packet_type_val = Utils::reverse_bits(mask & fixed_header_byte);
 
@@ -48,7 +48,7 @@ static PacketType eval_packet_type( unsigned char fixed_header_byte){
     err("unknown packet _type");
 }
 
-static unsigned char eval_specific_flags(/*bool[4] result,*/ unsigned char fixed_header_byte){
+static unsigned char evalSpecificFlags(/*bool[4] result,*/ unsigned char fixed_header_byte){
     unsigned char mask = Utils::create_bit_mask(0, 3);
     unsigned char specific_flags = mask & fixed_header_byte;
     return specific_flags;
@@ -82,7 +82,7 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
         err("cant sendPacket control_fixed_header");
     }
     // sendPacket length
-    unsigned char len = packet->getLength();
+    unsigned int len = packet->getLength();
     unsigned char length_fixed_header [] = { len };
     if (write(_conn_fd,&length_fixed_header,1) != 1){
         err("cant sendPacket length_fixed_header");
@@ -91,31 +91,31 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
     if (write(_conn_fd,packet->getData(),packet->getLength()) != packet->getLength()){
         err("cant sendPacket packet data");
     }
-    _session->getPacketsSent()->insert(packet);
+    _session->getPacketsSent()->push_back(packet);
 
 }
 
 
 RawPacket* PacketIOManager::read_packet() {
     // read fixed header
-    unsigned char control_fixed_header_buf[1];
-    if(read(_conn_fd, control_fixed_header_buf, 1) != 1){
+    unsigned char controlFixedHeaderBuf[1];
+    if(read(_conn_fd, controlFixedHeaderBuf, 1) != 1){
         err("Cant read mqtt control fixed header");
     }
-    unsigned char first_byte = control_fixed_header_buf[0];
+    unsigned char firstByte = controlFixedHeaderBuf[0];
     printf("fixed header first byte:\n");
-    Utils::print_bits(first_byte);
+    Utils::print_bits(firstByte);
 
 //    bool[4] _specificFlags;
-    unsigned char specific_flags =eval_specific_flags(first_byte);
+    unsigned char specific_flags = evalSpecificFlags(firstByte);
     printf("specific flags:\n");
     Utils::print_bits(specific_flags);
 
-    PacketType packet_type =eval_packet_type(first_byte);
-    int length = eval_packet_length(_conn_fd);
+    PacketType packet_type = evalPacketType(firstByte);
+    unsigned int length = eval_packet_length(_conn_fd);
     printf("packet len: %d\n",length);
 
-    char data_buf[length];
+    unsigned char data_buf[length];
     if(read(_conn_fd, data_buf, length) != length){
         err("Cant read packet data");
     }
@@ -123,10 +123,10 @@ RawPacket* PacketIOManager::read_packet() {
     printf("packet data: %s\n",data_buf);
 
 
-    RawPacket* raw_packet = new RawPacket(packet_type, specific_flags, length, data_buf);
+    RawPacket* raw_packet = new RawPacket(specific_flags,data_buf, length, packet_type);
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsed_packet = parser->parse(raw_packet);
-    _session->getPacketsReceived()->insert(parsed_packet);
+    _session->getPacketsReceived()->push_back(parsed_packet);
 }
 
 
@@ -134,8 +134,7 @@ RawPacket* PacketIOManager::read_packet() {
 PacketIOManager::PacketIOManager(Session *session, int connFd,
                                  std::map<PacketType, PacketParser *> *packetParsers) : _session(session),
                                                                                         _conn_fd(connFd),
-                                                                                        _packet_parsers(
-                                                                                                packetParsers) {}
+                                                                                        _packet_parsers(packetParsers) {}
 
 
 

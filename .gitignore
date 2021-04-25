@@ -1,17 +1,17 @@
-client/cmake-build-debug/
-client/.idea/
+src/client/cmake-build-debug/
+src/client/.idea/
 .idea
 
-client/CMakeLists.txt.user
-client/CMakeFiles
-client/CMakeScripts
-client/Testing
-client/Makefile
-client/cmake_install.cmake
-client/install_manifest.txt
-client/compile_commands.json
-client/CTestTestfile.cmake
-client/_deps
+src/client/CMakeLists.txt.user
+src/client/CMakeFiles
+src/client/CMakeScripts
+src/client/Testing
+src/client/Makefile
+src/client/cmake_install.cmake
+src/client/install_manifest.txt
+src/client/compile_commands.json
+src/client/CTestTestfile.cmake
+src/client/_deps
 
 CMakeLists.txt.user
 CMakeCache.txt

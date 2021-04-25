@@ -6,15 +6,16 @@
 #define LMQTT__SERVER_CONNECTPACKETFACTORY_H
 #include "PacketFactory.h"
 #include "../RawPacket.h"
+#include "../../packets/ConnectPacket.h"
 
 class ConnectPacketFactory : PacketFactory {
     ConnectPacket *create(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
                           unsigned char willRetain,
-                          unsigned char *clientId, unsigned char *willTopic, unsigned char *willMsg, unsigned char *username,
-                          unsigned char *password);
-    ConnectPacket *create(unsigned char cleanSession,unsigned char *clientId,
-                          unsigned char *username,
-                          unsigned char *password);
+                          char *clientId, char *willTopic, char *willMsg, char *username,
+                          char *password);
+    ConnectPacket *create(unsigned char cleanSession,char *clientId,
+                          char *username,
+                          char *password);
 };
 
 

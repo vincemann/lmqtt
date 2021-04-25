@@ -2,85 +2,19 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6"/>
 	<Project>
-		<Option title="lmqtt__server"/>
+		<Option title="lmqtt__client"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
 		<Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\src\client\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server"/>
+				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server/src/client"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="lmqtt__server">
-				<Option output="/home/vince/CLionProjects/lmqtt+-server/lmqtt__server" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/handlers/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/io"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/io/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/packets/parsers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/util"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/packets"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/lmqtt__server"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 lmqtt__server"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="lmqtt__server/fast">
-				<Option output="/home/vince/CLionProjects/lmqtt+-server/lmqtt__server" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/handlers/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/io"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/io/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/packets/parsers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/util"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/./src/packets"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/lmqtt__server"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 lmqtt__server/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="lmqtt__client">
@@ -122,116 +56,82 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Server.cpp">
-			<Option target="lmqtt__server"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Session.cpp">
-			<Option target="lmqtt__server"/>
-		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Session.h">
-			<Option target="lmqtt__server"/>
-		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/client/Client.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/ConnectPacketHandler.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/ConnectPacketHandler.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/PacketHandler.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/PacketHandler.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/PacketIOManager.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/PacketIOManager.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/exception/PacketIOException.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/exception/PacketIOException.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectPacket.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectPacket.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/PacketType.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/RawPacket.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/RawPacket.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectPacketFactory.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectPacketFactory.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/PacketFactory.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/ConnectPacketParser.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/ConnectPacketParser.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/PacketParser.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/util/Utils.cpp">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/util/Utils.h">
-			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/CMakeLists.txt">

@@ -5,9 +5,10 @@
 #ifndef LMQTT__SERVER_SESSION_H
 #define LMQTT__SERVER_SESSION_H
 
-#include "io/PacketIOManager.h"
 
 #include <list>
+#include "packets/RawPacket.h"
+
 
 class Session {
 
