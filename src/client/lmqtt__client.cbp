@@ -24,10 +24,13 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../io"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../packets"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../packet_factories"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers/exception"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io/exception"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets/parsers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/util"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 lmqtt__client"/>
@@ -43,10 +46,13 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../io"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../packets"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../packet_factories"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers/exception"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io/exception"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets/parsers"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/util"/>
+					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 lmqtt__client/fast"/>
@@ -111,6 +117,12 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/PacketFactory.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/exception/PacketCreationException.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/exception/PacketCreationException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/ConnectPacketParser.cpp">

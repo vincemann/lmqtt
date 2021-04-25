@@ -14,7 +14,7 @@ ConnectPacketHandler::ConnectPacketHandler(Session *session) : PacketHandler(ses
 
 void ConnectPacketHandler::handle(RawPacket *packet) {
     printf("handling connect packet:\n");
-    if (_session->getPacketsReceived()->size() != 1){
+    if (_session->_packets_received->size() != 1){
         throw new IllegalSessionStateException("received more than one Connect Packet");
     }
 

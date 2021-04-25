@@ -39,7 +39,7 @@ public:
     static char* createUtf8Payload(const char *pPayload) {
         // todo check for wrong encoding chars -> close connection
         // strlen does not count nullbyte
-        int len = strlen(pPayload) +1 ;
+        int len = strlen(pPayload) +1;
         if (len > 0xffff) {
             throw new PacketCreationException("utf8 payload too long");
         }

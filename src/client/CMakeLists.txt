@@ -4,6 +4,14 @@ project(lmqtt__client)
 set(CMAKE_CXX_STANDARD 17)
 
 
+include_directories(../../src/handlers)
+include_directories(../../src/handlers/exception)
+include_directories(../../src/io)
+include_directories(../../src/io/exception)
+include_directories(../../src/packets/parsers)
+include_directories(../../src/util)
+include_directories(../../src/packets)
+
 add_executable(lmqtt__client
         Client.cpp
 
@@ -25,10 +33,27 @@ add_executable(lmqtt__client
         ../handlers/ConnectPacketHandler.h
         ../handlers/ConnectPacketHandler.cpp
 
-        ../util/Utils.cpp ../util/Utils.h ../packets/parsers/PacketParser.h ../packets/parsers/exception/PacketParsingException.cpp ../packets/parsers/exception/PacketParsingException.h ../handlers/exception/IllegalSessionStateException.cpp ../handlers/exception/IllegalSessionStateException.h ../handlers/PacketHandler.cpp ../packets/factories/PacketFactory.h ../packets/factories/ConnectPacketFactory.cpp ../packets/factories/ConnectPacketFactory.h)
+        ../util/Utils.cpp
+        ../util/Utils.h
+        ../packets/parsers/PacketParser.h
+        ../packets/parsers/exception/PacketParsingException.cpp
+        ../packets/parsers/exception/PacketParsingException.h
 
-target_include_directories(lmqtt__client PRIVATE
-        ../handlers
-        ../io
-        ../packets
-        ../packet_factories)
+        ../packets/factories/exception/PacketCreationException.h
+        ../packets/factories/exception/PacketCreationException.cpp
+        ../handlers/exception/IllegalSessionStateException.cpp
+        ../handlers/exception/IllegalSessionStateException.h
+        ../handlers/PacketHandler.cpp
+        ../packets/factories/PacketFactory.h
+        ../packets/factories/ConnectPacketFactory.cpp
+        ../packets/factories/ConnectPacketFactory.h
+
+        )
+
+
+#target_include_directories(lmqtt__client PRIVATE
+#        ../handlers
+#        ../io
+#        ../packets
+#        ../packet_factories)
+

@@ -8,7 +8,8 @@
 #include "../RawPacket.h"
 #include "../../packets/ConnectPacket.h"
 
-class ConnectPacketFactory : PacketFactory {
+class ConnectPacketFactory : public PacketFactory {
+public:
     ConnectPacket *create(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
                           unsigned char willRetain,
                           char *clientId, char *willTopic, char *willMsg, char *username,

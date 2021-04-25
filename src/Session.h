@@ -13,11 +13,11 @@
 class Session {
 
 public:
-    std::list<RawPacket *> *getPacketsSent() const;
-    std::list<RawPacket *> *getPacketsReceived() const;
+    std::list<RawPacket *>* getPacketsSent();
+    std::list<RawPacket *>* getPacketsReceived();
 
     // todo add PacketIOManager as Friend, so he can call these methods
-private:
+//private:
 //    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsSent();
 //    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsReceived();
     std::list<RawPacket*>* _packets_sent;

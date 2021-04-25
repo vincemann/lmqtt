@@ -86,7 +86,7 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
 
     printf("payload:%.*s", payloadLen, (char*) payload);
 
-    RawPacket rawPacket = new RawPacket(specificFlags,payload,payloadLen,CONNECT);
+    RawPacket *rawPacket = new RawPacket(specificFlags,payload,payloadLen,CONNECT);
     return new ConnectPacket(rawPacket, protocolName, protocolLevel, reservedBit, cleanSession, willFlag, willQos, willRetain,
                              passwordFlag, usernameFlag,keepAlive, clientId, willTopic, willMsg, username, password);
 }

@@ -18,7 +18,7 @@ public:
     virtual void handle(RawPacket* packet) = 0;
 
 protected:
-    Session *_session;
+    Session* _session;
 };
 
 #endif //LMQTT__SERVER_PACKETHANDLER_H

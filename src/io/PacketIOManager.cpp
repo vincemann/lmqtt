@@ -13,6 +13,7 @@
 #include "exception/PacketIOException.h"
 #include "../packets/PacketType.h"
 #include "../util/Utils.h"
+#include "../Session.h"
 
 
 
@@ -91,7 +92,7 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
     if (write(_conn_fd,packet->getData(),packet->getLength()) != packet->getLength()){
         err("cant sendPacket packet data");
     }
-    _session->getPacketsSent()->push_back(packet);
+    _session->_packets_sent->push_back(packet);
 
 }
 
@@ -126,7 +127,7 @@ RawPacket* PacketIOManager::read_packet() {
     RawPacket* raw_packet = new RawPacket(specific_flags,data_buf, length, packet_type);
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsed_packet = parser->parse(raw_packet);
-    _session->getPacketsReceived()->push_back(parsed_packet);
+    _session->_packets_received->push_back(parsed_packet);
 }
 
 

@@ -17,10 +17,10 @@
 //}
 
 
-std::list<RawPacket *> *Session::getPacketsSent() const {
+std::list<RawPacket *>* Session::getPacketsSent() {
     return _packets_sent;
 }
 
-std::list<RawPacket *> *Session::getPacketsReceived() const {
+std::list<RawPacket *>* Session::getPacketsReceived() {
     return _packets_received;
 }

@@ -29,6 +29,9 @@ add_executable(lmqtt__server
         src/io/exception/PacketIOException.h
         src/io/exception/PacketIOException.cpp
 
+        src/packets/factories/exception/PacketCreationException.h
+        src/packets/factories/exception/PacketCreationException.cpp
+
         src/packets/parsers/ConnectPacketParser.h
         src/packets/parsers/ConnectPacketParser.cpp
 

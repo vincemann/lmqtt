@@ -47,17 +47,19 @@ int main(int argc, char const *argv[])
     std::map<PacketType,PacketParser*> parsers;
     std::map<PacketType,PacketFactory*> factories;
 
+    Session *session = new Session;
     ConnectPacketFactory connectPacketFactory;
     factories.insert(std::make_pair(CONNECT, &connectPacketFactory));
 
     int conn_fd = connectToServer();
-    PacketIOManager packetIoManager (&parsers, conn_fd);
+    PacketIOManager packetIoManager (session, conn_fd,&parsers);
 
     char* data = "connect me pls";
     char* clientId = "niceClientId";
     char* username = "gil";
-    char* password = "passw0rd"
-    RawPacket* finConPacket = connectPacketFactory.create(0,clientId,username,password);
+    char* password = "passw0rd";
+    unsigned char cleanSession = 0;
+    RawPacket* finConPacket = connectPacketFactory.create(cleanSession,clientId,username,password);
     packetIoManager.sendPacket(finConPacket);
     return 0;
 }
