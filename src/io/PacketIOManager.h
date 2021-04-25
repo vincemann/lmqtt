@@ -18,7 +18,7 @@ public:
     PacketIOManager(Session *session, int connFd, std::map<PacketType, PacketParser *> *packetParsers);
 
     //template<class P = const RawPacket&>
-    virtual RawPacket* read_packet();
+    virtual RawPacket* readPacket();
     void sendPacket(RawPacket *packet);
     // only packet io manager can write to these lists
 

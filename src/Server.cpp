@@ -15,7 +15,7 @@
 
 #define PORT 8080
 
-static int wait_for_connection(){
+static int waitForConnection(){
     int server_fd, conn_socket;
     struct sockaddr_in address;
     int opt = 1;
@@ -76,10 +76,10 @@ int main(int argc, char const *argv[])
     ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(session);
     handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
 
-    int conn_fd = wait_for_connection();
-    PacketIOManager packetIO (session, conn_fd, &parsers);
+    int connFd = waitForConnection();
+    PacketIOManager packetIO (session, connFd, &parsers);
 
-    RawPacket* packet = packetIO.read_packet();
+    RawPacket* packet = packetIO.readPacket();
 //    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>();
     PacketHandler* handler = handlers.at(packet->getType());
     handler->handle(packet);

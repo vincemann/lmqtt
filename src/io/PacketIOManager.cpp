@@ -23,7 +23,7 @@ static void err(const char* msg){
     throw new PacketIOException(msg);
 }
 
-static unsigned char eval_packet_type_value(PacketType packetType){
+static unsigned char evalPacketTypeValue(PacketType packetType){
     switch (packetType) {
         case CONNECT:
             return 1;
@@ -59,7 +59,7 @@ static unsigned char evalSpecificFlags(/*bool[4] result,*/ unsigned char fixed_h
 //    }
 }
 
-static unsigned int eval_packet_length(int _conn_fd){
+static unsigned int evalPacketLength(int _conn_fd){
     // for now just support small sizes
     unsigned char length_fixed_header_buf[1];
     if(read(_conn_fd, length_fixed_header_buf, 1) != 1){
@@ -76,7 +76,7 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
     unsigned char control_fixed_header [] = {
             Utils::reverse_bits(
                     packet->getSpecificFlags()
-                    | eval_packet_type_value(packet->getType())
+                    | evalPacketTypeValue(packet->getType())
             )
     };
     if (write(_conn_fd,&control_fixed_header,1) != 1){
@@ -97,7 +97,7 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
 }
 
 
-RawPacket* PacketIOManager::read_packet() {
+RawPacket* PacketIOManager::readPacket() {
     // read fixed header
     unsigned char controlFixedHeaderBuf[1];
     if(read(_conn_fd, controlFixedHeaderBuf, 1) != 1){
@@ -113,7 +113,7 @@ RawPacket* PacketIOManager::read_packet() {
     Utils::print_bits(specific_flags);
 
     PacketType packet_type = evalPacketType(firstByte);
-    unsigned int length = eval_packet_length(_conn_fd);
+    unsigned int length = evalPacketLength(_conn_fd);
     printf("packet len: %d\n",length);
 
     unsigned char data_buf[length];

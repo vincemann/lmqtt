@@ -76,8 +76,8 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
     int* payloadLen = 0;
     const Payload* toMerge[] = {protocolNamePayload, protocolLevelPayload,
                              connectFlagsPayload, clientIdPayload, willTopicPayload,
-                             willMsgPayload, usernamePayload, passwordPayload};
-    unsigned char* payload = PacketFactory::mergePayloads(payloadLen, toMerge, 8);
+                             willMsgPayload, usernamePayload,keepAlivePayload, passwordPayload};
+    unsigned char* payload = PacketFactory::mergePayloads(payloadLen, toMerge, 9);
 
     printf("payload:%.*s", payloadLen, (char*) payload);
 

@@ -19,9 +19,11 @@
 class PacketFactory {
 //    virtual RawPacket *create(RawPacket *raw_packet) = 0;
 public:
+
     // merges payloads into buf and returns it
     // call like that:
     // mergePayloads(dstBuf,(Payload*[]){val1,val2,val3,val4},4);
+    // also deletes the payloads
     static unsigned char* mergePayloads(int* bufSize, const Payload** values, int argCount){
         unsigned int offset = 0;
         int dstSize = 0;
@@ -44,6 +46,7 @@ public:
             // nullbytes of payload strings are cut off here bc size does not contain them
             memcpy(dst+offset, payload->_data, payload->_dataSize);
             offset += payload->getSize();
+            delete payload;
         }
         return dst;
     }
