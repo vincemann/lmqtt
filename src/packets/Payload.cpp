@@ -3,21 +3,31 @@
 //
 
 #include "Payload.h"
+#include <string.h>
+#include <stdlib.h>
 
 
 Payload::~Payload() {
     delete _data;
 }
 
-Payload::Payload(unsigned char *data, unsigned short size, bool prependSize=false) : _data(data), _dataSize(size),
-                                                                                     prependSize(prependSize) {}
+Payload::Payload(unsigned char *data, unsigned short size, bool prependSize) : _data(data), _dataSize(size),
+                                                                                     _prependSize(prependSize) {}
 
 int Payload::getSize() const {
     int size = 0;
-    if (prependSize){
+    if (_prependSize){
         size += 2;
     }
     size += _dataSize;
     return size;
+}
+
+Payload::Payload(unsigned char data, unsigned short size) {
+    unsigned char* pData = ( unsigned char*) malloc(size);
+    memcpy(pData,&data,size);
+    _data=pData;
+    _dataSize = size;
+    _prependSize=false;
 }
 

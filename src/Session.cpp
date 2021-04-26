@@ -24,3 +24,13 @@ std::list<RawPacket *>* Session::getPacketsSent() {
 std::list<RawPacket *>* Session::getPacketsReceived() {
     return _packets_received;
 }
+
+Session::Session(){
+    _packets_received= new std::list<RawPacket*>();
+    _packets_sent= new  std::list<RawPacket*>();
+}
+
+Session::~Session() {
+    delete _packets_received;
+    delete _packets_sent;
+}

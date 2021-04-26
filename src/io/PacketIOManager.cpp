@@ -33,12 +33,12 @@ static unsigned char evalPacketTypeValue(PacketType packetType){
 
 
 static PacketType evalPacketType(unsigned char fixed_header_byte){
-    unsigned char mask = Utils::create_bit_mask(4, 7);
+    unsigned char mask = Utils::createBitMask(4, 7);
     unsigned char packet_type_val = Utils::reverse_bits(mask & fixed_header_byte);
 
 
     printf("packet _type bits:\n");
-    Utils::print_bits(packet_type_val);
+    Utils::printBits(packet_type_val);
     printf("packet _type resulting number: %d\n",packet_type_val);
 
 
@@ -50,7 +50,7 @@ static PacketType evalPacketType(unsigned char fixed_header_byte){
 }
 
 static unsigned char evalSpecificFlags(/*bool[4] result,*/ unsigned char fixed_header_byte){
-    unsigned char mask = Utils::create_bit_mask(0, 3);
+    unsigned char mask = Utils::createBitMask(0, 3);
     unsigned char specific_flags = mask & fixed_header_byte;
     return specific_flags;
 //    for (int i =0; i < 4;i++){
@@ -105,12 +105,12 @@ RawPacket* PacketIOManager::readPacket() {
     }
     unsigned char firstByte = controlFixedHeaderBuf[0];
     printf("fixed header first byte:\n");
-    Utils::print_bits(firstByte);
+    Utils::printBits(firstByte);
 
 //    bool[4] _specificFlags;
     unsigned char specific_flags = evalSpecificFlags(firstByte);
     printf("specific flags:\n");
-    Utils::print_bits(specific_flags);
+    Utils::printBits(specific_flags);
 
     PacketType packet_type = evalPacketType(firstByte);
     unsigned int length = evalPacketLength(_conn_fd);

@@ -20,7 +20,7 @@ class PacketFactory {
 //    virtual RawPacket *create(RawPacket *raw_packet) = 0;
 public:
 
-    // merges payloads into buf and returns it
+    // merges payloads into buf on heap and returns it
     // call like that:
     // mergePayloads(dstBuf,(Payload*[]){val1,val2,val3,val4},4);
     // also deletes the payloads
@@ -29,19 +29,22 @@ public:
         int dstSize = 0;
         for (int i = 0; i < argCount; ++i) {
             const Payload *payload = values[i];
+            if (payload == 0){
+                continue;
+            }
             dstSize += payload->getSize();
         }
         *bufSize=dstSize;
-        unsigned char *dst = malloc(dstSize);
+        unsigned char *dst = ( unsigned char *)malloc(dstSize);
         // pointer cant have value 0xf, so its a acceptable end condition
         for (int i = 0; i < argCount; ++i) {
             const Payload *payload = values[i];
             if (payload == 0){
                 continue;
             }
-            if (payload->prependSize){
+            if (payload->_prependSize){
                 size_t sizeLength = sizeof(unsigned short);
-                memcpy(dst+offset, payload->_dataSize, sizeLength);
+                memcpy(dst+offset, &payload->_dataSize, sizeLength);
             }
             // nullbytes of payload strings are cut off here bc size does not contain them
             memcpy(dst+offset, payload->_data, payload->_dataSize);
@@ -81,7 +84,7 @@ public:
         char* data = (char*)malloc(sizeof(char) * len);
         // add data
         strncpy(data, payloadData, len);
-        Payload* payload = new Payload((unsigned char)data, len, true);
+        Payload* payload = new Payload((unsigned char* )data, len, true);
         return payload;
     }
 };

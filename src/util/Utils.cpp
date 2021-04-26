@@ -5,6 +5,8 @@
 #include "Utils.h"
 #include <iostream>
 #include <bitset>
+#include <stdio.h>
+#include <ctype.h>
 
 
 /* Function to reverse bits of num */
@@ -21,12 +23,43 @@ unsigned char Utils::reverse_bits(unsigned char num) {
     return reverse_num;
 }
 
-void Utils::print_bits(unsigned char val) {
+void Utils::printChars(unsigned char *ptr, int size)
+{
+    unsigned char *p = ptr;
+    int i;
+    bool chars = false;
+    for (i=0; i<size; i++) {
+        if (isalnum(p[i])){
+            chars=true;
+            printf("%c", p[i]);
+        } else{
+            if (chars){
+                printf("%s", " ");
+            }
+            printf("%02hhX ", p[i]);
+            chars=false;
+        }
+    }
+    printf("\n");
+}
+
+
+void Utils::printBytes(void *ptr, int size)
+{
+    unsigned char *p = (unsigned char *)ptr;
+    int i;
+    for (i=0; i<size; i++) {
+        printf("%02hhX ", p[i]);
+    }
+    printf("\n");
+}
+
+void Utils::printBits(unsigned char val) {
     std::bitset<8> bits(val);
     std::cout << bits << '\n';
 }
 
-unsigned Utils::create_bit_mask(unsigned a, unsigned b)
+unsigned Utils::createBitMask(unsigned a, unsigned b)
 {
     unsigned r = 0;
     for (unsigned i=a; i<=b; i++)

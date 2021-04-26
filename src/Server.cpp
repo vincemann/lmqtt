@@ -64,7 +64,7 @@ static int waitForConnection(){
 int main(int argc, char const *argv[])
 {
 
-    Session* session = new Session;
+    Session* session = new Session();
 
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;

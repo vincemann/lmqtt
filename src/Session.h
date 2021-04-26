@@ -13,6 +13,9 @@
 class Session {
 
 public:
+    Session();
+    ~Session();
+
     std::list<RawPacket *>* getPacketsSent();
     std::list<RawPacket *>* getPacketsReceived();
 

@@ -62,6 +62,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Session.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Session.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/client/Client.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>

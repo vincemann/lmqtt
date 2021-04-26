@@ -35,7 +35,7 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
 //    }
     unsigned char connectFlags = pData[8];
     printf("Binary connectFlags:");
-    Utils::print_bits(connectFlags);
+    Utils::printBits(connectFlags);
 
     unsigned char reservedBit = (connectFlags >> 0) & 1;
 //    if (reservedBit != 0){

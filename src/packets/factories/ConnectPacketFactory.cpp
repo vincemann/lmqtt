@@ -35,10 +35,10 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
         usernameFlag = 1;
     }
 
-
-    Payload* protocolNamePayload = PacketFactory::createUtf8Payload("MQTT");
+    char* protocolName = "MQTT";
+    Payload* protocolNamePayload = PacketFactory::createUtf8Payload(protocolName);
     unsigned char protocolLevel = 4;
-    Payload* protocolLevelPayload = new Payload(protocolLevel,1);
+    Payload* protocolLevelPayload = new Payload(protocolLevel);
 
     unsigned char reservedBit = 0;
     unsigned char connectFlags = reservedBit |
@@ -53,7 +53,7 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
     unsigned short keepAlive = 180;
     Payload* keepAlivePayload = new Payload(keepAlive,sizeof(unsigned short));
 
-    Payload* connectFlagsPayload = new Payload(connectFlags,1);
+    Payload* connectFlagsPayload = new Payload(connectFlags);
     Payload* clientIdPayload = PacketFactory::createUtf8Payload(clientId);
 
     Payload* willTopicPayload = 0;
@@ -73,13 +73,14 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
         passwordPayload = PacketFactory::createUtf8Payload(password);
     }
 
-    int* payloadLen = 0;
+    int payloadLen;
     const Payload* toMerge[] = {protocolNamePayload, protocolLevelPayload,
                              connectFlagsPayload, clientIdPayload, willTopicPayload,
                              willMsgPayload, usernamePayload,keepAlivePayload, passwordPayload};
-    unsigned char* payload = PacketFactory::mergePayloads(payloadLen, toMerge, 9);
+    unsigned char* payload = PacketFactory::mergePayloads(&payloadLen, toMerge, 9);
 
-    printf("payload:%.*s", payloadLen, (char*) payload);
+//    printf("payload:%.*s\n", *payloadLen, (char*) payload);
+    Utils::printChars(payload, payloadLen);
 
     RawPacket *rawPacket = new RawPacket(specificFlags,payload,payloadLen,CONNECT);
     return new ConnectPacket(rawPacket, protocolName, protocolLevel, reservedBit, cleanSession, willFlag, willQos, willRetain,

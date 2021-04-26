@@ -39,6 +39,9 @@ add_executable(lmqtt__client
         ../packets/parsers/exception/PacketParsingException.cpp
         ../packets/parsers/exception/PacketParsingException.h
 
+        ../Session.cpp
+        ../Session.h
+
         ../packets/factories/exception/PacketCreationException.h
         ../packets/factories/exception/PacketCreationException.cpp
         ../handlers/exception/IllegalSessionStateException.cpp

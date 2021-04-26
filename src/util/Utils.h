@@ -8,9 +8,11 @@
 
 namespace Utils {
     unsigned char reverse_bits(unsigned char num);
-    void print_bits(unsigned char val);
-    unsigned create_bit_mask(unsigned a, unsigned b);
+    void printBits(unsigned char val);
+    unsigned createBitMask(unsigned a, unsigned b);
     void extractSubArray(unsigned char *srcArray, unsigned char *subArray, int n);
+    void printBytes(void *ptr, int size);
+    void printChars(unsigned char *ptr, int size);
 };
 
 

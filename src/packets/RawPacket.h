@@ -17,10 +17,8 @@ public:
     RawPacket(unsigned char specificFlags,unsigned char *data, unsigned int length, PacketType type);
 
     RawPacket(RawPacket *rawPacket);
-    RawPacket(){}
-    ~RawPacket(){
-        delete _data;
-    }
+    RawPacket();
+    ~RawPacket();
 
     PacketType getType() const {
         return _type;

@@ -47,7 +47,7 @@ int main(int argc, char const *argv[])
     std::map<PacketType,PacketParser*> parsers;
     std::map<PacketType,PacketFactory*> factories;
 
-    Session *session = new Session;
+    Session *session = new Session();
     ConnectPacketFactory connectPacketFactory;
     factories.insert(std::make_pair(CONNECT, &connectPacketFactory));
 
