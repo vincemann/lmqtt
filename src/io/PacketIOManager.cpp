@@ -113,18 +113,19 @@ RawPacket* PacketIOManager::readPacket() {
     Utils::printBits(specific_flags);
 
     PacketType packet_type = evalPacketType(firstByte);
-    unsigned int length = evalPacketLength(_conn_fd);
-    printf("packet len: %d\n",length);
+    unsigned int packetLen = evalPacketLength(_conn_fd);
+    printf("packetLen: %d\n", packetLen);
 
-    unsigned char data_buf[length];
-    if(read(_conn_fd, data_buf, length) != length){
+    unsigned char packetData[packetLen];
+    if(read(_conn_fd, packetData, packetLen) != packetLen){
         err("Cant read packet data");
     }
 
-    printf("packet data: %s\n",data_buf);
+    Utils::printChars(packetData, packetLen);
+//    printf("packet data: %s\n",packetData);
 
 
-    RawPacket* raw_packet = new RawPacket(specific_flags,data_buf, length, packet_type);
+    RawPacket* raw_packet = new RawPacket(specific_flags, packetData, packetLen, packet_type);
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsed_packet = parser->parse(raw_packet);
     _session->_packets_received->push_back(parsed_packet);

@@ -26,14 +26,14 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
 //    if (strcmp(protocolName,"MQTT") != 0){
 //        throw new PacketParsingException("invalid protocol name");
 //    }
-    unsigned char protocolLevel = pData[7];
+    unsigned char protocolLevel = pData[6];
     printf("protocolLevel:%d\n", protocolLevel);
 
 //    if (protocolLevel != 4){
 //        // todo respond with connack return code 1 instead
 //        throw new PacketParsingException("invalid protocol level");
 //    }
-    unsigned char connectFlags = pData[8];
+    unsigned char connectFlags = pData[7];
     printf("Binary connectFlags:");
     Utils::printBits(connectFlags);
 
@@ -50,7 +50,7 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     unsigned char passwordFlag = (connectFlags >> 6) & 1;
     unsigned char usernameFlag = (connectFlags >> 7) & 1;
 
-    unsigned short keepAlive = (pData[9] << 8) | pData[10];
+    unsigned short keepAlive = (pData[8] << 8) | pData[9];
 
     pData += 10;
     // now comes payload

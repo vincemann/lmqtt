@@ -23,8 +23,10 @@ int Payload::getSize() const {
     return size;
 }
 
+
 Payload::Payload(unsigned char data, unsigned short size) {
     unsigned char* pData = ( unsigned char*) malloc(size);
+    // todo writes b4 7f instead of 00 b4
     memcpy(pData,&data,size);
     _data=pData;
     _dataSize = size;

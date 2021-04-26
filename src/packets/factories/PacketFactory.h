@@ -43,12 +43,13 @@ public:
                 continue;
             }
             if (payload->_prependSize){
-                size_t sizeLength = sizeof(unsigned short);
+                unsigned int sizeLength = sizeof(unsigned short);
                 memcpy(dst+offset, &payload->_dataSize, sizeLength);
+                offset+=sizeLength;
             }
             // nullbytes of payload strings are cut off here bc size does not contain them
             memcpy(dst+offset, payload->_data, payload->_dataSize);
-            offset += payload->getSize();
+            offset += payload->_dataSize;
             delete payload;
         }
         return dst;
