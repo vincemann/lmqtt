@@ -238,6 +238,10 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/PacketParser.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/PacketParser.h">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>

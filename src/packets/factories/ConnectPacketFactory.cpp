@@ -51,7 +51,7 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
 
     // 3 minutes
     unsigned short keepAlive = 180;
-    Payload* keepAlivePayload = new Payload(keepAlive,sizeof(unsigned short));
+    Payload* keepAlivePayload = new Payload(keepAlive);
 
     Payload* connectFlagsPayload = new Payload(connectFlags);
     Payload* clientIdPayload = PacketFactory::createUtf8Payload(clientId);

@@ -17,11 +17,7 @@ public:
     virtual RawPacket* parse(RawPacket* raw_packet) = 0;
 
 
-    static unsigned short getUf8PayloadLen(unsigned char *pData) {
-        // read length
-        unsigned short len = (pData[1] << 8) | pData[0];
-        return len;
-    }
+    unsigned short getUf8PayloadLen(unsigned char *pData);
 
 
     /*
@@ -29,26 +25,7 @@ public:
      * I'll increment your pointer until its behind utf8 payload and return
      * utf-8 payload as null terminated copied string
      */
-    static char *extractUtf8Payload(unsigned char *p, bool incrementPointer = true) {
-        // todo check for wrong encoding chars -> close connection
-        unsigned short len = getUf8PayloadLen(p);
-        unsigned char payload[len + 1];
-        p+=sizeof(unsigned short);
-        Utils::extractSubArray(p, payload, len);
-        // check for null bytes
-        for (int i = 0; i < len - 1; ++i) {
-            unsigned char c = payload[i];
-            if (c == '\0') {
-                throw new PacketParsingException("payload must not contain nullbytes");
-            }
-        }
-        // add trailing null byte
-        payload[len] = '\0';
-        if (incrementPointer) {
-            p += len;
-        }
-        return strdup((char*)payload);
-    }
+    char *extractUtf8Payload(unsigned char **ppData, bool incrementPointer = true);
 
 };
 

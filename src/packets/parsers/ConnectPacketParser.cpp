@@ -18,7 +18,7 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     }
     unsigned char *pData = pRawPacket->getData();
     // extract variable header
-    char *protocolName = PacketParser::extractUtf8Payload(pData, false);
+    char *protocolName = extractUtf8Payload(&pData, false);
     printf("protocolName:%s\n", protocolName);
 
     // todo all those checks put into ConnectPacketHandler
@@ -56,22 +56,22 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     // now comes payload
     // in this order Client Identifier, Will Topic, Will Message, User Name, Password
     // depends on variable header bits
-    char *clientId = PacketParser::extractUtf8Payload(pData);
+    char *clientId = extractUtf8Payload(&pData);
     printf("clientId:%s\n", clientId);
 
 
     char *willTopic = 0;
     char *willMsg = 0;
     if (willFlag) {
-        willTopic = PacketParser::extractUtf8Payload(pData);
-        willMsg = PacketParser::extractUtf8Payload(pData);
+        willTopic = extractUtf8Payload(&pData);
+        willMsg = extractUtf8Payload(&pData);
         printf("willTopic:%s\n",willTopic);
         printf("willMsg:%s\n",willMsg);
     }
 
     char *username = 0;
     if (usernameFlag) {
-        username = PacketParser::extractUtf8Payload(pData);
+        username = extractUtf8Payload(&pData);
         printf("username:%s\n",username);
 
     }
@@ -79,7 +79,7 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
 
     char *password = 0;
     if (passwordFlag) {
-        password = PacketParser::extractUtf8Payload(pData);
+        password = extractUtf8Payload(&pData);
         printf("password:%s\n",password);
     }
 

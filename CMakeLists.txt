@@ -50,7 +50,7 @@ add_executable(lmqtt__server
         src/handlers/exception/IllegalSessionStateException.h
         src/handlers/PacketHandler.cpp src/packets/factories/PacketFactory.h
         src/packets/factories/ConnectPacketFactory.cpp
-        src/packets/factories/ConnectPacketFactory.h src/packets/Payload.cpp src/packets/Payload.h)
+        src/packets/factories/ConnectPacketFactory.h src/packets/Payload.cpp src/packets/Payload.h src/packets/parsers/PacketParser.cpp)
 
 
 
