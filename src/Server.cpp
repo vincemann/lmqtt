@@ -81,7 +81,7 @@ int main(int argc, char const *argv[])
 
     RawPacket* packet = packetIO.readPacket();
 //    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>();
-    PacketHandler* handler = handlers.at(packet->getType());
+    PacketHandler* handler = handlers[packet->getType()];
     handler->handle(packet);
     return 0;
 }

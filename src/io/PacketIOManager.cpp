@@ -125,10 +125,11 @@ RawPacket* PacketIOManager::readPacket() {
 //    printf("packet data: %s\n",packetData);
 
 
-    RawPacket* raw_packet = new RawPacket(specific_flags, packetData, packetLen, packet_type);
+    RawPacket* rawPacket = new RawPacket(specific_flags, packetData, packetLen, packet_type);
     PacketParser *parser  = _packet_parsers->at(packet_type);
-    RawPacket* parsed_packet = parser->parse(raw_packet);
-    _session->_packets_received->push_back(parsed_packet);
+    RawPacket* parsedPacket = parser->parse(rawPacket);
+    _session->_packets_received->push_back(parsedPacket);
+    return parsedPacket;
 }
 
 
