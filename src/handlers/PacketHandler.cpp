@@ -3,6 +3,7 @@
 //
 
 #include "PacketHandler.h"
+#include "../io/PacketIOManager.h"
 
 
-PacketHandler::PacketHandler(Session *session) : _session(session) {}
+PacketHandler::PacketHandler(Session *session, PacketIOManager *packetIo) : _session(session), packetIo(packetIo) {}

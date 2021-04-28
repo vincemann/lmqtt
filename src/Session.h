@@ -25,6 +25,7 @@ public:
 //    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsReceived();
     std::list<RawPacket*>* _packets_sent;
     std::list<RawPacket*>* _packets_received;
+    char * _clientId;
 
 };
 

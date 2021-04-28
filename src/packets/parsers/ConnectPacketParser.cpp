@@ -21,26 +21,16 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     char *protocolName = extractUtf8Payload(&pData, false);
     printf("protocolName:%s\n", protocolName);
 
-    // todo all those checks put into ConnectPacketHandler
-    // this class only builds the ConnectPacket and does not verify
-//    if (strcmp(protocolName,"MQTT") != 0){
-//        throw new PacketParsingException("invalid protocol name");
-//    }
     unsigned char protocolLevel = pData[6];
     printf("protocolLevel:%d\n", protocolLevel);
 
-//    if (protocolLevel != 4){
-//        // todo respond with connack return code 1 instead
-//        throw new PacketParsingException("invalid protocol level");
-//    }
+
     unsigned char connectFlags = pData[7];
     printf("Binary connectFlags:");
     Utils::printBits(connectFlags);
 
     unsigned char reservedBit = (connectFlags >> 0) & 1;
-//    if (reservedBit != 0){
-//        throw new PacketParsingException("reserved bit must not be set");
-//    }
+
     unsigned char cleanSessionFlag = (connectFlags >> 1) & 1;
     unsigned char willFlag = (connectFlags >> 2) & 1;
     unsigned char willQos1 = (connectFlags >> 3) & 1;

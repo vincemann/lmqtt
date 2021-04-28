@@ -166,6 +166,14 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/InvalidPacketException.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/InvalidPacketException.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/PacketIOManager.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>

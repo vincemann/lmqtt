@@ -12,6 +12,6 @@ class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
 
 public:
     ConnectPacketHandler(Session *session);
-    void handle(RawPacket *packet);
+    void handle(RawPacket *rawPacket);
 };
 #endif //LMQTT__SERVER_CONNECTPACKETHANDLER_H

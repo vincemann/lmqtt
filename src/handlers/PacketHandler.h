@@ -6,19 +6,21 @@
 #define LMQTT__SERVER_PACKETHANDLER_H
 #include "../packets/RawPacket.h"
 #include "../Session.h"
+#include "../io/PacketIOManager.h"
 
 
 //todo add template
 //template <class P>
 class PacketHandler{
 public:
-    PacketHandler(Session *session);
+    PacketHandler(Session *session, PacketIOManager *packetIo);
 
 //    virtual void handle(P* packet) = 0;
     virtual void handle(RawPacket* packet) = 0;
 
 protected:
     Session* _session;
+    PacketIOManager* packetIo;
 };
 
 #endif //LMQTT__SERVER_PACKETHANDLER_H

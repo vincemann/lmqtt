@@ -45,6 +45,8 @@ static PacketType evalPacketType(unsigned char fixed_header_byte){
     switch (packet_type_val) {
         case 1:
             return PacketType::CONNECT;
+        case 2:
+            return PacketType::CONNACK;
     }
     err("unknown packet _type");
 }
