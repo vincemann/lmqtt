@@ -10,7 +10,7 @@
 #include "packets/parsers/ConnectPacketParser.h"
 #include "handlers/ConnectPacketHandler.h"
 #include "handlers/PacketHandler.h"
-#include "Session.h"
+#include "ConnectionSession.h"
 
 
 #define PORT 8080
@@ -63,8 +63,8 @@ static int waitForConnection(){
 
 int main(int argc, char const *argv[])
 {
-
-    Session* session = new Session();
+    int connFd = waitForConnection();
+    ConnectionSession* connection = new ConnectionSession(connFd);
 
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
@@ -73,14 +73,12 @@ int main(int argc, char const *argv[])
 
     // HANDLERS
     std::map<PacketType,PacketHandler*> handlers;
-    ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(session);
+    ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection);
     handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
+    PacketIOManager packetIO (connection, &parsers);
 
-    int connFd = waitForConnection();
-    PacketIOManager packetIO (session, connFd, &parsers);
 
     RawPacket* packet = packetIO.readPacket();
-//    ConnectPacket* con_packet = dynamic_cast<ConnectPacket*>();
     PacketHandler* handler = handlers[packet->getType()];
     handler->handle(packet);
     return 0;

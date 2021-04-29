@@ -5,7 +5,7 @@
 #ifndef LMQTT__SERVER_PACKETHANDLER_H
 #define LMQTT__SERVER_PACKETHANDLER_H
 #include "../packets/RawPacket.h"
-#include "../Session.h"
+#include "../ConnectionSession.h"
 #include "../io/PacketIOManager.h"
 
 
@@ -13,13 +13,14 @@
 //template <class P>
 class PacketHandler{
 public:
-    PacketHandler(Session *session, PacketIOManager *packetIo);
+    PacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo);
 
 //    virtual void handle(P* packet) = 0;
     virtual void handle(RawPacket* packet) = 0;
+    void closeConnection();
 
 protected:
-    Session* _session;
+    ConnectionSession* _connectionSession;
     PacketIOManager* packetIo;
 };
 

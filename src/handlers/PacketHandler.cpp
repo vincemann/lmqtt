@@ -6,4 +6,8 @@
 #include "../io/PacketIOManager.h"
 
 
-PacketHandler::PacketHandler(Session *session, PacketIOManager *packetIo) : _session(session), packetIo(packetIo) {}
+PacketHandler::PacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo) : _connectionSession(connectionSession), packetIo(packetIo) {}
+
+void PacketHandler::closeConnection() {
+    packetIo->closeConnection();
+}

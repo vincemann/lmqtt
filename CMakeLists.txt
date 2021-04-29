@@ -40,8 +40,8 @@ add_executable(lmqtt__server
         src/handlers/ConnectPacketHandler.cpp
 
         src/util/Utils.cpp src/util/Utils.h
-        src/Session.cpp
-        src/Session.h
+        src/ConnectionSession.cpp
+        src/ConnectionSession.h
         src/packets/parsers/PacketParser.h
         src/packets/parsers/exception/PacketParsingException.cpp
 
@@ -50,7 +50,7 @@ add_executable(lmqtt__server
         src/handlers/exception/IllegalSessionStateException.h
         src/handlers/PacketHandler.cpp src/packets/factories/PacketFactory.h
         src/packets/factories/ConnectPacketFactory.cpp
-        src/packets/factories/ConnectPacketFactory.h src/packets/Payload.cpp src/packets/Payload.h src/packets/parsers/PacketParser.cpp src/handlers/exception/InvalidPacketException.cpp src/handlers/exception/InvalidPacketException.h)
+        src/packets/factories/ConnectPacketFactory.h src/packets/Payload.cpp src/packets/Payload.h src/packets/parsers/PacketParser.cpp src/handlers/exception/InvalidPacketException.cpp src/handlers/exception/InvalidPacketException.h src/Session.cpp src/Session.h src/packets/ConnectAckPacket.h src/packets/factories/ConnectAckPacketFactory.cpp src/packets/factories/ConnectAckPacketFactory.h src/packets/ConnectAckPacket.cpp)
 
 
 

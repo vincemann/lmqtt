@@ -128,6 +128,14 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/ConnectionSession.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/ConnectionSession.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Server.cpp">
 			<Option target="lmqtt__server"/>
 		</Unit>
@@ -190,6 +198,13 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectAckPacket.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectAckPacket.h">
+			<Option target="lmqtt__server"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectPacket.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
@@ -215,6 +230,14 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/RawPacket.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.h">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>

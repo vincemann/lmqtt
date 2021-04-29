@@ -13,7 +13,7 @@
 #include "exception/PacketIOException.h"
 #include "../packets/PacketType.h"
 #include "../util/Utils.h"
-#include "../Session.h"
+#include "../ConnectionSession.h"
 
 
 
@@ -94,7 +94,7 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
     if (write(_conn_fd,packet->getData(),packet->getLength()) != packet->getLength()){
         err("cant sendPacket packet data");
     }
-    _session->_packets_sent->push_back(packet);
+    _connectionSession->_packets_sent->push_back(packet);
 
 }
 
@@ -130,16 +130,20 @@ RawPacket* PacketIOManager::readPacket() {
     RawPacket* rawPacket = new RawPacket(specific_flags, packetData, packetLen, packet_type);
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsedPacket = parser->parse(rawPacket);
-    _session->_packets_received->push_back(parsedPacket);
+    _connectionSession->_packets_received->push_back(parsedPacket);
     return parsedPacket;
 }
 
 
 
-PacketIOManager::PacketIOManager(Session *session, int connFd,
-                                 std::map<PacketType, PacketParser *> *packetParsers) : _session(session),
+PacketIOManager::PacketIOManager(ConnectionSession *session, int connFd,
+                                 std::map<PacketType, PacketParser *> *packetParsers) : _connectionSession(session),
                                                                                         _conn_fd(connFd),
                                                                                         _packet_parsers(packetParsers) {}
+
+void PacketIOManager::closeConnection() {
+    close(_conn_fd);
+}
 
 
 

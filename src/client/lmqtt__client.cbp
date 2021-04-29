@@ -62,6 +62,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/ConnectionSession.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/ConnectionSession.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Session.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -107,6 +113,12 @@
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/exception/PacketIOException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectAckPacket.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectAckPacket.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectPacket.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -126,6 +138,12 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/RawPacket.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectPacketFactory.cpp">
