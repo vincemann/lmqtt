@@ -25,9 +25,11 @@ unsigned char Utils::reverse_bits(unsigned char num) {
 
 bool Utils::isAlNum(const char * s){
     bool alnum = true;
-    while (*s){
-        if (! isalnum((int)*s)){
+    int len = strlen(s);
+    for (int i = 0; i < len; ++i) {
+        if (! isalnum((int)s[i])){
             alnum= false;
+            break;
         }
     }
     return alnum;
