@@ -9,7 +9,7 @@
 
 #include "../packets/RawPacket.h"
 #include "parsers/PacketParser.h"
-#include "../ConnectionSession.h"
+#include "../con/ConnectionSession.h"
 
 #include <map>
 

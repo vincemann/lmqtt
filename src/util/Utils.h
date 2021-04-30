@@ -13,6 +13,7 @@ namespace Utils {
     void extractSubArray(unsigned char *srcArray, unsigned char *subArray, int n);
     void printBytes(void *ptr, int size);
     void printChars(unsigned char *ptr, int size);
+    bool isAlNum(const char * s);
 };
 
 

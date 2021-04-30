@@ -8,6 +8,3 @@
 
 PacketHandler::PacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo) : _connectionSession(connectionSession), packetIo(packetIo) {}
 
-void PacketHandler::closeConnection() {
-    packetIo->closeConnection();
-}

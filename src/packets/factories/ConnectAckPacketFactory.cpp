@@ -8,7 +8,7 @@
 ConnectAckPacket *ConnectAckPacketFactory::create(unsigned char returnCode, unsigned char sessionPresent) {
     unsigned char specificFlags = 0;
     unsigned int payloadLen = 2;
-    unsigned char *payload = new char[2];
+    unsigned char *payload = new unsigned char[2];
     // first 7 bits must be 0 -> reserved
     if ( (sessionPresent > 1) || (sessionPresent < 0) ){
         throw new PacketCreationException("invalid session present flag");

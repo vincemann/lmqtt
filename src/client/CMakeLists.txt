@@ -39,8 +39,8 @@ add_executable(lmqtt__client
         ../packets/parsers/exception/PacketParsingException.cpp
         ../packets/parsers/exception/PacketParsingException.h
 
-        ../ConnectionSession.cpp
-        ../ConnectionSession.h
+        ../con/ConnectionSession.cpp
+        ../con/ConnectionSession.h
 
         ../packets/factories/exception/PacketCreationException.h
         ../packets/factories/exception/PacketCreationException.cpp
@@ -51,7 +51,7 @@ add_executable(lmqtt__client
         ../packets/factories/ConnectPacketFactory.cpp
         ../packets/factories/ConnectPacketFactory.h
 
-        ../packets/Payload.cpp ../packets/Payload.h ../packets/parsers/PacketParser.cpp ../handlers/exception/InvalidPacketException.cpp ../handlers/exception/InvalidPacketException.h ../Session.cpp ../Session.h ../packets/factories/ConnectAckPacketFactory.cpp ../packets/factories/ConnectAckPacketFactory.h ../packets/ConnectAckPacket.cpp)
+        ../packets/Payload.cpp ../packets/Payload.h ../packets/parsers/PacketParser.cpp ../handlers/exception/InvalidPacketException.cpp ../handlers/exception/InvalidPacketException.h ../Session.cpp ../Session.h ../packets/factories/ConnectAckPacketFactory.cpp ../packets/factories/ConnectAckPacketFactory.h ../packets/ConnectAckPacket.cpp ../con/ClientConnectionSession.cpp ../con/ClientConnectionSession.h ../handlers/ConnectAckPacketHandler.cpp ../handlers/ConnectAckPacketHandler.h)
 
 
 #target_include_directories(lmqtt__client PRIVATE

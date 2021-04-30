@@ -80,7 +80,6 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
     unsigned char* payload = PacketFactory::mergePayloads(&payloadLen, toMerge, 9);
 
 //    printf("payload:%.*s\n", *payloadLen, (char*) payload);
-    Utils::printChars(payload, payloadLen);
 
     RawPacket *rawPacket = new RawPacket(specificFlags,payload,payloadLen,CONNECT);
     return new ConnectPacket(rawPacket, protocolName, protocolLevel, reservedBit, cleanSession, willFlag, willQos, willRetain,

@@ -6,7 +6,7 @@
 #define LMQTT__SERVER_CONNECTPACKETHANDLER_H
 #include "PacketHandler.h"
 #include "../packets/ConnectPacket.h"
-#include "../ConnectionSession.h"
+#include "../con/ConnectionSession.h"
 #include "../packets/factories/ConnectAckPacketFactory.h"
 
 class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
@@ -16,8 +16,7 @@ ConnectAckPacketFactory* _connectAckPacketFactory;
 public:
     ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,ConnectAckPacketFactory* connectAckPacketFactory);
     void handle(RawPacket *rawPacket);
-    void connAck(int errorCode, const char* msg,unsigned char cleanSessionFlag, bool closeCon=true);
-    void closeConnectionWithoutAck(const char* errorMsg);
+    void connAck(int errorCode, unsigned char cleanSessionFlag);
 
     ConnectAckPacketFactory *getConnectAckPacketFactory() const;
 };

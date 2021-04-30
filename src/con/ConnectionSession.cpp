@@ -27,8 +27,11 @@ std::list<RawPacket *>* ConnectionSession::getPacketsReceived() {
 
 
 ConnectionSession::~ConnectionSession() {
+    _packets_received->clear();
+    _packets_sent->clear();
     delete _packets_received;
     delete _packets_sent;
+    delete _session;
 }
 
 ConnectionSession::ConnectionSession(int conn_fd) {

@@ -8,12 +8,13 @@
 #include <map>
 #include <stdio.h>
 #include <list>
+#include <iostream>
 
 #include "PacketIOManager.h"
 #include "exception/PacketIOException.h"
 #include "../packets/PacketType.h"
 #include "../util/Utils.h"
-#include "../ConnectionSession.h"
+#include "../con/ConnectionSession.h"
 
 
 
@@ -48,7 +49,7 @@ static PacketType evalPacketType(unsigned char fixed_header_byte){
         case 2:
             return PacketType::CONNACK;
     }
-    err("unknown packet _type");
+    err("unknown packet type");
 }
 
 static unsigned char evalSpecificFlags(/*bool[4] result,*/ unsigned char fixed_header_byte){
@@ -72,6 +73,9 @@ static unsigned int evalPacketLength(int _conn_fd){
 
 
 void PacketIOManager::sendPacket(RawPacket *packet) {
+
+    std::cout << "sending new packet of type: " << packet->getType() <<"\n";
+    Utils::printChars(packet->getData(), packet->getLength());
 
     // sendPacket first fixed header byte
     // needs to be reversed bc specs want network endianess on byte level
@@ -131,6 +135,8 @@ RawPacket* PacketIOManager::readPacket() {
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsedPacket = parser->parse(rawPacket);
     _connectionSession->_packets_received->push_back(parsedPacket);
+    std::cout << "received new packet of type: " << parsedPacket->getType() <<"\n";
+    Utils::printChars(parsedPacket->getData(), parsedPacket->getLength());
     return parsedPacket;
 }
 

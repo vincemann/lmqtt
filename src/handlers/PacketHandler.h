@@ -5,7 +5,7 @@
 #ifndef LMQTT__SERVER_PACKETHANDLER_H
 #define LMQTT__SERVER_PACKETHANDLER_H
 #include "../packets/RawPacket.h"
-#include "../ConnectionSession.h"
+#include "../con/ConnectionSession.h"
 #include "../io/PacketIOManager.h"
 
 
@@ -17,8 +17,6 @@ public:
 
 //    virtual void handle(P* packet) = 0;
     virtual void handle(RawPacket* packet) = 0;
-    void closeConnection();
-
 protected:
     ConnectionSession* _connectionSession;
     PacketIOManager* packetIo;

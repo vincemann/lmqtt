@@ -6,11 +6,16 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <iostream>
+
 #include "../packets/ConnectPacket.h"
 #include "../packets/PacketType.h"
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/PacketFactory.h"
 #include "../packets/factories/ConnectPacketFactory.h"
+#include "../con/ClientConnectionSession.h"
+#include "../handlers/ConnectAckPacketHandler.h"
+
 
 
 #define PORT 8080
@@ -45,21 +50,44 @@ static int connectToServer(){
 int main(int argc, char const *argv[])
 {
     std::map<PacketType,PacketParser*> parsers;
-    std::map<PacketType,PacketFactory*> factories;
 
-    ConnectionSession *session = new ConnectionSession();
-    ConnectPacketFactory connectPacketFactory;
-    factories.insert(std::make_pair(CONNECT, &connectPacketFactory));
+    // FACTORIES
+    ConnectPacketFactory* connectPacketFactory = new ConnectPacketFactory();
 
-    int conn_fd = connectToServer();
-    PacketIOManager packetIoManager (session, conn_fd,&parsers);
+    int connFd = connectToServer();
+    ClientConnectionSession *connection = new ClientConnectionSession(connFd);
+    PacketIOManager* packetIo = new PacketIOManager(connection, connFd, &parsers);
+
+    // HANDLERS
+    std::map<PacketType,PacketHandler*> handlers;
+
+    ConnectAckPacketHandler* connectAckPacketHandler = new ConnectAckPacketHandler(connection, packetIo);
+    handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
 
     char* data = "connect me pls";
     char* clientId = "niceClientId";
     char* username = "gil";
     char* password = "passw0rd";
     unsigned char cleanSession = 0;
-    RawPacket* finConPacket = connectPacketFactory.create(cleanSession,clientId,username,password);
-    packetIoManager.sendPacket(finConPacket);
+    RawPacket* finConPacket = connectPacketFactory->create(cleanSession,clientId,username,password);
+    packetIo->sendPacket(finConPacket);
+
+    while (true){
+        try{
+            std::cout << "waiting for new packet" << "\n";
+            RawPacket* packet = packetIo->readPacket();
+            PacketHandler* handler = handlers[packet->getType()];
+            handler->handle(packet);
+            std::cout << "packet handled without errors" << "\n";
+        } catch (const std::exception& e) {
+            std::cout << "exception occurred:" << "\n";
+            std::cout << e.what() << "\n";
+            break;
+        }
+    }
+    std::cout << "Closing Connection" << "\n";
+    packetIo->closeConnection();
+    delete connection;
+    delete connectPacketFactory;
     return 0;
 }

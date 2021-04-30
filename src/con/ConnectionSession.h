@@ -7,8 +7,8 @@
 
 
 #include <list>
-#include "packets/RawPacket.h"
-#include "Session.h"
+#include "../packets/RawPacket.h"
+#include "../Session.h"
 
 
 class ConnectionSession {

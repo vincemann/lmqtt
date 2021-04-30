@@ -23,6 +23,16 @@ unsigned char Utils::reverse_bits(unsigned char num) {
     return reverse_num;
 }
 
+bool Utils::isAlNum(const char * s){
+    bool alnum = true;
+    while (*s){
+        if (! isalnum((int)*s)){
+            alnum= false;
+        }
+    }
+    return alnum;
+}
+
 void Utils::printChars(unsigned char *ptr, int size)
 {
     unsigned char *p = ptr;

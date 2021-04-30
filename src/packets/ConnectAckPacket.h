@@ -4,7 +4,7 @@
 
 #ifndef LMQTT__SERVER_CONNECTACKPACKET_H
 #define LMQTT__SERVER_CONNECTACKPACKET_H
-#include "../RawPacket.h"
+#include "RawPacket.h"
 
 
 class ConnectAckPacket : public RawPacket {

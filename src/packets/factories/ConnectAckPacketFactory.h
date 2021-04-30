@@ -6,11 +6,11 @@
 #define LMQTT__SERVER_CONNECTACKPACKETFACTORY_H
 
 #include "PacketFactory.h"
-#include "../ConnectAckPacket.h.h"
+#include "../ConnectAckPacket.h"
 
-class ConnectAckPacketFactory : PacketFactory{
-
-    ConnectAckPacket *ConnectAckPacketFactory::create(unsigned char returnCode, unsigned char sessionPresent);
+class ConnectAckPacketFactory : public PacketFactory{
+public:
+    ConnectAckPacket *create(unsigned char returnCode, unsigned char sessionPresent);
 };
 
 

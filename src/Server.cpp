@@ -4,13 +4,16 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <iostream>
+
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
 #include "packets/parsers/PacketParser.h"
 #include "packets/parsers/ConnectPacketParser.h"
 #include "handlers/ConnectPacketHandler.h"
 #include "handlers/PacketHandler.h"
-#include "ConnectionSession.h"
+#include "con/ServerConnectionSession.h"
+#include "util/Utils.h"
 
 
 #define PORT 8080
@@ -62,24 +65,46 @@ static int waitForConnection(){
 
 
 int main(int argc, char const *argv[])
-{
-    int connFd = waitForConnection();
-    ConnectionSession* connection = new ConnectionSession(connFd);
 
+{
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
     ConnectPacketParser* connectPacketParser = new ConnectPacketParser;
     parsers.insert(std::make_pair(CONNECT, connectPacketParser));
 
-    // HANDLERS
-    std::map<PacketType,PacketHandler*> handlers;
-    ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection);
-    handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
-    PacketIOManager packetIO (connection, &parsers);
+    // FACTORIES
+    ConnectAckPacketFactory* connectAckPacketFactory = new ConnectAckPacketFactory();
 
 
-    RawPacket* packet = packetIO.readPacket();
-    PacketHandler* handler = handlers[packet->getType()];
-    handler->handle(packet);
+    while (true){
+        std::cout << "waiting for new connection" << "\n";
+        int connFd = waitForConnection();
+        std::cout << "connected to client" << "\n";
+        ServerConnectionSession* connection = new ServerConnectionSession(connFd);
+        PacketIOManager* packetIO = new PacketIOManager(connection,connFd, &parsers);
+
+        // HANDLERS
+        std::map<PacketType,PacketHandler*> handlers;
+
+        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory);
+        handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
+
+        while(true){
+            try{
+                std::cout << "waiting for new packet" << "\n";
+                RawPacket* packet = packetIO->readPacket();
+                PacketHandler* handler = handlers[packet->getType()];
+                handler->handle(packet);
+                std::cout << "packet handled without errors" << "\n";
+            } catch (const std::exception& e) {
+                std::cout << "exception occurred:" << "\n";
+                std::cout << e.what() << "\n";
+                packetIO->closeConnection();
+                delete connection;
+                break;
+            }
+        }
+    }
+
     return 0;
 }
