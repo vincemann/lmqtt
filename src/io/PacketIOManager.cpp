@@ -2,8 +2,6 @@
 // Created by vince on 06.04.21.
 //
 
-
-
 #include <unistd.h>
 #include <map>
 #include <stdio.h>
@@ -28,6 +26,8 @@ static unsigned char evalPacketTypeValue(PacketType packetType){
     switch (packetType) {
         case CONNECT:
             return 1;
+        case CONNACK:
+            return 2;
     }
     err("unknown packet _type");
 }
@@ -38,9 +38,9 @@ static PacketType evalPacketType(unsigned char fixed_header_byte){
     unsigned char packet_type_val = Utils::reverse_bits(mask & fixed_header_byte);
 
 
-    printf("packet _type bits:\n");
-    Utils::printBits(packet_type_val);
-    printf("packet _type resulting number: %d\n",packet_type_val);
+    // printf("packet _type bits:\n");
+    // Utils::printBits(packet_type_val);
+    // printf("packet _type resulting number: %d\n",packet_type_val);
 
 
     switch (packet_type_val) {
@@ -74,7 +74,15 @@ static unsigned int evalPacketLength(int _conn_fd){
 
 void PacketIOManager::sendPacket(RawPacket *packet) {
 
-    std::cout << "sending new packet of type: " << packet->getType() <<"\n";
+    std::cout << "sending new packet of type: " << PacketTypes::toString(packet->getType()) <<"\n";
+
+    printf("specific flags:\n");
+    Utils::printBits(packet->getSpecificFlags());
+
+
+    printf("packetLen: %d\n", packet->getLength());
+
+    printf("Payload:\n");
     Utils::printChars(packet->getData(), packet->getLength());
 
     // sendPacket first fixed header byte
@@ -110,15 +118,19 @@ RawPacket* PacketIOManager::readPacket() {
         err("Cant read mqtt control fixed header");
     }
     unsigned char firstByte = controlFixedHeaderBuf[0];
-    printf("fixed header first byte:\n");
-    Utils::printBits(firstByte);
+    // printf("fixed header first byte:\n");
+    // Utils::printBits(firstByte);
 
 //    bool[4] _specificFlags;
     unsigned char specific_flags = evalSpecificFlags(firstByte);
+
+    PacketType packet_type = evalPacketType(firstByte);
+
+    std::cout << "received new packet of type: " << PacketTypes::toString(packet_type) <<"\n";
+
     printf("specific flags:\n");
     Utils::printBits(specific_flags);
 
-    PacketType packet_type = evalPacketType(firstByte);
     unsigned int packetLen = evalPacketLength(_conn_fd);
     printf("packetLen: %d\n", packetLen);
 
@@ -127,6 +139,8 @@ RawPacket* PacketIOManager::readPacket() {
         err("Cant read packet data");
     }
 
+    // print packet
+    printf("Payload:\n");
     Utils::printChars(packetData, packetLen);
 //    printf("packet data: %s\n",packetData);
 
@@ -135,8 +149,7 @@ RawPacket* PacketIOManager::readPacket() {
     PacketParser *parser  = _packet_parsers->at(packet_type);
     RawPacket* parsedPacket = parser->parse(rawPacket);
     _connectionSession->_packets_received->push_back(parsedPacket);
-    std::cout << "received new packet of type: " << parsedPacket->getType() <<"\n";
-    Utils::printChars(parsedPacket->getData(), parsedPacket->getLength());
+    // Utils::printChars(parsedPacket->getData(), parsedPacket->getLength());
     return parsedPacket;
 }
 

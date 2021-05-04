@@ -9,6 +9,7 @@
 class Session {
 public:
     char * _clientId;
+
 };
 
 

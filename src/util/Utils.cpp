@@ -7,6 +7,7 @@
 #include <bitset>
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 
 /* Function to reverse bits of num */
@@ -26,7 +27,7 @@ unsigned char Utils::reverse_bits(unsigned char num) {
 bool Utils::isAlNum(const char * s){
     bool alnum = true;
     int len = strlen(s);
-    for (int i = 0; i < len; ++i) {
+    for (int i = 0; i < len; i++) {
         if (! isalnum((int)s[i])){
             alnum= false;
             break;

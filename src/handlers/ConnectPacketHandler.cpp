@@ -78,7 +78,7 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
 
     // init client session
     Session *session = new Session();
-    strcpy(session->_clientId, packet->getClientId());
+    session->_clientId = strdup(packet->getClientId());
     _connectionSession->_session=session;
 
     connAck(0x0,packet->getCleanSession());

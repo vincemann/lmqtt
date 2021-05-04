@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 3.17)
 project(lmqtt__client)
 
 set(CMAKE_CXX_STANDARD 17)
+# set(CMAKE_TOOLCHAIN_FILE /home/vince/programme/vcpkg/scripts/buildsystems/vcpkg.cmake)
 
+# find_path(MAGIC_ENUM_INCLUDE_DIR NAMES magic_enum.hpp PATH_SUFFIXES magic_enum2)
+# include_directories(${MAGIC_ENUM_INCLUDE_DIR})
 
 include_directories(../../src/handlers)
 include_directories(../../src/handlers/exception)

@@ -12,4 +12,20 @@ enum PacketType{
     CONNACK
 };
 
+namespace PacketTypes{
+    static const char* toString(PacketType PacketType){
+        switch (PacketType)
+        {
+        case CONNECT:
+            return "CONNECT";
+            break;
+        case CONNACK:
+            return "CONNACK";
+                break;
+        }
+        return "";
+    }
+}
+
+
 #endif //LMQTT__SERVER_PACKETTYPE_H

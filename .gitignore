@@ -2,8 +2,8 @@ src/client/cmake-build-debug/
 src/client/.idea/
 .idea
 
-build/
-src/client/build/
+build/**
+src/client/build/**
 
 
 src/client/CMakeLists.txt.user
