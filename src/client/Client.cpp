@@ -49,7 +49,9 @@ static int connectToServer(){
 
 int main(int argc, char const *argv[])
 {
+    // PARSERS
     std::map<PacketType,PacketParser*> parsers;
+    
 
     // FACTORIES
     ConnectPacketFactory* connectPacketFactory = new ConnectPacketFactory();
