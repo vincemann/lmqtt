@@ -15,8 +15,7 @@
 #include "../packets/factories/ConnectPacketFactory.h"
 #include "../con/ClientConnectionSession.h"
 #include "../handlers/ConnectAckPacketHandler.h"
-
-
+#include "../packets/parsers/ConnAckPacketParser.h"
 
 #define PORT 8080
 
@@ -47,10 +46,13 @@ static int connectToServer(){
     return conn_fd;
 }
 
+
 int main(int argc, char const *argv[])
 {
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
+    ConnAckPacketParser* connAckPacketParser = new ConnAckPacketParser;
+    parsers.insert(std::make_pair(CONNACK, connAckPacketParser));
     
 
     // FACTORIES
@@ -66,7 +68,6 @@ int main(int argc, char const *argv[])
     ConnectAckPacketHandler* connectAckPacketHandler = new ConnectAckPacketHandler(connection, packetIo);
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
 
-    char* data = "connect me pls";
     char* clientId = "niceClientId";
     char* username = "gil";
     char* password = "passw0rd";

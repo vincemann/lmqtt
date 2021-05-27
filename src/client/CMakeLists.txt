@@ -41,6 +41,8 @@ add_executable(lmqtt__client
         ../packets/parsers/PacketParser.h
         ../packets/parsers/exception/PacketParsingException.cpp
         ../packets/parsers/exception/PacketParsingException.h
+        ../packets/parsers/ConnAckPacketParser.h
+        ../packets/parsers/ConnAckPacketParser.cpp
 
         ../con/ConnectionSession.cpp
         ../con/ConnectionSession.h

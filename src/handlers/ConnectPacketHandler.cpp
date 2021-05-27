@@ -19,12 +19,28 @@
 
 
 
-
 void ConnectPacketHandler::connAck(int errorCode, unsigned char cleanSessionFlag){
     ConnectAckPacket *connectAckPacket = getConnectAckPacketFactory()->create(errorCode,cleanSessionFlag);
     packetIo->sendPacket(connectAckPacket);
 }
 
+Session* ConnectPacketHandler::findSession(char* clientId){
+    dirent* file = _fileLocator->findFile(SESSION_DIR, *clientId);
+    if (file == 0)
+    {
+        return 0;
+    }
+    // todo create json parser that loads session in json format from file
+}
+
+Session* ConnectPacketHandler::createSession(unsigned char cleanSession, char* clientId){
+    if (cleanSession == 0)
+    {
+            // check if there is already a session and use, otherwise gen one
+    }else{
+        // remove old session if there is any and gen new
+    }
+}
 
 void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     ConnectPacket* packet = static_cast<ConnectPacket*>(rawPacket);
@@ -74,7 +90,12 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
         throw new InvalidPacketException("Client id must be alphanumerical");
     }
 
+    
     printf("%s\n","valid connect packet received, initializing session");
+    unsigned char cleanSession = packet->getCleanSession();
+    
+    
+
 
     // init client session
     Session *session = new Session();
@@ -82,7 +103,6 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     _connectionSession->_session=session;
 
     connAck(0x0,packet->getCleanSession());
-
 }
 
 ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() const {
@@ -90,8 +110,8 @@ ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() cons
 }
 
 
-ConnectPacketHandler::ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,ConnectAckPacketFactory *connectAckPacketFactory)
-        : PacketHandler(connectionSession, packetIo), _connectAckPacketFactory(connectAckPacketFactory) {
+ConnectPacketHandler::ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,ConnectAckPacketFactory *connectAckPacketFactory, FileLocator* fileLocator)
+        : PacketHandler(connectionSession, packetIo), _connectAckPacketFactory(connectAckPacketFactory), _fileLocator(fileLocator) {
 
 }
 

@@ -5,8 +5,11 @@
 #include "../RawPacket.h"
 #include "ConnAckPacketParser.h"
 
-RawPacket* ConnAckPacketParser::parse(RawPacket* pRawPacket) 
+RawPacket* ConnAckPacketParser::parse(RawPacket* packet) 
 {
-    
-    ConnectAckPacket *result = new ConnectAckPacket();
+    unsigned char* data = packet->getData();
+    unsigned char sessionPresent = data[0];
+    unsigned char retCode = data[1];
+    ConnectAckPacket *result = new ConnectAckPacket(packet,sessionPresent,retCode);
+    return result;
 }

@@ -16,16 +16,16 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
         // all specific flags must be 0
         throw new PacketParsingException("invalid specific flags");
     }
-    unsigned char *pData = pRawPacket->getData();
+    unsigned char *data = pRawPacket->getData();
     // extract variable header
-    char *protocolName = extractUtf8Payload(&pData, false);
+    char *protocolName = extractUtf8Payload(&data, false);
     printf("protocolName:%s\n", protocolName);
 
-    unsigned char protocolLevel = pData[6];
+    unsigned char protocolLevel = data[6];
     printf("protocolLevel:%d\n", protocolLevel);
 
 
-    unsigned char connectFlags = pData[7];
+    unsigned char connectFlags = data[7];
     printf("Binary connectFlags:");
     Utils::printBits(connectFlags);
 
@@ -40,28 +40,28 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     unsigned char passwordFlag = (connectFlags >> 6) & 1;
     unsigned char usernameFlag = (connectFlags >> 7) & 1;
 
-    unsigned short keepAlive = (pData[8] << 8) | pData[9];
+    unsigned short keepAlive = (data[8] << 8) | data[9];
 
-    pData += 10;
+    data += 10;
     // now comes payload
     // in this order Client Identifier, Will Topic, Will Message, User Name, Password
     // depends on variable header bits
-    char *clientId = extractUtf8Payload(&pData);
+    char *clientId = extractUtf8Payload(&data);
     printf("clientId:%s\n", clientId);
 
 
     char *willTopic = 0;
     char *willMsg = 0;
     if (willFlag) {
-        willTopic = extractUtf8Payload(&pData);
-        willMsg = extractUtf8Payload(&pData);
+        willTopic = extractUtf8Payload(&data);
+        willMsg = extractUtf8Payload(&data);
         printf("willTopic:%s\n",willTopic);
         printf("willMsg:%s\n",willMsg);
     }
 
     char *username = 0;
     if (usernameFlag) {
-        username = extractUtf8Payload(&pData);
+        username = extractUtf8Payload(&data);
         printf("username:%s\n",username);
 
     }
@@ -69,7 +69,7 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
 
     char *password = 0;
     if (passwordFlag) {
-        password = extractUtf8Payload(&pData);
+        password = extractUtf8Payload(&data);
         printf("password:%s\n",password);
     }
 
