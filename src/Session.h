@@ -5,8 +5,12 @@
 #ifndef LMQTT__SERVER_SESSION_H
 #define LMQTT__SERVER_SESSION_H
 
-# define BASE_DIR "~/.lmqtt"
-# define SESSION_DIR BASEDIR+"/sessions"
+
+namespace SessionFiles{
+    char* BASE_DIR = "~/.lmqtt";
+    char* SESSION_DIR = *BASE_DIR + "/sessions";
+};
+
 
 class Session {
 public:

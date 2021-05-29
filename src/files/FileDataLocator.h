@@ -4,7 +4,8 @@
 #include <dirent.h>
 
 class FileLocator{
-    dirent* findFile(char dir, char name);
-}
+public:
+    dirent* findFileData(char* dir, char* name);
+};
 
 #endif // __FILELOCATOR_H__

@@ -4,6 +4,8 @@
 
 
 #include <stdio.h>
+#include <iostream>
+
 
 #include "ConnectPacketHandler.h"
 #include "../con/ConnectionSession.h"
@@ -24,19 +26,24 @@ void ConnectPacketHandler::connAck(int errorCode, unsigned char cleanSessionFlag
     packetIo->sendPacket(connectAckPacket);
 }
 
-Session* ConnectPacketHandler::findSession(char* clientId){
-    dirent* file = _fileLocator->findFile(SESSION_DIR, *clientId);
-    if (file == 0)
+Session* ConnectPacketHandler::findSession(const char* clientId){
+    dirent* sessionFile = _fileLocator->findFile(*SessionFiles::SESSION_DIR, *clientId);
+    if (sessionFile == 0)
     {
+        std::cout << "did not find session file for client id" << clientId;
         return 0;
+    }else{
+        std::cout << "did find session file for client id" << clientId;
     }
-    // todo create json parser that loads session in json format from file
+    std::string content( (std::istreambuf_iterator<char>(sessionFile->d_name) ),
+                       (std::istreambuf_iterator<char>()    ) );
 }
 
 Session* ConnectPacketHandler::createSession(unsigned char cleanSession, char* clientId){
     if (cleanSession == 0)
     {
-            // check if there is already a session and use, otherwise gen one
+         // check if there is already a session and use, otherwise gen one
+         findSession(clientId);
     }else{
         // remove old session if there is any and gen new
     }
