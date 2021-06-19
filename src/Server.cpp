@@ -14,6 +14,7 @@
 #include "handlers/PacketHandler.h"
 #include "con/ServerConnectionSession.h"
 #include "util/Utils.h"
+#include "files/FileDataManager.h"
 
 
 #define PORT 8080
@@ -82,11 +83,12 @@ int main(int argc, char const *argv[])
         std::cout << "connected to client" << "\n";
         ServerConnectionSession* connection = new ServerConnectionSession(connFd);
         PacketIOManager* packetIO = new PacketIOManager(connection,connFd, &parsers);
+        FileDataManager* fileDataManager = new FileDataManager();
 
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
 
-        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory);
+        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory, fileDataManager);
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
 
         while(true){

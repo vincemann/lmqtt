@@ -6,10 +6,10 @@
 #define LMQTT__SERVER_SESSION_H
 
 
-namespace SessionFiles{
-    char* BASE_DIR = "~/.lmqtt";
-    char* SESSION_DIR = *BASE_DIR + "/sessions";
-};
+// namespace SessionFiles{
+//     char* BASE_DIR = "~/.lmqtt";
+//     char* SESSION_DIR = "~/.lmqtt/sessions";
+// };
 
 
 class Session {

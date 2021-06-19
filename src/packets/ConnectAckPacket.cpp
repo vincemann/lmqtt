@@ -3,7 +3,7 @@
 //
 
 #include "ConnectAckPacket.h"
-#include "../RawPacket.h"
+#include "RawPacket.h"
 
 
 ConnectAckPacket::ConnectAckPacket(RawPacket *rawPacket, unsigned char sessionPresent, unsigned char returnCode)

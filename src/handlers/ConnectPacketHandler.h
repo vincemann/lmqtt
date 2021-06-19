@@ -8,20 +8,20 @@
 #include "../packets/ConnectPacket.h"
 #include "../con/ConnectionSession.h"
 #include "../packets/factories/ConnectAckPacketFactory.h"
-#include "../FileLocator.h"
+#include "../files/FileDataManager.h"
 
 class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
-private:
-ConnectAckPacketFactory* _connectAckPacketFactory;
-FileLocator* _fileLocator;
 protected:
+ConnectAckPacketFactory* _connectAckPacketFactory;
+FileDataManager* _fileDataManager;
 Session* findSession(char* clientId);
 Session* createSession(unsigned char cleanSession, char* clientId);
-public:
-    ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,ConnectAckPacketFactory* connectAckPacketFactory, FileLocator* fileLocator);
-    void handle(RawPacket *rawPacket);
-    void connAck(int errorCode, unsigned char cleanSessionFlag);
+void connAck(int errorCode, unsigned char cleanSessionFlag);
 
+
+public:
+    ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,ConnectAckPacketFactory* connectAckPacketFactory, FileDataManager* fileDataManager);
+    void handle(RawPacket *rawPacket);
     ConnectAckPacketFactory *getConnectAckPacketFactory() const;
 };
 #endif //LMQTT__SERVER_CONNECTPACKETHANDLER_H

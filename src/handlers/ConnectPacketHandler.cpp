@@ -7,16 +7,17 @@
 #include <iostream>
 
 
-#include "ConnectPacketHandler.h"
 #include "../con/ConnectionSession.h"
 #include "exception/IllegalSessionStateException.h"
 #include "exception/InvalidPacketException.h"
 #include "../packets/RawPacket.h"
 #include "../packets/ConnectAckPacket.h"
 #include "../io/PacketIOManager.h"
-#include "../Session.h"
+#include "../session/Session.h"
 #include "../util/Utils.h"
 #include "../packets/factories/ConnectAckPacketFactory.h"
+#include "ConnectPacketHandler.h"
+#include "../files/FileDataManager.h"
 
 
 
@@ -26,17 +27,18 @@ void ConnectPacketHandler::connAck(int errorCode, unsigned char cleanSessionFlag
     packetIo->sendPacket(connectAckPacket);
 }
 
-Session* ConnectPacketHandler::findSession(const char* clientId){
-    dirent* sessionFile = _fileLocator->findFile(*SessionFiles::SESSION_DIR, *clientId);
-    if (sessionFile == 0)
+Session* ConnectPacketHandler::findSession(char* clientId){
+    // char* sessionFileData = _fileDataManager->find("~/.lmqtt", clientId);
+    // char* sessionFileData = _fileDataManager->find("test", clientId);
+    char* sessionFileData = 0;
+    if (sessionFileData == 0)
     {
-        std::cout << "did not find session file for client id" << clientId;
+        std::cout << "did not find session file for client id" << clientId << "\n";
         return 0;
     }else{
-        std::cout << "did find session file for client id" << clientId;
+        std::cout << "did find session file for client id" << clientId << ": " << *sessionFileData <<"\n";
+        return 0;
     }
-    std::string content( (std::istreambuf_iterator<char>(sessionFile->d_name) ),
-                       (std::istreambuf_iterator<char>()    ) );
 }
 
 Session* ConnectPacketHandler::createSession(unsigned char cleanSession, char* clientId){
@@ -117,8 +119,11 @@ ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() cons
 }
 
 
-ConnectPacketHandler::ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,ConnectAckPacketFactory *connectAckPacketFactory, FileLocator* fileLocator)
-        : PacketHandler(connectionSession, packetIo), _connectAckPacketFactory(connectAckPacketFactory), _fileLocator(fileLocator) {
+ConnectPacketHandler::ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,ConnectAckPacketFactory *connectAckPacketFactory, FileDataManager* fileDataManager)
+        : PacketHandler(connectionSession, packetIo),
+         _connectAckPacketFactory(connectAckPacketFactory),
+          _fileDataManager(fileDataManager) 
+          {
 
 }
 
