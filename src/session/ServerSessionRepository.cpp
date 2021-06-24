@@ -19,8 +19,8 @@ void ServerSessionRepository::save(ServerSession* session)
     using json = nlohmann::json;
     json j;
     // using json j;
-    j["clientId"] = 42;
-    // j["_subscriptions"] = {session->_subscriptions}
+    j["clientId"] = session->_clientId;
+    j["subscriptions"] = *session->_subscriptions;
     std::string jsonString = j.dump();
     char *pJsonString = new char[jsonString.length() + 1];
     strcpy(pJsonString, jsonString.c_str());

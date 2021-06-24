@@ -17,7 +17,7 @@
 char *FileDataManager::find(char *startDir, char *name)
 {
     dirent *entry = 0;
-    int len = strlen(name);
+//    int len = strlen(name);
     DIR *dir = opendir(startDir);
     while ((entry = readdir(dir)) != 0)
     {
@@ -36,9 +36,10 @@ char *FileDataManager::find(char *startDir, char *name)
 }
 
 int FileDataManager::store(const char *targetDir, char *name, char *content) {
-    char* filePath = Utils::formatToCharP(targetDir,name);
-//    int len = strlen(name);
-     FILE *fp = fopen(filePath,"a");
+    int len = strlen(targetDir) + strlen(name) + 1;
+    char filePath[len];
+    sprintf(filePath,"%s/%s",targetDir,name);
+    FILE *fp = fopen(filePath,"a");
     if(fp == nullptr){
         throw MsgException(Utils::formatToCharP("Cant open file %s\n",filePath));
     }
@@ -46,6 +47,7 @@ int FileDataManager::store(const char *targetDir, char *name, char *content) {
         throw MsgException(Utils::formatToCharP("Unable to store file %s\n",filePath));
 
     }
+    fflush(fp);
 //    int fd = open(entry->d_name, O_WRONLY | O_CREAT);
 //    int len = strlen(content);
 //    write(fp,content,len);

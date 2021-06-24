@@ -5,6 +5,8 @@
 #ifndef LMQTT__SERVER_UTILS_H
 #define LMQTT__SERVER_UTILS_H
 #include <string>
+#include <vector>
+
 
 namespace Utils {
     
@@ -17,6 +19,8 @@ namespace Utils {
     bool isAlNum(const char * s);
     char* toCharP(std::string s);
     char* formatToCharP(const char* format,const char* arg);
+    void* vec_to_array(std::vector<void*> * vector);
+    char* vec_to_deref_array(std::vector<char*> * vector);
 };
 
 

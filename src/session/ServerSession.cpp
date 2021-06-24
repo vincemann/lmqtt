@@ -7,7 +7,7 @@
 #endif // __SERVERSESSION_H__
 
 ServerSession::ServerSession(char *clientId) : _clientId(clientId){
-    this->_subscriptions= new std::list<char *>;
+    this->_subscriptions= new std::vector<char *>;
 }
 
 std::ostream &operator<<(std::ostream &os, const ServerSession &session) {

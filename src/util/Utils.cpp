@@ -5,6 +5,7 @@
 #include "Utils.h"
 #include <iostream>
 #include <bitset>
+#include <vector>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -71,6 +72,31 @@ void Utils::printBytes(void *ptr, int size)
     }
     printf("\n");
 }
+
+void* Utils::vec_to_array(std::vector<void*> * vector)
+{
+    int i;
+    void** array = (void **) malloc(sizeof(void *) * vector->size());
+    for (i = 0; i < vector->size(); i++)
+    {
+        array[i] = vector->at(i);
+    }
+
+    return array;
+}
+
+//char* Utils::vec_to_deref_array(std::vector<char*> * vector)
+//{
+//    int i;
+//    char* array = (char *) malloc(sizeof(char) * vector->size());
+//    for (i = 0; i < vector->size(); i++)
+//    {
+//        char* p = (*vector)[i];
+//        array[i] = e;
+//    }
+//
+//    return array;
+//}
 
 void Utils::printBits(unsigned char val) {
     std::bitset<8> bits(val);

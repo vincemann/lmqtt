@@ -5,7 +5,7 @@
 #ifndef LMQTT__SERVER_SESSION_H
 #define LMQTT__SERVER_SESSION_H
 
-#include <list>
+#include <vector>
 #include <ConnectAckPacketHandler.h>
 #include <ostream>
 
@@ -14,7 +14,7 @@
 class ServerSession {
 public:
     char * _clientId;
-    std::list<char *>* _subscriptions;
+    std::vector<char *>* _subscriptions;
     //todo add 3. and 4. from ServerSessionState
     explicit ServerSession(char* clientId);
 
