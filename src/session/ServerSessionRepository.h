@@ -6,13 +6,13 @@
 
 
 class ServerSessionRepository{
-private:
+protected:
 FileDataManager* _fileDataManager;
 public:
     void save(ServerSession* session);
     ServerSession* load(char* clientId);
 
-    ServerSessionRepository(FileDataManager *fileDataManager);
+    explicit ServerSessionRepository(FileDataManager *fileDataManager);
 };
 
 #endif // __SESSIONREPOSITORY_H__

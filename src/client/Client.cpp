@@ -57,15 +57,13 @@ int main(int argc, char const *argv[])
 
     // FACTORIES
     ConnectPacketFactory* connectPacketFactory = new ConnectPacketFactory();
-
     int connFd = connectToServer();
     ClientConnectionSession *connection = new ClientConnectionSession();
     PacketIOManager* packetIo = new PacketIOManager(connection, connFd, &parsers);
 
     // HANDLERS
     std::map<PacketType,PacketHandler*> handlers;
-
-    ConnectAckPacketHandler* connectAckPacketHandler = new ConnectAckPacketHandler(connection, packetIo);
+    ConnectAckPacketHandler* connectAckPacketHandler = new ConnectAckPacketHandler(packetIo);
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
 
     char* clientId = "niceClientId";

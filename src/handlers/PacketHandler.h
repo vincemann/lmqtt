@@ -13,14 +13,11 @@
 //todo add template
 //template <class P>
 class PacketHandler{
-public:
-    PacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo);
-
-//    virtual void handle(P* packet) = 0;
-    virtual void handle(RawPacket* packet) = 0;
 protected:
-    ConnectionSession* _connectionSession;
     PacketIOManager* _packetIo;
+public:
+    explicit PacketHandler(PacketIOManager *packetIo);
+    virtual void handle(RawPacket* packet) = 0;
 };
 
 #endif //LMQTT__SERVER_PACKETHANDLER_H

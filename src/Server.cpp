@@ -90,7 +90,6 @@ int main(int argc, char const *argv[])
         ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
         ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory, serverSessionRepository);
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
-//        ConnectAckPacket* connectAckPacket = new ConnectAckPacket(0,0,0);
 
         while(true){
             try{

@@ -9,9 +9,8 @@
 
 class ConnectAckPacketHandler : public PacketHandler{
 public:
-    ConnectAckPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo);
-
-    virtual void handle(RawPacket *packet);
+    explicit ConnectAckPacketHandler(PacketIOManager *packetIo);
+    void handle(RawPacket *packet) override;
 };
 
 

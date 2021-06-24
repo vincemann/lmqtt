@@ -31,6 +31,7 @@ void ServerSessionRepository::save(ServerSession* session)
 
 ServerSession* ServerSessionRepository::load(char* clientId)
 {
+    std::cout << "clientId gets loaded: " << clientId << "\n";
     return nullptr;
 }
 

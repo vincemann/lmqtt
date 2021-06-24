@@ -98,7 +98,7 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
     }
     // sendPacket length
     unsigned int len = packet->getLength();
-    unsigned char length_fixed_header [] = { len };
+    unsigned char length_fixed_header [] = { static_cast<unsigned char>(len) };
     if (write(_conn_fd,&length_fixed_header,1) != 1){
         err("cant sendPacket length_fixed_header");
     }

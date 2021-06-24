@@ -15,7 +15,7 @@
 #include "../session/ServerSession.h"
 #include "../packets/factories/ConnectAckPacketFactory.h"
 #include "ConnectPacketHandler.h"
-#include <ServerSessionRepository.h>
+#include "../session/ServerSessionRepository.h"
 
 
 
@@ -25,7 +25,7 @@ void ConnectPacketHandler::connAck(int errorCode, unsigned char cleanSessionFlag
     _packetIo->sendPacket(connectAckPacket);
 }
 
-void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char* clientId){
+void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * clientId){
     if (cleanSession == 0)
     {
         ServerSession* session = _sessionRepository->load(clientId);
@@ -33,8 +33,10 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char* c
         {
             std::cout << "did not find session file for client id" << clientId << "\n";
             std::cout << "creating it" << "\n";
-            session = new ServerSession(strdup(clientId));
+            char* duplicatedClientId = strdup(clientId);
+            session = new ServerSession(duplicatedClientId);
             _sessionRepository->save(session);
+            _connectionSession->_serverSession = session;
             std::cout << "new session: " << session << "\n";
         } else{
             std::cout << "have found session file for client id" << clientId << ": " << session <<"\n";
@@ -105,11 +107,11 @@ ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() cons
     return _connectAckPacketFactory;
 }
 
-ConnectPacketHandler::ConnectPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo,
+
+ConnectPacketHandler::ConnectPacketHandler(ServerConnectionSession *connectionSession, PacketIOManager *packetIo,
                                            ConnectAckPacketFactory *connectAckPacketFactory,
-                                           ServerSessionRepository *sessionRepository) : PacketHandler(
-        connectionSession, packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
-        sessionRepository) {}
+                                           ServerSessionRepository *sessionRepository) : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
+                                                   sessionRepository), _connectionSession(connectionSession) {}
 
 
 

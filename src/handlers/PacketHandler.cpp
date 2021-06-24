@@ -6,5 +6,6 @@
 #include "../io/PacketIOManager.h"
 
 
-PacketHandler::PacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo) : _connectionSession(connectionSession), _packetIo(packetIo) {}
+PacketHandler::PacketHandler(PacketIOManager *packetIo) : _packetIo(packetIo){
 
+}

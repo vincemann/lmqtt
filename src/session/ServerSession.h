@@ -16,7 +16,7 @@ public:
     char * _clientId;
     std::list<char *>* _subscriptions;
     //todo add 3. and 4. from ServerSessionState
-    ServerSession(char *clientId);
+    explicit ServerSession(char* clientId);
 
     friend std::ostream &operator<<(std::ostream &os, const ServerSession &session);
 

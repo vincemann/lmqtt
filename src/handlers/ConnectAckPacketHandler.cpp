@@ -7,8 +7,8 @@
 #include "InvalidPacketException.h"
 #include "IllegalSessionStateException.h"
 
-ConnectAckPacketHandler::ConnectAckPacketHandler(ConnectionSession *connectionSession, PacketIOManager *packetIo)
-        : PacketHandler(connectionSession, packetIo) {}
+ConnectAckPacketHandler::ConnectAckPacketHandler(PacketIOManager *packetIo)
+        : PacketHandler(packetIo) {}
 
 void ConnectAckPacketHandler::handle(RawPacket *rawPacket) {
     printf("handling connect ack packet\n");
