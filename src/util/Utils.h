@@ -4,9 +4,10 @@
 
 #ifndef LMQTT__SERVER_UTILS_H
 #define LMQTT__SERVER_UTILS_H
-
+#include <string>
 
 namespace Utils {
+    
     unsigned char reverse_bits(unsigned char num);
     void printBits(unsigned char val);
     unsigned createBitMask(unsigned a, unsigned b);
@@ -14,6 +15,7 @@ namespace Utils {
     void printBytes(void *ptr, int size);
     void printChars(unsigned char *ptr, int size);
     bool isAlNum(const char * s);
+    char* to_char_string(std::string s);
 };
 
 

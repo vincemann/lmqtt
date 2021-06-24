@@ -19,7 +19,7 @@
 
 
 static void err(const char* msg){
-    throw new PacketIOException(msg);
+    throw PacketIOException(msg);
 }
 
 static unsigned char evalPacketTypeValue(PacketType packetType){

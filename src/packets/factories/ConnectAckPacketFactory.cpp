@@ -11,11 +11,11 @@ ConnectAckPacket *ConnectAckPacketFactory::create(unsigned char returnCode, unsi
     unsigned char *payload = new unsigned char[2];
     // first 7 bits must be 0 -> reserved
     if ( (sessionPresent > 1) || (sessionPresent < 0) ){
-        throw new PacketCreationException("invalid session present flag");
+        throw PacketCreationException("invalid session present flag");
     }
     payload[0] = sessionPresent;
     if ( (returnCode > 5) || (returnCode < 0) ){
-        throw new PacketCreationException("invalid ret code");
+        throw PacketCreationException("invalid ret code");
     }
     payload[1]= returnCode;
     RawPacket *rawPacket = new RawPacket(specificFlags, payload, payloadLen, CONNACK);

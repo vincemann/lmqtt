@@ -19,7 +19,7 @@ char *PacketParser::extractUtf8Payload(unsigned char **ppData, bool incrementPoi
     for (int i = 0; i < len - 1; ++i) {
         unsigned char c = payload[i];
         if (c == '\0') {
-            throw new PacketParsingException("payload must not contain nullbytes");
+            throw PacketParsingException("payload must not contain nullbytes");
         }
     }
     // add trailing null byte

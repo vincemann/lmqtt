@@ -9,7 +9,7 @@
 
 class ServerConnectionSession : public ConnectionSession{
 public:
-    ServerConnectionSession(int connFd);
+    ServerConnectionSession();
 };
 
 

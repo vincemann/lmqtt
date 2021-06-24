@@ -59,7 +59,7 @@ int main(int argc, char const *argv[])
     ConnectPacketFactory* connectPacketFactory = new ConnectPacketFactory();
 
     int connFd = connectToServer();
-    ClientConnectionSession *connection = new ClientConnectionSession(connFd);
+    ClientConnectionSession *connection = new ClientConnectionSession();
     PacketIOManager* packetIo = new PacketIOManager(connection, connFd, &parsers);
 
     // HANDLERS

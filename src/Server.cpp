@@ -81,15 +81,16 @@ int main(int argc, char const *argv[])
         std::cout << "waiting for new connection" << "\n";
         int connFd = waitForConnection();
         std::cout << "connected to client" << "\n";
-        ServerConnectionSession* connection = new ServerConnectionSession(connFd);
+        ServerConnectionSession* connection = new ServerConnectionSession();
         PacketIOManager* packetIO = new PacketIOManager(connection,connFd, &parsers);
         FileDataManager* fileDataManager = new FileDataManager();
 
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
-
-        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory, fileDataManager);
+        ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
+        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory, serverSessionRepository);
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
+//        ConnectAckPacket* connectAckPacket = new ConnectAckPacket(0,0,0);
 
         while(true){
             try{
@@ -107,6 +108,4 @@ int main(int argc, char const *argv[])
             }
         }
     }
-
-    return 0;
 }

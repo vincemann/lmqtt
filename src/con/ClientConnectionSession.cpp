@@ -4,4 +4,4 @@
 
 #include "ClientConnectionSession.h"
 
-ClientConnectionSession::ClientConnectionSession(int connFd) : ConnectionSession(connFd) {}
+ClientConnectionSession::ClientConnectionSession() : ConnectionSession() {}

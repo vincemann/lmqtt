@@ -8,199 +8,233 @@
 		<Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\src\client\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server/src/client"/>
+				<Option working_dir="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="lmqtt__client">
-				<Option output="/home/vince/CLionProjects/lmqtt+-server/src/client/lmqtt__client" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server/src/client"/>
+				<Option output="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/lmqtt__client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets/parsers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/util"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../con"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../files"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../handlers"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../handlers/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../io"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../io/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/factories"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/factories/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/parsers"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/parsers/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../session"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../util"/>
+					<Add directory="/usr/includes/c++/8"/>
+					<Add directory="/usr/includes/x86_64-linux-gnu/c++/8"/>
+					<Add directory="/usr/includes/c++/8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/includes"/>
+					<Add directory="/usr/local/includes"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/includes-fixed"/>
+					<Add directory="/usr/includes/x86_64-linux-gnu"/>
+					<Add directory="/usr/includes"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 lmqtt__client"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 lmqtt__client"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="lmqtt__client/fast">
-				<Option output="/home/vince/CLionProjects/lmqtt+-server/src/client/lmqtt__client" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/vince/CLionProjects/lmqtt+-server/src/client"/>
+				<Option output="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/lmqtt__client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/handlers/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/io/exception"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets/parsers"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/util"/>
-					<Add directory="/home/vince/CLionProjects/lmqtt+-server/src/client/../../src/packets"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../con"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../files"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../handlers"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../handlers/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../io"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../io/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/factories"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/factories/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/parsers"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../packets/parsers/exception"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../session"/>
+					<Add directory="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/../util"/>
+					<Add directory="/usr/includes/c++/8"/>
+					<Add directory="/usr/includes/x86_64-linux-gnu/c++/8"/>
+					<Add directory="/usr/includes/c++/8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/includes"/>
+					<Add directory="/usr/local/includes"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/includes-fixed"/>
+					<Add directory="/usr/includes/x86_64-linux-gnu"/>
+					<Add directory="/usr/includes"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 lmqtt__client/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/home/vince/CLionProjects/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 lmqtt__client/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Session.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Client.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/Session.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnectionSession.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/client/Client.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnectionSession.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/con/ClientConnectionSession.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ConnectionSession.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/con/ClientConnectionSession.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ConnectionSession.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/con/ConnectionSession.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/files/FileDataManager.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/con/ConnectionSession.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/files/FileDataManager.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/ConnectAckPacketHandler.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ConnectAckPacketHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/ConnectAckPacketHandler.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ConnectAckPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/ConnectPacketHandler.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ConnectPacketHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/ConnectPacketHandler.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ConnectPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/PacketHandler.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PacketHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/PacketHandler.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/InvalidPacketException.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/exception/InvalidPacketException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/handlers/exception/InvalidPacketException.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/exception/InvalidPacketException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/PacketIOManager.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/io/PacketIOManager.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/PacketIOManager.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/io/PacketIOManager.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/exception/PacketIOException.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/io/exception/PacketIOException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/io/exception/PacketIOException.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/io/exception/PacketIOException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectAckPacket.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/ConnectAckPacket.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectAckPacket.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/ConnectAckPacket.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectPacket.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/ConnectPacket.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/ConnectPacket.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/ConnectPacket.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/PacketType.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/PacketType.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/Payload.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/Payload.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/Payload.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/Payload.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/RawPacket.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/RawPacket.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/RawPacket.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/RawPacket.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectPacketFactory.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/ConnectPacketFactory.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/ConnectPacketFactory.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/ConnectPacketFactory.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/PacketFactory.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/PacketFactory.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/exception/PacketCreationException.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/exception/PacketCreationException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/factories/exception/PacketCreationException.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/exception/PacketCreationException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/ConnectPacketParser.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnAckPacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/ConnectPacketParser.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnAckPacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/PacketParser.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnectPacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/PacketParser.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnectPacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/util/Utils.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/util/Utils.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/CMakeLists.txt">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/util/Utils.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/util/Utils.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/home/vince/CLionProjects/lmqtt+-server/src/client/CMakeLists.txt">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\src\client\"/>
 		</Unit>
 	</Project>

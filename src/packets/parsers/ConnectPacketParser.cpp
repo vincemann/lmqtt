@@ -14,7 +14,7 @@
 RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     if (pRawPacket->getSpecificFlags() != 0) {
         // all specific flags must be 0
-        throw new PacketParsingException("invalid specific flags");
+        throw PacketParsingException("invalid specific flags");
     }
     unsigned char *data = pRawPacket->getData();
     // extract variable header

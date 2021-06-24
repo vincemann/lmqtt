@@ -79,7 +79,7 @@ public:
         // strlen does not count nullbyte -> null byte will be cut off
         int len = strlen(payloadData);
         if (len > 0xffff) {
-            throw new PacketCreationException("utf8 payloadData too long");
+            throw PacketCreationException("utf8 payloadData too long");
         }
         len = (unsigned short) len;
         char* data = (char*)malloc(sizeof(char) * len);

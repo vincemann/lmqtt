@@ -18,25 +18,25 @@ void ConnectAckPacketHandler::handle(RawPacket *rawPacket) {
     {
     case 0:
         /* code */
-        printf("Connection Accepted\n");
+        printf("Connection Accepted by Server\n");
         break;
      case 1:
-        throw new InvalidPacketException("Connection Refused, unacceptable protocol version");
+        throw InvalidPacketException("Connection Refused, unacceptable protocol version");
         break;
      case 2:
-        throw new InvalidPacketException("Connection Refused, identifier rejected");
+        throw InvalidPacketException("Connection Refused, identifier rejected");
         break;
     case 3:
-        throw new InvalidPacketException("Connection Refused, Server unavailable");
+        throw InvalidPacketException("Connection Refused, Server unavailable");
         break;
     case 4:
-        throw new InvalidPacketException("Connection Refused, bad user name or password");
+        throw InvalidPacketException("Connection Refused, bad user name or password");
         break;
     case 5:
-        throw new InvalidPacketException("Connection Refused, not authorized");
+        throw InvalidPacketException("Connection Refused, not authorized");
         break;
     default:
-        throw new InvalidPacketException("Connection Refused, unknown error");
+        throw InvalidPacketException("Connection Refused, unknown error");
         break;
     }
 

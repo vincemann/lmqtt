@@ -17,24 +17,15 @@
 //}
 
 
-std::list<RawPacket *>* ConnectionSession::getPacketsSent() {
-    return _packets_sent;
-}
-
-std::list<RawPacket *>* ConnectionSession::getPacketsReceived() {
-    return _packets_received;
-}
-
 
 ConnectionSession::~ConnectionSession() {
     _packets_received->clear();
     _packets_sent->clear();
     delete _packets_received;
     delete _packets_sent;
-    delete _session;
 }
 
-ConnectionSession::ConnectionSession(int conn_fd) {
+ConnectionSession::ConnectionSession() {
     _packets_received= new std::list<RawPacket*>();
-    _packets_sent= new  std::list<RawPacket*>();
+    _packets_sent= new std::list<RawPacket*>();
 }
