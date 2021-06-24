@@ -94,3 +94,11 @@ void Utils::extractSubArray(unsigned char *srcArray, unsigned char *subArray, in
         subArray[i] = srcArray[i];
     }
 }
+
+char *Utils::formatToCharP(const char *format,const char *arg) {
+    char* r = new char;
+    sprintf(r,format,arg);
+    return r;
+}
+
+

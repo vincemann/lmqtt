@@ -25,7 +25,7 @@ void ServerSessionRepository::save(ServerSession* session)
     char *pJsonString = new char[jsonString.length() + 1];
     strcpy(pJsonString, jsonString.c_str());
     std::cout << "json of server session: " << pJsonString << "\n";
-    char* sessionsDir = "~/.lmqtt/server/sessions";
+    const char* sessionsDir = "/home/vince/.lmqtt/server/sessions";
     _fileDataManager->store(sessionsDir, session->_clientId, pJsonString);
 }
 

@@ -75,7 +75,7 @@ add_executable(lmqtt__client
         ../session/ServerSession.cpp
         ../session/ServerSessionRepository.h
         ../session/ServerSessionRepository.cpp
-        )
+        ../MsgException.cpp ../MsgException.h)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

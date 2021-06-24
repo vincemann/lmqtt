@@ -182,6 +182,14 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/MsgException.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/MsgException.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/Server.cpp">
 			<Option target="lmqtt__server"/>
 		</Unit>

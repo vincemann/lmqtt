@@ -5,10 +5,11 @@
 
 #include "PacketParsingException.h"
 
-PacketParsingException::PacketParsingException(const char *msg) {
-    _msg=msg;
+
+PacketParsingException::PacketParsingException(const char *msg) : MsgException(msg) {
+
 }
 
-const char *PacketParsingException::what() const throw() {
-    return _msg;
+const char *PacketParsingException::what() const noexcept {
+    return MsgException::what();
 }

@@ -6,13 +6,12 @@
 #define LMQTT__SERVER_INVALIDPACKETEXCEPTION_H
 
 #include <exception>
+#include "../../MsgException.h"
 
-class InvalidPacketException : public std::exception {
-private:
-    const char* _msg;
+class InvalidPacketException :  public MsgException {
 public:
-    InvalidPacketException(const char* msg);
-    const char * what () const throw ();
+    explicit InvalidPacketException(const char* msg);
+    const char * what () const noexcept;
 };
 
 

@@ -6,7 +6,7 @@
 class FileDataManager{
 public:
     char* find(char* startDir, char* name);
-    int store(char* targetDir, char* name, char* content);
+    int store(const char* targetDir, char* name, char* content);
 };
 
 #endif // __FILELOCATOR_H__

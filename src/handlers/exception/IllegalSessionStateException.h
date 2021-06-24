@@ -5,13 +5,12 @@
 #ifndef LMQTT__SERVER_ILLEGALSESSIONSTATEEXCEPTION_H
 #define LMQTT__SERVER_ILLEGALSESSIONSTATEEXCEPTION_H
 #include <exception>
+#include "../../MsgException.h"
 
-class IllegalSessionStateException : public std::exception {
-private:
-    const char* _msg;
+class IllegalSessionStateException : public MsgException {
 public:
-    IllegalSessionStateException(const char* msg);
-    const char * what () const throw ();
+    explicit IllegalSessionStateException(const char* msg);
+    const char * what () const noexcept;
 };
 
 #endif //LMQTT__SERVER_ILLEGALSESSIONSTATEEXCEPTION_H

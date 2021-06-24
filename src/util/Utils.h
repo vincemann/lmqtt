@@ -15,7 +15,8 @@ namespace Utils {
     void printBytes(void *ptr, int size);
     void printChars(unsigned char *ptr, int size);
     bool isAlNum(const char * s);
-    char* to_char_string(std::string s);
+    char* toCharP(std::string s);
+    char* formatToCharP(const char* format,const char* arg);
 };
 
 

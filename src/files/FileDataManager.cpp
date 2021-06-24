@@ -8,6 +8,10 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include "FileDataManager.h"
+#include "../MsgException.h"
+#include <exception>
+#include <cstdio>
+#include <Utils.h>
 
 
 char *FileDataManager::find(char *startDir, char *name)
@@ -31,20 +35,20 @@ char *FileDataManager::find(char *startDir, char *name)
     return 0;
 }
 
-int FileDataManager::store(char *targetDir, char *name, char *content) {
-    dirent *entry = 0;
-    int len = strlen(name);
-    DIR *dir = opendir(targetDir);
-    while ((entry = readdir(dir)) != 0)
-    {
-        if (!strcmp(entry->d_name, name))
-        {
-            (void)closedir(dir);
-            int fd = open(entry->d_name, O_RDONLY);
-            int len = strlen(content);
-            write(fd,content,len);
-            return 0;
-        }
+int FileDataManager::store(const char *targetDir, char *name, char *content) {
+    char* filePath = Utils::formatToCharP(targetDir,name);
+//    int len = strlen(name);
+     FILE *fp = fopen(filePath,"a");
+    if(fp == nullptr){
+        throw MsgException(Utils::formatToCharP("Cant open file %s\n",filePath));
     }
-    (void)closedir(dir);
+    if(fprintf(fp,"%s", content)< 0){
+        throw MsgException(Utils::formatToCharP("Unable to store file %s\n",filePath));
+
+    }
+//    int fd = open(entry->d_name, O_WRONLY | O_CREAT);
+//    int len = strlen(content);
+//    write(fp,content,len);
+    fclose(fp);
+    return 0;
 }

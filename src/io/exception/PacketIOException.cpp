@@ -4,10 +4,11 @@
 
 #include "PacketIOException.h"
 
-PacketIOException::PacketIOException(const char *msg) {
-    _msg=msg;
+
+PacketIOException::PacketIOException(const char *msg) : MsgException(msg) {
+
 }
 
-const char *PacketIOException::what() const throw() {
-    return _msg;
+const char *PacketIOException::what() const noexcept {
+    return MsgException::what();
 }

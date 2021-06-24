@@ -7,13 +7,12 @@
 #define LMQTT__SERVER_PARSEREXCEPTION_H
 
 #include <exception>
+#include "../../MsgException.h"
 
-class PacketIOException : public std::exception{
-private:
-    const char* _msg;
+class PacketIOException :  public MsgException {
 public:
-    PacketIOException(const char* msg);
-    const char * what () const throw ();
+    explicit PacketIOException(const char* msg);
+    const char * what () const noexcept;
 };
 
 #endif //LMQTT__SERVER_PARSEREXCEPTION_H

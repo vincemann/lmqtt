@@ -4,10 +4,10 @@
 
 #include "IllegalSessionStateException.h"
 
-IllegalSessionStateException::IllegalSessionStateException(const char *msg) {
-    _msg=msg;
+IllegalSessionStateException::IllegalSessionStateException(const char *msg) : MsgException(msg) {
+
 }
 
-const char *IllegalSessionStateException::what() const throw() {
-    return _msg;
+const char *IllegalSessionStateException::what() const noexcept {
+    return MsgException::what();
 }

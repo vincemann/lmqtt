@@ -4,10 +4,11 @@
 
 #include "InvalidPacketException.h"
 
-InvalidPacketException::InvalidPacketException(const char *msg) {
-    _msg=msg;
+
+InvalidPacketException::InvalidPacketException(const char *msg) : MsgException(msg) {
+
 }
 
-const char *InvalidPacketException::what() const throw() {
-    return _msg;
+const char *InvalidPacketException::what() const noexcept {
+    return MsgException::what();
 }

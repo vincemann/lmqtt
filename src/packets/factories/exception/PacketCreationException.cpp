@@ -5,10 +5,11 @@
 
 #include "PacketCreationException.h"
 
-PacketCreationException::PacketCreationException(const char *msg) {
-    _msg=msg;
+
+PacketCreationException::PacketCreationException(const char *msg) : MsgException(msg) {
+
 }
 
-const char *PacketCreationException::what() const throw() {
-    return _msg;
+const char *PacketCreationException::what() const noexcept {
+    return MsgException::what();
 }
