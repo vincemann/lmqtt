@@ -7,12 +7,9 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <iostream>
-#include <unistd.h>
 
 #include "../packets/ConnectPacket.h"
-#include "../packets/PacketType.h"
 #include "../io/PacketIOManager.h"
-#include "../packets/factories/PacketFactory.h"
 #include "../packets/factories/ConnectPacketFactory.h"
 #include "../con/ClientConnectionSession.h"
 #include "../handlers/ConnectAckPacketHandler.h"
@@ -48,7 +45,11 @@ static int connectToServer() {
 }
 
 static void attemptConnection(RawPacket *connectPacket, PacketIOManager *packetIoManager,
-                             ConnectAckPacketHandler *connectAckPacketHandler) {
+                              ConnectAckPacketHandler *connectAckPacketHandler,
+                              ClientConnectionSession* connection,
+                              std::map<PacketType, PacketParser *>* parsers) {
+    int connFd = connectToServer();
+    packetIoManager = new PacketIOManager(connection, connFd, parsers);
     std::cout << "Sending Connect packet" << "\n";
     packetIoManager->sendPacket(connectPacket);
     std::cout << "waiting for ConnAck packet" << "\n";
@@ -60,7 +61,7 @@ static void attemptConnection(RawPacket *connectPacket, PacketIOManager *packetI
     std::cout << "connack packet handled without errors" << "\n";
 }
 
-enum CLIMode{ CONNECT_MODE, SUBSCIBE_MODE, PUBLISH_MODE, RECV_MODE } mode;
+enum CLIMode{ CONNECT_MODE, SUBSCRIBE_MODE, PUBLISH_MODE, RECV_MODE } mode;
 
 static CLIMode findCliMode(char *argv[]){
     char* firstArg = argv[1];
@@ -91,10 +92,12 @@ int main(int argc, char *argv[]) {
     parsers.insert(std::make_pair(CONNACK, connAckPacketParser));
 
     // FACTORIES
-    ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
-    int connFd = connectToServer();
+    ConnectPacketFactory*  connectPacketFactory = new ConnectPacketFactory();
+
     ClientConnectionSession *connection = new ClientConnectionSession();
-    PacketIOManager *packetIoManager = new PacketIOManager(connection, connFd, &parsers);
+
+    // gets initialized by attemptConnection
+    PacketIOManager *packetIoManager;
 
     // HANDLERS
     std::map<PacketType, PacketHandler *> handlers;
@@ -114,6 +117,7 @@ int main(int argc, char *argv[]) {
         case CONNECT_MODE:
             int opt;
             // i = clientId, u = username, p = password, r=removeSession
+            //todo learn to make args obsolete (i is needed, i think it was '!' or smth)
             while ((opt = getopt(argc, argv, "u:p:i:r")) != -1) {
                 switch (opt) {
                     case 'u': username = optarg; break;
@@ -126,9 +130,14 @@ int main(int argc, char *argv[]) {
                 }
             }
             initRoute(argv);
+            if (clientId==0){
+                fprintf(stderr, "Client Id missing");
+                printUsageInformation( argv[0]);
+                exit(1);
+            }
             RawPacket *connectPacket = connectPacketFactory->create(cleanSession, clientId, username, password);
             try {
-                attemptConnection(connectPacket, packetIoManager, connectAckPacketHandler);
+                attemptConnection(connectPacket, packetIoManager, connectAckPacketHandler,connection,&parsers);
                 std::cout << "Successfully connected to Server!" << "\n";
                 exit(0);
             } catch (const std::exception &e) {
