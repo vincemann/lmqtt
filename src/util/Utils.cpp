@@ -57,9 +57,9 @@ void Utils::printChars(unsigned char *ptr, int size)
     printf("\n");
 }
 
-char* to_char_string(std::string s){
-    char *cstr = new char[s.length() + 1];
-    strcpy(cstr, s.c_str());
+char* Utils::toCharP(std::string* s){
+    char *cstr = new char[s->length() + 1];
+    strcpy(cstr, s->c_str());
     return cstr;
 }
 
