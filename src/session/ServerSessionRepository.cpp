@@ -3,7 +3,6 @@
 
 #include "ServerSessionRepository.h"
 #include "ServerSession.h"
-// #includes <json-c/json.h>
 #include "../json.hpp"
 #include "../util/Utils.h"
 #include <iostream>
@@ -37,6 +36,7 @@ ServerSession *ServerSessionRepository::load(char *clientId) {
 //    auto parsedClientId = j.find("clientId")
 
     // special iterator member functions for objects
+    // todo replace iterator with find method maybe
     ServerSession *serverSession = 0;
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
         std::cout << it.key() << " : " << it.value() << "\n";
