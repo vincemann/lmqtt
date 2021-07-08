@@ -9,7 +9,8 @@
 
 enum PacketType{
     CONNECT,
-    CONNACK
+    CONNACK,
+    SUBSCRIBE
 };
 
 namespace PacketTypes{
@@ -21,6 +22,9 @@ namespace PacketTypes{
             break;
         case CONNACK:
             return "CONNACK";
+                break;
+            case SUBSCRIBE:
+                return "SUBSCRIBE";
                 break;
         }
         return "";

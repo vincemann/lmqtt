@@ -12,6 +12,7 @@
 
 
 RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
+    // todo move to handler
     if (pRawPacket->getSpecificFlags() != 0) {
         // all specific flags must be 0
         throw PacketParsingException("invalid specific flags");

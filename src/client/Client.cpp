@@ -65,7 +65,7 @@ enum CLIMode{ CONNECT_MODE, SUBSCRIBE_MODE, PUBLISH_MODE, RECV_MODE } mode;
 
 static CLIMode findCliMode(char *argv[]){
     char* firstArg = argv[1];
-    if (strcmp("-c",firstArg) == 0){
+    if (strcmp("connect",firstArg) == 0){
         return CONNECT_MODE;
     }
     fprintf(stderr,"%s","Invalid cli mode");
@@ -83,6 +83,7 @@ static void printUsageInformation(char* progName){
 static void initRoute(char *argv[]){
     IP = argv[optind];
     PORT = strtol(argv[optind+1],nullptr,10);
+    printf("route: %s:%d\n",IP,PORT);
 }
 
 int main(int argc, char *argv[]) {
@@ -108,9 +109,9 @@ int main(int argc, char *argv[]) {
     mode = findCliMode(argv);
     optind = 2;
 
-    char *clientId;
-    char *username;
-    char *password;
+    char *clientId = 0;
+    char *username = 0;
+    char *password = 0;
     unsigned char cleanSession = 0;
 
     switch (mode) {
@@ -124,13 +125,13 @@ int main(int argc, char *argv[]) {
                     case 'p': password = optarg; break;
                     case 'i': clientId = optarg; break;
                     case 'r': cleanSession=1; break;
-                    default:
+                    default: /* '?' */
                         printUsageInformation( argv[0]);
                         exit(1);
                 }
             }
             initRoute(argv);
-            if (clientId==0){
+            if (clientId == 0){
                 fprintf(stderr, "Client Id missing");
                 printUsageInformation( argv[0]);
                 exit(1);
