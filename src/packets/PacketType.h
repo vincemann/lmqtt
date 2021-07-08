@@ -10,7 +10,8 @@
 enum PacketType{
     CONNECT,
     CONNACK,
-    SUBSCRIBE
+    SUBSCRIBE,
+    SUBSCRIBE_ACK
 };
 
 namespace PacketTypes{
