@@ -1,7 +1,6 @@
 //
 // Created by derdoc on 7/4/21.
 //
-// NOT APPROVED
 
 #include "SubscribePacketParser.h"
 #include "exception/PacketParsingException.h"
