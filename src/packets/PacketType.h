@@ -27,6 +27,9 @@ namespace PacketTypes{
             case SUBSCRIBE:
                 return "SUBSCRIBE";
                 break;
+            case SUBSCRIBE_ACK:
+                return "SUBSCRIBE_ACK";
+                break;
         }
         return "";
     }
