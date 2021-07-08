@@ -9,25 +9,26 @@
 
 #include "../packets/RawPacket.h"
 #include "../packets/parsers/PacketParser.h"
-#include "../con/ConnectionSession.h"
+#include "../con/Connection.h"
 
 #include <map>
 
 class PacketIOManager{
 public:
-    PacketIOManager(ConnectionSession *session, int connFd, std::map<PacketType, PacketParser *> *packetParsers);
+    PacketIOManager(Connection *session, int connFd, std::map<PacketType, PacketParser *> *packetParsers);
+
+    PacketIOManager();
 
     //template<class P = const RawPacket&>
     virtual RawPacket* readPacket();
     void sendPacket(RawPacket *packet);
     void closeConnection();
     // only packet io manager can write to these lists
-
-private:
-//    struct Private;
     int _conn_fd;
-    ConnectionSession *_connectionSession;
+    Connection *_connectionSession;
     std::map<PacketType,PacketParser*>* _packet_parsers;
+
+
 };
 
 

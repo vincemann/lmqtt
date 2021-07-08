@@ -2,7 +2,7 @@
 // Created by vince on 08.04.21.
 //
 
-#include "ConnectionSession.h"
+#include "Connection.h"
 #include <list>
 
 
@@ -18,14 +18,14 @@
 
 
 
-ConnectionSession::~ConnectionSession() {
+Connection::~Connection() {
     _packets_received->clear();
     _packets_sent->clear();
     delete _packets_received;
     delete _packets_sent;
 }
 
-ConnectionSession::ConnectionSession() {
+Connection::Connection() {
     _packets_received= new std::list<RawPacket*>();
     _packets_sent= new std::list<RawPacket*>();
 }

@@ -18,8 +18,8 @@ public:
     //todo add 3. and 4. from ServerSessionState
     explicit ServerSession(char* clientId);
 
+//    friend std::ostream &operator<<(std::ostream &os, const ServerSession &session);
     friend std::ostream &operator<<(std::ostream &os, const ServerSession &session);
-
 };
 
 

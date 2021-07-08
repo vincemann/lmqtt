@@ -12,7 +12,7 @@
 #include "packets/parsers/ConnectPacketParser.h"
 #include "handlers/ConnectPacketHandler.h"
 #include "handlers/PacketHandler.h"
-#include "con/ServerConnectionSession.h"
+#include "con/ServerConnection.h"
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
 
@@ -81,7 +81,7 @@ int main(int argc, char const *argv[])
         std::cout << "waiting for new connection" << "\n";
         int connFd = waitForConnection();
         std::cout << "connected to client" << "\n";
-        ServerConnectionSession* connection = new ServerConnectionSession();
+        ServerConnection* connection = new ServerConnection();
         PacketIOManager* packetIO = new PacketIOManager(connection,connFd, &parsers);
         FileDataManager* fileDataManager = new FileDataManager();
 

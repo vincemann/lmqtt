@@ -11,7 +11,7 @@
 #include "../packets/ConnectPacket.h"
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/ConnectPacketFactory.h"
-#include "../con/ClientConnectionSession.h"
+#include "../con/ClientConnection.h"
 #include "../handlers/ConnectAckPacketHandler.h"
 #include "../packets/parsers/ConnAckPacketParser.h"
 
@@ -46,10 +46,13 @@ static int connectToServer() {
 
 static void attemptConnection(RawPacket *connectPacket, PacketIOManager *packetIoManager,
                               ConnectAckPacketHandler *connectAckPacketHandler,
-                              ClientConnectionSession* connection,
+                              ClientConnection* connection,
                               std::map<PacketType, PacketParser *>* parsers) {
     int connFd = connectToServer();
-    packetIoManager = new PacketIOManager(connection, connFd, parsers);
+    packetIoManager->_conn_fd = connFd;
+    packetIoManager->_connectionSession = connection;
+    packetIoManager->_packet_parsers = parsers;
+
     std::cout << "Sending Connect packet" << "\n";
     packetIoManager->sendPacket(connectPacket);
     std::cout << "waiting for ConnAck packet" << "\n";
@@ -95,14 +98,16 @@ int main(int argc, char *argv[]) {
     // FACTORIES
     ConnectPacketFactory*  connectPacketFactory = new ConnectPacketFactory();
 
-    ClientConnectionSession *connection = new ClientConnectionSession();
+    FileDataManager* fileDataManager = new FileDataManager();
+    ClientConnection* connection = new ClientConnection();
+    ClientSessionRepository* clientSessionRepository = new ClientSessionRepository(fileDataManager);
 
     // gets initialized by attemptConnection
-    PacketIOManager *packetIoManager;
+    PacketIOManager *packetIoManager = new PacketIOManager();
 
     // HANDLERS
     std::map<PacketType, PacketHandler *> handlers;
-    ConnectAckPacketHandler *connectAckPacketHandler = new ConnectAckPacketHandler(packetIoManager);
+    ConnectAckPacketHandler* connectAckPacketHandler = new ConnectAckPacketHandler(packetIoManager, clientSessionRepository, connection);
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
 
 
@@ -117,7 +122,7 @@ int main(int argc, char *argv[]) {
     switch (mode) {
         case CONNECT_MODE:
             int opt;
-            // i = clientId, u = username, p = password, r=removeSession
+            // i = clientId, u = username, p = _password, r=removeSession
             //todo learn to make args obsolete (i is needed, i think it was '!' or smth)
             while ((opt = getopt(argc, argv, "u:p:i:r")) != -1) {
                 switch (opt) {
@@ -137,6 +142,7 @@ int main(int argc, char *argv[]) {
                 exit(1);
             }
             RawPacket *connectPacket = connectPacketFactory->create(cleanSession, clientId, username, password);
+            connection->_connectPacket= static_cast<ConnectPacket *>(connectPacket);
             try {
                 attemptConnection(connectPacket, packetIoManager, connectAckPacketHandler,connection,&parsers);
                 std::cout << "Successfully connected to Server!" << "\n";

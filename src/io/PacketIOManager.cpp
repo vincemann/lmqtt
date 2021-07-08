@@ -12,7 +12,7 @@
 #include "exception/PacketIOException.h"
 #include "../packets/PacketType.h"
 #include "../util/Utils.h"
-#include "../con/ConnectionSession.h"
+#include "../con/Connection.h"
 
 
 
@@ -155,7 +155,7 @@ RawPacket* PacketIOManager::readPacket() {
 
 
 
-PacketIOManager::PacketIOManager(ConnectionSession *session, int connFd,
+PacketIOManager::PacketIOManager(Connection *session, int connFd,
                                  std::map<PacketType, PacketParser *> *packetParsers) : _connectionSession(session),
                                                                                         _conn_fd(connFd),
                                                                                         _packet_parsers(packetParsers) {}
@@ -163,6 +163,8 @@ PacketIOManager::PacketIOManager(ConnectionSession *session, int connFd,
 void PacketIOManager::closeConnection() {
     close(_conn_fd);
 }
+
+PacketIOManager::PacketIOManager() {}
 
 
 

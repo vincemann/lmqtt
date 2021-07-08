@@ -99,16 +99,16 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Client.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnectionSession.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnection.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnectionSession.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnection.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ConnectionSession.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/Connection.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ConnectionSession.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/Connection.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/files/FileDataManager.cpp">
@@ -229,6 +229,18 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSession.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSession.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSessionRepository.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSessionRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServerSession.cpp">

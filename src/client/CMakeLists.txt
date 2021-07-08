@@ -47,8 +47,8 @@ add_executable(lmqtt__client
         ../packets/parsers/exception/PacketParsingException.h
         ../packets/parsers/ConnAckPacketParser.h
         ../packets/parsers/ConnAckPacketParser.cpp
-        ../con/ConnectionSession.cpp
-        ../con/ConnectionSession.h
+        ../con/Connection.cpp
+        ../con/Connection.h
         ../packets/factories/exception/PacketCreationException.h
         ../packets/factories/exception/PacketCreationException.cpp
         ../handlers/exception/IllegalSessionStateException.cpp
@@ -65,8 +65,8 @@ add_executable(lmqtt__client
         ../packets/factories/ConnectAckPacketFactory.cpp
         ../packets/factories/ConnectAckPacketFactory.h
         ../packets/ConnectAckPacket.cpp
-        ../con/ClientConnectionSession.cpp
-        ../con/ClientConnectionSession.h
+        ../con/ClientConnection.cpp
+        ../con/ClientConnection.h
         ../handlers/ConnectAckPacketHandler.cpp
         ../handlers/ConnectAckPacketHandler.h
         ../files/FileDataManager.h
@@ -75,7 +75,7 @@ add_executable(lmqtt__client
         ../session/ServerSession.cpp
         ../session/ServerSessionRepository.h
         ../session/ServerSessionRepository.cpp
-        ../MsgException.cpp ../MsgException.h)
+        ../MsgException.cpp ../MsgException.h ../session/ClientSession.cpp ../session/ClientSession.h ../session/ClientSessionRepository.cpp ../session/ClientSessionRepository.h)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

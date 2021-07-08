@@ -6,7 +6,7 @@
 #define LMQTT__SERVER_PACKETHANDLER_H
 
 #include "../packets/RawPacket.h"
-#include "../con/ConnectionSession.h"
+#include "../con/Connection.h"
 #include "../io/PacketIOManager.h"
 
 

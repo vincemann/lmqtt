@@ -71,7 +71,7 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     char *password = 0;
     if (passwordFlag) {
         password = extractUtf8Payload(&data);
-        printf("password:%s\n",password);
+        printf("_password:%s\n",password);
     }
 
 

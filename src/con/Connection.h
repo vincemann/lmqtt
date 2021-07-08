@@ -2,18 +2,18 @@
 // Created by vince on 08.04.21.
 //
 
-#ifndef LMQTT__SERVER_CONNECTIONSESSION_H
-#define LMQTT__SERVER_CONNECTIONSESSION_H
+#ifndef LMQTT__SERVER_CONNECTION_H
+#define LMQTT__SERVER_CONNECTION_H
 
 
 #include <list>
 #include "../packets/RawPacket.h"
 
-class ConnectionSession {
+class Connection {
 
 public:
-    ConnectionSession();
-    ~ConnectionSession();
+    Connection();
+    ~Connection();
 
     // todo add PacketIOManager as Friend, so he can call these methods
 //private:
@@ -24,4 +24,4 @@ public:
 };
 
 
-#endif //LMQTT__SERVER_CONNECTIONSESSION_H
+#endif //LMQTT__SERVER_CONNECTION_H

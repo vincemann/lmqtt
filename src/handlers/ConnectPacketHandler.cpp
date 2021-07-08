@@ -7,7 +7,7 @@
 #include <iostream>
 
 
-#include "../con/ConnectionSession.h"
+#include "../con/Connection.h"
 #include "exception/IllegalSessionStateException.h"
 #include "exception/InvalidPacketException.h"
 #include "../packets/ConnectAckPacket.h"
@@ -108,7 +108,7 @@ ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() cons
 }
 
 
-ConnectPacketHandler::ConnectPacketHandler(ServerConnectionSession *connectionSession, PacketIOManager *packetIo,
+ConnectPacketHandler::ConnectPacketHandler(ServerConnection *connectionSession, PacketIOManager *packetIo,
                                            ConnectAckPacketFactory *connectAckPacketFactory,
                                            ServerSessionRepository *sessionRepository) : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
                                                    sessionRepository), _connectionSession(connectionSession) {}

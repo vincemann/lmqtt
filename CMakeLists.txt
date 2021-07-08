@@ -49,8 +49,8 @@ add_executable(lmqtt__server
         src/handlers/ConnectPacketHandler.cpp
         src/util/Utils.cpp
         src/util/Utils.h
-        src/con/ConnectionSession.cpp
-        src/con/ConnectionSession.h
+        src/con/Connection.cpp
+        src/con/Connection.h
         src/packets/parsers/PacketParser.h
         src/packets/parsers/exception/PacketParsingException.cpp
         src/packets/parsers/exception/PacketParsingException.h
@@ -71,8 +71,8 @@ add_executable(lmqtt__server
         src/packets/factories/ConnectAckPacketFactory.cpp
         src/packets/factories/ConnectAckPacketFactory.h
         src/packets/ConnectAckPacket.cpp
-        src/con/ServerConnectionSession.cpp
-        src/con/ServerConnectionSession.h
+        src/con/ServerConnection.cpp
+        src/con/ServerConnection.h
         src/session/ServerSessionRepository.h
         src/session/ServerSessionRepository.cpp
         src/json.hpp
