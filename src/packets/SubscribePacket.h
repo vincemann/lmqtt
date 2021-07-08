@@ -23,6 +23,8 @@ public:
 
     virtual ~SubscribePacket();
 private:
+    // todo remove array initialisations
+    // todo add leading _ for member vars
     unsigned short packetId;
     unsigned short topicLength{};
     char *topic{};

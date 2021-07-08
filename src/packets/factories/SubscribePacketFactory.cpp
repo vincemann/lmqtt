@@ -3,6 +3,7 @@
 //
 
 #include "SubscribePacketFactory.h"
+#include "PacketType.h"
 
 SubscribePacket *
 SubscribePacketFactory::create(unsigned short packetId, unsigned short topicLength,
@@ -15,12 +16,18 @@ SubscribePacketFactory::create(unsigned short packetId, unsigned short topicLeng
     }
 
     memcpy(payload, &packetId, sizeof(packetId));
-    memcpy(payload + 2, &topicLength, sizeof(topicLength));
-    memcpy(payload + 4, &topic, sizeof(topicLength));
-    for (int i = 0; i < topicLength; ++i) {
-        payload[5 + i] = topic[i];
-    }
-    payload[topicLength - 1] = qos;
+    payload += sizeof(packetId);
+    memcpy(payload, &topicLength, sizeof(topicLength));
+    payload += sizeof(topicLength);
+    memcpy(payload, &topic, topicLength);
+    payload += topicLength;
+    // todo double writing of payload?
+//    for (int i = 0; i < topicLength; ++i) {
+//        payload[5 + i] = topic[i];
+//    }
+    memcpy(payload, &qos, sizeof(qos));
+    payload += sizeof(qos);
+//    payload[topicLength - 1] = qos;
     RawPacket *rawPacket = new RawPacket(specificFlags, payload, payloadLen, SUBSCRIBE);
     return new SubscribePacket(rawPacket, packetId, topicLength, topic, qos);
 }
