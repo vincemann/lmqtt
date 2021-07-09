@@ -64,10 +64,20 @@ static int waitForConnection(){
     return conn_socket;
 }
 
+static void createSessionDirectories(){
+    char* dir = getenv("HOME");
+    strcat(dir,"/.lmqtt");
+    Utils::createDirectory(dir);
+    strcat(dir,"/server");
+    Utils::createDirectory(dir);
+    strcat(dir,"/sessions");
+    Utils::createDirectory(dir);
+}
 
 int main(int argc, char const *argv[])
 
 {
+    createSessionDirectories();
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
     ConnectPacketParser* connectPacketParser = new ConnectPacketParser;

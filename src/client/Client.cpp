@@ -8,12 +8,15 @@
 #include <string.h>
 #include <iostream>
 
+
 #include "../packets/ConnectPacket.h"
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/ConnectPacketFactory.h"
 #include "../con/ClientConnection.h"
 #include "../handlers/ConnectAckPacketHandler.h"
 #include "../packets/parsers/ConnAckPacketParser.h"
+
+
 
 //#define PORT 8080
 
@@ -42,6 +45,16 @@ static int connectToServer() {
         exit(1);
     }
     return conn_fd;
+}
+
+static void createSessionDirectories(){
+    char* dir = getenv("HOME");
+    strcat(dir,"/.lmqtt");
+    Utils::createDirectory(dir);
+    strcat(dir,"/client");
+    Utils::createDirectory(dir);
+    strcat(dir,"/sessions");
+    Utils::createDirectory(dir);
 }
 
 static void attemptConnection(RawPacket *connectPacket, PacketIOManager *packetIoManager,
@@ -90,6 +103,7 @@ static void initRoute(char *argv[]){
 }
 
 int main(int argc, char *argv[]) {
+    createSessionDirectories();
     // PARSERS
     std::map<PacketType, PacketParser *> parsers;
     ConnAckPacketParser *connAckPacketParser = new ConnAckPacketParser;

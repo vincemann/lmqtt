@@ -17,6 +17,7 @@ public:
 
     void save(ClientSession *session);
     ClientSession *load(char *clientId);
+    char *_clientSessionsDir;
 };
 
 

@@ -8,6 +8,7 @@
 class ServerSessionRepository{
 protected:
 FileDataManager* _fileDataManager;
+char * _serverSessionsDir;
 public:
     void save(ServerSession* session);
     ServerSession* load(char* clientId);

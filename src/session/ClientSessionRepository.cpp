@@ -9,7 +9,6 @@
 #include <iostream>
 #include <string>
 
-const char *CLIENT_SESSIONS_DIR = "/home/vince/.lmqtt/client/sessions";
 
 
 void ClientSessionRepository::save(ClientSession *session) {
@@ -23,7 +22,7 @@ void ClientSessionRepository::save(ClientSession *session) {
     char *pJsonString = new char[jsonString.length() + 1];
     strcpy(pJsonString, jsonString.c_str());
     std::cout << "json of client session: " << pJsonString << "\n";
-    _fileDataManager->store(CLIENT_SESSIONS_DIR, session->_clientId, pJsonString);
+    _fileDataManager->store(_clientSessionsDir, session->_clientId, pJsonString);
 }
 
 static char * extractJsonValue(nlohmann::json::iterator it){
@@ -36,7 +35,7 @@ static char * extractJsonValue(nlohmann::json::iterator it){
 
 ClientSession *ClientSessionRepository::load(char *clientId) {
     std::cout << "clientId gets loaded: " << clientId << "\n";
-    char *jsonContent = _fileDataManager->find(CLIENT_SESSIONS_DIR, clientId);
+    char *jsonContent = _fileDataManager->find(_clientSessionsDir, clientId);
     if (jsonContent == nullptr) {
         return nullptr;
     }
@@ -56,4 +55,9 @@ ClientSession *ClientSessionRepository::load(char *clientId) {
     }
 
 ClientSessionRepository::ClientSessionRepository(FileDataManager *fileDataManager) : _fileDataManager(
-        fileDataManager) {}
+        fileDataManager) {
+    char* dir = getenv("HOME");
+    strcat(dir,"/.lmqtt/client/sessions");
+    this->_clientSessionsDir = dir;
+//    strcpy(,dir);
+}

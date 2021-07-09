@@ -10,6 +10,10 @@
 #include <ctype.h>
 #include <string.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 
 /* Function to reverse bits of num */
 unsigned char Utils::reverse_bits(unsigned char num) {
@@ -101,6 +105,17 @@ void* Utils::vec_to_array(std::vector<void*> * vector)
 void Utils::printBits(unsigned char val) {
     std::bitset<8> bits(val);
     std::cout << bits << '\n';
+}
+
+int Utils::createDirectory(const char* path){
+    struct stat st = {0};
+    if (stat(path, &st) == -1) {
+        int r = mkdir(path, 0700);
+        return r;
+    }else{
+        printf("dir %s already exists\n", path);
+        return 0;
+    }
 }
 
 unsigned Utils::createBitMask(unsigned a, unsigned b)
