@@ -59,8 +59,11 @@ ServerSession *ServerSessionRepository::load(char *clientId) {
 
 ServerSessionRepository::ServerSessionRepository(FileDataManager *fileDataManager) : _fileDataManager(
         fileDataManager) {
-    char* dir = getenv("HOME");
-    strcat(dir,"/.lmqtt/server/sessions");
+    const char* targetDir = "/.lmqtt/server/sessions";
+    char* home = getenv("HOME");
+    char* dir = (char*) malloc(strlen(home) + strlen(targetDir) + 1);
+    strcpy(dir,home);
+    strcat(dir,targetDir);
     this->_serverSessionsDir = dir;
 //    strcpy(,dir);
 }

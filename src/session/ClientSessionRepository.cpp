@@ -49,15 +49,20 @@ ClientSession *ClientSessionRepository::load(char *clientId) {
             clientSession->_clientId= extractJsonValue(it);
         } else if (it.key() == "username") {
             clientSession->_username= extractJsonValue(it);
-        }else if(it.key() == "password")
+        }else if(it.key() == "password"){
             clientSession->_password= extractJsonValue(it);
         }
     }
+    return clientSession;
+}
 
 ClientSessionRepository::ClientSessionRepository(FileDataManager *fileDataManager) : _fileDataManager(
         fileDataManager) {
-    char* dir = getenv("HOME");
-    strcat(dir,"/.lmqtt/client/sessions");
+    const char* targetDir = "/.lmqtt/client/sessions";
+    char* home = getenv("HOME");
+    char* dir = (char*) malloc(strlen(home) + strlen(targetDir) + 1);
+    strcpy(dir,home);
+    strcat(dir,targetDir);
     this->_clientSessionsDir = dir;
 //    strcpy(,dir);
 }

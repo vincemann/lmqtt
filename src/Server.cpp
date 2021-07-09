@@ -65,7 +65,10 @@ static int waitForConnection(){
 }
 
 static void createSessionDirectories(){
-    char* dir = getenv("HOME");
+    const char* targetDir = "/.lmqtt/server/sessions";
+    char* home = getenv("HOME");
+    char* dir = (char*) malloc(strlen(home) + strlen(targetDir) + 1);
+    strcpy(dir, home);
     strcat(dir,"/.lmqtt");
     Utils::createDirectory(dir);
     strcat(dir,"/server");
