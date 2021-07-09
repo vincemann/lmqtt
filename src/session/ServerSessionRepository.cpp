@@ -10,7 +10,7 @@
 #include "FileDataManager.h"
 
 
-const char *SESSIONS_DIR = "/home/vince/.lmqtt/server/sessions";
+const char *SERVER_SESSIONS_DIR = "/home/vince/.lmqtt/server/sessions";
 
 void ServerSessionRepository::save(ServerSession *session) {
     // for convenience
@@ -22,12 +22,12 @@ void ServerSessionRepository::save(ServerSession *session) {
     char *pJsonString = new char[jsonString.length() + 1];
     strcpy(pJsonString, jsonString.c_str());
     std::cout << "json of server session: " << pJsonString << "\n";
-    _fileDataManager->store(SESSIONS_DIR, session->_clientId, pJsonString);
+    _fileDataManager->store(SERVER_SESSIONS_DIR, session->_clientId, pJsonString);
 }
 
 ServerSession *ServerSessionRepository::load(char *clientId) {
     std::cout << "clientId gets loaded: " << clientId << "\n";
-    char *jsonContent = _fileDataManager->find(SESSIONS_DIR, clientId);
+    char *jsonContent = _fileDataManager->find(SERVER_SESSIONS_DIR, clientId);
     if (jsonContent == nullptr) {
         return nullptr;
     }

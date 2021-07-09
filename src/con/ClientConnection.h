@@ -12,8 +12,9 @@ class ClientConnection : public Connection{
 public:
     ConnectPacket* _connectPacket;
 
-    ClientConnection(ConnectPacket *connectPacket);
+    ConnectPacket *getConnectPacket() const;
 
+    ClientConnection(ConnectPacket *connectPacket);
     ClientConnection();
 };
 

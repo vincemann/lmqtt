@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string>
 
-const char *SESSIONS_DIR = "/home/vince/.lmqtt/client/sessions";
+const char *CLIENT_SESSIONS_DIR = "/home/vince/.lmqtt/client/sessions";
 
 
 void ClientSessionRepository::save(ClientSession *session) {
@@ -17,13 +17,13 @@ void ClientSessionRepository::save(ClientSession *session) {
     using json = nlohmann::json;
     json j;
     j["clientId"] = session->_clientId;
-    j["username"] = *session->_username;
-    j["password"] = *session->_password;
+    j["username"] = session->_username;
+    j["password"] = session->_password;
     std::string jsonString = j.dump();
     char *pJsonString = new char[jsonString.length() + 1];
     strcpy(pJsonString, jsonString.c_str());
-    std::cout << "json of server session: " << pJsonString << "\n";
-    _fileDataManager->store(SESSIONS_DIR, session->_clientId, pJsonString);
+    std::cout << "json of client session: " << pJsonString << "\n";
+    _fileDataManager->store(CLIENT_SESSIONS_DIR, session->_clientId, pJsonString);
 }
 
 static char * extractJsonValue(nlohmann::json::iterator it){
@@ -36,16 +36,13 @@ static char * extractJsonValue(nlohmann::json::iterator it){
 
 ClientSession *ClientSessionRepository::load(char *clientId) {
     std::cout << "clientId gets loaded: " << clientId << "\n";
-    char *jsonContent = _fileDataManager->find(SESSIONS_DIR, clientId);
+    char *jsonContent = _fileDataManager->find(CLIENT_SESSIONS_DIR, clientId);
     if (jsonContent == nullptr) {
         return nullptr;
     }
     using json = nlohmann::json;
     json j = json::parse(jsonContent);
-    //    auto parsedClientId = j.find("clientId")
 
-    // special iterator member functions for objects
-    // todo replace iterator with find method maybe
     ClientSession *clientSession = new ClientSession();
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
         std::cout << it.key() << " : " << it.value() << "\n";

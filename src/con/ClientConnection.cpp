@@ -7,3 +7,7 @@
 ClientConnection::ClientConnection() {}
 
 ClientConnection::ClientConnection(ConnectPacket *connectPacket) : _connectPacket(connectPacket) {}
+
+ConnectPacket *ClientConnection::getConnectPacket() const {
+    return _connectPacket;
+}

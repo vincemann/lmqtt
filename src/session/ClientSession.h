@@ -14,7 +14,7 @@ public:
 
     ClientSession();
 
-    char * _clientId;
+    char* _clientId;
     char* _username;
     char* _password;
 
