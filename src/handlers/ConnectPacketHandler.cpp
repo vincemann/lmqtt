@@ -47,7 +47,7 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * 
 
 void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     ConnectPacket* packet = static_cast<ConnectPacket*>(rawPacket);
-    printf("handling connect rawPacket:\n");
+    printf("handling waitForNewClient rawPacket:\n");
     if (_connectionSession->_packets_received->size() != 1){
         throw IllegalSessionStateException("received more than one Connect Packet");
     }
@@ -94,7 +94,7 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     }
 
     
-    printf("%s\n","valid connect packet received, initializing session");
+    printf("%s\n","valid waitForNewClient packet received, initializing session");
     unsigned char cleanSession = packet->getCleanSession();
 
 

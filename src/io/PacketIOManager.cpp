@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <list>
 #include <iostream>
+#include <bits/fcntl.h>
+
 
 #include "PacketIOManager.h"
 #include "exception/PacketIOException.h"

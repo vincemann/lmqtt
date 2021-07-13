@@ -14,7 +14,7 @@ ConnectAckPacketHandler::ConnectAckPacketHandler(PacketIOManager *packetIo,
           _clientConnectionSession(clientConnectionSession) {}
 
 void ConnectAckPacketHandler::handle(RawPacket *rawPacket) {
-    printf("handling connect ack packet\n");
+    printf("handling waitForNewClient ack packet\n");
     ConnectAckPacket *packet = static_cast<ConnectAckPacket *>(rawPacket);
     unsigned char retCode = packet->getReturnCode();
     ConnectPacket *connectPacket = _clientConnectionSession->getConnectPacket();

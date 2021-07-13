@@ -84,7 +84,7 @@ enum CLIMode{ CONNECT_MODE, SUBSCRIBE_MODE, PUBLISH_MODE, RECV_MODE } mode;
 
 static CLIMode findCliMode(char *argv[]){
     char* firstArg = argv[1];
-    if (strcmp("connect",firstArg) == 0){
+    if (strcmp("waitForNewClient",firstArg) == 0){
         return CONNECT_MODE;
     }
     fprintf(stderr,"%s","Invalid cli mode");

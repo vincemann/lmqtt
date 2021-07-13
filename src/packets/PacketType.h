@@ -7,28 +7,31 @@
 #ifndef LMQTT__SERVER_PACKETTYPE_H
 #define LMQTT__SERVER_PACKETTYPE_H
 
-enum PacketType{
+enum PacketType {
     CONNECT,
     CONNACK,
     SUBSCRIBE,
-    SUBSCRIBE_ACK
+    SUBSCRIBE_ACK,
+    DISCONNECT
 };
 
-namespace PacketTypes{
-    static const char* toString(PacketType PacketType){
-        switch (PacketType)
-        {
-        case CONNECT:
-            return "CONNECT";
-            break;
-        case CONNACK:
-            return "CONNACK";
+namespace PacketTypes {
+    static const char *toString(PacketType PacketType) {
+        switch (PacketType) {
+            case CONNECT:
+                return "CONNECT";
+                break;
+            case CONNACK:
+                return "CONNACK";
                 break;
             case SUBSCRIBE:
                 return "SUBSCRIBE";
                 break;
             case SUBSCRIBE_ACK:
                 return "SUBSCRIBE_ACK";
+                break;
+            case DISCONNECT:
+                return "DISCONNECT";
                 break;
         }
         return "";
