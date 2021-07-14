@@ -11,9 +11,6 @@
 
 #include "PacketIOManager.h"
 #include "exception/PacketIOException.h"
-#include "../packets/PacketType.h"
-#include "../util/Utils.h"
-#include "../con/Connection.h"
 
 
 static void err(const char *msg) {
