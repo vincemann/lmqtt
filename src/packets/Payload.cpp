@@ -23,8 +23,9 @@ int Payload::getSize() const {
     return size;
 }
 
-
-Payload::Payload(unsigned char data, unsigned short size) {
+// for payloads that consist of only one byte
+Payload::Payload(unsigned char data) {
+    unsigned short size = sizeof(unsigned char);
     unsigned char* pData = ( unsigned char*) malloc(size);
     memcpy(pData,&data,size);
     _data=pData;
@@ -32,6 +33,7 @@ Payload::Payload(unsigned char data, unsigned short size) {
     _prependSize=false;
 }
 
+// for payloads that consist of only two byte
 Payload::Payload(unsigned short data) {
     unsigned char* pData = ( unsigned char*) malloc(sizeof (unsigned short));
     pData[0]= data & 0xff;

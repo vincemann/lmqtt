@@ -45,7 +45,7 @@ public:
 
     char *getPassword() const;
 
-    ~ConnectPacket();
+//    ~ConnectPacket();
 
 
 

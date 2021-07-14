@@ -51,7 +51,8 @@ int main(int argc, char const *argv[])
 
 
     ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories);
-    connectionManager->waitForNewClient();
-
+    connectionManager->serveClients();
 
 }
+
+

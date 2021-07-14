@@ -18,6 +18,7 @@ protected:
 public:
     explicit PacketHandler(PacketIOManager *packetIo);
     virtual void handle(RawPacket* packet) = 0;
+    virtual ~PacketHandler();
 };
 
 #endif //LMQTT__SERVER_PACKETHANDLER_H

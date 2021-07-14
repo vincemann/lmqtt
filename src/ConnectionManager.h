@@ -11,8 +11,9 @@ public:
     ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
                       std::map<PacketType, PacketFactory *> *factories);
 
-    void waitForNewClient();
+    void serveClients();
     void disconnectClient();
+
 private:
     int waitForConnection();
     int _port;

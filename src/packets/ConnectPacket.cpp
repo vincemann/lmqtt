@@ -7,14 +7,6 @@
 
 
 
-ConnectPacket::~ConnectPacket(){
-    delete clientId;
-    delete willTopic;
-    delete willMsg;
-    delete username;
-    delete password;
-    delete protocolName;
-}
 
 
 

@@ -19,8 +19,8 @@ public:
 //private:
 //    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsSent();
 //    friend std::list<RawPacket *> &PacketIOManager::modifyPacketsReceived();
-    std::list<RawPacket*>* _packets_sent;
-    std::list<RawPacket*>* _packets_received;
+    std::list<RawPacket*>* _packetsSent;
+    std::list<RawPacket*>* _packetsReceived;
 };
 
 

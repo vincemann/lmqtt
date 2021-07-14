@@ -9,7 +9,7 @@
 class Payload {
 public:
     Payload(unsigned char *data, unsigned short size, bool prependSize=false);
-    Payload(unsigned char data, unsigned short size=1);
+    Payload(unsigned char data);
     Payload(unsigned short data);
     unsigned char* _data;
     unsigned short _dataSize;

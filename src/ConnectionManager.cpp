@@ -68,12 +68,12 @@ int ConnectionManager::waitForConnection(){
     return conn_socket;
 }
 
-void ConnectionManager::waitForNewClient() {
+void ConnectionManager::serveClients() {
     while (true){
         std::cout << "waiting for new connection" << "\n";
         int connFd = waitForConnection();
         std::cout << "connected to client" << "\n";
-        _clientConnected = 1;
+        this->_clientConnected = 1;
 
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
         ServerConnection* connection = new ServerConnection();
@@ -108,8 +108,18 @@ void ConnectionManager::waitForNewClient() {
 
         // CLIENT IS DISCONNECTED -> CLEANUP
         packetIO->closeConnection();
+        for (const auto &packet : *connection->_packetsSent){
+            delete packet;
+        }
+        for (const auto &packet : *connection->_packetsReceived){
+            delete packet;
+        }
         delete connection;
-        delete &handlers;
+
+        for (const auto& any : handlers) {
+            delete any.second;
+        }
+
         delete serverSessionRepository;
         delete fileDataManager;
         delete packetIO;
@@ -123,3 +133,4 @@ void ConnectionManager::disconnectClient() {
 ConnectionManager::ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
                                      std::map<PacketType, PacketFactory *> *factories) : _port(port), _parsers(parsers),
                                                                                          _factories(factories) {}
+

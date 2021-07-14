@@ -9,23 +9,24 @@
 
 
 //std::list<RawPacket *> &PacketIOManager::modifyPacketsSent() {
-//    return _packets_sent;
+//    return _packetsSent;
 //}
 //
 //std::list<RawPacket *> &PacketIOManager::modifyPacketsReceived() {
-//    return _packets_received;
+//    return _packetsReceived;
 //}
 
 
 
 Connection::~Connection() {
-    _packets_received->clear();
-    _packets_sent->clear();
-    delete _packets_received;
-    delete _packets_sent;
+    // packets will not be removed from heap
+    _packetsReceived->clear();
+    _packetsSent->clear();
+    delete _packetsReceived;
+    delete _packetsSent;
 }
 
 Connection::Connection() {
-    _packets_received= new std::list<RawPacket*>();
-    _packets_sent= new std::list<RawPacket*>();
+    _packetsReceived= new std::list<RawPacket*>();
+    _packetsSent= new std::list<RawPacket*>();
 }
