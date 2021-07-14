@@ -12,7 +12,8 @@ enum PacketType {
     CONNACK,
     SUBSCRIBE,
     SUBSCRIBE_ACK,
-    DISCONNECT
+    DISCONNECT,
+    UNKNOWN
 };
 
 namespace PacketTypes {
@@ -34,7 +35,39 @@ namespace PacketTypes {
                 return "DISCONNECT";
                 break;
         }
-        return "";
+        return "UNKNOWN";
+    }
+
+    static unsigned char evalPacketTypeValue(PacketType packetType) {
+        switch (packetType) {
+            case CONNECT:
+                return 1;
+            case CONNACK:
+                return 2;
+            case SUBSCRIBE:
+                return 8;
+            case SUBSCRIBE_ACK:
+                return 9;
+            case DISCONNECT:
+                return 14;
+        }
+        return -1;
+    }
+
+    static PacketType evalPacketType(unsigned char packetTypeVal) {
+        switch (packetTypeVal) {
+            case 1:
+                return PacketType::CONNECT;
+            case 2:
+                return PacketType::CONNACK;
+            case 8:
+                return PacketType::SUBSCRIBE;
+            case 9:
+                return PacketType::SUBSCRIBE_ACK;
+            case 14:
+                return PacketType::DISCONNECT;
+        }
+        return PacketType::UNKNOWN;
     }
 }
 

@@ -36,3 +36,7 @@ unsigned short PacketParser::getUf8PayloadLen(unsigned char *pData)  {
     return len;
 }
 
+PacketParser::~PacketParser() {
+
+}
+

@@ -16,6 +16,7 @@ ConnectAckPacketHandler::ConnectAckPacketHandler(PacketIOManager *packetIo,
 void ConnectAckPacketHandler::handle(RawPacket *rawPacket) {
     printf("handling connection ack packet\n");
     ConnectAckPacket *packet = static_cast<ConnectAckPacket *>(rawPacket);
+    assertSpecificFlagsZero(packet);
     unsigned char retCode = packet->getReturnCode();
     ConnectPacket *connectPacket = _clientConnectionSession->getConnectPacket();
 

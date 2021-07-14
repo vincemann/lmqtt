@@ -47,6 +47,8 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * 
 
 void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     ConnectPacket* packet = static_cast<ConnectPacket*>(rawPacket);
+    assertSpecificFlagsZero(packet);
+
     printf("handling connect rawPacket:\n");
     if (_connectionSession->_packetsReceived->size() != 1){
         throw IllegalSessionStateException("received more than one Connect Packet");

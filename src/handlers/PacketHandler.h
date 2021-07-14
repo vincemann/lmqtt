@@ -15,6 +15,7 @@
 class PacketHandler{
 protected:
     PacketIOManager* _packetIo;
+    void assertSpecificFlagsZero(RawPacket* packet);
 public:
     explicit PacketHandler(PacketIOManager *packetIo);
     virtual void handle(RawPacket* packet) = 0;

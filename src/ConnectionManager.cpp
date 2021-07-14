@@ -10,6 +10,7 @@
 #include <string.h>
 #include <iostream>
 #include <fcntl.h>
+#include <DisconnectPacketHandler.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -79,13 +80,15 @@ void ConnectionManager::serveClients() {
         ServerConnection* connection = new ServerConnection();
         PacketIOManager* packetIO = new PacketIOManager(connection,connFd, _parsers);
         FileDataManager* fileDataManager = new FileDataManager();
+        ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
 
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
-        ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
         ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNACK));
         ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory, serverSessionRepository);
+        DisconnectPacketHandler* disconnectPacketHandler = new DisconnectPacketHandler(packetIO,this);
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
+        handlers.insert(std::make_pair(DISCONNECT, disconnectPacketHandler));
 
 
         while(true){
@@ -106,6 +109,7 @@ void ConnectionManager::serveClients() {
             }
         }
 
+        printf("Client Disconnected\n");
         // CLIENT IS DISCONNECTED -> CLEANUP
         packetIO->closeConnection();
         for (const auto &packet : *connection->_packetsSent){
@@ -127,6 +131,7 @@ void ConnectionManager::serveClients() {
 }
 
 void ConnectionManager::disconnectClient() {
+    printf("Disconnecting client\n");
     this->_clientConnected = 0;
 }
 

@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <iostream>
+#include <DisconnectPacket.h>
 
 
 #include "../packets/ConnectPacket.h"
@@ -65,9 +66,9 @@ static void attemptConnection(RawPacket *connectPacket, PacketIOManager *packetI
                               ClientConnection* connection,
                               std::map<PacketType, PacketParser *>* parsers) {
     int connFd = connectToServer();
-    packetIoManager->_conn_fd = connFd;
+    packetIoManager->_connFd = connFd;
     packetIoManager->_connectionSession = connection;
-    packetIoManager->_packet_parsers = parsers;
+    packetIoManager->_packetParsers = parsers;
 
     std::cout << "Sending Connect packet" << "\n";
     packetIoManager->sendPacket(connectPacket);
@@ -163,6 +164,8 @@ int main(int argc, char *argv[]) {
             try {
                 attemptConnection(connectPacket, packetIoManager, connectAckPacketHandler,connection,&parsers);
                 std::cout << "Successfully connected to Server!" << "\n";
+                packetIoManager->sendPacket(new DisconnectPacket());
+                packetIoManager->closeConnection();
                 exit(0);
             } catch (const std::exception &e) {
                 std::cout << "exception occurred while creating connection with server:" << "\n";

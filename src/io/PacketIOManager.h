@@ -14,9 +14,10 @@
 #include <map>
 
 class PacketIOManager{
+private:
+    unsigned int evalPacketLength();
 public:
     PacketIOManager(Connection *session, int connFd, std::map<PacketType, PacketParser *> *packetParsers);
-
     PacketIOManager();
 
     //template<class P = const RawPacket&>
@@ -24,9 +25,9 @@ public:
     void sendPacket(RawPacket *packet);
     void closeConnection();
     // only packet io manager can write to these lists
-    int _conn_fd;
+    int _connFd;
     Connection *_connectionSession;
-    std::map<PacketType,PacketParser*>* _packet_parsers;
+    std::map<PacketType,PacketParser*>* _packetParsers;
 
 
 };

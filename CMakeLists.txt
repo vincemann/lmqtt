@@ -78,7 +78,17 @@ add_executable(lmqtt__server
         src/json.hpp
         src/files/FileDataManager.h
         src/files/FileDataManager.cpp
-        src/MsgException.cpp src/MsgException.h src/ConnectionManager.cpp src/ConnectionManager.h)
+        src/MsgException.cpp
+        src/MsgException.h
+        src/ConnectionManager.cpp
+        src/ConnectionManager.h
+        src/packets/DisconnectPacket.cpp
+        src/packets/DisconnectPacket.h
+        src/packets/parsers/DisconnectPacketParser.cpp
+        src/packets/parsers/DisconnectPacketParser.h
+        src/handlers/DisconnectPacketHandler.cpp
+        src/handlers/DisconnectPacketHandler.h
+        )
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

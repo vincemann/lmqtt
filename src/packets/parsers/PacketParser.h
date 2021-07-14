@@ -15,6 +15,7 @@
 class PacketParser {
 public:
     virtual RawPacket* parse(RawPacket* raw_packet) = 0;
+    virtual ~PacketParser();
 
 
     unsigned short getUf8PayloadLen(unsigned char *pData);
