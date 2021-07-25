@@ -1,0 +1,42 @@
+//
+// Created by vince on 25.07.21.
+//
+
+#ifndef LMQTT__SERVER_CLIENTCONNECTIONMANAGER_H
+#define LMQTT__SERVER_CLIENTCONNECTIONMANAGER_H
+
+#include <PacketParser.h>
+#include <PacketIOManager.h>
+#include <ConnectAckPacketHandler.h>
+#include "ClientConnectionManager.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <iostream>
+#include <DisconnectPacket.h>
+
+class ClientConnectionManager {
+public:
+    // need to be set via setters
+    char* _ip;
+    int _port;
+    PacketIOManager *_packetIoManager;
+    ConnectAckPacketHandler *_connectAckPacketHandler;
+    ClientConnection *_connection;
+    std::map<PacketType, PacketParser *> *parsers;
+
+    ClientConnectionManager(PacketIOManager *packetIoManager, ConnectAckPacketHandler *connectAckPacketHandler,
+                            ClientConnection *connection, std::map<PacketType, PacketParser *> *parsers);
+
+    void attemptConnection(RawPacket *connectPacket);
+    int connectToServer();
+    void closeConnection();
+    void setIp(char *ip);
+    void setPort(int port);
+};
+
+
+#endif //LMQTT__SERVER_CLIENTCONNECTIONMANAGER_H

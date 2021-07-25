@@ -71,7 +71,7 @@ int ConnectionManager::waitForConnection(){
 
 void ConnectionManager::serveClients() {
     while (true){
-        std::cout << "waiting for new connection" << "\n";
+        std::cout << "waiting for new _connection" << "\n";
         int connFd = waitForConnection();
         std::cout << "connected to client" << "\n";
         this->_clientConnected = 1;

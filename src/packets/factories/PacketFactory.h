@@ -75,7 +75,7 @@ public:
 
     // Payload strings wont have trailing nullbytes
     static Payload* createUtf8Payload(const char *payloadData) {
-        // todo check for wrong encoding chars -> close connection
+        // todo check for wrong encoding chars -> close _connection
         // strlen does not count nullbyte -> null byte will be cut off
         int len = strlen(payloadData);
         if (len > 0xffff) {

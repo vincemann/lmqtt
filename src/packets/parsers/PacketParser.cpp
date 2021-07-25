@@ -9,7 +9,7 @@
 #include <string.h>
 
 char *PacketParser::extractUtf8Payload(unsigned char **ppData, bool incrementPointer) {
-    // todo check for wrong encoding chars -> close connection
+    // todo check for wrong encoding chars -> close _connection
     unsigned char *pData = *ppData;
     unsigned short len = getUf8PayloadLen(pData);
     unsigned char payload[len + 1];
