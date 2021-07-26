@@ -39,7 +39,7 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * 
             _connectionSession->_serverSession = session;
             std::cout << "new session: " << session << "\n";
         } else{
-            std::cout << "have found session file for client id" << clientId << ": " << session <<"\n";
+            std::cout << "have found session file for client id: " << clientId << ": " << session <<"\n";
         }
     }
 }

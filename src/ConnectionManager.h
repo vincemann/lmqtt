@@ -14,8 +14,10 @@ public:
     void serveClients();
     void disconnectClient();
 
+
 private:
-    int waitForConnection();
+    int waitForConnection(int serverFd);
+    int bindToPort();
     int _port;
     unsigned char _clientConnected;
     std::map<PacketType,PacketParser*>* _parsers;

@@ -24,11 +24,33 @@
 
 #include "ConnectionManager.h"
 
-int ConnectionManager::waitForConnection(){
-    int server_fd, conn_socket;
+
+int ConnectionManager::waitForConnection(int serverFd){
+    int conn_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons( _port );
+
+    if ((conn_socket = accept(serverFd, (struct sockaddr *)&address,
+            (socklen_t*)&addrlen))<0)
+    {
+        perror("accept");
+        exit(EXIT_FAILURE);
+    }
+    return conn_socket;
+}
+
+int ConnectionManager::bindToPort(){
+    int server_fd;
     struct sockaddr_in address;
     int opt = 1;
-    int addrlen = sizeof(address);
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons( _port );
+
 
     // Creating socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
@@ -44,13 +66,9 @@ int ConnectionManager::waitForConnection(){
         perror("setsockopt");
         exit(EXIT_FAILURE);
     }
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons( _port );
-
     // Forcefully attaching socket to the port 8080
     if (bind(server_fd, (struct sockaddr *)&address,
-            sizeof(address))<0)
+             sizeof(address))<0)
     {
         perror("bind failed");
         exit(EXIT_FAILURE);
@@ -60,33 +78,28 @@ int ConnectionManager::waitForConnection(){
         perror("listen");
         exit(EXIT_FAILURE);
     }
-    if ((conn_socket = accept(server_fd, (struct sockaddr *)&address,
-            (socklen_t*)&addrlen))<0)
-    {
-        perror("accept");
-        exit(EXIT_FAILURE);
-    }
-    return conn_socket;
+    return server_fd;
 }
 
 void ConnectionManager::serveClients() {
+    int serverFd = bindToPort();
     while (true){
-        std::cout << "waiting for new _connection" << "\n";
-        int connFd = waitForConnection();
+        std::cout << "waiting for new connection" << "\n";
+        int connFd = waitForConnection(serverFd);
         std::cout << "connected to client" << "\n";
         this->_clientConnected = 1;
 
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
         ServerConnection* connection = new ServerConnection();
-        PacketIOManager* packetIO = new PacketIOManager(connection,connFd, _parsers);
+        PacketIOManager* packetIoManager = new PacketIOManager(connection, connFd, _parsers);
         FileDataManager* fileDataManager = new FileDataManager();
         ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
 
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
         ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNACK));
-        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection,packetIO,connectAckPacketFactory, serverSessionRepository);
-        DisconnectPacketHandler* disconnectPacketHandler = new DisconnectPacketHandler(packetIO,this);
+        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager, connectAckPacketFactory, serverSessionRepository);
+        DisconnectPacketHandler* disconnectPacketHandler = new DisconnectPacketHandler(packetIoManager, this);
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
         handlers.insert(std::make_pair(DISCONNECT, disconnectPacketHandler));
 
@@ -95,11 +108,12 @@ void ConnectionManager::serveClients() {
             try{
                 std::cout << "waiting for new packet" << "\n";
                 if (_clientConnected){
-                    RawPacket* packet = packetIO->readPacket();
+                    RawPacket* packet = packetIoManager->readPacket();
                     PacketHandler* handler = handlers[packet->getType()];
                     handler->handle(packet);
                     std::cout << "packet handled without errors" << "\n";
                 } else{
+                    // this is reached when disconnectClient() is called
                     break;
                 }
             } catch (const std::exception& e) {
@@ -111,7 +125,7 @@ void ConnectionManager::serveClients() {
 
         printf("Client Disconnected\n");
         // CLIENT IS DISCONNECTED -> CLEANUP
-        packetIO->closeConnection();
+        packetIoManager->closeConnection();
         for (const auto &packet : *connection->_packetsSent){
             delete packet;
         }
@@ -126,7 +140,7 @@ void ConnectionManager::serveClients() {
 
         delete serverSessionRepository;
         delete fileDataManager;
-        delete packetIO;
+        delete packetIoManager;
     }
 }
 
