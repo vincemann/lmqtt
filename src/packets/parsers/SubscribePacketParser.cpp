@@ -7,23 +7,23 @@
 #include <stdio.h>
 #include <string.h>
 
-RawPacket *SubscribePacketParser::parse(RawPacket *pRawPacket) {
-    if (pRawPacket->getSpecificFlags() != 8) {
-        // all specific flags must be 0
+RawPacket *SubscribePacketParser::parse(RawPacket *rawPacket) {
+    if (rawPacket->getSpecificFlags() != 2) {
+        // all specific flags must be 2
         throw PacketParsingException("invalid specific flags");
     }
 
-    unsigned char *data = pRawPacket->getData();
-//    todo: packetId "database"
+    unsigned char *data = rawPacket->getData();
     unsigned short packetId;
     memcpy(&packetId, data, sizeof(unsigned short));
     data += sizeof(unsigned short);
 
-    printf("packetId:%d\n", packetId);
-
-    unsigned short topicLength;
-    memcpy(&topicLength, data, sizeof(unsigned short));
-    data += sizeof(unsigned short);
+    printf("_packetId:%d\n", packetId);
+//    unsigned short topicLength;
+//
+//    memcpy(&topicLength, data, sizeof(unsigned short));
+//    data += sizeof(unsigned short);
+//    Payload* topic = extractUtf8Payload(data);
 
     char *topic = extractUtf8Payload(&data, true);
     printf("topic:%s\n", topic);
@@ -33,10 +33,5 @@ RawPacket *SubscribePacketParser::parse(RawPacket *pRawPacket) {
     unsigned char qos;
     memcpy(&qos, data, sizeof(unsigned char ));
 
-    // todo move to handler
-    if (qos > 3){
-        throw PacketParsingException("invalid QoS field");
-    }
-
-    return new SubscribePacket(pRawPacket, packetId, topicLength, topic, qos);
+    return new SubscribePacket(rawPacket, packetId, topic, qos);
 }

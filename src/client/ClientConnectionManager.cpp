@@ -35,7 +35,7 @@ void ClientConnectionManager::attemptConnection(RawPacket *connectPacket) {
 }
 
 int ClientConnectionManager::connectToServer() {
-    int conn_fd = 0;
+    int conn_fd;
     struct sockaddr_in serv_addr;
     if ((conn_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("\n Socket creation error \n");

@@ -9,9 +9,9 @@
 #include <iostream>
 #include <DisconnectPacket.h>
 #include "CLIMode.h"
-#include "ConnectModeHandler.h"
+#include "ConnectCLIModeHandler.h"
 
-void ConnectModeHandler::handle() {
+void ConnectCLIModeHandler::handle() {
     int opt;
 
     char *clientId = 0;
@@ -51,8 +51,9 @@ void ConnectModeHandler::handle() {
     }
 }
 
-ConnectModeHandler::ConnectModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
-                                       ConnectPacketFactory *connectPacketFactory, int argc) : ModeHandler(argv,
-                                                                                                           clientConnectionManager,
-                                                                                                           connectPacketFactory,
-                                                                                                           argc) {}
+ConnectCLIModeHandler::ConnectCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
+                                             ConnectPacketFactory *connectPacketFactory, int argc) : CLIModeHandler(argv,
+                                                                                                              clientConnectionManager,
+                                                                                                              connectPacketFactory,
+                                                                                                              argc),
+ {}

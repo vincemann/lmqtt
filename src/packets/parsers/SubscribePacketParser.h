@@ -13,7 +13,7 @@
 
 class SubscribePacketParser : public PacketParser{
 public:
-    RawPacket* parse(RawPacket* pRawPacket);
+    RawPacket* parse(RawPacket* rawPacket);
 
 };
 

@@ -12,7 +12,7 @@
 #include "../handlers/ConnectAckPacketHandler.h"
 #include "../packets/parsers/ConnAckPacketParser.h"
 #include "./mode/CLIMode.h"
-#include "mode/ConnectModeHandler.h"
+#include "mode/ConnectCLIModeHandler.h"
 #include "ClientConnectionManager.h"
 
 
@@ -60,7 +60,8 @@ int main(int argc, char *argv[]) {
     ClientConnectionManager* clientConnectionManager = new ClientConnectionManager(packetIoManager,connectAckPacketHandler,connection, &parsers);
 
     // MODE HANDLERS
-    ConnectModeHandler* connectModeHandler = new ConnectModeHandler(argv, clientConnectionManager,connectPacketFactory,argc);
+    ConnectCLIModeHandler* connectModeHandler = new ConnectCLIModeHandler(argv, clientConnectionManager,
+                                                                          connectPacketFactory, argc, nullptr);
 
     CLIMode mode = CLIModes::findCliMode(argv[1]);
     optind = 2;

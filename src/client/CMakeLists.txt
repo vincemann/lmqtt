@@ -83,7 +83,7 @@ add_executable(lmqtt__client
         ../session/ClientSessionRepository.h
         ../packets/DisconnectPacket.cpp
         ../packets/DisconnectPacket.h
-        mode/ConnectModeHandler.cpp mode/ConnectModeHandler.h mode/ModeHandler.h mode/CLIMode.h mode/ModeHandler.cpp ClientConnectionManager.cpp ClientConnectionManager.h)
+        mode/ConnectCLIModeHandler.cpp mode/ConnectCLIModeHandler.h mode/CLIModeHandler.h mode/CLIMode.h mode/CLIModeHandler.cpp ClientConnectionManager.cpp ClientConnectionManager.h mode/SubscribeCLIModeHandler.cpp mode/SubscribeCLIModeHandler.h)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

@@ -11,12 +11,9 @@
 class SubscribePacket : public RawPacket{
 public:
 
-    SubscribePacket(RawPacket *rawPacket, unsigned short packetId, unsigned short topicLength,
-                    char *topic, unsigned char qos);
+    SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned short qos);
 
     unsigned short getPacketId() const;
-
-    unsigned short getTopicLength() const;
 
     char *getTopic() const;
 
@@ -26,11 +23,10 @@ public:
 private:
     // todo remove array initialisations
     // todo add leading _ for member vars
-    unsigned short packetId;
-    unsigned short topicLength{};
-    char *topic{};
+    unsigned short _packetId;
+    char *topic;
 
-    unsigned short qos{};
+    unsigned short qos;
 };
 
 

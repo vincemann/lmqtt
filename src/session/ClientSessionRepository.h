@@ -17,6 +17,10 @@ public:
 
     void save(ClientSession *session);
     ClientSession *load(char *clientId);
+    /**
+     * load first client session file found
+     * @return
+     */
     char *_clientSessionsDir;
 };
 

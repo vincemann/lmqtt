@@ -10,7 +10,7 @@
 
 class SubscribePacketFactory : public PacketFactory{
 public:
-    SubscribePacket *create(unsigned short packetId, unsigned short topicLength,
+    SubscribePacket *create(unsigned short packetId,
                             char *topic, unsigned char qos);
 
 };

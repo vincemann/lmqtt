@@ -2,23 +2,23 @@
 // Created by vince on 25.07.21.
 //
 
-#ifndef LMQTT__SERVER_MODEHANDLER_H
-#define LMQTT__SERVER_MODEHANDLER_H
+#ifndef LMQTT__SERVER_CLIMODEHANDLER_H
+#define LMQTT__SERVER_CLIMODEHANDLER_H
 
 #include <ConnectPacketFactory.h>
 #include "../ClientConnectionManager.h"
 
-class ModeHandler{
+class CLIModeHandler{
 public:
     int _argc;
     char **_argv;
     ClientConnectionManager* _clientConnectionManager;
     ConnectPacketFactory* _connectPacketFactory;
 
-    ModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
-                ConnectPacketFactory *connectPacketFactory, int argc);
+    CLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
+                   ConnectPacketFactory *connectPacketFactory, int argc);
 
-    virtual ~ModeHandler();
+    virtual ~CLIModeHandler();
 
     // call this after parsing all your cli args
     // -> updates ClientConnectionManager
@@ -27,4 +27,4 @@ public:
 
 };
 
-#endif //LMQTT__SERVER_MODEHANDLER_H
+#endif //LMQTT__SERVER_CLIMODEHANDLER_H

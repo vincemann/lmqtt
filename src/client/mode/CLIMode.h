@@ -12,13 +12,18 @@ namespace CLIModes{
     static void printUsageInformation(char* programName, PacketType mode){
         switch (mode) {
             case CONNECT_MODE:
-                fprintf(stderr, "Usage: %s %s -u -p -i [-r] ip port\n", programName, PacketTypes::toString(mode));
+                fprintf(stderr, "Usage: %s %s -u username -p password -i clientId [-r (reset)] ip port\n", programName, PacketTypes::toString(mode));
+            case SUBSCRIBE:
+                fprintf(stderr, "Usage: %s %s -t topic -i clientId -q qos ip port\n", programName, PacketTypes::toString(mode));
         }
     }
 
     static CLIMode findCliMode(char *mode){
         if (strcmp(mode,"connect") == 0){
             return CONNECT_MODE;
+        }
+        if (strcmp(mode,"subscribe") == 0){
+            return SUBSCRIBE_MODE;
         }
         fprintf(stderr,"%s","Invalid cli mode\n");
         fprintf(stderr, "valid modes are: %s, %s\n","connect","subscribe");

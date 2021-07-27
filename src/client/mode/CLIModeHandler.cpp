@@ -6,28 +6,28 @@
 #include <PacketIOManager.h>
 #include <ConnectAckPacketHandler.h>
 #include <unistd.h>
-#include "ModeHandler.h"
+#include "CLIModeHandler.h"
 
 
-void ModeHandler::initRoute(){
+void CLIModeHandler::initRoute(){
     _clientConnectionManager->setIp(_argv[optind]);
     _clientConnectionManager->setPort(strtol(_argv[optind+1],nullptr,10));
     printf("route: %s:%d\n",_clientConnectionManager->_ip,_clientConnectionManager->_port);
 }
 
 
-ModeHandler::ModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
-                         ConnectPacketFactory *connectPacketFactory, int argc) : _argv(argv),
+CLIModeHandler::CLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
+                               ConnectPacketFactory *connectPacketFactory, int argc) : _argv(argv),
                                                                                  _clientConnectionManager(
                                                                                                   clientConnectionManager),
                                                                                  _connectPacketFactory(connectPacketFactory),
                                                                                  _argc(argc) {}
 
-void ModeHandler::handle() {
+void CLIModeHandler::handle() {
 
 }
 
-ModeHandler::~ModeHandler() {
+CLIModeHandler::~CLIModeHandler() {
 
 }
 

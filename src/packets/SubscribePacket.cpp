@@ -7,14 +7,14 @@
 
 
 //SubscribePacket::~SubscribePacket() {
-//    delete packetId;
+//    delete _packetId;
 //    delete topicLength;
 //    delete topic;
 //    delete qos:
 //}
 
-//SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short packetId, unsigned short topicLength, char *topic,
-//                                 unsigned short qos) : RawPacket(rawPacket), packetId(packetId), topicLength(topicLength),
+//SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short _packetId, unsigned short topicLength, char *topic,
+//                                 unsigned short qos) : RawPacket(rawPacket), _packetId(_packetId), topicLength(topicLength),
 //                                                       topic(topic), qos(qos) {}
 
 
@@ -22,16 +22,8 @@ SubscribePacket::~SubscribePacket() {
     delete topic;
 }
 
-SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short packetId, unsigned short topicLength, char *topic,
-                                 unsigned char qos) : RawPacket(rawPacket), packetId(packetId),
-                                                       topicLength(topicLength), topic(topic), qos(qos) {}
-
 unsigned short SubscribePacket::getPacketId() const {
-    return packetId;
-}
-
-unsigned short SubscribePacket::getTopicLength() const {
-    return topicLength;
+    return _packetId;
 }
 
 char *SubscribePacket::getTopic() const {
@@ -41,4 +33,7 @@ char *SubscribePacket::getTopic() const {
 unsigned short SubscribePacket::getQos() const {
     return qos;
 }
+
+SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned short qos)
+        : RawPacket(rawPacket), _packetId(packetId), topic(topic), qos(qos) {}
 

@@ -108,16 +108,22 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/CLIMode.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/ConnectModeHandler.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/CLIModeHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/ConnectModeHandler.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/CLIModeHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/ModeHandler.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/ConnectCLIModeHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/ModeHandler.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/ConnectCLIModeHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/SubscribeCLIModeHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/SubscribeCLIModeHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnection.cpp">
