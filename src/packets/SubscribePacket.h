@@ -11,13 +11,13 @@
 class SubscribePacket : public RawPacket{
 public:
 
-    SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned short qos);
+    SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned char qos);
 
     unsigned short getPacketId() const;
 
     char *getTopic() const;
 
-    unsigned short getQos() const;
+    unsigned char getQos() const;
 
     virtual ~SubscribePacket();
 private:

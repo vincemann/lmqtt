@@ -41,8 +41,9 @@ void ConnectCLIModeHandler::handle() {
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-        std::cout << "Successfully connected to Server!" << "\n";
-        _clientConnectionManager->closeConnection();
+        std::cout << "Successfully _connected to Server!" << "\n";
+//        _clientConnectionManager->closeConnection();
+        _clientConnectionManager->handleIncomingPackets();
         exit(0);
     } catch (const std::exception &e) {
         std::cout << "exception occurred while creating _connection with server:" << "\n";
@@ -55,5 +56,7 @@ ConnectCLIModeHandler::ConnectCLIModeHandler(char **argv, ClientConnectionManage
                                              ConnectPacketFactory *connectPacketFactory, int argc) : CLIModeHandler(argv,
                                                                                                               clientConnectionManager,
                                                                                                               connectPacketFactory,
-                                                                                                              argc),
- {}
+                                                                                                              argc)
+ {
+
+ }

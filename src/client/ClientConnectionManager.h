@@ -21,18 +21,21 @@
 class ClientConnectionManager {
 public:
     // need to be set via setters
+    char _connected = 0;
     char* _ip;
     int _port;
     PacketIOManager *_packetIoManager;
     ConnectAckPacketHandler *_connectAckPacketHandler;
     ClientConnection *_connection;
     std::map<PacketType, PacketParser *> *parsers;
+    std::map<PacketType, PacketHandler *>* handlers;
 
     ClientConnectionManager(PacketIOManager *packetIoManager, ConnectAckPacketHandler *connectAckPacketHandler,
-                            ClientConnection *connection, std::map<PacketType, PacketParser *> *parsers);
+                            ClientConnection *connection, std::map<PacketType, PacketParser *> *parsers,std::map<PacketType, PacketHandler *>* handlers);
 
     void attemptConnection(RawPacket *connectPacket);
     int connectToServer();
+    void handleIncomingPackets();
     void closeConnection();
     void setIp(char *ip);
     void setPort(int port);

@@ -6,6 +6,7 @@
 #include "CLIMode.h"
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void SubscribeCLIModeHandler::handle() {
     int opt;
@@ -47,15 +48,20 @@ void SubscribeCLIModeHandler::handle() {
 
     ClientSession* clientSession = clientSessionRepository->load(clientId);
 
+
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientSession->_username, clientSession->_password);
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-        std::cout << "Successfully connected to Server!" << "\n";
+        std::cout << "Successfully _connected to Server!" << "\n";
         srand(time(NULL));   // Initialization, should only be called once.
-        int packetId = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+        unsigned short packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+        printf("packet id:%d\n",packetId);
         SubscribePacket* subscribePacket = subscribePacketFactory->create(packetId,topic,qos);
         _clientConnectionManager->_packetIoManager->sendPacket(subscribePacket);
+        // todo wait for suback
+        RawPacket* subackPacket = _clientConnectionManager->_packetIoManager->readPacket();
+        subscribeAckPacketHandler->handle(subackPacket);
         _clientConnectionManager->closeConnection();
         exit(0);
     } catch (const std::exception &e) {
@@ -68,7 +74,6 @@ void SubscribeCLIModeHandler::handle() {
 SubscribeCLIModeHandler::SubscribeCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                                                  ConnectPacketFactory *connectPacketFactory, int argc,
                                                  ClientSessionRepository *clientSessionRepository,
-                                                 SubscribePacketFactory *subscribePacketFactory) : CLIModeHandler(
+                                                 SubscribePacketFactory *subscribePacketFactory, SubscribeAckPacketHandler* subscribeAckPacketHandler) : CLIModeHandler(
         argv, clientConnectionManager, connectPacketFactory, argc), clientSessionRepository(clientSessionRepository),
-                                                                                                   subscribePacketFactory(
-                                                                                                           subscribePacketFactory) {}
+        subscribePacketFactory(subscribePacketFactory), subscribeAckPacketHandler(subscribeAckPacketHandler) {}

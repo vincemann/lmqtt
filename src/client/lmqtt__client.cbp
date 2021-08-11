@@ -162,6 +162,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/SubscribeAckPacketHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/SubscribeAckPacketHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -219,6 +225,18 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/RawPacket.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/SubAckPacket.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/SubAckPacket.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/SubscribePacket.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/SubscribePacket.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -232,6 +250,12 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/PacketFactory.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/SubscribePacketFactory.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/SubscribePacketFactory.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/exception/PacketCreationException.cpp">

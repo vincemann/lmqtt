@@ -13,7 +13,7 @@ namespace CLIModes{
         switch (mode) {
             case CONNECT_MODE:
                 fprintf(stderr, "Usage: %s %s -u username -p password -i clientId [-r (reset)] ip port\n", programName, PacketTypes::toString(mode));
-            case SUBSCRIBE:
+            case SUBSCRIBE_MODE:
                 fprintf(stderr, "Usage: %s %s -t topic -i clientId -q qos ip port\n", programName, PacketTypes::toString(mode));
         }
     }

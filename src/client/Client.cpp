@@ -14,24 +14,21 @@
 #include "./mode/CLIMode.h"
 #include "mode/ConnectCLIModeHandler.h"
 #include "ClientConnectionManager.h"
+#include "mode/SubscribeCLIModeHandler.h"
 
 
-
-static void createSessionDirectories(){
-    const char* targetDir = "/.lmqtt/client/sessions";
-    char* home = getenv("HOME");
-    char* dir = (char*) malloc(strlen(home) + strlen(targetDir) + 1);
+static void createSessionDirectories() {
+    const char *targetDir = "/.lmqtt/client/sessions";
+    char *home = getenv("HOME");
+    char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
     strcpy(dir, home);
-    strcat(dir,"/.lmqtt");
+    strcat(dir, "/.lmqtt");
     Utils::createDirectory(dir);
-    strcat(dir,"/client");
+    strcat(dir, "/client");
     Utils::createDirectory(dir);
-    strcat(dir,"/sessions");
+    strcat(dir, "/sessions");
     Utils::createDirectory(dir);
 }
-
-
-
 
 
 int main(int argc, char *argv[]) {
@@ -42,37 +39,54 @@ int main(int argc, char *argv[]) {
     parsers.insert(std::make_pair(CONNACK, connAckPacketParser));
 
     // FACTORIES
-    ConnectPacketFactory* connectPacketFactory = new ConnectPacketFactory();
+    ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
+    SubscribePacketFactory *subscribePacketFactory = new SubscribePacketFactory();
 
-    FileDataManager* fileDataManager = new FileDataManager();
-    ClientConnection* connection = new ClientConnection();
-    ClientSessionRepository* clientSessionRepository = new ClientSessionRepository(fileDataManager);
+
+    FileDataManager *fileDataManager = new FileDataManager();
+    ClientConnection *connection = new ClientConnection();
+    ClientSessionRepository *clientSessionRepository = new ClientSessionRepository(fileDataManager);
 
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
 
     // HANDLERS
     std::map<PacketType, PacketHandler *> handlers;
-    ConnectAckPacketHandler* connectAckPacketHandler = new ConnectAckPacketHandler(packetIoManager, clientSessionRepository, connection);
+    ConnectAckPacketHandler *connectAckPacketHandler = new ConnectAckPacketHandler(packetIoManager,
+                                                                                   clientSessionRepository, connection);
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
 
     // CONNECTION PROCESS ENCAPSULATED
-    ClientConnectionManager* clientConnectionManager = new ClientConnectionManager(packetIoManager,connectAckPacketHandler,connection, &parsers);
+    ClientConnectionManager *clientConnectionManager = new ClientConnectionManager(packetIoManager,
+                                                                                   connectAckPacketHandler, connection,
+                                                                                   &parsers,&handlers);
 
     // MODE HANDLERS
-    ConnectCLIModeHandler* connectModeHandler = new ConnectCLIModeHandler(argv, clientConnectionManager,
-                                                                          connectPacketFactory, argc, nullptr);
+
 
     CLIMode mode = CLIModes::findCliMode(argv[1]);
     optind = 2;
 
 
     switch (mode) {
-        case CONNECT_MODE:
-            connectModeHandler->handle();
+        case CONNECT_MODE: {
+            printf("connect mode\n");
+            ConnectCLIModeHandler *connectCliModeHandler = new ConnectCLIModeHandler(argv, clientConnectionManager,
+                                                                                     connectPacketFactory, argc);
+            connectCliModeHandler->handle();
             break;
-        case SUBSCRIBE_MODE:
+        }
+
+        case SUBSCRIBE_MODE: {
+            printf("subscribe mode\n");
+            SubscribeCLIModeHandler *subscribeCliModeHandler = new SubscribeCLIModeHandler(argv,
+                                                                                           clientConnectionManager,
+                                                                                           connectPacketFactory, argc,
+                                                                                           clientSessionRepository,
+                                                                                           subscribePacketFactory);
+            subscribeCliModeHandler->handle();
             break;
+        }
     };
 
     // todo useful for publishing msges later

@@ -88,7 +88,11 @@ add_executable(lmqtt__server
         src/packets/parsers/DisconnectPacketParser.h
         src/handlers/DisconnectPacketHandler.cpp
         src/handlers/DisconnectPacketHandler.h
-        )
+        src/packets/parsers/SubscribePacketParser.h
+        src/packets/parsers/SubscribePacketParser.cpp
+        src/packets/SubscribePacket.h
+        src/packets/SubscribePacket.cpp
+        src/handlers/SubscribePacketHandler.cpp src/handlers/SubscribePacketHandler.h src/packets/SubAckPacket.cpp src/packets/SubAckPacket.h src/packets/factories/SubAckPacketFactory.cpp src/packets/factories/SubAckPacketFactory.h)
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

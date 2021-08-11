@@ -39,6 +39,7 @@ char *FileDataManager::find(const char *startDir,const char *name)
                 if (buffer)
                 {
                     fread (buffer, 1, length, f);
+                    buffer[length] = '\0';
                 }
                 fclose (f);
             }else{

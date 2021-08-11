@@ -55,14 +55,17 @@ int ClientConnectionManager::connectToServer() {
         perror("\nConnection Failed \n");
         exit(1);
     }
+    _connected=1;
     return conn_fd;
 }
+
+
 
 ClientConnectionManager::ClientConnectionManager(PacketIOManager *packetIoManager,
                                                  ConnectAckPacketHandler *connectAckPacketHandler,
                                                  ClientConnection *connection,
-                                                 std::map<PacketType, PacketParser *> *parsers) : _packetIoManager(
-        packetIoManager), _connectAckPacketHandler(connectAckPacketHandler), _connection(connection), parsers(parsers) {}
+                                                 std::map<PacketType, PacketParser *> *parsers, std::map<PacketType, PacketHandler *>* handlers) : _packetIoManager(
+        packetIoManager), _connectAckPacketHandler(connectAckPacketHandler), _connection(connection), parsers(parsers), handlers(handlers) {}
 
 void ClientConnectionManager::setIp(char *ip) {
     _ip = ip;
@@ -75,5 +78,28 @@ void ClientConnectionManager::setPort(int port) {
 void ClientConnectionManager::closeConnection() {
     _packetIoManager->sendPacket(new DisconnectPacket());
     _packetIoManager->closeConnection();
+    _connected = 0;
+}
+
+void ClientConnectionManager::handleIncomingPackets() {
+    while(true){
+        try{
+            std::cout << "waiting for new packet" << "\n";
+            if (_connected){
+                RawPacket* packet = _packetIoManager->readPacket();
+                PacketHandler* handler = handlers->at(packet->getType());
+                handler->handle(packet);
+                std::cout << "packet handled without errors" << "\n";
+            } else{
+                // this is reached when disconnectClient() is called
+                break;
+            }
+        } catch (const std::exception& e) {
+            // if exception occurs close connection
+            std::cout << "exception occurred:" << "\n";
+            std::cout << e.what() << "\n";
+            break;
+        }
+    }
 }
 

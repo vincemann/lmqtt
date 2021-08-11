@@ -16,7 +16,7 @@ void ServerSessionRepository::save(ServerSession *session) {
     using json = nlohmann::json;
     json j;
     j["clientId"] = session->_clientId;
-    j["subscriptions"] = *session->_subscriptions;
+    j["subscriptions"] = *session->_qos_subscriptions;
     std::string jsonString = j.dump();
     char *pJsonString = new char[jsonString.length() + 1];
     strcpy(pJsonString, jsonString.c_str());
@@ -50,7 +50,7 @@ ServerSession *ServerSessionRepository::load(char *clientId) {
             for (auto& el : it.value().items()){
                 std::string s = el.value().get<std::string>();
                 char *parsedSubscription = Utils::toCharP(&s);
-                serverSession->_subscriptions->push_back(parsedSubscription);
+                serverSession->_qos_subscriptions->push_back(parsedSubscription);
             }
         }
     }

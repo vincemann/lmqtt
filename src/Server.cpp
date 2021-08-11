@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <DisconnectPacketParser.h>
+#include <SubscribePacketParser.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -45,8 +46,10 @@ int main(int argc, char const *argv[])
     std::map<PacketType,PacketParser*> parsers;
     ConnectPacketParser* connectPacketParser = new ConnectPacketParser;
     DisconnectPacketParser* disconnectPacketParser = new DisconnectPacketParser;
+    SubscribePacketParser* subscribePacketParser = new SubscribePacketParser;
     parsers.insert(std::make_pair(CONNECT, connectPacketParser));
     parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
+    parsers.insert(std::make_pair(SUBSCRIBE, subscribePacketParser));
     // FACTORIES
     std::map<PacketType,PacketFactory*> factories;
     ConnectAckPacketFactory* connectAckPacketFactory = new ConnectAckPacketFactory();

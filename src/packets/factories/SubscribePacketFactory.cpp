@@ -6,8 +6,7 @@
 #include "PacketType.h"
 #include <string.h>
 
-SubscribePacket *
-SubscribePacketFactory::create(unsigned short packetId,
+SubscribePacket *SubscribePacketFactory::create(unsigned short packetId,
                                char *topic, unsigned char qos) {
     unsigned char specificFlags = 2;
     unsigned int topicLength = strlen(topic);
@@ -31,6 +30,6 @@ SubscribePacketFactory::create(unsigned short packetId,
     payload += sizeof(qos);
 //    payload[topicLength - 1] = qos;
     RawPacket *rawPacket = new RawPacket(specificFlags, payload, payloadLen, SUBSCRIBE);
-    return new SubscribePacket(rawPacket, packetId, topicLength, topic, qos);
+    return new SubscribePacket(rawPacket, packetId, topic, qos);
 }
 

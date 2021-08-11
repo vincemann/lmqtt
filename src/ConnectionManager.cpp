@@ -86,7 +86,7 @@ void ConnectionManager::serveClients() {
     while (true){
         std::cout << "waiting for new connection" << "\n";
         int connFd = waitForConnection(serverFd);
-        std::cout << "connected to client" << "\n";
+        std::cout << "_connected to client" << "\n";
         this->_clientConnected = 1;
 
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
@@ -117,6 +117,7 @@ void ConnectionManager::serveClients() {
                     break;
                 }
             } catch (const std::exception& e) {
+                // if exception occurs close connection
                 std::cout << "exception occurred:" << "\n";
                 std::cout << e.what() << "\n";
                 break;

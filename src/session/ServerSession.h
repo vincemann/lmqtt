@@ -10,11 +10,14 @@
 #include <ostream>
 
 
-
+/**
+ * Encapsulates server side information about client that is stored permanently
+ */
 class ServerSession {
 public:
     char * _clientId;
-    std::vector<char *>* _subscriptions;
+    // example 3MyTopic qos = 3 topic = MyTopic
+    std::vector<char *>* _qos_subscriptions;
     //todo add 3. and 4. from ServerSessionState
     explicit ServerSession(char* clientId);
 

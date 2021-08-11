@@ -13,7 +13,7 @@ public:
     void handle() override;
 
     ConnectCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
-                          ConnectPacketFactory *connectPacketFactory, int argc,);
+                          ConnectPacketFactory *connectPacketFactory, int argc);
 };
 
 

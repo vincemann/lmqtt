@@ -6,16 +6,6 @@
 #include "SubscribePacket.h"
 
 
-//SubscribePacket::~SubscribePacket() {
-//    delete _packetId;
-//    delete topicLength;
-//    delete topic;
-//    delete qos:
-//}
-
-//SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short _packetId, unsigned short topicLength, char *topic,
-//                                 unsigned short qos) : RawPacket(rawPacket), _packetId(_packetId), topicLength(topicLength),
-//                                                       topic(topic), qos(qos) {}
 
 
 SubscribePacket::~SubscribePacket() {
@@ -30,10 +20,10 @@ char *SubscribePacket::getTopic() const {
     return topic;
 }
 
-unsigned short SubscribePacket::getQos() const {
+unsigned char SubscribePacket::getQos() const {
     return qos;
 }
 
-SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned short qos)
+SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned char qos)
         : RawPacket(rawPacket), _packetId(packetId), topic(topic), qos(qos) {}
 
