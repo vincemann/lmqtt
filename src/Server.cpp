@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <DisconnectPacketParser.h>
 #include <SubscribePacketParser.h>
+#include <SubAckPacketFactory.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -50,10 +51,13 @@ int main(int argc, char const *argv[])
     parsers.insert(std::make_pair(CONNECT, connectPacketParser));
     parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
     parsers.insert(std::make_pair(SUBSCRIBE, subscribePacketParser));
+
     // FACTORIES
     std::map<PacketType,PacketFactory*> factories;
     ConnectAckPacketFactory* connectAckPacketFactory = new ConnectAckPacketFactory();
     factories.insert(std::make_pair(CONNACK, connectAckPacketFactory));
+    SubAckPacketFactory* subAckPacketFactory = new SubAckPacketFactory();
+    factories.insert(std::make_pair(SUBSCRIBE_ACK, subAckPacketFactory));
 
 
     ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories);

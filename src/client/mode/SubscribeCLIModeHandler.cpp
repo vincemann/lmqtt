@@ -59,7 +59,7 @@ void SubscribeCLIModeHandler::handle() {
         printf("packet id:%d\n",packetId);
         SubscribePacket* subscribePacket = subscribePacketFactory->create(packetId,topic,qos);
         _clientConnectionManager->_packetIoManager->sendPacket(subscribePacket);
-        // todo wait for suback
+        // wait for suback
         RawPacket* subackPacket = _clientConnectionManager->_packetIoManager->readPacket();
         subscribeAckPacketHandler->handle(subackPacket);
         _clientConnectionManager->closeConnection();

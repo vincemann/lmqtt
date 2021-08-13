@@ -6,11 +6,14 @@
 #define LMQTT__SERVER_SUBSCRIBEACKPACKETHANDLER_H
 
 
+#include <ClientConnection.h>
 #include "PacketHandler.h"
 
 class SubscribeAckPacketHandler : public PacketHandler{
+private:
+    ClientConnection* clientConnection;
 public:
-    SubscribeAckPacketHandler(PacketIOManager *packetIo);
+    SubscribeAckPacketHandler(PacketIOManager *packetIo, ClientConnection *clientConnection);
     void handle(RawPacket *packet) override;
 };
 

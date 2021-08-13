@@ -10,9 +10,11 @@
 SubscribePacketHandler::SubscribePacketHandler(PacketIOManager *packetIo,
                                                ServerSessionRepository *serverSessionRepository,
                                                ServerConnection *serverConnection,
-                                               SubAckPacketFactory *subAckPacketFactory)
+                                               SubAckPacketFactory *subAckPacketFactory,
+                                               TopicRepository *topicRepository)
         : PacketHandler(packetIo), _serverSessionRepository(serverSessionRepository),
-          _serverConnection(serverConnection), _subAckPacketFactory(subAckPacketFactory) {}
+          _serverConnection(serverConnection), _subAckPacketFactory(subAckPacketFactory),
+          topicRepository(topicRepository) {}
 void SubscribePacketHandler::handle(RawPacket *packet) {
     SubscribePacket* subscribePacket = static_cast<SubscribePacket*>(packet);
     if (subscribePacket->getQos() > 3 || subscribePacket->getQos() < 0){
@@ -31,6 +33,17 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
     strcat(qos_topic,subscribePacket->getTopic());
     serverSession->_qos_subscriptions->push_back(qos_topic);
     _serverSessionRepository->save(serverSession);
-    SubAckPacket* subAckPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(),(unsigned char) subscribePacket->getQos());
-    _packetIo->sendPacket(subAckPacket);
+    Topic* storedTopic = topicRepository->findTopic(subscribePacket->getTopic());
+    if (storedTopic == 0){
+        // send err ret code and quit connection
+        SubAckPacket* errPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(),0x80);
+        _packetIo->sendPacket(errPacket);
+        throw InvalidPacketException("Topic does not exist");
+    } else{
+        storedTopic->_subscribed_user_count += 1;
+        SubAckPacket* successPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(), (unsigned char) subscribePacket->getQos());
+        _packetIo->sendPacket(successPacket);
+        // todo send publish msg'es to let client consume all msges of topic
+    }
+
 }

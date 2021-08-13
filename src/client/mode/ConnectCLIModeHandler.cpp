@@ -43,6 +43,7 @@ void ConnectCLIModeHandler::handle() {
         _clientConnectionManager->attemptConnection(connectPacket);
         std::cout << "Successfully _connected to Server!" << "\n";
 //        _clientConnectionManager->closeConnection();
+        // wait for publish packets of server (if any) and ultimately disconnect packet from server
         _clientConnectionManager->handleIncomingPackets();
         exit(0);
     } catch (const std::exception &e) {

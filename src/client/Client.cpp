@@ -50,11 +50,20 @@ int main(int argc, char *argv[]) {
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
 
+
+
     // HANDLERS
     std::map<PacketType, PacketHandler *> handlers;
     ConnectAckPacketHandler *connectAckPacketHandler = new ConnectAckPacketHandler(packetIoManager,
                                                                                    clientSessionRepository, connection);
+
+    SubscribeAckPacketHandler* subscribeAckPacketHandler = new SubscribeAckPacketHandler(packetIoManager,connection);
+
+
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
+    handlers.insert(std::make_pair(SUBSCRIBE_ACK, subscribeAckPacketHandler));
+
+
 
     // CONNECTION PROCESS ENCAPSULATED
     ClientConnectionManager *clientConnectionManager = new ClientConnectionManager(packetIoManager,
@@ -62,8 +71,6 @@ int main(int argc, char *argv[]) {
                                                                                    &parsers,&handlers);
 
     // MODE HANDLERS
-
-
     CLIMode mode = CLIModes::findCliMode(argv[1]);
     optind = 2;
 
@@ -83,7 +90,7 @@ int main(int argc, char *argv[]) {
                                                                                            clientConnectionManager,
                                                                                            connectPacketFactory, argc,
                                                                                            clientSessionRepository,
-                                                                                           subscribePacketFactory);
+                                                                                           subscribePacketFactory,subscribeAckPacketHandler);
             subscribeCliModeHandler->handle();
             break;
         }

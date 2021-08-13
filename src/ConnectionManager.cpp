@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <DisconnectPacketHandler.h>
+#include <SubscribePacketHandler.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -99,9 +100,18 @@ void ConnectionManager::serveClients() {
         std::map<PacketType,PacketHandler*> handlers;
         ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNACK));
         ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager, connectAckPacketFactory, serverSessionRepository);
+
         DisconnectPacketHandler* disconnectPacketHandler = new DisconnectPacketHandler(packetIoManager, this);
+
+        SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
+        SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,
+                                                                                    serverSessionRepository, connection,
+                                                                                    subAckPacketFactory, nullptr);
+
+        // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
         handlers.insert(std::make_pair(DISCONNECT, disconnectPacketHandler));
+        handlers.insert(std::make_pair(SUBSCRIBE, subscribePacketHandler));
 
 
         while(true){
