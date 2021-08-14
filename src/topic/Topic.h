@@ -11,9 +11,10 @@ class Topic {
 
 public:
     long _last_msg_id_published;
-    int _subscribed_user_count;
+    int _subscribed_users_count;
     char *_topic;
     Topic(long lastMsgIdPublished, int subscribedUserCount, char *topic);
+    Topic(char* topic);
 
     long getLastMsgIdPublished() const;
 

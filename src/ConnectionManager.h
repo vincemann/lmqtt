@@ -6,10 +6,12 @@
 #define LMQTT__SERVER_CONNECTIONMANAGER_H
 
 
+#include <FileDataManager.h>
+
 class ConnectionManager {
 public:
     ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
-                      std::map<PacketType, PacketFactory *> *factories);
+                      std::map<PacketType, PacketFactory *> *factories, FileDataManager *pManager);
 
     void serveClients();
     void disconnectClient();
@@ -18,6 +20,7 @@ public:
 private:
     int waitForConnection(int serverFd);
     int bindToPort();
+    FileDataManager *fileDataManager;
     int _port;
     unsigned char _clientConnected;
     std::map<PacketType,PacketParser*>* _parsers;

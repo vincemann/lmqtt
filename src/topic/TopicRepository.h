@@ -10,15 +10,18 @@
 #include "Message.h"
 #include "Topic.h"
 #include <vector>
+#include <FileDataManager.h>
 
 class TopicRepository {
     std::map<Topic*, std::vector<Message*> *> *_topics;
+    FileDataManager* fileDataManager;
+    char* _topicsDir;
 
 public:
-    TopicRepository();
+    TopicRepository(FileDataManager *fileDataManager);
     void store(Topic* topic,Message* msg);
     void remove(Topic* topic,Message* msg);
-    Topic* findTopic(char* topic);
+    Topic* loadTopic(char* topic);
 };
 
 

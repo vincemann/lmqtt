@@ -93,7 +93,6 @@ void ConnectionManager::serveClients() {
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
         ServerConnection* connection = new ServerConnection();
         PacketIOManager* packetIoManager = new PacketIOManager(connection, connFd, _parsers);
-        FileDataManager* fileDataManager = new FileDataManager();
         ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
 
         // HANDLERS
@@ -150,7 +149,6 @@ void ConnectionManager::serveClients() {
         }
 
         delete serverSessionRepository;
-        delete fileDataManager;
         delete packetIoManager;
     }
 }
@@ -161,6 +159,7 @@ void ConnectionManager::disconnectClient() {
 }
 
 ConnectionManager::ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
-                                     std::map<PacketType, PacketFactory *> *factories) : _port(port), _parsers(parsers),
-                                                                                         _factories(factories) {}
+                                     std::map<PacketType, PacketFactory *> *factories, FileDataManager *fileDataManager)
+        : _port(port), _parsers(parsers),
+                                                                                         _factories(factories), fileDataManager(fileDataManager) {}
 

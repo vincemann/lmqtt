@@ -20,6 +20,7 @@
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
 #include "ConnectionManager.h"
+#include "topic/TopicRepository.h"
 
 
 #define PORT 8080
@@ -31,9 +32,15 @@ static void createSessionDirectories(){
     strcpy(dir, home);
     strcat(dir,"/.lmqtt");
     Utils::createDirectory(dir);
+
     strcat(dir,"/server");
+    char* serverDir = strdup(dir);
     Utils::createDirectory(dir);
+
     strcat(dir,"/sessions");
+    Utils::createDirectory(dir);
+
+    strcat(serverDir,"/topics");
     Utils::createDirectory(dir);
 }
 
@@ -42,6 +49,7 @@ static void createSessionDirectories(){
 int main(int argc, char const *argv[])
 {
     createSessionDirectories();
+    FileDataManager* fileDataManager = new FileDataManager();
     // THESE OBJECTS LIVE AS LONG AS THE SERVER
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
@@ -59,8 +67,17 @@ int main(int argc, char const *argv[])
     SubAckPacketFactory* subAckPacketFactory = new SubAckPacketFactory();
     factories.insert(std::make_pair(SUBSCRIBE_ACK, subAckPacketFactory));
 
+    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
 
-    ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories);
+    // CREATE DUMMY DATA
+    char* testTopicS = "jeff seid feed";
+    char* testMessageS = "jeff seid trains biceps in mecca";
+    Topic* testTopic = new Topic(testTopicS);
+    Message* testFirstMsg = new Message(testMessageS);
+    topicRepository->store(testTopic,testFirstMsg);
+
+
+    ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories, fileDataManager);
     connectionManager->serveClients();
 
 }

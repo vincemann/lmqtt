@@ -18,3 +18,8 @@ int Message::getUnconsumedUserCount() const {
 char *Message::getMsg() const {
     return _msg;
 }
+
+Message::Message(char *msg) : _msg(msg){
+    _unconsumed_user_count=1;
+    _id = 0;
+}

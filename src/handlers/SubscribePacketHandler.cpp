@@ -33,14 +33,14 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
     strcat(qos_topic,subscribePacket->getTopic());
     serverSession->_qos_subscriptions->push_back(qos_topic);
     _serverSessionRepository->save(serverSession);
-    Topic* storedTopic = topicRepository->findTopic(subscribePacket->getTopic());
+    Topic* storedTopic = topicRepository->loadTopic(subscribePacket->getTopic());
     if (storedTopic == 0){
         // send err ret code and quit connection
         SubAckPacket* errPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(),0x80);
         _packetIo->sendPacket(errPacket);
         throw InvalidPacketException("Topic does not exist");
     } else{
-        storedTopic->_subscribed_user_count += 1;
+        storedTopic->_subscribed_users_count += 1;
         SubAckPacket* successPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(), (unsigned char) subscribePacket->getQos());
         _packetIo->sendPacket(successPacket);
         // todo send publish msg'es to let client consume all msges of topic

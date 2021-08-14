@@ -12,6 +12,7 @@ class Message {
     char* _msg;
 public:
     Message(long id, int unconsumedUserCount, char *msg);
+    Message(char *msg);
 
     long getId() const;
 
