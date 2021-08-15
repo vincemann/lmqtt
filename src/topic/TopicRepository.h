@@ -23,8 +23,11 @@ public:
     void remove(Topic* topic,Message* msg);
     void remove(Topic* topic);
     Topic* loadTopic(char* topic);
+    void saveTopic(Topic* topic);
     Message* loadMessage(Topic* topic, unsigned long msgId);
     std::vector<Message*> loadMessagesStartingFromIndex(Topic* topic, unsigned long msgId);
+    void subscribe(char* topic);
+    void unsubscribe(char* topic);
 };
 
 

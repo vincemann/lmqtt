@@ -7,11 +7,12 @@
 #include <Utils.h>
 #include "TopicRepository.h"
 #include <stdlib.h>
+#include "IllegalSessionStateException.h"
 
 #include "../json.hpp"
 
 TopicRepository::TopicRepository(FileDataManager *fileDataManager) : _fileDataManager(fileDataManager) {
-//    _topics = new std::map<Topic *, std::vector<Message *> *>();
+    //    _topics = new std::map<Topic *, std::vector<Message *> *>();
     const char *targetDir = "/.lmqtt/server/topics/";
     char *home = getenv("HOME");
     char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
@@ -86,9 +87,9 @@ void TopicRepository::store(Topic *topic, Message *msg) {
      */
     j["msgs"] = {
             {"msg",
-                    {"id", msg->getId()},
-                    {"msg_value", msg->getMsg()},
-                    {"unconsumed_user_count", msg->getUnconsumedUserCount()}
+             {"id", msg->getId()},
+             {"msg_value", msg->getMsg()},
+             {"unconsumed_user_count", msg->getUnconsumedUserCount()}
             }
     };
     std::string jsonString = j.dump();
@@ -102,17 +103,65 @@ void TopicRepository::remove(Topic *topic, Message *msg) {
 
 }
 
+// expects topic name
 Topic *TopicRepository::loadTopic(char *topic) {
-    //
+    using json = nlohmann::json;
+    char* pathToTopicDir = strdup(_topicsDir);
+    strcat(pathToTopicDir, topic);
 
-    for (auto const &entry : *_topics) {
-        Topic *cmp_topic = entry.first;
-        if (strcmp(topic, cmp_topic->getTopic()) == 0) {
-            return cmp_topic;
+    //    check file existence
+    unsigned char fileExists = _fileDataManager->exists(pathToTopicDir, "topic");
+    if (fileExists == 0){
+        throw IllegalSessionStateException("Connection Refused, unacceptable protocol version");
+    }
+
+    //    extract values
+    int subscribedUserCount = -1;
+    long lastMsgIdPublished = -1;
+    char* topicJson = _fileDataManager->find(pathToTopicDir,"topic");
+    json j = json::parse(topicJson);
+    for (json::iterator it = j.begin(); it != j.end(); ++it) {
+        if (it.key() == "subscribed_users_count"){
+            std::string s = it.value().get<std::string>();
+            char* subscribed_users_count_s = Utils::toCharP(&s);
+            subscribedUserCount = strtol(subscribed_users_count_s,NULL,10);
+        }
+        if (it.key() == "last_msg_id_published"){
+            std::string s = it.value().get<std::string>();
+            char* last_msg_id_published_s = Utils::toCharP(&s);
+            lastMsgIdPublished = strtol(last_msg_id_published_s,NULL,10);
         }
     }
-    return 0;
+    return new Topic(lastMsgIdPublished, subscribedUserCount, topic);
 }
+
+void TopicRepository::saveTopic(Topic* topic) {
+    using json = nlohmann::json;
+    json j;
+
+    char* topicDir = strdup(_topicsDir);
+    strcat(topicDir, topic->getTopic());
+    j["topic"] = {
+            {"topic_value",            topic->getTopic()},
+            {"subscribed_users_count", topic->getSubscribedUserCount()},
+            {"last_msg_id_published",  topic->getLastMsgIdPublished()}
+    };
+    std::string jsonString = j.dump();
+    _fileDataManager->store(topicDir, "topic", Utils::toCharP(&jsonString));
+}
+
+
+//Topic *TopicRepository::loadTopic(char *topic) {
+//    //
+//
+//    for (auto const &entry : *_topics) {
+//        Topic *cmp_topic = entry.first;
+//        if (strcmp(topic, cmp_topic->getTopic()) == 0) {
+//            return cmp_topic;
+//        }
+//    }
+//    return 0;
+//}
 
 Message *TopicRepository::loadMessage(Topic *topic, unsigned long msgId) {
     return nullptr;
@@ -129,3 +178,16 @@ void TopicRepository::store(Topic *topic) {
 std::vector<Message *> TopicRepository::loadMessagesStartingFromIndex(Topic *topic, unsigned long msgId) {
     return std::vector<Message *>();
 }
+
+void TopicRepository::subscribe(char *topicName) {
+    Topic *topic = loadTopic(topicName);
+    topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
+    saveTopic(topic);
+}
+
+void TopicRepository::unsubscribe(char *topicName) {
+    Topic *topic = loadTopic(topicName);
+    topic->setSubscribedUsersCount(topic->getSubscribedUserCount() - 1);
+    saveTopic(topic);
+}
+

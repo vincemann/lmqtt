@@ -22,6 +22,11 @@ public:
 
     char *getTopic() const;
 
+    void setLastMsgIdPublished(long lastMsgIdPublished);
+
+    void setSubscribedUsersCount(int subscribedUsersCount);
+
+
 };
 
 
