@@ -29,7 +29,6 @@
 
 int main(int argc, char const *argv[])
 {
-    createSessionDirectories();
     FileDataManager* fileDataManager = new FileDataManager();
     // THESE OBJECTS LIVE AS LONG AS THE SERVER
     // PARSERS
