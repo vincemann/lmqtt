@@ -18,13 +18,18 @@ class TopicRepository {
 
 public:
     TopicRepository(FileDataManager *fileDataManager);
+    void initTopicFiles(char* topicName);
     void store(Topic* topic,Message* msg);
     void store(Topic* topic);
     void remove(Topic* topic,Message* msg);
     void remove(Topic* topic);
     Topic* loadTopic(char* topic);
+    void saveTopic(Topic* topic);
     Message* loadMessage(Topic* topic, unsigned long msgId);
-    std::vector<Message*> loadMessagesStartingFromIndex(Topic* topic, unsigned long msgId);
+    std::vector<Message*>* loadMessages(char* topicName);
+    std::vector<Message*>* loadMessagesStartingFromIndex(Topic* topic, unsigned long msgId);
+    void subscribe(char* topic);
+    void unsubscribe(char* topic);
 };
 
 
