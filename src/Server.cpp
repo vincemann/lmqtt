@@ -25,25 +25,6 @@
 
 #define PORT 8080
 
-static void createSessionDirectories(){
-    const char* targetDir = "/.lmqtt/server/sessions";
-    char* home = getenv("HOME");
-    char* dir = (char*) malloc(strlen(home) + strlen(targetDir) + 1);
-    strcpy(dir, home);
-    strcat(dir,"/.lmqtt");
-    Utils::createDirectory(dir);
-
-    strcat(dir,"/server");
-    char* serverDir = strdup(dir);
-    Utils::createDirectory(dir);
-
-    strcat(dir,"/sessions");
-    Utils::createDirectory(dir);
-
-    strcat(serverDir,"/topics");
-    Utils::createDirectory(dir);
-}
-
 
 
 int main(int argc, char const *argv[])
@@ -70,7 +51,7 @@ int main(int argc, char const *argv[])
     TopicRepository* topicRepository = new TopicRepository(fileDataManager);
 
     // CREATE DUMMY DATA
-    char* testTopicS = "jeff seid feed";
+    char* testTopicS = "jeffseid";
     char* testMessageS = "jeff seid trains biceps in mecca";
     Topic* testTopic = new Topic(testTopicS);
     Message* testFirstMsg = new Message(testMessageS);

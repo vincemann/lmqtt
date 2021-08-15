@@ -12,8 +12,7 @@
 #include <exception>
 #include <cstdio>
 #include <Utils.h>
-
-
+#include <errno.h>
 
 
 
@@ -52,6 +51,22 @@ char *FileDataManager::find(const char *startDir,const char *name)
     }
     (void)closedir(dir);
     return 0;
+}
+
+unsigned char FileDataManager::exists(char* dir, char* file){
+    char* filePath = FileDataManager::combinePaths(dir,file);
+    struct stat st = {0};
+
+    if (stat(filePath, &st) == -1) {
+        if (errno == EFAULT){
+            return 0;
+        }else{
+            printf("%s\n", strerror(errno));
+            throw MsgException("Invalid File exception");
+        }
+    }else{
+        return 1;
+    }
 }
 
 int FileDataManager::store(const char *targetDir, const char *name,const char *content) {

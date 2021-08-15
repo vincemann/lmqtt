@@ -8,6 +8,7 @@
 #include "ClientSession.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 
 
@@ -58,13 +59,14 @@ ClientSession *ClientSessionRepository::load(char *clientId) {
 
 ClientSessionRepository::ClientSessionRepository(FileDataManager *fileDataManager) : _fileDataManager(
         fileDataManager) {
+
     const char* targetDir = "/.lmqtt/client/sessions";
     char* home = getenv("HOME");
     char* dir = (char*) malloc(strlen(home) + strlen(targetDir) + 1);
     strcpy(dir,home);
     strcat(dir,targetDir);
     this->_clientSessionsDir = dir;
-//    strcpy(,dir);
+    Utils::createHomeDirectoryChain(_clientSessionsDir);
 }
 
 

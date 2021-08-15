@@ -61,6 +61,57 @@ void Utils::printChars(unsigned char *ptr, int size)
     printf("\n");
 }
 
+
+
+// always starts creating dirs from home
+void Utils::createHomeDirectoryChain(char* dirChain) {
+
+    char *home = getenv("HOME");
+    char *dir = (char *) malloc(strlen(home) + strlen(dirChain) + 1);
+    strcpy(dir, home);
+    char delim[] = "/";
+
+    int count = 0;
+    char *partialDir = 0;
+    while (1) {
+        if (count > 1) {
+            partialDir = strtok(dirChain, delim);
+            if (partialDir == 0) {
+                break;
+            }
+            printf("'%s'\n", partialDir);
+            char *dirWithSlash = "/";
+            strcat(dirWithSlash, partialDir);
+            strcat(dir, dirWithSlash);
+            Utils::createDirectory(dir);
+        } else {
+            // /home/user
+            strtok(dirChain, delim);
+        }
+        count += 1;
+    }
+
+    delete dir;
+}
+
+
+
+
+//    int dirChainLen = -1;
+//    for (const auto &item : *dirs){
+//        dirChainLen += strlen(item);
+//    }
+////    const char* targetDir = "/.lmqtt/server/sessions";
+//    char* home = getenv("HOME");
+//    char* dir = (char*) malloc(strlen(home) + dirChainLen + 1);
+//    strcpy(dir, home);
+//
+//    for (const auto &item : *dirs){
+//        strcat(dir,item);
+//        Utils::createDirectory(dir);
+//    }
+}
+
 char* Utils::toCharP(std::string* s){
     char *cstr = new char[s->length() + 1];
     strcpy(cstr, s->c_str());

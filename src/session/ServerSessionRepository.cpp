@@ -65,6 +65,6 @@ ServerSessionRepository::ServerSessionRepository(FileDataManager *fileDataManage
     strcpy(dir,home);
     strcat(dir,targetDir);
     this->_serverSessionsDir = dir;
-//    strcpy(,dir);
+    Utils::createHomeDirectoryChain(_serverSessionsDir);
 }
 
