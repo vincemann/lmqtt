@@ -8,10 +8,10 @@
 
 class Message {
     long _id;
-    int _unconsumed_user_count;
+    long _unconsumed_user_count;
     char* _msg;
 public:
-    Message(long id, int unconsumedUserCount, char *msg);
+    Message(long id, long unconsumedUserCount, char *msg);
     Message(char *msg);
 
     long getId() const;

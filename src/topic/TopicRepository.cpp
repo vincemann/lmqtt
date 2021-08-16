@@ -31,21 +31,22 @@ void TopicRepository::store(Topic *topic, Message *msg) {
     std::vector<Message *>* msgs = loadMessages(topic->getTopic());
     msgs->push_back(msg);
 
-    std::vector<json> jsonMsgesVec = std::vector<json>();
+    std::vector<json> jsonMsgs = std::vector<json>();
 
     for (const auto &item : *msgs) {
-        json msgObj = {"msg",
-                       {"id", msg->getId()},
-                       {"msg_value", msg->getMsg()},
-                       {"unconsumed_user_count", msg->getUnconsumedUserCount()}
+        json jsonMsg = {"msg",
+                        {"id", msg->getId()},
+                        {"msg_value", msg->getMsg()},
+                        {"unconsumed_user_count", msg->getUnconsumedUserCount()}
         };
-        jsonMsgesVec.push_back(msgObj);
+        jsonMsgs.push_back(jsonMsg);
     }
 
 
 
-    j = jsonMsgesVec;
+    j = jsonMsgs;
     std::string jsonString = j.dump();
+    // use util function
     char *pJsonString = new char[jsonString.length() + 1];
     strcpy(pJsonString, jsonString.c_str());
 

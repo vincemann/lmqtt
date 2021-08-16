@@ -4,7 +4,7 @@
 
 #include "Message.h"
 
-Message::Message(long id, int unconsumedUserCount, char *msg) : _id(id), _unconsumed_user_count(unconsumedUserCount),
+Message::Message(long id, long unconsumedUserCount, char *msg) : _id(id), _unconsumed_user_count(unconsumedUserCount),
                                                                 _msg(msg) {}
 
 long Message::getId() const {
