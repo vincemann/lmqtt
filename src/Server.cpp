@@ -50,11 +50,9 @@ int main(int argc, char const *argv[])
     TopicRepository* topicRepository = new TopicRepository(fileDataManager);
 
     // CREATE DUMMY DATA
-    char* testTopicS = "jeffseid";
-    char* testMessageS = "jeff seid trains biceps in mecca";
-    Topic* testTopic = new Topic(testTopicS);
-    Message* testFirstMsg = new Message(testMessageS);
-    topicRepository->store(testTopic,testFirstMsg);
+    char* testTopic = "jeffseid";
+    char* testMessage = "jeff seid trains biceps in mecca";
+    topicRepository->store(testTopic, testMessage);
 
 
     ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories, fileDataManager);

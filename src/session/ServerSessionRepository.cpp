@@ -61,10 +61,7 @@ ServerSessionRepository::ServerSessionRepository(FileDataManager *fileDataManage
         fileDataManager) {
     const char* targetDir = "/.lmqtt/server/sessions";
     char* home = getenv("HOME");
-    char* dir = (char*) malloc(strlen(home) + strlen(targetDir) + 1);
-    strcpy(dir,home);
-    strcat(dir,targetDir);
-    this->_serverSessionsDir = dir;
+    _serverSessionsDir = Utils::smartstrcat(home,targetDir);
     Utils::createHomeDirectoryChain(_serverSessionsDir);
 }
 

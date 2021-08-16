@@ -60,12 +60,13 @@ unsigned char FileDataManager::exists(char* dir, char* file){
     struct stat st = {0};
 
     if (stat(filePath, &st) == -1) {
-        if (errno == EFAULT){
-            return 0;
-        }else{
-            printf("%s\n", strerror(errno));
-            throw MsgException("Invalid File exception");
-        }
+        return 0;
+//        if (errno == EFAULT){
+//            return 0;
+//        }else{
+//            printf("%s\n", strerror(errno));
+//            throw MsgException("Invalid File exception");
+//        }
     }else{
         return 1;
     }
