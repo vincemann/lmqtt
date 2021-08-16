@@ -13,6 +13,8 @@
 #include <cstdio>
 #include <Utils.h>
 #include <errno.h>
+#include<stdio.h>
+#include<stdlib.h>
 
 
 
@@ -86,4 +88,8 @@ int FileDataManager::store(const char *targetDir, const char *name,const char *c
 //    write(fp,content,len);
     fclose(fp);
     return 0;
+}
+
+void FileDataManager::remove(char *file) {
+    std::remove(file);
 }

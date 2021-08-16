@@ -103,6 +103,8 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     // init server session
     initServerSession(cleanSession, clientId);
     connAck(0x0, cleanSession);
+
+
 }
 
 ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() const {
