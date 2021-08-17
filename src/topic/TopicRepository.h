@@ -28,7 +28,7 @@ public:
     std::vector<Message*>* consumeMessagesStartingFromId(char* topic, unsigned long msgId);
     void subscribe(char* topic);
     void unsubscribe(char* topic, unsigned long lastConsumedMsgId);
-    void saveMessages(char* topic, std::vector<Message*>* msgs);
+    void replaceMessages(char* topic, std::vector<Message*>* msgs);
 };
 
 
