@@ -47,6 +47,10 @@ void SubscribeCLIModeHandler::handle() {
 
 
     ClientSession* clientSession = clientSessionRepository->load(clientId);
+    if (clientSession == 0 ){
+        printf("You have to call connect to init session before calling subscribe");
+        exit(1);
+    }
 
 
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientSession->_username, clientSession->_password);

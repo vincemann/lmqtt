@@ -8,6 +8,9 @@
 #include <ConnectPacket.h>
 #include "Connection.h"
 
+/**
+ * Hols all information the lasts as long as a connection with the server (in ram)
+ */
 class ClientConnection : public Connection{
 public:
     ConnectPacket* _connectPacket;

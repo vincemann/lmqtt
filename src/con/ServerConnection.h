@@ -8,6 +8,9 @@
 #include <ServerSession.h>
 #include "Connection.h"
 
+/**
+ * Hols all information the lasts as long as a connection with a client (in ram)
+ */
 class ServerConnection : public Connection{
 public:
     ServerConnection();

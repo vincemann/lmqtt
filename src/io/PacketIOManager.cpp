@@ -20,7 +20,9 @@ static void err(const char *msg) {
 
 static PacketType evalPacketType(unsigned char fixedHeaderByte) {
     unsigned char mask = Utils::createBitMask(4, 7);
-    unsigned char packetTypeVal = Utils::reverse_bits(mask & fixedHeaderByte);
+//    unsigned char packetTypeVal = mask & fixedHeaderByte;
+    unsigned char packetTypeVal = fixedHeaderByte >> 4;
+//    unsigned char packetTypeVal = Utils::reverse_bits(packetTypeValTmp);
 
 
     // printf("packet _type bits:\n");
@@ -33,6 +35,7 @@ static PacketType evalPacketType(unsigned char fixedHeaderByte) {
 static unsigned char evalSpecificFlags(/*bool[4] result,*/ unsigned char fixedHeaderByte) {
     unsigned char mask = Utils::createBitMask(0, 3);
     unsigned char specificFlags = mask & fixedHeaderByte;
+//    unsigned char specificFlags = (fixedHeaderByte << 4) >> 4 ;
     return specificFlags;
 //    for (int i =0; i < 4;i++){
 //        bool bit = (specificFlags >> i) & 1;
@@ -70,11 +73,10 @@ void PacketIOManager::sendPacket(RawPacket *packet) {
 
     // sendPacket first fixed header byte
     // needs to be reversed bc specs want network endianess on byte level
+    unsigned char firstByte = (PacketTypes::evalPacketTypeValue(packet->getType()) << 4) | packet->getSpecificFlags();
+//    unsigned char firstByte = (packet->getSpecificFlags() << 4) | PacketTypes::evalPacketTypeValue(packet->getType());
     unsigned char fixedHeader[] = {
-            Utils::reverse_bits(
-                    packet->getSpecificFlags()
-                    | PacketTypes::evalPacketTypeValue(packet->getType())
-            )
+            firstByte
     };
     if (write(_connFd, &fixedHeader, 1) != 1) {
         err("cant sendPacket fixedHeader");
@@ -104,8 +106,8 @@ RawPacket *PacketIOManager::readPacket() {
         err("Cant read  fixed header");
     }
     unsigned char fixedHeaderFirstByte = fixedHeader[0];
-    // printf("fixed header first byte:\n");
-    // Utils::printBits(fixedHeaderFirstByte);
+     printf("fixed header first byte:\n");
+     Utils::printBits(fixedHeaderFirstByte);
 
     //    bool[4] _specificFlags;
     unsigned char specificFlags = evalSpecificFlags(fixedHeaderFirstByte);

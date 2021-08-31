@@ -6,6 +6,7 @@
 #include <InvalidPacketException.h>
 #include <SubAckPacket.h>
 #include "SubscribePacketHandler.h"
+#include <stdlib.h>
 
 SubscribePacketHandler::SubscribePacketHandler(PacketIOManager *packetIo,
                                                ServerSessionRepository *serverSessionRepository,
@@ -28,9 +29,14 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
 
     ServerSession* serverSession = _serverConnection->_serverSession;
 
-    char *qos_topic = (char *) malloc(strlen((char*) subscribePacket->getQos()) + strlen(subscribePacket->getTopic()) + 1);
-    strcat(qos_topic,(char*) subscribePacket->getQos());
-    strcat(qos_topic,subscribePacket->getTopic());
+    // store qos and topic cated together to save space and complexity
+    int bufLen = /* qos:*/ sizeof(unsigned char) + strlen(subscribePacket->getTopic()) + 1;
+    char *qos_topic = (char *) malloc(bufLen);
+    memset(qos_topic,0,bufLen);
+    unsigned char qos = subscribePacket->getQos();
+    sprintf(qos_topic,"%d",qos);
+    sprintf(qos_topic+1,"%s",subscribePacket->getTopic());
+//    memcpy(qos_topic+1,subscribePacket->getTopic(), strlen(subscribePacket->getTopic())+1);
     serverSession->_qos_subscriptions->push_back(qos_topic);
     _serverSessionRepository->save(serverSession);
     Topic* storedTopic = topicRepository->loadTopic(subscribePacket->getTopic());

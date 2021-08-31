@@ -42,9 +42,7 @@ void ConnectCLIModeHandler::handle() {
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
         std::cout << "Successfully _connected to Server!" << "\n";
-//        _clientConnectionManager->closeConnection();
-        // wait for publish packets of server (if any) and ultimately disconnect packet from server
-        _clientConnectionManager->handleIncomingPackets();
+        _clientConnectionManager->closeConnection();
         exit(0);
     } catch (const std::exception &e) {
         std::cout << "exception occurred while creating _connection with server:" << "\n";

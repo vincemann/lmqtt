@@ -47,39 +47,39 @@ int main(int argc, char const *argv[])
     SubAckPacketFactory* subAckPacketFactory = new SubAckPacketFactory();
     factories.insert(std::make_pair(SUBSCRIBE_ACK, subAckPacketFactory));
 
-    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
+//    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
 
     // CREATE DUMMY DATA
-    char* testTopic = "jeffseid";
-    char* testMessage = "jeff seid trains biceps in mecca";
-    char* testMessage2 = "jeff seid trains biceps in mecca2";
-    char* testMessage3 = "jeff seid trains biceps in mecca3";
-    topicRepository->store(testTopic, testMessage);
-    topicRepository->store(testTopic, testMessage2);
-    topicRepository->store(testTopic, testMessage3);
-
-    std::vector<Message *>* msgs = topicRepository->loadMessages(testTopic);
-
-    topicRepository->subscribe(testTopic);
-    topicRepository->subscribe(testTopic);
-
-    std::vector<Message *>* msgsAfterSub = topicRepository->loadMessages(testTopic);
-
-
-    std::vector<Message *>* consumedMsgs = topicRepository->consumeMessagesStartingFromId(testTopic,1);
-    std::vector<Message *>* consumedMsgs2 = topicRepository->consumeMessagesStartingFromId(testTopic,1);
-
-//    topicRepository->unsubscribe(testTopic,1);
-//    topicRepository->unsubscribe(testTopic,1);
-
-//    char* testMessage3 = "test msg2";
-//    char* testMessage4 = "test msg3";
-//    Message* tmsg3 = new Message(2,1,testMessage3);
-//    Message* tmsg4 = new Message(3,1, testMessage4);
-//    msgs = new std::vector<Message*>();
-//    msgs->push_back(tmsg3);
-//    msgs->push_back(tmsg4);
-//    topicRepository->replaceMessages(testTopic, msgs);
+//    char* testTopic = "jeffseid";
+//    char* testMessage = "jeff seid trains biceps in mecca";
+//    char* testMessage2 = "jeff seid trains biceps in mecca2";
+//    char* testMessage3 = "jeff seid trains biceps in mecca3";
+//    topicRepository->store(testTopic, testMessage);
+//    topicRepository->store(testTopic, testMessage2);
+//    topicRepository->store(testTopic, testMessage3);
+//
+//    std::vector<Message *>* msgs = topicRepository->loadMessages(testTopic);
+//
+//    topicRepository->subscribe(testTopic);
+//    topicRepository->subscribe(testTopic);
+//
+//    std::vector<Message *>* msgsAfterSub = topicRepository->loadMessages(testTopic);
+//
+//
+//    std::vector<Message *>* consumedMsgs = topicRepository->consumeMessagesStartingFromId(testTopic,1);
+//    std::vector<Message *>* consumedMsgs2 = topicRepository->consumeMessagesStartingFromId(testTopic,1);
+//
+////    topicRepository->unsubscribe(testTopic,1);
+////    topicRepository->unsubscribe(testTopic,1);
+//
+////    char* testMessage3 = "test msg2";
+////    char* testMessage4 = "test msg3";
+////    Message* tmsg3 = new Message(2,1,testMessage3);
+////    Message* tmsg4 = new Message(3,1, testMessage4);
+////    msgs = new std::vector<Message*>();
+////    msgs->push_back(tmsg3);
+////    msgs->push_back(tmsg4);
+////    topicRepository->replaceMessages(testTopic, msgs);
 
 
     ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories, fileDataManager);
