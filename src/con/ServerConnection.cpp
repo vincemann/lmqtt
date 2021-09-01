@@ -5,3 +5,5 @@
 #include "ServerConnection.h"
 
 ServerConnection::ServerConnection() : Connection() {}
+
+ServerConnection::ServerConnection(ServerSession *serverSession) : _serverSession(serverSession) {}

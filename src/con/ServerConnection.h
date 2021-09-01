@@ -14,6 +14,9 @@
 class ServerConnection : public Connection{
 public:
     ServerConnection();
+
+    ServerConnection(ServerSession *serverSession);
+
     ServerSession* _serverSession;
 };
 

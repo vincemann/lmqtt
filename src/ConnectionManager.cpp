@@ -93,7 +93,6 @@ void ConnectionManager::serveClients() {
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
         ServerConnection* connection = new ServerConnection();
         PacketIOManager* packetIoManager = new PacketIOManager(connection, connFd, _parsers);
-        ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
 
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
@@ -105,7 +104,7 @@ void ConnectionManager::serveClients() {
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
         SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,
                                                                                     serverSessionRepository, connection,
-                                                                                    subAckPacketFactory, nullptr);
+                                                                                    subAckPacketFactory, topicRepository);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
@@ -148,7 +147,6 @@ void ConnectionManager::serveClients() {
             delete any.second;
         }
 
-        delete serverSessionRepository;
         delete packetIoManager;
     }
 }
@@ -159,7 +157,10 @@ void ConnectionManager::disconnectClient() {
 }
 
 ConnectionManager::ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
-                                     std::map<PacketType, PacketFactory *> *factories, FileDataManager *fileDataManager)
+                                     std::map<PacketType, PacketFactory *> *factories,
+                                     TopicRepository *topicRepository,
+                                     ServerSessionRepository *serverSessionRepository)
         : _port(port), _parsers(parsers),
-                                                                                         _factories(factories), fileDataManager(fileDataManager) {}
+          _factories(factories),  topicRepository(topicRepository),
+          serverSessionRepository(serverSessionRepository) {}
 

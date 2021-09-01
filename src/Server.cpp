@@ -29,8 +29,11 @@
 
 int main(int argc, char const *argv[])
 {
-    FileDataManager* fileDataManager = new FileDataManager();
     // THESE OBJECTS LIVE AS LONG AS THE SERVER
+    FileDataManager* fileDataManager = new FileDataManager();
+    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
+    ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
+
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
     ConnectPacketParser* connectPacketParser = new ConnectPacketParser;
@@ -50,11 +53,11 @@ int main(int argc, char const *argv[])
 //    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
 
     // CREATE DUMMY DATA
-//    char* testTopic = "jeffseid";
-//    char* testMessage = "jeff seid trains biceps in mecca";
+    char* testTopic = "jeffseid";
+    char* testMessage = "jeff seid trains biceps in mecca";
 //    char* testMessage2 = "jeff seid trains biceps in mecca2";
 //    char* testMessage3 = "jeff seid trains biceps in mecca3";
-//    topicRepository->store(testTopic, testMessage);
+    topicRepository->store(testTopic, testMessage);
 //    topicRepository->store(testTopic, testMessage2);
 //    topicRepository->store(testTopic, testMessage3);
 //
@@ -82,7 +85,8 @@ int main(int argc, char const *argv[])
 ////    topicRepository->replaceMessages(testTopic, msgs);
 
 
-    ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories, fileDataManager);
+    ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories,
+                                                                 topicRepository, serverSessionRepository);
     connectionManager->serveClients();
 
 }

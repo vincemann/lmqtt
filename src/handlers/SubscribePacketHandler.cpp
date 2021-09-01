@@ -27,18 +27,7 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
         throw InvalidPacketException("topic len must be > 1");
     }
 
-    ServerSession* serverSession = _serverConnection->_serverSession;
 
-    // store qos and topic cated together to save space and complexity
-    int bufLen = /* qos:*/ sizeof(unsigned char) + strlen(subscribePacket->getTopic()) + 1;
-    char *qos_topic = (char *) malloc(bufLen);
-    memset(qos_topic,0,bufLen);
-    unsigned char qos = subscribePacket->getQos();
-    sprintf(qos_topic,"%d",qos);
-    sprintf(qos_topic+1,"%s",subscribePacket->getTopic());
-//    memcpy(qos_topic+1,subscribePacket->getTopic(), strlen(subscribePacket->getTopic())+1);
-    serverSession->_qos_subscriptions->push_back(qos_topic);
-    _serverSessionRepository->save(serverSession);
     Topic* storedTopic = topicRepository->loadTopic(subscribePacket->getTopic());
     if (storedTopic == 0){
         // send err ret code and quit connection
@@ -46,7 +35,20 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
         _packetIo->sendPacket(errPacket);
         throw InvalidPacketException("Topic does not exist");
     } else{
-        storedTopic->_subscribed_users_count += 1;
+        // session is already loaded by connectPacketHandler
+        ServerSession* serverSession = _serverConnection->_serverSession;
+
+        // store qos and topic cated together to save space and complexity
+        int bufLen = /* qos:*/ sizeof(unsigned char) + strlen(subscribePacket->getTopic()) + 1;
+        char *qos_topic = (char *) malloc(bufLen);
+        memset(qos_topic,0,bufLen);
+        unsigned char qos = subscribePacket->getQos();
+        sprintf(qos_topic,"%d",qos);
+        sprintf(qos_topic+1,"%s",subscribePacket->getTopic());
+        serverSession->_qos_subscriptions->push_back(qos_topic);
+        _serverSessionRepository->save(serverSession);
+
+        topicRepository->subscribe(subscribePacket->getTopic());
         SubAckPacket* successPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(), (unsigned char) subscribePacket->getQos());
         _packetIo->sendPacket(successPacket);
         // todo send publish msg'es to let client consume all msges of topic
