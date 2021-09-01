@@ -2,7 +2,7 @@
 // Created by vince on 12.08.21.
 //
 
-#include <SubAckPacket.h>
+#include <SubscribeAckPacket.h>
 #include <SubscribePacket.h>
 #include <InvalidPacketException.h>
 #include "SubscribeAckPacketHandler.h"
@@ -11,7 +11,7 @@ SubscribeAckPacketHandler::SubscribeAckPacketHandler(PacketIOManager *packetIo, 
         : PacketHandler(packetIo), clientConnection(clientConnection) {}
 
 void SubscribeAckPacketHandler::handle(RawPacket *packet) {
-    SubAckPacket* subAckPacket = static_cast<SubAckPacket*>(packet);
+    SubscribeAckPacket* subAckPacket = static_cast<SubscribeAckPacket*>(packet);
     unsigned char retCode = subAckPacket->getRetCode();
     if (retCode >= 0 && retCode <3 ){
         printf("Subscribe packet acked successfully with qos: %d\n",retCode);

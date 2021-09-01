@@ -96,10 +96,12 @@ add_executable(lmqtt__client
         ../packets/factories/SubscribePacketFactory.cpp
         ../packets/SubscribePacket.h
         ../packets/SubscribePacket.cpp
-        ../packets/SubAckPacket.cpp
-        ../packets/SubAckPacket.h
+        ../packets/SubscribeAckPacket.cpp
+        ../packets/SubscribeAckPacket.h
         ../handlers/SubscribeAckPacketHandler.cpp
         ../handlers/SubscribeAckPacketHandler.h
+        ../packets/parsers/SubscribeAckPacketParser.cpp
+        ../packets/parsers/SubscribeAckPacketParser.h
         )
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets

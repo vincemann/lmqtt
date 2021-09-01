@@ -4,7 +4,7 @@
 
 #include <SubscribePacket.h>
 #include <InvalidPacketException.h>
-#include <SubAckPacket.h>
+#include <SubscribeAckPacket.h>
 #include "SubscribePacketHandler.h"
 #include <stdlib.h>
 
@@ -31,7 +31,7 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
     Topic* storedTopic = topicRepository->loadTopic(subscribePacket->getTopic());
     if (storedTopic == 0){
         // send err ret code and quit connection
-        SubAckPacket* errPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(),0x80);
+        SubscribeAckPacket* errPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(), 0x80);
         _packetIo->sendPacket(errPacket);
         throw InvalidPacketException("Topic does not exist");
     } else{
@@ -49,7 +49,7 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
         _serverSessionRepository->save(serverSession);
 
         topicRepository->subscribe(subscribePacket->getTopic());
-        SubAckPacket* successPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(), (unsigned char) subscribePacket->getQos());
+        SubscribeAckPacket* successPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(), (unsigned char) subscribePacket->getQos());
         _packetIo->sendPacket(successPacket);
         // todo send publish msg'es to let client consume all msges of topic
     }
