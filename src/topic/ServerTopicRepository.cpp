@@ -5,13 +5,13 @@
 #include <cstring>
 #include <iostream>
 #include <Utils.h>
-#include "TopicRepository.h"
+#include "ServerTopicRepository.h"
 #include <stdlib.h>
 #include "IllegalSessionStateException.h"
 
 #include "../json.hpp"
 
-TopicRepository::TopicRepository(FileDataManager *fileDataManager) : _fileDataManager(fileDataManager) {
+ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager) : _fileDataManager(fileDataManager) {
     //    _topics = new std::map<Topic *, std::vector<Message *> *>();
     const char *targetDir = "/.lmqtt/server/topics/";
     char *home = getenv("HOME");
@@ -19,7 +19,7 @@ TopicRepository::TopicRepository(FileDataManager *fileDataManager) : _fileDataMa
     Utils::createHomeDirectoryChain(_topicsDir);
 }
 
-void TopicRepository::store(char *topic_c, char *msg) {
+void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
 
     initTopicFiles(topic_c);
 
@@ -96,7 +96,7 @@ void TopicRepository::store(char *topic_c, char *msg) {
 //    strcat(topicDir, topic_c);
 //
 //    saveTopic(new Topic(topicDir));
-//    _fileDataManager->store(topicDir, "messages", jsonMsgs_c);
+//    _fileDataManager->saveMsg(topicDir, "messages", jsonMsgs_c);
 }
 
 
@@ -122,7 +122,7 @@ void TopicRepository::store(char *topic_c, char *msg) {
  * ~/.lmqtt/server/topics/topicBar/topic
  */
 
-void TopicRepository::replaceMessages(char *topic, std::vector<Message *> *msgs) {
+void ServerTopicRepository::replaceMessages(char *topic, std::vector<Message *> *msgs) {
     using json = nlohmann::json;
     std::vector<json> jsonMsgs = std::vector<json>();
 
@@ -146,12 +146,14 @@ void TopicRepository::replaceMessages(char *topic, std::vector<Message *> *msgs)
                   "messages", jsonMsgs_c);
 }
 
-void TopicRepository::remove(Topic *topic, Message *msg) {
+void ServerTopicRepository::removeMsg(char *topic, Message *msg) {
 
 }
 
+
+
 // expects topic name
-Topic *TopicRepository::loadTopic(char *topic) {
+Topic *ServerTopicRepository::loadTopic(char *topic) {
     using json = nlohmann::json;
 
     char *pathToTopicDir = Utils::smartstrcat(_topicsDir, topic);
@@ -174,7 +176,9 @@ Topic *TopicRepository::loadTopic(char *topic) {
     return new Topic(lastMsgIdPublished, subscribedUserCount, topicValue);
 }
 
-void TopicRepository::saveTopic(Topic *topic) {
+
+
+void ServerTopicRepository::saveTopic(Topic *topic) {
     using json = nlohmann::json;
     json j;
 
@@ -189,12 +193,12 @@ void TopicRepository::saveTopic(Topic *topic) {
 }
 
 
-//Message *TopicRepository::loadMessage(Topic *topic, unsigned long msgId) {
+//Message *ServerTopicRepository::loadMessage(Topic *topic, unsigned long msgId) {
 //    return nullptr;
 //}
 
 
-std::vector<Message *> *TopicRepository::consumeMessagesStartingFromId(char *topic, unsigned long lastConsumedMsgId) {
+std::vector<Message *> *ServerTopicRepository::consumeMessagesStartingFromId(char *topic, unsigned long lastConsumedMsgId) {
     std::vector<Message *> *msgs = loadMessages(topic);
     std::vector<Message *> *consumedMsgs = new std::vector<Message *>();
     std::vector<Message *> *updatedMsgs = new std::vector<Message *>();
@@ -251,7 +255,7 @@ std::vector<Message *> *TopicRepository::consumeMessagesStartingFromId(char *top
     return consumedMsgs;
 }
 
-void TopicRepository::subscribe(char *topicName) {
+void ServerTopicRepository::subscribe(char *topicName) {
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
     std::vector<Message *> *msgs = loadMessages(topicName);
@@ -262,7 +266,7 @@ void TopicRepository::subscribe(char *topicName) {
     saveTopic(topic);
 }
 
-void TopicRepository::unsubscribe(char *topicName, unsigned long lastConsumedMsgId) {
+void ServerTopicRepository::unsubscribe(char *topicName, unsigned long lastConsumedMsgId) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
 
 
@@ -284,7 +288,7 @@ void TopicRepository::unsubscribe(char *topicName, unsigned long lastConsumedMsg
 
 }
 
-void TopicRepository::initTopicFiles(char *topicName) {
+void ServerTopicRepository::initTopicFiles(char *topicName) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
     unsigned char topicExists = _fileDataManager->exists(_topicsDir, topicName);
     if (topicExists) {
@@ -292,12 +296,12 @@ void TopicRepository::initTopicFiles(char *topicName) {
         return;
     }
     Utils::createDirectory(topicDir);
-//    _fileDataManager->store(topicDir, "topic", "");
+//    _fileDataManager->saveMsg(topicDir, "topic", "");
     saveTopic(new Topic(topicName));
     _fileDataManager->store(topicDir, "messages", "");
 }
 
-std::vector<Message *> *TopicRepository::loadMessages(char *topicName) {
+std::vector<Message *> *ServerTopicRepository::loadMessages(char *topicName) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
     char *msgsJson = _fileDataManager->find(topicDir, "messages");
 

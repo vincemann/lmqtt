@@ -6,4 +6,4 @@
 
 ServerConnection::ServerConnection() : Connection() {}
 
-ServerConnection::ServerConnection(ServerSession *serverSession) : _serverSession(serverSession) {}
+ServerConnection::ServerConnection(ServersClientInfo *serverSession) : serversClientInfo(serverSession) {}

@@ -30,5 +30,5 @@ RawPacket *PublishPacketParser::parse(RawPacket *raw_packet) {
 
     char* msg = extractUtf8Payload(&data,true);
 
-    return new PublishPacket(raw_packet,dupFlag,qos,retainFlag,topic,packetId,msg);
+    return new PublishPacket(raw_packet, dupFlag, qos, retainFlag, topic, packetId, msg);
 }

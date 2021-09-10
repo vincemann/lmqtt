@@ -5,7 +5,7 @@
 #ifndef LMQTT__SERVER_SERVERCONNECTION_H
 #define LMQTT__SERVER_SERVERCONNECTION_H
 
-#include <ServerSession.h>
+#include <ServersClientInfo.h>
 #include "Connection.h"
 
 /**
@@ -15,9 +15,9 @@ class ServerConnection : public Connection{
 public:
     ServerConnection();
 
-    ServerConnection(ServerSession *serverSession);
+    ServerConnection(ServersClientInfo *serverSession);
 
-    ServerSession* _serverSession;
+    ServersClientInfo* serversClientInfo;
 };
 
 

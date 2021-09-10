@@ -124,7 +124,7 @@ int FileDataManager::store(const char *targetDir, const char *name,const char *c
         throw MsgException(Utils::formatToCharP("Cant open file %s\n",filePath));
     }
     if(fprintf(fp,"%s", content)< 0){
-        throw MsgException(Utils::formatToCharP("Unable to store file %s\n",filePath));
+        throw MsgException(Utils::formatToCharP("Unable to saveMsg file %s\n",filePath));
 
     }
     fflush(fp);

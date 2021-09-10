@@ -17,8 +17,8 @@ class PublishPacket : public RawPacket{
     char* msg;
 
 public:
-    PublishPacket(RawPacket *rawPacket, unsigned char dupFlag, unsigned short qos, unsigned char retainFlag,
-                  char *topic, unsigned short packetId, char *msg);
+    PublishPacket(RawPacket *rawPacket, unsigned char dupFlag, unsigned short qos,
+                  unsigned char retainFlag, char *topic, unsigned short packetId, char *msg);
 
     unsigned char getDupFlag() const;
 

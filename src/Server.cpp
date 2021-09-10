@@ -21,7 +21,7 @@
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
 #include "ConnectionManager.h"
-#include "topic/TopicRepository.h"
+#include "topic/ServerTopicRepository.h"
 
 
 #define PORT 8080
@@ -32,8 +32,8 @@ int main(int argc, char const *argv[])
 {
     // THESE OBJECTS LIVE AS LONG AS THE SERVER
     FileDataManager* fileDataManager = new FileDataManager();
-    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
-    ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
+    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager);
+    ServersClientInfoRepository* serverSessionRepository = new ServersClientInfoRepository(fileDataManager);
 
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
@@ -53,16 +53,16 @@ int main(int argc, char const *argv[])
     SubAckPacketFactory* subAckPacketFactory = new SubAckPacketFactory();
     factories.insert(std::make_pair(SUBSCRIBE_ACK, subAckPacketFactory));
 
-//    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
+//    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager);
 
     // CREATE DUMMY DATA
     char* testTopic = "jeffseid";
     char* testMessage = "jeff seid trains biceps in mecca";
 //    char* testMessage2 = "jeff seid trains biceps in mecca2";
 //    char* testMessage3 = "jeff seid trains biceps in mecca3";
-    topicRepository->store(testTopic, testMessage);
-//    topicRepository->store(testTopic, testMessage2);
-//    topicRepository->store(testTopic, testMessage3);
+    topicRepository->saveMsg(testTopic, testMessage);
+//    topicRepository->saveMsg(testTopic, testMessage2);
+//    topicRepository->saveMsg(testTopic, testMessage3);
 //
 //    std::vector<Message *>* msgs = topicRepository->loadMessages(testTopic);
 //

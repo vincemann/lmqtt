@@ -161,8 +161,8 @@ void ConnectionManager::disconnectClient() {
 
 ConnectionManager::ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
                                      std::map<PacketType, PacketFactory *> *factories,
-                                     TopicRepository *topicRepository,
-                                     ServerSessionRepository *serverSessionRepository)
+                                     ServerTopicRepository *topicRepository,
+                                     ServersClientInfoRepository *serverSessionRepository)
         : _port(port), _parsers(parsers),
           _factories(factories),  topicRepository(topicRepository),
           serverSessionRepository(serverSessionRepository) {}

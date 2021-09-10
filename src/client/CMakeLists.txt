@@ -71,16 +71,16 @@ add_executable(lmqtt__client
         ../handlers/ConnectAckPacketHandler.h
         ../files/FileDataManager.h
         ../files/FileDataManager.cpp
-        ../session/ServerSession.h
-        ../session/ServerSession.cpp
-        ../session/ServerSessionRepository.h
-        ../session/ServerSessionRepository.cpp
+        ../session/ServersClientInfo.h
+        ../session/ServersClientInfo.cpp
+        ../session/ServersClientInfoRepository.h
+        ../session/ServersClientInfoRepository.cpp
         ../MsgException.cpp
         ../MsgException.h
-        ../session/ClientSession.cpp
-        ../session/ClientSession.h
-        ../session/ClientSessionRepository.cpp
-        ../session/ClientSessionRepository.h
+        ../session/ClientsClientInfo.cpp
+        ../session/ClientsClientInfo.h
+        ../session/ClientsClientInfoRepository.cpp
+        ../session/ClientsClientInfoRepository.h
         ../packets/DisconnectPacket.cpp
         ../packets/DisconnectPacket.h
         mode/ConnectCLIModeHandler.cpp
@@ -102,7 +102,7 @@ add_executable(lmqtt__client
         ../handlers/SubscribeAckPacketHandler.h
         ../packets/parsers/SubscribeAckPacketParser.cpp
         ../packets/parsers/SubscribeAckPacketParser.h
-        mode/PublishCLIModeHandler.cpp mode/PublishCLIModeHandler.h ../packets/factories/PublishPacketFactory.cpp ../packets/factories/PublishPacketFactory.h ../packets/PublishPacket.cpp ../packets/PublishPacket.h ../packets/parsers/PublishPacketParser.cpp ../packets/parsers/PublishPacketParser.h ../handlers/ClientPublishPacketHandler.cpp ../handlers/ClientPublishPacketHandler.h)
+        mode/PublishCLIModeHandler.cpp mode/PublishCLIModeHandler.h ../packets/factories/PublishPacketFactory.cpp ../packets/factories/PublishPacketFactory.h ../packets/PublishPacket.cpp ../packets/PublishPacket.h ../packets/parsers/PublishPacketParser.cpp ../packets/parsers/PublishPacketParser.h ../handlers/ClientPublishPacketHandler.cpp ../handlers/ClientPublishPacketHandler.h ../Subscription.cpp ../Subscription.h)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

@@ -65,16 +65,16 @@ add_executable(lmqtt__server
         src/packets/parsers/PacketParser.cpp
         src/handlers/exception/InvalidPacketException.cpp
         src/handlers/exception/InvalidPacketException.h
-        src/session/ServerSession.cpp
-        src/session/ServerSession.h
+        src/session/ServersClientInfo.cpp
+        src/session/ServersClientInfo.h
         src/packets/ConnectAckPacket.h
         src/packets/factories/ConnectAckPacketFactory.cpp
         src/packets/factories/ConnectAckPacketFactory.h
         src/packets/ConnectAckPacket.cpp
         src/con/ServerConnection.cpp
         src/con/ServerConnection.h
-        src/session/ServerSessionRepository.h
-        src/session/ServerSessionRepository.cpp
+        src/session/ServersClientInfoRepository.h
+        src/session/ServersClientInfoRepository.cpp
         src/json.hpp
         src/files/FileDataManager.h
         src/files/FileDataManager.cpp
@@ -98,13 +98,13 @@ add_executable(lmqtt__server
         src/packets/SubscribeAckPacket.h
         src/packets/factories/SubAckPacketFactory.cpp
         src/packets/factories/SubAckPacketFactory.h
-        src/topic/TopicRepository.cpp
-        src/topic/TopicRepository.h
+        src/topic/ServerTopicRepository.cpp
+        src/topic/ServerTopicRepository.h
         src/topic/Topic.cpp
         src/topic/Topic.h
         src/topic/Message.cpp
         src/topic/Message.h
-        src/packets/factories/PublishPacketFactory.cpp src/packets/factories/PublishPacketFactory.h src/packets/PublishPacket.cpp src/packets/PublishPacket.h src/packets/parsers/PublishPacketParser.cpp src/packets/parsers/PublishPacketParser.h src/handlers/ServerPublishPacketHandler.cpp src/handlers/ServerPublishPacketHandler.h)
+        src/packets/factories/PublishPacketFactory.cpp src/packets/factories/PublishPacketFactory.h src/packets/PublishPacket.cpp src/packets/PublishPacket.h src/packets/parsers/PublishPacketParser.cpp src/packets/parsers/PublishPacketParser.h src/handlers/ServerPublishPacketHandler.cpp src/handlers/ServerPublishPacketHandler.h src/Subscription.cpp src/Subscription.h)
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

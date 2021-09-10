@@ -10,13 +10,13 @@
 #include "CLIModeHandler.h"
 
 class PublishCLIModeHandler : public CLIModeHandler{
-    ClientSessionRepository *clientSessionRepository;
+    ClientsClientInfoRepository *clientSessionRepository;
     PublishPacketFactory *publishPacketFactory;
 
 public:
     PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                           ConnectPacketFactory *connectPacketFactory, int argc,
-                          ClientSessionRepository *clientSessionRepository, PublishPacketFactory *publishPacketFactory);
+                          ClientsClientInfoRepository *clientSessionRepository, PublishPacketFactory *publishPacketFactory);
 
     void handle() override;
 

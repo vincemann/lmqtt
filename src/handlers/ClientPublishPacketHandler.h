@@ -6,8 +6,12 @@
 #define LMQTT__SERVER_CLIENTPUBLISHPACKETHANDLER_H
 
 
-class ClientPublishPacketHandler {
+#include <RawPacket.h>
+#include "PacketHandler.h"
 
+class ClientPublishPacketHandler : public PacketHandler {
+
+    void handle(RawPacket *packet) override;
 };
 
 

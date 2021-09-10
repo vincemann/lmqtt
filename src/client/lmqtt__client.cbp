@@ -96,6 +96,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/MsgException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/Subscription.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/Subscription.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/Client.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -324,28 +330,28 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSession.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientsClientInfo.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSession.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientsClientInfo.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSessionRepository.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientsClientInfoRepository.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientSessionRepository.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ClientsClientInfoRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServerSession.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServersClientInfo.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServerSession.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServersClientInfo.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServerSessionRepository.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServersClientInfoRepository.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServerSessionRepository.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServersClientInfoRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/util/Utils.cpp">

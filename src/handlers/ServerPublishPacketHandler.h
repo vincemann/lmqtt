@@ -7,14 +7,14 @@
 
 
 #include "PacketHandler.h"
-#include "../topic/TopicRepository.h"
+#include "../topic/ServerTopicRepository.h"
 
 class ServerPublishPacketHandler : public PacketHandler {
-    TopicRepository *topicRepository;
+    ServerTopicRepository *topicRepository;
 public:
     void handle(RawPacket *packet) override;
 
-    ServerPublishPacketHandler(PacketIOManager *packetIo, TopicRepository *topicRepository);
+    ServerPublishPacketHandler(PacketIOManager *packetIo, ServerTopicRepository *topicRepository);
 
 };
 

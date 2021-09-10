@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 
     FileDataManager *fileDataManager = new FileDataManager();
     ClientConnection *connection = new ClientConnection();
-    ClientSessionRepository *clientSessionRepository = new ClientSessionRepository(fileDataManager);
+    ClientsClientInfoRepository *clientSessionRepository = new ClientsClientInfoRepository(fileDataManager);
 
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();

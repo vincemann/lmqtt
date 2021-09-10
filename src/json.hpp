@@ -4924,7 +4924,7 @@ with a subtype used by BSON and MessagePack. This type exists so that the user
 does not have to specify a type themselves with a specific naming scheme in
 order to override the binary type.
 
-@tparam BinaryType container to store bytes (`std::vector<std::uint8_t>` by
+@tparam BinaryType container to saveMsg bytes (`std::vector<std::uint8_t>` by
                    default)
 
 @since version 3.8.0
@@ -5939,7 +5939,7 @@ class json_sax_dom_parser
 
     bool key(string_t& val)
     {
-        // add null at given key and store the reference for later
+        // add null at given key and saveMsg the reference for later
         object_element = &(ref_stack.back()->m_value.object->operator[](val));
         return true;
     }
@@ -6126,7 +6126,7 @@ class json_sax_dom_callback_parser
         const bool keep = callback(static_cast<int>(ref_stack.size()), parse_event_t::key, k);
         key_keep_stack.push_back(keep);
 
-        // add discarded value at given key and store the reference for later
+        // add discarded value at given key and saveMsg the reference for later
         if (keep && ref_stack.back())
         {
             object_element = &(ref_stack.back()->m_value.object->operator[](val) = discarded);
@@ -6303,7 +6303,7 @@ class json_sax_dom_callback_parser
 
         // object
         JSON_ASSERT(ref_stack.back()->is_object());
-        // check if we should store an element for the current key
+        // check if we should saveMsg an element for the current key
         JSON_ASSERT(!key_keep_stack.empty());
         const bool store_element = key_keep_stack.back();
         key_keep_stack.pop_back();
@@ -7383,7 +7383,7 @@ class lexer : public lexer_base<BasicJsonType>
     */
     token_type scan_number()  // lgtm [cpp/use-of-goto]
     {
-        // reset token_buffer to store the number's bytes
+        // reset token_buffer to saveMsg the number's bytes
         reset();
 
         // the type of the parsed number; initially set to unsigned; will be
@@ -12874,7 +12874,7 @@ class json_pointer
                 }
             }
 
-            // finally, store the reference token
+            // finally, saveMsg the reference token
             detail::unescape(reference_token);
             result.push_back(reference_token);
         }
@@ -15204,7 +15204,7 @@ inline cached_power get_cached_power_for_binary_exponent(int e)
     //         = 960
     //
     // This binary exponent range [-1137,960] results in a decimal exponent
-    // range [-307,324]. One does not need to store a cached power for each
+    // range [-307,324]. One does not need to saveMsg a cached power for each
     // k in this range. For each such k it suffices to find a cached power
     // such that the exponent of the product lies in [alpha,gamma].
     // This implies that the difference of the decimal exponents of adjacent
@@ -17107,7 +17107,7 @@ namespace nlohmann
 {
 
 /*!
-@brief a class to store JSON values
+@brief a class to saveMsg JSON values
 
 @tparam ObjectType type for JSON objects (`std::map` by default; will be used
 in @ref object_t)
@@ -17430,7 +17430,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     ///////////////////////////
 
     /// @name JSON value data types
-    /// The data types to store a JSON value. These types are derived from
+    /// The data types to saveMsg a JSON value. These types are derived from
     /// the template arguments passed to class @ref basic_json.
     /// @{
 
@@ -17450,10 +17450,10 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     > where a name is a string and a value is a string, number, boolean, null,
     > object, or array.
 
-    To store objects in C++, a type is defined by the template parameters
+    To saveMsg objects in C++, a type is defined by the template parameters
     described below.
 
-    @tparam ObjectType  the container to store objects (e.g., `std::map` or
+    @tparam ObjectType  the container to saveMsg objects (e.g., `std::map` or
     `std::unordered_map`)
     @tparam StringType the type of the keys or names (e.g., `std::string`).
     The comparison function `std::less<StringType>` is used to order elements
@@ -17537,10 +17537,10 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     [RFC 8259](https://tools.ietf.org/html/rfc8259) describes JSON arrays as follows:
     > An array is an ordered sequence of zero or more values.
 
-    To store objects in C++, a type is defined by the template parameters
+    To saveMsg objects in C++, a type is defined by the template parameters
     explained below.
 
-    @tparam ArrayType  container type to store arrays (e.g., `std::vector` or
+    @tparam ArrayType  container type to saveMsg arrays (e.g., `std::vector` or
     `std::list`)
     @tparam AllocatorType allocator to use for arrays (e.g., `std::allocator`)
 
@@ -17583,11 +17583,11 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     [RFC 8259](https://tools.ietf.org/html/rfc8259) describes JSON strings as follows:
     > A string is a sequence of zero or more Unicode characters.
 
-    To store objects in C++, a type is defined by the template parameter
+    To saveMsg objects in C++, a type is defined by the template parameter
     described below. Unicode values are split by the JSON class into
     byte-sized characters during deserialization.
 
-    @tparam StringType  the container to store strings (e.g., `std::string`).
+    @tparam StringType  the container to saveMsg strings (e.g., `std::string`).
     Note this container is used for keys/names in objects, see @ref object_t.
 
     #### Default type
@@ -17636,7 +17636,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     [RFC 8259](https://tools.ietf.org/html/rfc8259) implicitly describes a boolean as a
     type which differentiates the two literals `true` and `false`.
 
-    To store objects in C++, a type is defined by the template parameter @a
+    To saveMsg objects in C++, a type is defined by the template parameter @a
     BooleanType which chooses the type to use.
 
     #### Default type
@@ -17674,7 +17674,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     Therefore, three different types, @ref number_integer_t, @ref
     number_unsigned_t and @ref number_float_t are used.
 
-    To store integer numbers in C++, a type is defined by the template
+    To saveMsg integer numbers in C++, a type is defined by the template
     parameter @a NumberIntegerType which chooses the type to use.
 
     #### Default type
@@ -17746,7 +17746,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     Therefore, three different types, @ref number_integer_t, @ref
     number_unsigned_t and @ref number_float_t are used.
 
-    To store unsigned integer numbers in C++, a type is defined by the
+    To saveMsg unsigned integer numbers in C++, a type is defined by the
     template parameter @a NumberUnsignedType which chooses the type to use.
 
     #### Default type
@@ -17817,7 +17817,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     Therefore, three different types, @ref number_integer_t, @ref
     number_unsigned_t and @ref number_float_t are used.
 
-    To store floating-point numbers in C++, a type is defined by the template
+    To saveMsg floating-point numbers in C++, a type is defined by the template
     parameter @a NumberFloatType which chooses the type to use.
 
     #### Default type

@@ -7,15 +7,15 @@
 
 
 #include <FileDataManager.h>
-#include <ServerSessionRepository.h>
-#include "topic/TopicRepository.h"
+#include <ServersClientInfoRepository.h>
+#include "topic/ServerTopicRepository.h"
 
 class ConnectionManager {
 public:
     ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
                       std::map<PacketType, PacketFactory *> *factories,
-                      TopicRepository *topicRepository,
-                      ServerSessionRepository *serverSessionRepository);
+                      ServerTopicRepository *topicRepository,
+                      ServersClientInfoRepository *serverSessionRepository);
 
     void serveClients();
     void disconnectClient();
@@ -24,8 +24,8 @@ public:
 private:
     int waitForConnection(int serverFd);
     int bindToPort();
-    ServerSessionRepository* serverSessionRepository;
-    TopicRepository* topicRepository;
+    ServersClientInfoRepository* serverSessionRepository;
+    ServerTopicRepository* topicRepository;
     int _port;
     unsigned char _clientConnected;
     std::map<PacketType,PacketParser*>* _parsers;

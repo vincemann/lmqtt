@@ -12,13 +12,16 @@ void ServerPublishPacketHandler::handle(RawPacket *packet) {
     if (publishPacket->getQos() > 2){
         throw InvalidPacketException("qos must be between 0 and 2");
     }
-
-    topicRepository->store(publishPacket->getTopic(),publishPacket->getMsg());
+    Topic* topic = topicRepository->loadTopic(publishPacket->getTopic());
+    if (topic == 0){
+        topicRepository->saveTopic(new Topic(publishPacket->getTopic()));
+    }
+    topicRepository->saveMsg(publishPacket->getTopic(), publishPacket->getMsg());
     if (publishPacket->getQos() == 0 ){
         printf("qos of published msg is 0, no response to client\n");
     }
     // todo add responses and retransmissions
 }
 
-ServerPublishPacketHandler::ServerPublishPacketHandler(PacketIOManager *packetIo, TopicRepository *topicRepository)
+ServerPublishPacketHandler::ServerPublishPacketHandler(PacketIOManager *packetIo, ServerTopicRepository *topicRepository)
         : PacketHandler(packetIo), topicRepository(topicRepository) {}
