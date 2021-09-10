@@ -13,6 +13,7 @@ enum PacketType {
     SUBSCRIBE,
     SUBSCRIBE_ACK,
     DISCONNECT,
+    PUBLISH,
     UNKNOWN
 };
 
@@ -33,6 +34,9 @@ namespace PacketTypes {
                 break;
             case DISCONNECT:
                 return "DISCONNECT";
+                break;
+            case PUBLISH:
+                return "PUBLISH";
                 break;
         }
         return "UNKNOWN";

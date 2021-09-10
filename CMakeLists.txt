@@ -104,7 +104,7 @@ add_executable(lmqtt__server
         src/topic/Topic.h
         src/topic/Message.cpp
         src/topic/Message.h
-        )
+        src/packets/factories/PublishPacketFactory.cpp src/packets/factories/PublishPacketFactory.h src/packets/PublishPacket.cpp src/packets/PublishPacket.h src/packets/parsers/PublishPacketParser.cpp src/packets/parsers/PublishPacketParser.h src/handlers/ServerPublishPacketHandler.cpp src/handlers/ServerPublishPacketHandler.h)
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

@@ -5,7 +5,7 @@
 #ifndef LMQTT__SERVER_CLIMODE_H
 #define LMQTT__SERVER_CLIMODE_H
 
-enum CLIMode{ CONNECT_MODE, SUBSCRIBE_MODE, PUBLISH_MODE, RECV_MODE };
+enum CLIMode{ CONNECT_MODE, SUBSCRIBE_MODE, PUBLISH_MODE };
 
 namespace CLIModes{
 
@@ -15,6 +15,8 @@ namespace CLIModes{
                 fprintf(stderr, "Usage: %s %s -u username -p password -i clientId [-r (reset)] ip port\n", programName, PacketTypes::toString(mode));
             case SUBSCRIBE_MODE:
                 fprintf(stderr, "Usage: %s %s -t topic -i clientId -q qos ip port\n", programName, PacketTypes::toString(mode));
+            case PUBLISH_MODE:
+                fprintf(stderr, "Usage: %s %s -t topic -i clientId msg ip port\n", programName, PacketTypes::toString(mode));
         }
     }
 
@@ -24,6 +26,9 @@ namespace CLIModes{
         }
         if (strcmp(mode,"subscribe") == 0){
             return SUBSCRIBE_MODE;
+        }
+        if (strcmp(mode,"publish") == 0){
+            return PUBLISH_MODE;
         }
         fprintf(stderr,"%s","Invalid cli mode\n");
         fprintf(stderr, "valid modes are: %s, %s\n","connect","subscribe");

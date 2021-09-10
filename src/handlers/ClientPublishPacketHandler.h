@@ -1,0 +1,14 @@
+//
+// Created by vince on 10.09.21.
+//
+
+#ifndef LMQTT__SERVER_CLIENTPUBLISHPACKETHANDLER_H
+#define LMQTT__SERVER_CLIENTPUBLISHPACKETHANDLER_H
+
+
+class ClientPublishPacketHandler {
+
+};
+
+
+#endif //LMQTT__SERVER_CLIENTPUBLISHPACKETHANDLER_H

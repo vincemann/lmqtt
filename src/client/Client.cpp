@@ -99,6 +99,9 @@ int main(int argc, char *argv[]) {
             subscribeCliModeHandler->handle();
             break;
         }
+        case PUBLISH_MODE:
+            printf("publish mode\n");
+
     };
 
     // todo useful for publishing msges later
