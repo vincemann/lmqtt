@@ -9,3 +9,27 @@ PublishPacket::PublishPacket(RawPacket *rawPacket, unsigned char dupFlag, unsign
                                                                                 qos(qos), retainFlag(retainFlag),
                                                                                 topic(topic), packetId(packetId),
                                                                                 msg(msg) {}
+
+unsigned char PublishPacket::getDupFlag() const {
+    return dupFlag;
+}
+
+unsigned short PublishPacket::getQos() const {
+    return qos;
+}
+
+unsigned char PublishPacket::getRetainFlag() const {
+    return retainFlag;
+}
+
+char *PublishPacket::getTopic() const {
+    return topic;
+}
+
+unsigned short PublishPacket::getPacketId() const {
+    return packetId;
+}
+
+char *PublishPacket::getMsg() const {
+    return msg;
+}

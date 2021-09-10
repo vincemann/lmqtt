@@ -63,10 +63,14 @@ void PublishCLIModeHandler::handle() {
         std::cout << "Successfully _connected to Server!" << "\n";
         PublishPacket* publishPacket = publishPacketFactory->create(qos, 0,topic,msg,0);
         _clientConnectionManager->_packetIoManager->sendPacket(publishPacket);
-        // wait for puback
-//        RawPacket* pubAckPackage = _clientConnectionManager->_packetIoManager->readPacket();
-//        subscribeAckPacketHandler->handle(subackPacket);
-        _clientConnectionManager->closeConnection();
+
+        if (qos == 0 ){
+//            _clientConnectionManager->closeConnection();
+        } else{
+            // wait for puback/pubrecv
+//        RawPacket* pubResponsePackage = _clientConnectionManager->_packetIoManager->readPacket();
+//        subscribeAckPacketHandler->handle(pubResponsePackage);
+        }
         exit(0);
     } catch (const std::exception &e) {
         std::cout << "exception occurred while creating _connection with server:" << "\n";
@@ -74,4 +78,16 @@ void PublishCLIModeHandler::handle() {
         exit(1);
     }
 }
+
+PublishCLIModeHandler::PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
+                                             ConnectPacketFactory *connectPacketFactory, int argc,
+                                             ClientSessionRepository *clientSessionRepository,
+                                             PublishPacketFactory *publishPacketFactory) : CLIModeHandler(argv,
+                                                                                                          clientConnectionManager,
+                                                                                                          connectPacketFactory,
+                                                                                                          argc),
+                                                                                           clientSessionRepository(
+                                                                                                   clientSessionRepository),
+                                                                                           publishPacketFactory(
+                                                                                                   publishPacketFactory) {}
 

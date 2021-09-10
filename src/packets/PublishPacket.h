@@ -19,6 +19,18 @@ class PublishPacket : public RawPacket{
 public:
     PublishPacket(RawPacket *rawPacket, unsigned char dupFlag, unsigned short qos, unsigned char retainFlag,
                   char *topic, unsigned short packetId, char *msg);
+
+    unsigned char getDupFlag() const;
+
+    unsigned short getQos() const;
+
+    unsigned char getRetainFlag() const;
+
+    char *getTopic() const;
+
+    unsigned short getPacketId() const;
+
+    char *getMsg() const;
 };
 
 

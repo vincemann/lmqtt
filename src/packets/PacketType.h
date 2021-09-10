@@ -52,6 +52,8 @@ namespace PacketTypes {
                 return 8;
             case SUBSCRIBE_ACK:
                 return 9;
+            case PUBLISH:
+                return 4;
             case DISCONNECT:
                 return 14;
         }
@@ -64,6 +66,8 @@ namespace PacketTypes {
                 return PacketType::CONNECT;
             case 2:
                 return PacketType::CONNACK;
+            case 4:
+                return PacketType::PUBLISH;
             case 8:
                 return PacketType::SUBSCRIBE;
             case 9:

@@ -8,9 +8,7 @@
 RawPacket *PublishPacketParser::parse(RawPacket *raw_packet) {
     unsigned char* data = raw_packet->getData();
 
-    unsigned char specificFlags;
-    memcpy(&specificFlags, data, sizeof(unsigned char));
-    data += sizeof(unsigned char);
+    unsigned char specificFlags = raw_packet->getSpecificFlags();
 
     unsigned char mask = Utils::createBitMask(3, 3);
     unsigned char dupFlag = mask & specificFlags;

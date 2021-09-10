@@ -13,6 +13,10 @@ class PublishCLIModeHandler : public CLIModeHandler{
     ClientSessionRepository *clientSessionRepository;
     PublishPacketFactory *publishPacketFactory;
 
+public:
+    PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
+                          ConnectPacketFactory *connectPacketFactory, int argc,
+                          ClientSessionRepository *clientSessionRepository, PublishPacketFactory *publishPacketFactory);
 
     void handle() override;
 

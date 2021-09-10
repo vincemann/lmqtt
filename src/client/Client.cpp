@@ -18,6 +18,7 @@
 #include "mode/ConnectCLIModeHandler.h"
 #include "ClientConnectionManager.h"
 #include "mode/SubscribeCLIModeHandler.h"
+#include "mode/PublishCLIModeHandler.h"
 
 
 static void createSessionDirectories() {
@@ -46,6 +47,7 @@ int main(int argc, char *argv[]) {
     // FACTORIES
     ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
     SubscribePacketFactory *subscribePacketFactory = new SubscribePacketFactory();
+    PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
 
 
     FileDataManager *fileDataManager = new FileDataManager();
@@ -101,7 +103,10 @@ int main(int argc, char *argv[]) {
         }
         case PUBLISH_MODE:
             printf("publish mode\n");
+            PublishCLIModeHandler *publishCliModeHandler = new PublishCLIModeHandler(argv, clientConnectionManager,
+                                                                                     connectPacketFactory, argc, clientSessionRepository,publishPacketFactory);
 
+            publishCliModeHandler->handle();
     };
 
     // todo useful for publishing msges later

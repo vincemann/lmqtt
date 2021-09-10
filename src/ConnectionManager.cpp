@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <DisconnectPacketHandler.h>
 #include <SubscribePacketHandler.h>
+#include <ServerPublishPacketHandler.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -105,11 +106,13 @@ void ConnectionManager::serveClients() {
         SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,
                                                                                     serverSessionRepository, connection,
                                                                                     subAckPacketFactory, topicRepository);
+        ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,topicRepository);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
         handlers.insert(std::make_pair(DISCONNECT, disconnectPacketHandler));
         handlers.insert(std::make_pair(SUBSCRIBE, subscribePacketHandler));
+        handlers.insert(std::make_pair(PUBLISH, serverPublishPacketHandler));
 
 
         while(true){
