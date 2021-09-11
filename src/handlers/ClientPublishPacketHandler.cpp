@@ -25,3 +25,7 @@ void ClientPublishPacketHandler::handle(RawPacket *packet) {
     }
     // todo add responses and retransmissions
 }
+
+ClientPublishPacketHandler::ClientPublishPacketHandler(PacketIOManager *packetIo,
+                                                       ServerTopicRepository *topicRepository) : PacketHandler(
+        packetIo), topicRepository(topicRepository) {}

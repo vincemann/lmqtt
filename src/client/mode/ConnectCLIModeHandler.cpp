@@ -27,14 +27,14 @@ void ConnectCLIModeHandler::handle() {
             case 'i': clientId = optarg; break;
             case 'r': cleanSession=1; break;
             default: /* '?' */
-                CLIModes::printUsageInformation(_argv[0],CONNECT);
+                CLIModes::printUsageInformation(_argv[0],CONNECT_MODE);
                 exit(1);
         }
     }
     initRoute();
     if (clientId == 0){
         fprintf(stderr, "Client Id missing");
-        CLIModes::printUsageInformation(_argv[0],CONNECT);
+        CLIModes::printUsageInformation(_argv[0],CONNECT_MODE);
         exit(1);
     }
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, username, password);

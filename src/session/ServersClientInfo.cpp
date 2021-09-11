@@ -6,7 +6,7 @@
 
 
 ServersClientInfo::ServersClientInfo(char *clientId) : _clientId(clientId){
-    this->subscriptions= new std::vector<char *>;
+    this->subscriptions= new std::vector<Subscription*>;
 }
 
 std::ostream &operator<<(std::ostream &os, const ServersClientInfo &session) {

@@ -20,7 +20,7 @@
 #include "con/ServerConnection.h"
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
-#include "ConnectionManager.h"
+#include "ServerConnectionManager.h"
 #include "topic/ServerTopicRepository.h"
 
 
@@ -57,10 +57,12 @@ int main(int argc, char const *argv[])
 
     // CREATE DUMMY DATA
     char* testTopic = "jeffseid";
-    char* testMessage = "jeff seid trains biceps in mecca";
+
+    topicRepository->saveTopic(new Topic(testTopic));
+//    char* testMessage = "jeff seid trains biceps in mecca";
 //    char* testMessage2 = "jeff seid trains biceps in mecca2";
 //    char* testMessage3 = "jeff seid trains biceps in mecca3";
-    topicRepository->saveMsg(testTopic, testMessage);
+//    topicRepository->saveMsg(testTopic, testMessage);
 //    topicRepository->saveMsg(testTopic, testMessage2);
 //    topicRepository->saveMsg(testTopic, testMessage3);
 //
@@ -88,8 +90,8 @@ int main(int argc, char const *argv[])
 ////    topicRepository->replaceMessages(testTopic, msgs);
 
 
-    ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories,
-                                                                 topicRepository, serverSessionRepository);
+    ServerConnectionManager* connectionManager = new ServerConnectionManager(PORT, &parsers, &factories,
+                                                                             topicRepository, serverSessionRepository);
     connectionManager->serveClients();
 
 }

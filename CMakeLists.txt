@@ -80,8 +80,8 @@ add_executable(lmqtt__server
         src/files/FileDataManager.cpp
         src/MsgException.cpp
         src/MsgException.h
-        src/ConnectionManager.cpp
-        src/ConnectionManager.h
+        src/ServerConnectionManager.cpp
+        src/ServerConnectionManager.h
         src/packets/DisconnectPacket.cpp
         src/packets/DisconnectPacket.h
         src/packets/parsers/DisconnectPacketParser.cpp

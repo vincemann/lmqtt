@@ -51,30 +51,35 @@ ServersClientInfo *ServersClientInfoRepository::load(char *clientId) {
 
     // special iterator member functions for objects
     // todo replace iterator with find method maybe
-    ServersClientInfo *serverSession = 0;
+    ServersClientInfo *serversClientInfo = 0;
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
         std::cout << it.key() << " : " << it.value() << "\n";
         if (it.key() == "clientId") {
             std::string s = it.value().get<std::string>();
             std::cout << "found clientId: " << s << std::endl;
             char *parsedClientId = Utils::toCharP(&s);
-            serverSession = new ServersClientInfo(parsedClientId);
+            serversClientInfo = new ServersClientInfo(parsedClientId);
         } else if (it.key() == "subscriptions") {
             // via value() call i can get the json child object and thus move down the hierachry
             // el should be a json object as well
-            for (auto& el : it.value().items()){
-                std::string s = el.value().get<std::string>();
-                char *parsedSubscription = Utils::toCharP(&s);
-                serverSession->subscriptions->push_back(parsedSubscription);
+            json jsonSubscriptions = it.value();
+            for (json::iterator it = jsonSubscriptions.begin(); it != jsonSubscriptions.end(); ++it) {
+                unsigned long last_msg_id_consumed = it.value().at("last_msg_id_consumed").get<unsigned long>();
+                unsigned short qos = it.value().at("qos").get<unsigned short>();
+                std::string s_topic = it.value().at("topic").get<std::string>();
+                char *topic = Utils::toCharP(&s_topic);
+                Subscription *subscription = new Subscription(topic, last_msg_id_consumed, qos);
+                serversClientInfo->subscriptions->push_back(subscription);
             }
+
         }
     }
-    return serverSession;
+    return serversClientInfo;
 }
 
 ServersClientInfoRepository::ServersClientInfoRepository(FileDataManager *fileDataManager) : _fileDataManager(
         fileDataManager) {
-    const char* targetDir = "/.lmqtt/server/sessions";
+    const char* targetDir = "/.lmqtt/server/client-info";
     char* home = getenv("HOME");
     serversClientInfoDir = Utils::smartstrcat(home, targetDir);
     Utils::createHomeDirectoryChain(serversClientInfoDir);

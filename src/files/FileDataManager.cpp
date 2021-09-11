@@ -118,7 +118,7 @@ unsigned char FileDataManager::exists(char* dir, char* file){
 
 int FileDataManager::store(const char *targetDir, const char *name,const char *content) {
     char* filePath = FileDataManager::combinePaths(targetDir,name);
-    FILE *fp = fopen(filePath,"w");
+    FILE *fp = fopen(filePath,"w+");
     delete filePath;
     if(fp == 0){
         throw MsgException(Utils::formatToCharP("Cant open file %s\n",filePath));

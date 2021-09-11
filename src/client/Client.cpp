@@ -21,22 +21,23 @@
 #include "mode/PublishCLIModeHandler.h"
 
 
-static void createSessionDirectories() {
-    const char *targetDir = "/.lmqtt/client/sessions";
-    char *home = getenv("HOME");
-    char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
-    strcpy(dir, home);
-    strcat(dir, "/.lmqtt");
-    Utils::createDirectory(dir);
-    strcat(dir, "/client");
-    Utils::createDirectory(dir);
-    strcat(dir, "/sessions");
-    Utils::createDirectory(dir);
-}
+//static void createSessionDirectories() {
+//    const char *targetDir = "/.lmqtt/client/info";
+//    char *home = getenv("HOME");
+//    char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
+//    strcpy(dir, home);
+//    strcat(dir, "/.lmqtt");
+//    Utils::createDirectory(dir);
+//    strcat(dir, "/client");
+//    Utils::createDirectory(dir);
+//    strcat(dir, "/info");
+//    Utils::createDirectory(dir);
+//}
 
 
 int main(int argc, char *argv[]) {
-    createSessionDirectories();
+//    createSessionDirectories();
+
     // PARSERS
     std::map<PacketType, PacketParser *> parsers;
     ConnAckPacketParser *connAckPacketParser = new ConnAckPacketParser;

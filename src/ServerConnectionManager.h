@@ -2,20 +2,20 @@
 // Created by vince on 14.07.21.
 //
 
-#ifndef LMQTT__SERVER_CONNECTIONMANAGER_H
-#define LMQTT__SERVER_CONNECTIONMANAGER_H
+#ifndef LMQTT__SERVER_SERVERCONNECTIONMANAGER_H
+#define LMQTT__SERVER_SERVERCONNECTIONMANAGER_H
 
 
 #include <FileDataManager.h>
 #include <ServersClientInfoRepository.h>
 #include "topic/ServerTopicRepository.h"
 
-class ConnectionManager {
+class ServerConnectionManager {
 public:
-    ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
-                      std::map<PacketType, PacketFactory *> *factories,
-                      ServerTopicRepository *topicRepository,
-                      ServersClientInfoRepository *serverSessionRepository);
+    ServerConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
+                            std::map<PacketType, PacketFactory *> *factories,
+                            ServerTopicRepository *topicRepository,
+                            ServersClientInfoRepository *serverSessionRepository);
 
     void serveClients();
     void disconnectClient();
@@ -33,4 +33,4 @@ private:
 };
 
 
-#endif //LMQTT__SERVER_CONNECTIONMANAGER_H
+#endif //LMQTT__SERVER_SERVERCONNECTIONMANAGER_H

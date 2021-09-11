@@ -24,25 +24,25 @@ void PublishCLIModeHandler::handle() {
             case 'i': clientId = optarg; break;
             case 'q': qos = atoi(optarg); break;
             default: /* '?' */
-                CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+                CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
                 exit(1);
         }
     }
 
     if (clientId == 0){
         fprintf(stderr, "Client Id missing");
-        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+        CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
         exit(1);
     }
 
     if (topic == 0){
         fprintf(stderr, "Topic is missing");
-        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+        CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
         exit(1);
     }
     if (qos == 0xff){
         fprintf(stderr, "Qos is missing");
-        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+        CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
         exit(1);
     }
 

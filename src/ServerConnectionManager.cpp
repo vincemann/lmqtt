@@ -24,10 +24,10 @@
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
 
-#include "ConnectionManager.h"
+#include "ServerConnectionManager.h"
 
 
-int ConnectionManager::waitForConnection(int serverFd){
+int ServerConnectionManager::waitForConnection(int serverFd){
     int conn_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
@@ -45,7 +45,7 @@ int ConnectionManager::waitForConnection(int serverFd){
     return conn_socket;
 }
 
-int ConnectionManager::bindToPort(){
+int ServerConnectionManager::bindToPort(){
     int server_fd;
     struct sockaddr_in address;
     int opt = 1;
@@ -83,7 +83,7 @@ int ConnectionManager::bindToPort(){
     return server_fd;
 }
 
-void ConnectionManager::serveClients() {
+void ServerConnectionManager::serveClients() {
     int serverFd = bindToPort();
     while (true){
         std::cout << "waiting for new connection" << "\n";
@@ -154,15 +154,15 @@ void ConnectionManager::serveClients() {
     }
 }
 
-void ConnectionManager::disconnectClient() {
+void ServerConnectionManager::disconnectClient() {
     printf("Disconnecting client\n");
     this->_clientConnected = 0;
 }
 
-ConnectionManager::ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
-                                     std::map<PacketType, PacketFactory *> *factories,
-                                     ServerTopicRepository *topicRepository,
-                                     ServersClientInfoRepository *serverSessionRepository)
+ServerConnectionManager::ServerConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
+                                                 std::map<PacketType, PacketFactory *> *factories,
+                                                 ServerTopicRepository *topicRepository,
+                                                 ServersClientInfoRepository *serverSessionRepository)
         : _port(port), _parsers(parsers),
           _factories(factories),  topicRepository(topicRepository),
           serverSessionRepository(serverSessionRepository) {}

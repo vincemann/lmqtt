@@ -189,6 +189,7 @@ void ServerTopicRepository::saveTopic(Topic *topic) {
             {"last_msg_id_published",  topic->getLastMsgIdPublished()}
     };
     std::string jsonString = j.dump();
+    Utils::createDirectory(topicDir);
     _fileDataManager->store(topicDir, "topic", Utils::toCharP(&jsonString));
 }
 

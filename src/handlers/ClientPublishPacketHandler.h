@@ -8,10 +8,13 @@
 
 #include <RawPacket.h>
 #include "PacketHandler.h"
+#include "../topic/ServerTopicRepository.h"
 
 class ClientPublishPacketHandler : public PacketHandler {
-
+    ServerTopicRepository *topicRepository;
+public:
     void handle(RawPacket *packet) override;
+    ClientPublishPacketHandler(PacketIOManager *packetIo, ServerTopicRepository *topicRepository);
 };
 
 

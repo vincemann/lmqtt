@@ -102,7 +102,7 @@ add_executable(lmqtt__client
         ../handlers/SubscribeAckPacketHandler.h
         ../packets/parsers/SubscribeAckPacketParser.cpp
         ../packets/parsers/SubscribeAckPacketParser.h
-        mode/PublishCLIModeHandler.cpp mode/PublishCLIModeHandler.h ../packets/factories/PublishPacketFactory.cpp ../packets/factories/PublishPacketFactory.h ../packets/PublishPacket.cpp ../packets/PublishPacket.h ../packets/parsers/PublishPacketParser.cpp ../packets/parsers/PublishPacketParser.h ../handlers/ClientPublishPacketHandler.cpp ../handlers/ClientPublishPacketHandler.h ../Subscription.cpp ../Subscription.h)
+        mode/PublishCLIModeHandler.cpp mode/PublishCLIModeHandler.h ../packets/factories/PublishPacketFactory.cpp ../packets/factories/PublishPacketFactory.h ../packets/PublishPacket.cpp ../packets/PublishPacket.h ../packets/parsers/PublishPacketParser.cpp ../packets/parsers/PublishPacketParser.h ../handlers/ClientPublishPacketHandler.cpp ../handlers/ClientPublishPacketHandler.h ../Subscription.cpp ../Subscription.h ../handlers/ClientPublishPacketHandler.h ../handlers/ClientPublishPacketHandler.cpp ../topic/ServerTopicRepository.h ../topic/ServerTopicRepository.cpp ../topic/Topic.h ../topic/Topic.cpp ../topic/Message.h ../topic/Message.cpp)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)
