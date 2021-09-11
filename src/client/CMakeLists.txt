@@ -102,7 +102,39 @@ add_executable(lmqtt__client
         ../handlers/SubscribeAckPacketHandler.h
         ../packets/parsers/SubscribeAckPacketParser.cpp
         ../packets/parsers/SubscribeAckPacketParser.h
-        mode/PublishCLIModeHandler.cpp mode/PublishCLIModeHandler.h ../packets/factories/PublishPacketFactory.cpp ../packets/factories/PublishPacketFactory.h ../packets/PublishPacket.cpp ../packets/PublishPacket.h ../packets/parsers/PublishPacketParser.cpp ../packets/parsers/PublishPacketParser.h ../handlers/ClientPublishPacketHandler.cpp ../handlers/ClientPublishPacketHandler.h ../Subscription.cpp ../Subscription.h ../handlers/ClientPublishPacketHandler.h ../handlers/ClientPublishPacketHandler.cpp ../topic/ServerTopicRepository.h ../topic/ServerTopicRepository.cpp ../topic/Topic.h ../topic/Topic.cpp ../topic/Message.h ../topic/Message.cpp)
+        ../packets/factories/UnsubAckPacketFactory.h
+        ../packets/factories/UnsubAckPacketFactory.cpp
+        ../packets/UnsubscribePacket.cpp ../packets/UnsubscribePacket.h
+        ../packets/factories/UnsubscribePacketFactory.cpp
+        ../packets/factories/UnsubscribePacketFactory.h
+        ../packets/UnsubAckPacket.cpp
+        ../packets/UnsubAckPacket.h
+        ../packets/parsers/UnsubAckPacketParser.cpp
+        ../packets/parsers/UnsubAckPacketParser.h
+        ../handlers/UnsubAckPacketHandler.cpp
+        ../handlers/UnsubAckPacketHandler.h
+        mode/UnsubscribeCLIModeHandler.cpp
+        mode/UnsubscribeCLIModeHandler.h
+        mode/PublishCLIModeHandler.cpp
+        mode/PublishCLIModeHandler.h
+        ../packets/factories/PublishPacketFactory.cpp
+        ../packets/factories/PublishPacketFactory.h
+        ../packets/PublishPacket.cpp
+        ../packets/PublishPacket.h
+        ../packets/parsers/PublishPacketParser.cpp
+        ../packets/parsers/PublishPacketParser.h
+        ../handlers/ClientPublishPacketHandler.cpp
+        ../handlers/ClientPublishPacketHandler.h
+        ../Subscription.cpp
+        ../Subscription.h
+        ../handlers/ClientPublishPacketHandler.h
+        ../handlers/ClientPublishPacketHandler.cpp
+        ../topic/ServerTopicRepository.h
+        ../topic/ServerTopicRepository.cpp
+        ../topic/Topic.h
+        ../topic/Topic.cpp
+        ../topic/Message.h
+        ../topic/Message.cpp)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

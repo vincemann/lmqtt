@@ -501,6 +501,8 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
+<<<<<<< HEAD
+=======
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PublishPacketParser.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
@@ -509,6 +511,7 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
+>>>>>>> 416b1564649cd1236a49f43d4f035cdf8b45bd30
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/SubscribeAckPacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>

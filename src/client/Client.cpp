@@ -7,7 +7,9 @@
 #include <SubscribePacketParser.h>
 #include <SubscribeAckPacketParser.h>
 #include <SubscribeAckPacketHandler.h>
-
+#include <UnsubAckPacketParser.h>
+#include <UnsubscribePacketFactory.h>
+#include <UnsubAckPacketHandler.h>
 
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/ConnectPacketFactory.h"
@@ -18,8 +20,8 @@
 #include "mode/ConnectCLIModeHandler.h"
 #include "ClientConnectionManager.h"
 #include "mode/SubscribeCLIModeHandler.h"
+#include "mode/UnsubscribeCLIModeHandler.h"
 #include "mode/PublishCLIModeHandler.h"
-
 
 //static void createSessionDirectories() {
 //    const char *targetDir = "/.lmqtt/client/info";
@@ -44,10 +46,13 @@ int main(int argc, char *argv[]) {
     parsers.insert(std::make_pair(CONNACK, connAckPacketParser));
     SubscribeAckPacketParser *subscribePacketParser = new SubscribeAckPacketParser;
     parsers.insert(std::make_pair(SUBSCRIBE_ACK, subscribePacketParser));
+    UnsubAckPacketParser *unsubAckPacketParser = new UnsubAckPacketParser;
+    parsers.insert(std::make_pair(UNSUB_ACK, subscribePacketParser));
 
     // FACTORIES
     ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
     SubscribePacketFactory *subscribePacketFactory = new SubscribePacketFactory();
+    UnsubscribePacketFactory *unsubscribePacketFactory = new UnsubscribePacketFactory();
     PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
 
 
@@ -67,9 +72,12 @@ int main(int argc, char *argv[]) {
 
     SubscribeAckPacketHandler* subscribeAckPacketHandler = new SubscribeAckPacketHandler(packetIoManager,connection);
 
+    UnsubAckPacketHandler* unsubAckPacketHandler = new UnsubAckPacketHandler(packetIoManager);
+
 
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
     handlers.insert(std::make_pair(SUBSCRIBE_ACK, subscribeAckPacketHandler));
+    handlers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketHandler));
 
 
 
@@ -100,6 +108,16 @@ int main(int argc, char *argv[]) {
                                                                                            clientSessionRepository,
                                                                                            subscribePacketFactory,subscribeAckPacketHandler);
             subscribeCliModeHandler->handle();
+            break;
+        }
+        case UNSUBSCRIBE_MODE: {
+            printf("unsubscribe mode\n");
+            UnsubscribeCLIModeHandler *unsubscribeCliModeHandler = new UnsubscribeCLIModeHandler(argv,
+                                                                                           clientConnectionManager,
+                                                                                           connectPacketFactory, argc,
+                                                                                           clientSessionRepository,
+                                                                                           unsubscribePacketFactory,unsubAckPacketHandler);
+            unsubscribeCliModeHandler->handle();
             break;
         }
         case PUBLISH_MODE:

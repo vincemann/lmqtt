@@ -23,7 +23,7 @@ void SubscribeCLIModeHandler::handle() {
             case 'i': clientId = optarg; break;
             case 'q': qos = atoi(optarg); break;
             default: /* '?' */
-                CLIModes::printUsageInformation(_argv[0],SUBSCRIBE_MODE);
+            CLIModes::printUsageInformation(_argv[0],SUBSCRIBE_MODE);
                 exit(1);
         }
     }

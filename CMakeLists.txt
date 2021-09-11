@@ -104,7 +104,26 @@ add_executable(lmqtt__server
         src/topic/Topic.h
         src/topic/Message.cpp
         src/topic/Message.h
-        src/packets/factories/PublishPacketFactory.cpp src/packets/factories/PublishPacketFactory.h src/packets/PublishPacket.cpp src/packets/PublishPacket.h src/packets/parsers/PublishPacketParser.cpp src/packets/parsers/PublishPacketParser.h src/handlers/ServerPublishPacketHandler.cpp src/handlers/ServerPublishPacketHandler.h src/Subscription.cpp src/Subscription.h)
+        src/packets/UnsubscribePacket.cpp
+        src/packets/UnsubscribePacket.h
+        src/packets/parsers/UnsubscribePacketParser.cpp
+        src/packets/parsers/UnsubscribePacketParser.h
+        src/packets/UnsubAckPacket.cpp
+        src/packets/UnsubAckPacket.h
+        src/packets/factories/UnsubAckPacketFactory.cpp
+        src/packets/factories/UnsubAckPacketFactory.h
+        src/handlers/UnsubscribePacketHandler.h
+        src/handlers/UnsubscribePacketHandler.cpp
+        src/packets/parsers/UnsubAckPacketParser.h
+        src/packets/parsers/UnsubAckPacketParser.cpp
+        src/packets/factories/PublishPacketFactory.cpp
+        src/packets/factories/PublishPacketFactory.h
+        src/packets/PublishPacket.cpp src/packets/PublishPacket.h
+        src/packets/parsers/PublishPacketParser.cpp
+        src/packets/parsers/PublishPacketParser.h
+        src/handlers/ServerPublishPacketHandler.cpp
+        src/handlers/ServerPublishPacketHandler.h
+        src/Subscription.cpp src/Subscription.h)
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

@@ -12,6 +12,9 @@
 #include <fcntl.h>
 #include <DisconnectPacketHandler.h>
 #include <SubscribePacketHandler.h>
+#include <UnsubscribePacketFactory.h>
+#include <UnsubAckPacketFactory.h>
+#include <UnsubscribePacketHandler.h>
 #include <ServerPublishPacketHandler.h>
 
 #include "io/PacketIOManager.h"
@@ -105,15 +108,20 @@ void ServerConnectionManager::serveClients() {
 
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
         SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,
+                                                                                    serverSessionRepository, connection,
                                                                                     subAckPacketFactory, topicRepository);
+        UnsubAckPacketFactory* unsubAckPacketFactory = static_cast<UnsubAckPacketFactory*>(_factories->at(UNSUB_ACK));
+        UnsubscribePacketHandler* unsubscribePacketHandler = new UnsubscribePacketHandler(packetIoManager,
+                                                                                          serverSessionRepository,
+                                                                                          unsubAckPacketFactory, connection, topicRepository);
         ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,topicRepository);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
         handlers.insert(std::make_pair(DISCONNECT, disconnectPacketHandler));
         handlers.insert(std::make_pair(SUBSCRIBE, subscribePacketHandler));
+        handlers.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketHandler));
         handlers.insert(std::make_pair(PUBLISH, serverPublishPacketHandler));
-
 
         while(true){
             try{

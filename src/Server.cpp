@@ -9,6 +9,10 @@
 #include <DisconnectPacketParser.h>
 #include <SubscribePacketParser.h>
 #include <SubAckPacketFactory.h>
+#include <UnsubscribePacketParser.h>
+#include <UnsubAckPacketParser.h>
+#include <UnsubscribePacketFactory.h>
+#include <UnsubAckPacketFactory.h>
 #include <PublishPacketParser.h>
 
 #include "io/PacketIOManager.h"
@@ -40,11 +44,16 @@ int main(int argc, char const *argv[])
     ConnectPacketParser* connectPacketParser = new ConnectPacketParser;
     DisconnectPacketParser* disconnectPacketParser = new DisconnectPacketParser;
     SubscribePacketParser* subscribePacketParser = new SubscribePacketParser;
+
     PublishPacketParser* publishPacketParser = new PublishPacketParser;
+    UnsubscribePacketParser* unsubscribePacketParser = new UnsubscribePacketParser;
+    UnsubAckPacketParser* unsubAckPacketParser = new UnsubAckPacketParser;
     parsers.insert(std::make_pair(CONNECT, connectPacketParser));
     parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
     parsers.insert(std::make_pair(SUBSCRIBE, subscribePacketParser));
     parsers.insert(std::make_pair(PUBLISH, publishPacketParser));
+    parsers.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketParser));
+    parsers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketParser));
 
     // FACTORIES
     std::map<PacketType,PacketFactory*> factories;
@@ -52,6 +61,11 @@ int main(int argc, char const *argv[])
     factories.insert(std::make_pair(CONNACK, connectAckPacketFactory));
     SubAckPacketFactory* subAckPacketFactory = new SubAckPacketFactory();
     factories.insert(std::make_pair(SUBSCRIBE_ACK, subAckPacketFactory));
+    UnsubscribePacketFactory* unsubscribePacketFactory = new UnsubscribePacketFactory();
+    factories.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketFactory));
+    UnsubAckPacketFactory* unsubAckPacketFactory = new UnsubAckPacketFactory();
+    factories.insert(std::make_pair(UNSUB_ACK, unsubAckPacketFactory));
+
 
 //    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager);
 
@@ -90,10 +104,10 @@ int main(int argc, char const *argv[])
 ////    topicRepository->replaceMessages(testTopic, msgs);
 
 
+
     ServerConnectionManager* connectionManager = new ServerConnectionManager(PORT, &parsers, &factories,
                                                                              topicRepository, serverSessionRepository);
     connectionManager->serveClients();
-
 }
 
 

@@ -26,7 +26,6 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
         throw InvalidPacketException("topic len must be > 1");
     }
 
-
     Topic *storedTopic = topicRepository->loadTopic(subscribePacket->getTopic());
     if (storedTopic == 0) {
         // send err ret code and quit connection
@@ -41,5 +40,4 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
         _packetIo->sendPacket(successPacket);
         // todo send publish msg'es to let client consume all msges of topic
     }
-
 }

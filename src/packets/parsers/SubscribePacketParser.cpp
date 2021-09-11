@@ -8,6 +8,7 @@
 #include <string.h>
 
 RawPacket *SubscribePacketParser::parse(RawPacket *rawPacket) {
+//    todo: flag check in handler verlegen
     if (rawPacket->getSpecificFlags() != 2) {
         // all specific flags must be 2
         throw PacketParsingException("invalid specific flags");
