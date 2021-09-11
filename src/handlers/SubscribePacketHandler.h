@@ -6,24 +6,20 @@
 #define LMQTT__SERVER_SUBSCRIBEPACKETHANDLER_H
 
 
-#include <ServerSessionRepository.h>
+#include <ServersClientInfoRepository.h>
 #include <ServerConnection.h>
 #include <SubAckPacketFactory.h>
 #include "PacketHandler.h"
-#include "../topic/TopicRepository.h"
+#include "../topic/ServerTopicRepository.h"
 
 class SubscribePacketHandler : public PacketHandler{
 private:
-    ServerSessionRepository* _serverSessionRepository;
-    ServerConnection* _serverConnection;
     SubAckPacketFactory* _subAckPacketFactory;
-    TopicRepository* topicRepository;
+    ServerTopicRepository* topicRepository;
 public:
     SubscribePacketHandler(PacketIOManager *packetIo,
-                           ServerSessionRepository *serverSessionRepository,
-                           ServerConnection *serverConnection,
                            SubAckPacketFactory *subAckPacketFactory,
-                           TopicRepository *topicRepository);
+                           ServerTopicRepository *topicRepository);
     void handle(RawPacket *packet) override;
 };
 

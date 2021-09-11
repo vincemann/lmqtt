@@ -12,10 +12,10 @@
 #include "exception/InvalidPacketException.h"
 #include "../packets/ConnectAckPacket.h"
 #include "../io/PacketIOManager.h"
-#include "../session/ServerSession.h"
+#include "../session/ServersClientInfo.h"
 #include "../packets/factories/ConnectAckPacketFactory.h"
 #include "ConnectPacketHandler.h"
-#include "../session/ServerSessionRepository.h"
+#include "../session/ServersClientInfoRepository.h"
 
 
 
@@ -28,19 +28,19 @@ void ConnectPacketHandler::connAck(int errorCode, unsigned char cleanSessionFlag
 void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * clientId){
     if (cleanSession == 0)
     {
-        ServerSession* session = _sessionRepository->load(clientId);
+        ServersClientInfo* session = _sessionRepository->load(clientId);
         if (session == nullptr)
         {
             std::cout << "did not find session file for client id" << clientId << "\n";
             std::cout << "creating it" << "\n";
             char* duplicatedClientId = strdup(clientId);
-            session = new ServerSession(duplicatedClientId);
+            session = new ServersClientInfo(duplicatedClientId);
             _sessionRepository->save(session);
             std::cout << "new session: " << session << "\n";
         } else{
             std::cout << "have found session file for client id: " << clientId << ": " << session <<"\n";
         }
-        _connectionSession->_serverSession = session;
+        serverConnection->serversClientInfo = session;
     }
 }
 
@@ -50,7 +50,7 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     assertSpecificFlagsZero(packet);
 
     printf("handling connect rawPacket:\n");
-    if (_connectionSession->_packetsReceived->size() != 1){
+    if (serverConnection->_packetsReceived->size() != 1){
         throw IllegalSessionStateException("received more than one Connect Packet");
     }
     if (strcmp(packet->getProtocolName(), "MQTT") != 0){
@@ -114,8 +114,8 @@ ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() cons
 
 ConnectPacketHandler::ConnectPacketHandler(ServerConnection *connectionSession, PacketIOManager *packetIo,
                                            ConnectAckPacketFactory *connectAckPacketFactory,
-                                           ServerSessionRepository *sessionRepository) : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
-                                                   sessionRepository), _connectionSession(connectionSession) {}
+                                           ServersClientInfoRepository *sessionRepository) : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
+                                                   sessionRepository), serverConnection(connectionSession) {}
 
 
 

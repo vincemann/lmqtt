@@ -21,5 +21,5 @@ void DisconnectPacketHandler::handle(RawPacket *packet) {
 
 }
 
-DisconnectPacketHandler::DisconnectPacketHandler(PacketIOManager *packetIo, ConnectionManager *connectionManager)
+DisconnectPacketHandler::DisconnectPacketHandler(PacketIOManager *packetIo, ServerConnectionManager *connectionManager)
         : PacketHandler(packetIo), _connectionManager(connectionManager) {}

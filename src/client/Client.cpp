@@ -11,7 +11,6 @@
 #include <UnsubscribePacketFactory.h>
 #include <UnsubAckPacketHandler.h>
 
-
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/ConnectPacketFactory.h"
 #include "../con/ClientConnection.h"
@@ -22,24 +21,25 @@
 #include "ClientConnectionManager.h"
 #include "mode/SubscribeCLIModeHandler.h"
 #include "mode/UnsubscribeCLIModeHandler.h"
+#include "mode/PublishCLIModeHandler.h"
 
-
-static void createSessionDirectories() {
-    const char *targetDir = "/.lmqtt/client/sessions";
-    char *home = getenv("HOME");
-    char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
-    strcpy(dir, home);
-    strcat(dir, "/.lmqtt");
-    Utils::createDirectory(dir);
-    strcat(dir, "/client");
-    Utils::createDirectory(dir);
-    strcat(dir, "/sessions");
-    Utils::createDirectory(dir);
-}
+//static void createSessionDirectories() {
+//    const char *targetDir = "/.lmqtt/client/info";
+//    char *home = getenv("HOME");
+//    char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
+//    strcpy(dir, home);
+//    strcat(dir, "/.lmqtt");
+//    Utils::createDirectory(dir);
+//    strcat(dir, "/client");
+//    Utils::createDirectory(dir);
+//    strcat(dir, "/info");
+//    Utils::createDirectory(dir);
+//}
 
 
 int main(int argc, char *argv[]) {
-    createSessionDirectories();
+//    createSessionDirectories();
+
     // PARSERS
     std::map<PacketType, PacketParser *> parsers;
     ConnAckPacketParser *connAckPacketParser = new ConnAckPacketParser;
@@ -53,11 +53,12 @@ int main(int argc, char *argv[]) {
     ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
     SubscribePacketFactory *subscribePacketFactory = new SubscribePacketFactory();
     UnsubscribePacketFactory *unsubscribePacketFactory = new UnsubscribePacketFactory();
+    PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
 
 
     FileDataManager *fileDataManager = new FileDataManager();
     ClientConnection *connection = new ClientConnection();
-    ClientSessionRepository *clientSessionRepository = new ClientSessionRepository(fileDataManager);
+    ClientsClientInfoRepository *clientSessionRepository = new ClientsClientInfoRepository(fileDataManager);
 
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
@@ -119,6 +120,12 @@ int main(int argc, char *argv[]) {
             unsubscribeCliModeHandler->handle();
             break;
         }
+        case PUBLISH_MODE:
+            printf("publish mode\n");
+            PublishCLIModeHandler *publishCliModeHandler = new PublishCLIModeHandler(argv, clientConnectionManager,
+                                                                                     connectPacketFactory, argc, clientSessionRepository,publishPacketFactory);
+
+            publishCliModeHandler->handle();
     };
 
     // todo useful for publishing msges later

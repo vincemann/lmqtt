@@ -27,7 +27,7 @@ void ConnectCLIModeHandler::handle() {
             case 'i': clientId = optarg; break;
             case 'r': cleanSession=1; break;
             default: /* '?' */
-            CLIModes::printUsageInformation(_argv[0],CONNECT_MODE);
+                CLIModes::printUsageInformation(_argv[0],CONNECT_MODE);
                 exit(1);
         }
     }

@@ -6,12 +6,12 @@
 #define LMQTT__SERVER_CLIMODE_H
 
 enum CLIMode {
-    CONNECT_MODE, SUBSCRIBE_MODE, PUBLISH_MODE, RECV_MODE, UNSUBSCRIBE_MODE
+    CONNECT_MODE, SUBSCRIBE_MODE, PUBLISH_MODE, PUBLISH_MODE, UNSUBSCRIBE_MODE
 };
 
 namespace CLIModes {
 
-    static const char *toString(CLIMode cliMode) {
+    static const char* toString(CLIMode cliMode){
         switch (cliMode) {
             case CONNECT_MODE:
                 return "connect";
@@ -22,14 +22,14 @@ namespace CLIModes {
         }
     }
 
-    static void printUsageInformation(char *programName, CLIMode mode) {
+    static void printUsageInformation(char* programName, CLIMode mode){
         switch (mode) {
             case CONNECT_MODE:
-                fprintf(stderr, "Usage: %s %s -u username -p password -i clientId [-r (reset)] ip port\n", programName,
-                        CLIModes::toString(mode));
+                fprintf(stderr, "Usage: %s %s -u username -p password -i clientId [-r (reset)] ip port\n", programName, CLIModes::toString(mode));
             case SUBSCRIBE_MODE:
-                fprintf(stderr, "Usage: %s %s -t topic -i clientId -q qos ip port\n", programName,
-                        CLIModes::toString(mode));
+                fprintf(stderr, "Usage: %s %s -t topic -i clientId -q qos ip port\n", programName, CLIModes::toString(mode));
+            case PUBLISH_MODE:
+                fprintf(stderr, "Usage: %s %s -t topic -i clientId msg ip port\n", programName, CLIModes::toString(mode));
             case UNSUBSCRIBE_MODE:
                 fprintf(stderr, "Usage: %s %s -t topic -i clientId ip port\n", programName, CLIModes::toString(mode));
         }
@@ -46,9 +46,13 @@ namespace CLIModes {
             return UNSUBSCRIBE_MODE;
         }
         fprintf(stderr, "%s", "Invalid cli mode\n");
-        fprintf(stderr, "valid modes are: %s, %s\n", "connect", "subscribe");
+        fprintf(stderr, "valid modes are: %s, %s, %s\n", "connect", "subscribe, unsubscribe");
+        if (strcmp(mode,"publish") == 0){
+            return PUBLISH_MODE;
+        }
         exit(1);
     }
+
 }
 
 #endif //LMQTT__SERVER_CLIMODE_H

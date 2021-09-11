@@ -8,7 +8,7 @@
 #include "IllegalSessionStateException.h"
 
 ConnectAckPacketHandler::ConnectAckPacketHandler(PacketIOManager *packetIo,
-                                                 ClientSessionRepository *clientSessionRepository,
+                                                 ClientsClientInfoRepository *clientSessionRepository,
                                                  ClientConnection *clientConnectionSession)
         : PacketHandler(packetIo), _clientSessionRepository(clientSessionRepository),
           _clientConnectionSession(clientConnectionSession) {}
@@ -25,7 +25,7 @@ void ConnectAckPacketHandler::handle(RawPacket *rawPacket) {
             printf("Connection Accepted by Server\n");
             if(_clientSessionRepository->load(connectPacket->getClientId()) == 0){
                 printf("No Client Session yet, creating one\n");
-                ClientSession* clientSession = new ClientSession(connectPacket->getClientId(),connectPacket->getUsername(),connectPacket->getPassword());
+                ClientsClientInfo* clientSession = new ClientsClientInfo(connectPacket->getClientId(), connectPacket->getUsername(), connectPacket->getPassword());
                 _clientSessionRepository->save(clientSession);
             } else {
                 printf("Client Session is present already\n");

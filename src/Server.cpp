@@ -13,6 +13,7 @@
 #include <UnsubAckPacketParser.h>
 #include <UnsubscribePacketFactory.h>
 #include <UnsubAckPacketFactory.h>
+#include <PublishPacketParser.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -23,8 +24,8 @@
 #include "con/ServerConnection.h"
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
-#include "ConnectionManager.h"
-#include "topic/TopicRepository.h"
+#include "ServerConnectionManager.h"
+#include "topic/ServerTopicRepository.h"
 
 
 #define PORT 8080
@@ -35,19 +36,22 @@ int main(int argc, char const *argv[])
 {
     // THESE OBJECTS LIVE AS LONG AS THE SERVER
     FileDataManager* fileDataManager = new FileDataManager();
-    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
-    ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
+    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager, nullptr);
+    ServersClientInfoRepository* serverSessionRepository = new ServersClientInfoRepository(fileDataManager);
 
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
     ConnectPacketParser* connectPacketParser = new ConnectPacketParser;
     DisconnectPacketParser* disconnectPacketParser = new DisconnectPacketParser;
     SubscribePacketParser* subscribePacketParser = new SubscribePacketParser;
+
+    PublishPacketParser* publishPacketParser = new PublishPacketParser;
     UnsubscribePacketParser* unsubscribePacketParser = new UnsubscribePacketParser;
     UnsubAckPacketParser* unsubAckPacketParser = new UnsubAckPacketParser;
     parsers.insert(std::make_pair(CONNECT, connectPacketParser));
     parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
     parsers.insert(std::make_pair(SUBSCRIBE, subscribePacketParser));
+    parsers.insert(std::make_pair(PUBLISH, publishPacketParser));
     parsers.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketParser));
     parsers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketParser));
 
@@ -62,16 +66,19 @@ int main(int argc, char const *argv[])
     UnsubAckPacketFactory* unsubAckPacketFactory = new UnsubAckPacketFactory();
     factories.insert(std::make_pair(UNSUB_ACK, unsubAckPacketFactory));
 
-//    TopicRepository* topicRepository = new TopicRepository(fileDataManager);
+
+//    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager);
 
     // CREATE DUMMY DATA
     char* testTopic = "jeffseid";
-    char* testMessage = "jeff seid trains biceps in mecca";
+
+    topicRepository->saveTopic(new Topic(testTopic));
+//    char* testMessage = "jeff seid trains biceps in mecca";
 //    char* testMessage2 = "jeff seid trains biceps in mecca2";
 //    char* testMessage3 = "jeff seid trains biceps in mecca3";
-    topicRepository->store(testTopic, testMessage);
-//    topicRepository->store(testTopic, testMessage2);
-//    topicRepository->store(testTopic, testMessage3);
+//    topicRepository->saveMsg(testTopic, testMessage);
+//    topicRepository->saveMsg(testTopic, testMessage2);
+//    topicRepository->saveMsg(testTopic, testMessage3);
 //
 //    std::vector<Message *>* msgs = topicRepository->loadMessages(testTopic);
 //
@@ -97,10 +104,10 @@ int main(int argc, char const *argv[])
 ////    topicRepository->replaceMessages(testTopic, msgs);
 
 
-    ConnectionManager* connectionManager = new ConnectionManager(PORT, &parsers, &factories,
-                                                                 topicRepository, serverSessionRepository);
-    connectionManager->serveClients();
 
+    ServerConnectionManager* connectionManager = new ServerConnectionManager(PORT, &parsers, &factories,
+                                                                             topicRepository, serverSessionRepository);
+    connectionManager->serveClients();
 }
 
 

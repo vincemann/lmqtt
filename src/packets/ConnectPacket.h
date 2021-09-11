@@ -10,10 +10,11 @@
 class ConnectPacket : public RawPacket{
 public:
 
-    ConnectPacket(RawPacket *rawPacket, char *protocolName, unsigned char protocolLevel, unsigned char reservedBit,
-                  unsigned char cleanSession, unsigned char willFlag, unsigned char willQos, unsigned char willRetain,
-                  unsigned char passwordFlag, unsigned char usernameFlag, unsigned short keepAlive, char *clientId,
-                  char *willTopic, char *willMsg, char *username, char *password);
+    ConnectPacket(RawPacket *rawPacket, char *protocolName, unsigned char protocolLevel,
+                  unsigned char reservedBit, unsigned char cleanSession, unsigned char willFlag,
+                  unsigned char willQos, unsigned char willRetain, unsigned char passwordFlag,
+                  unsigned char usernameFlag, unsigned short keepAlive, char *clientId, char *willTopic,
+                  char *willMsg, char *username, char *password);
 
     char *getProtocolName() const;
 
@@ -46,7 +47,6 @@ public:
     char *getPassword() const;
 
 //    ~ConnectPacket();
-
 
 
 private:

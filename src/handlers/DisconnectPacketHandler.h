@@ -7,13 +7,13 @@
 
 
 #include "PacketHandler.h"
-#include "../ConnectionManager.h"
+#include "../ServerConnectionManager.h"
 
 class DisconnectPacketHandler : public PacketHandler{
 private:
-    ConnectionManager* _connectionManager;
+    ServerConnectionManager* _connectionManager;
 public:
-    DisconnectPacketHandler(PacketIOManager *packetIo, ConnectionManager *connectionManager);
+    DisconnectPacketHandler(PacketIOManager *packetIo, ServerConnectionManager *connectionManager);
     void handle(RawPacket* packet) override;
 };
 

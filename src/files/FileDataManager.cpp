@@ -118,13 +118,17 @@ unsigned char FileDataManager::exists(char* dir, char* file){
 
 int FileDataManager::store(const char *targetDir, const char *name,const char *content) {
     char* filePath = FileDataManager::combinePaths(targetDir,name);
+<<<<<<< HEAD
     FILE *fp = fopen(filePath,"w");
+=======
+    FILE *fp = fopen(filePath,"w+");
+>>>>>>> 416b1564649cd1236a49f43d4f035cdf8b45bd30
     delete filePath;
     if(fp == 0){
         throw MsgException(Utils::formatToCharP("Cant open file %s\n",filePath));
     }
     if(fprintf(fp,"%s", content)< 0){
-        throw MsgException(Utils::formatToCharP("Unable to store file %s\n",filePath));
+        throw MsgException(Utils::formatToCharP("Unable to saveMsg file %s\n",filePath));
 
     }
     fflush(fp);

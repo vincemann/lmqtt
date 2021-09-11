@@ -5,16 +5,16 @@
 #ifndef LMQTT__SERVER_CONNECTACKPACKETHANDLER_H
 #define LMQTT__SERVER_CONNECTACKPACKETHANDLER_H
 
-#include <ClientSessionRepository.h>
+#include <ClientsClientInfoRepository.h>
 #include <ClientConnection.h>
 #include "PacketHandler.h"
 
 class ConnectAckPacketHandler : public PacketHandler{
 public:
-    ClientSessionRepository* _clientSessionRepository;
+    ClientsClientInfoRepository* _clientSessionRepository;
     ClientConnection* _clientConnectionSession;
     ConnectAckPacketHandler(PacketIOManager *packetIo,
-                            ClientSessionRepository *clientSessionRepository,
+                            ClientsClientInfoRepository *clientSessionRepository,
                             ClientConnection *clientConnectionSession);
     void handle(RawPacket *packet) override;
 };

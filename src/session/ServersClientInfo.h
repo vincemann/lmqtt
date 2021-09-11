@@ -9,20 +9,22 @@
 #include <ConnectAckPacketHandler.h>
 #include <ostream>
 
+#include "../Subscription.h"
+
 
 /**
  * Encapsulates server side information about client that is stored permanently (on disk)
  */
-class ServerSession {
+class ServersClientInfo {
 public:
     char * _clientId;
     // example 3MyTopic qos = 3 topic = MyTopic
-    std::vector<char *>* _qos_subscriptions;
+    std::vector<Subscription*>* subscriptions;
     //todo add 3. and 4. from ServerSessionState
-    explicit ServerSession(char* clientId);
+    explicit ServersClientInfo(char* clientId);
 
 //    friend std::ostream &operator<<(std::ostream &os, const ServerSession &session);
-    friend std::ostream &operator<<(std::ostream &os, const ServerSession &session);
+    friend std::ostream &operator<<(std::ostream &os, const ServersClientInfo &session);
 };
 
 

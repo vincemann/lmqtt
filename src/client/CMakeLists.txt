@@ -71,16 +71,16 @@ add_executable(lmqtt__client
         ../handlers/ConnectAckPacketHandler.h
         ../files/FileDataManager.h
         ../files/FileDataManager.cpp
-        ../session/ServerSession.h
-        ../session/ServerSession.cpp
-        ../session/ServerSessionRepository.h
-        ../session/ServerSessionRepository.cpp
+        ../session/ServersClientInfo.h
+        ../session/ServersClientInfo.cpp
+        ../session/ServersClientInfoRepository.h
+        ../session/ServersClientInfoRepository.cpp
         ../MsgException.cpp
         ../MsgException.h
-        ../session/ClientSession.cpp
-        ../session/ClientSession.h
-        ../session/ClientSessionRepository.cpp
-        ../session/ClientSessionRepository.h
+        ../session/ClientsClientInfo.cpp
+        ../session/ClientsClientInfo.h
+        ../session/ClientsClientInfoRepository.cpp
+        ../session/ClientsClientInfoRepository.h
         ../packets/DisconnectPacket.cpp
         ../packets/DisconnectPacket.h
         mode/ConnectCLIModeHandler.cpp
@@ -104,7 +104,37 @@ add_executable(lmqtt__client
         ../packets/parsers/SubscribeAckPacketParser.h
         ../packets/factories/UnsubAckPacketFactory.h
         ../packets/factories/UnsubAckPacketFactory.cpp
-        ../packets/UnsubscribePacket.cpp ../packets/UnsubscribePacket.h ../packets/factories/UnsubscribePacketFactory.cpp ../packets/factories/UnsubscribePacketFactory.h  ../packets/UnsubAckPacket.cpp ../packets/UnsubAckPacket.h ../packets/parsers/UnsubAckPacketParser.cpp ../packets/parsers/UnsubAckPacketParser.h ../handlers/UnsubAckPacketHandler.cpp ../handlers/UnsubAckPacketHandler.h mode/UnsubscribeCLIModeHandler.cpp mode/UnsubscribeCLIModeHandler.h)
+        ../packets/UnsubscribePacket.cpp ../packets/UnsubscribePacket.h
+        ../packets/factories/UnsubscribePacketFactory.cpp
+        ../packets/factories/UnsubscribePacketFactory.h
+        ../packets/UnsubAckPacket.cpp
+        ../packets/UnsubAckPacket.h
+        ../packets/parsers/UnsubAckPacketParser.cpp
+        ../packets/parsers/UnsubAckPacketParser.h
+        ../handlers/UnsubAckPacketHandler.cpp
+        ../handlers/UnsubAckPacketHandler.h
+        mode/UnsubscribeCLIModeHandler.cpp
+        mode/UnsubscribeCLIModeHandler.h
+        mode/PublishCLIModeHandler.cpp
+        mode/PublishCLIModeHandler.h
+        ../packets/factories/PublishPacketFactory.cpp
+        ../packets/factories/PublishPacketFactory.h
+        ../packets/PublishPacket.cpp
+        ../packets/PublishPacket.h
+        ../packets/parsers/PublishPacketParser.cpp
+        ../packets/parsers/PublishPacketParser.h
+        ../handlers/ClientPublishPacketHandler.cpp
+        ../handlers/ClientPublishPacketHandler.h
+        ../Subscription.cpp
+        ../Subscription.h
+        ../handlers/ClientPublishPacketHandler.h
+        ../handlers/ClientPublishPacketHandler.cpp
+        ../topic/ServerTopicRepository.h
+        ../topic/ServerTopicRepository.cpp
+        ../topic/Topic.h
+        ../topic/Topic.cpp
+        ../topic/Message.h
+        ../topic/Message.cpp)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

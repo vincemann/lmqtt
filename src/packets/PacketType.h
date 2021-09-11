@@ -15,6 +15,7 @@ enum PacketType {
     UNSUBSCRIBE,
     UNSUB_ACK,
     DISCONNECT,
+    PUBLISH,
     UNKNOWN
 };
 
@@ -36,11 +37,14 @@ namespace PacketTypes {
             case UNSUBSCRIBE:
                 return "UNSUBSCRIBE";
                 break;
-                case UNSUB_ACK:
-                    return "UNSUB_ACK";
+            case UNSUB_ACK:
+                return "UNSUB_ACK";
                 break;
             case DISCONNECT:
                 return "DISCONNECT";
+                break;
+            case PUBLISH:
+                return "PUBLISH";
                 break;
         }
         return "UNKNOWN";
@@ -60,6 +64,8 @@ namespace PacketTypes {
                 return 10;
             case UNSUB_ACK:
                 return 11;
+            case PUBLISH:
+                return 4;
             case DISCONNECT:
                 return 14;
         }
@@ -72,6 +78,8 @@ namespace PacketTypes {
                 return PacketType::CONNECT;
             case 2:
                 return PacketType::CONNACK;
+            case 4:
+                return PacketType::PUBLISH;
             case 8:
                 return PacketType::SUBSCRIBE;
             case 9:

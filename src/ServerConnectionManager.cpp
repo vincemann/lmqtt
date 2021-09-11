@@ -15,6 +15,7 @@
 #include <UnsubscribePacketFactory.h>
 #include <UnsubAckPacketFactory.h>
 #include <UnsubscribePacketHandler.h>
+#include <ServerPublishPacketHandler.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -26,10 +27,10 @@
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
 
-#include "ConnectionManager.h"
+#include "ServerConnectionManager.h"
 
 
-int ConnectionManager::waitForConnection(int serverFd){
+int ServerConnectionManager::waitForConnection(int serverFd){
     int conn_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
@@ -47,7 +48,7 @@ int ConnectionManager::waitForConnection(int serverFd){
     return conn_socket;
 }
 
-int ConnectionManager::bindToPort(){
+int ServerConnectionManager::bindToPort(){
     int server_fd;
     struct sockaddr_in address;
     int opt = 1;
@@ -85,7 +86,7 @@ int ConnectionManager::bindToPort(){
     return server_fd;
 }
 
-void ConnectionManager::serveClients() {
+void ServerConnectionManager::serveClients() {
     int serverFd = bindToPort();
     while (true){
         std::cout << "waiting for new connection" << "\n";
@@ -95,6 +96,7 @@ void ConnectionManager::serveClients() {
 
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
         ServerConnection* connection = new ServerConnection();
+        topicRepository->setServerConnection(connection);
         PacketIOManager* packetIoManager = new PacketIOManager(connection, connFd, _parsers);
 
         // HANDLERS
@@ -112,13 +114,14 @@ void ConnectionManager::serveClients() {
         UnsubscribePacketHandler* unsubscribePacketHandler = new UnsubscribePacketHandler(packetIoManager,
                                                                                           serverSessionRepository,
                                                                                           unsubAckPacketFactory, connection, topicRepository);
+        ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,topicRepository);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
         handlers.insert(std::make_pair(DISCONNECT, disconnectPacketHandler));
         handlers.insert(std::make_pair(SUBSCRIBE, subscribePacketHandler));
         handlers.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketHandler));
-
+        handlers.insert(std::make_pair(PUBLISH, serverPublishPacketHandler));
 
         while(true){
             try{
@@ -159,15 +162,15 @@ void ConnectionManager::serveClients() {
     }
 }
 
-void ConnectionManager::disconnectClient() {
+void ServerConnectionManager::disconnectClient() {
     printf("Disconnecting client\n");
     this->_clientConnected = 0;
 }
 
-ConnectionManager::ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
-                                     std::map<PacketType, PacketFactory *> *factories,
-                                     TopicRepository *topicRepository,
-                                     ServerSessionRepository *serverSessionRepository)
+ServerConnectionManager::ServerConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
+                                                 std::map<PacketType, PacketFactory *> *factories,
+                                                 ServerTopicRepository *topicRepository,
+                                                 ServersClientInfoRepository *serverSessionRepository)
         : _port(port), _parsers(parsers),
           _factories(factories),  topicRepository(topicRepository),
           serverSessionRepository(serverSessionRepository) {}

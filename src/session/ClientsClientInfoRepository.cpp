@@ -2,17 +2,17 @@
 // Created by vince on 09.07.21.
 //
 
-#include "ClientSessionRepository.h"
+#include "ClientsClientInfoRepository.h"
 #include "../json.hpp"
 #include "../util/Utils.h"
-#include "ClientSession.h"
+#include "ClientsClientInfo.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
 
 
-void ClientSessionRepository::save(ClientSession *session) {
+void ClientsClientInfoRepository::save(ClientsClientInfo *session) {
     // for convenience
     using json = nlohmann::json;
     json j;
@@ -34,7 +34,7 @@ static char * extractJsonValue(nlohmann::json::iterator it){
 }
 
 
-ClientSession *ClientSessionRepository::load(char *clientId) {
+ClientsClientInfo *ClientsClientInfoRepository::load(char *clientId) {
     std::cout << "clientId gets loaded: " << clientId << "\n";
     char *jsonContent = _fileDataManager->find(_clientSessionsDir, clientId);
     if (jsonContent == nullptr) {
@@ -43,7 +43,7 @@ ClientSession *ClientSessionRepository::load(char *clientId) {
     using json = nlohmann::json;
     json j = json::parse(jsonContent);
 
-    ClientSession *clientSession = new ClientSession();
+    ClientsClientInfo *clientSession = new ClientsClientInfo();
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
         std::cout << it.key() << " : " << it.value() << "\n";
         if (it.key() == "clientId") {
@@ -57,9 +57,9 @@ ClientSession *ClientSessionRepository::load(char *clientId) {
     return clientSession;
 }
 
-ClientSessionRepository::ClientSessionRepository(FileDataManager *fileDataManager) : _fileDataManager(
+ClientsClientInfoRepository::ClientsClientInfoRepository(FileDataManager *fileDataManager) : _fileDataManager(
         fileDataManager) {
-    const char* targetDir = "/.lmqtt/client/sessions";
+    const char* targetDir = "/.lmqtt/client/info";
     char* home = getenv("HOME");
     _clientSessionsDir = Utils::smartstrcat(home,targetDir);
     Utils::createHomeDirectoryChain(_clientSessionsDir);

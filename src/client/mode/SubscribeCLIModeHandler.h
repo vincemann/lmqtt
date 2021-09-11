@@ -12,14 +12,14 @@
 
 class SubscribeCLIModeHandler : public CLIModeHandler{
 private:
-    ClientSessionRepository *clientSessionRepository;
+    ClientsClientInfoRepository *clientSessionRepository;
     SubscribePacketFactory *subscribePacketFactory;
     SubscribeAckPacketHandler* subscribeAckPacketHandler;
 
 public:
     SubscribeCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                             ConnectPacketFactory *connectPacketFactory, int argc,
-                            ClientSessionRepository *clientSessionRepository,
+                            ClientsClientInfoRepository *clientSessionRepository,
                             SubscribePacketFactory *subscribePacketFactory,
                             SubscribeAckPacketHandler* subscribeAckPacketHandler);
 
