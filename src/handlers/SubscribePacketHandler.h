@@ -14,14 +14,10 @@
 
 class SubscribePacketHandler : public PacketHandler{
 private:
-    ServersClientInfoRepository* serversClientInfoRepository;
-    ServerConnection* _serverConnection;
     SubAckPacketFactory* _subAckPacketFactory;
     ServerTopicRepository* topicRepository;
 public:
     SubscribePacketHandler(PacketIOManager *packetIo,
-                           ServersClientInfoRepository *serverSessionRepository,
-                           ServerConnection *serverConnection,
                            SubAckPacketFactory *subAckPacketFactory,
                            ServerTopicRepository *topicRepository);
     void handle(RawPacket *packet) override;

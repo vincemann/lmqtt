@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
 {
     // THESE OBJECTS LIVE AS LONG AS THE SERVER
     FileDataManager* fileDataManager = new FileDataManager();
-    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager);
+    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager, nullptr);
     ServersClientInfoRepository* serverSessionRepository = new ServersClientInfoRepository(fileDataManager);
 
     // PARSERS

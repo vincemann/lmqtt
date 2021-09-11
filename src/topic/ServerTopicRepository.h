@@ -12,14 +12,16 @@
 #include <vector>
 #include <FileDataManager.h>
 #include <ServersClientInfoRepository.h>
+#include <ServerConnection.h>
 
 class ServerTopicRepository {
     FileDataManager* _fileDataManager;
-    ServersClientInfoRepository* serverSessionRepository;
+    ServersClientInfoRepository* serversClientInfoRepository;
+    ServerConnection* serverConnection;
     char* _topicsDir;
 
 public:
-    ServerTopicRepository(FileDataManager *fileDataManager);
+    ServerTopicRepository(FileDataManager *fileDataManager, ServerConnection *serverConnection);
     void initTopicFiles(char* topicName);
     void saveMsg(char* topic_c, char* msg);
     // es kann duplikate geben, daher brauche ich das msg obj mit der msg id
@@ -29,9 +31,11 @@ public:
 //    Message* loadMessage(Topic* topic, unsigned long msgId);
     std::vector<Message*>* loadMessages(char* topicName);
     std::vector<Message*>* consumeMessagesStartingFromId(char* topic, unsigned long msgId);
-    void subscribe(char* topic);
+    void subscribe(char* topic, unsigned short qos);
     void unsubscribe(char* topic, unsigned long lastConsumedMsgId);
     void replaceMessages(char* topic, std::vector<Message*>* msgs);
+
+    void setServerConnection(ServerConnection *serverConnection);
 };
 
 

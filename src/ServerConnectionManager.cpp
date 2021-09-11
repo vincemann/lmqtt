@@ -93,6 +93,7 @@ void ServerConnectionManager::serveClients() {
 
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
         ServerConnection* connection = new ServerConnection();
+        topicRepository->setServerConnection(connection);
         PacketIOManager* packetIoManager = new PacketIOManager(connection, connFd, _parsers);
 
         // HANDLERS
@@ -104,7 +105,6 @@ void ServerConnectionManager::serveClients() {
 
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
         SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,
-                                                                                    serverSessionRepository, connection,
                                                                                     subAckPacketFactory, topicRepository);
         ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,topicRepository);
 

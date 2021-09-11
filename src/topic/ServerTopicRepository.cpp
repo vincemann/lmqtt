@@ -11,7 +11,8 @@
 
 #include "../json.hpp"
 
-ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager) : _fileDataManager(fileDataManager) {
+ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager, ServerConnection *serverConnection)
+        : _fileDataManager(fileDataManager), serverConnection(serverConnection) {
     //    _topics = new std::map<Topic *, std::vector<Message *> *>();
     const char *targetDir = "/.lmqtt/server/topics/";
     char *home = getenv("HOME");
@@ -191,6 +192,7 @@ void ServerTopicRepository::saveTopic(Topic *topic) {
     std::string jsonString = j.dump();
     Utils::createDirectory(topicDir);
     _fileDataManager->store(topicDir, "topic", Utils::toCharP(&jsonString));
+    _fileDataManager->store(topicDir, "messages", "");
 }
 
 
@@ -256,7 +258,7 @@ std::vector<Message *> *ServerTopicRepository::consumeMessagesStartingFromId(cha
     return consumedMsgs;
 }
 
-void ServerTopicRepository::subscribe(char *topicName) {
+void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
     std::vector<Message *> *msgs = loadMessages(topicName);
@@ -265,6 +267,13 @@ void ServerTopicRepository::subscribe(char *topicName) {
     }
     replaceMessages(topicName, msgs);
     saveTopic(topic);
+
+
+    // update client info
+    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
+    Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished(),qos);
+    clientInfo->subscriptions->push_back(subscription);
+    serversClientInfoRepository->save(clientInfo);
 }
 
 void ServerTopicRepository::unsubscribe(char *topicName, unsigned long lastConsumedMsgId) {
@@ -287,6 +296,16 @@ void ServerTopicRepository::unsubscribe(char *topicName, unsigned long lastConsu
     replaceMessages(topicName, msgs);
     saveTopic(topic);
 
+    // update client info
+    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
+    for (std::vector<Subscription*>::iterator it = clientInfo->subscriptions->begin(); it != clientInfo->subscriptions->end(); ++it) {
+        Subscription* subscription = *it;
+        if (strcmp(subscription->getTopic(),topicName) == 0){
+            clientInfo->subscriptions->erase(it);
+            break;
+        }
+    }
+    serversClientInfoRepository->save(clientInfo);
 }
 
 void ServerTopicRepository::initTopicFiles(char *topicName) {
@@ -305,11 +324,14 @@ void ServerTopicRepository::initTopicFiles(char *topicName) {
 std::vector<Message *> *ServerTopicRepository::loadMessages(char *topicName) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
     char *msgsJson = _fileDataManager->find(topicDir, "messages");
+    std::vector<Message *> *msgs = new std::vector<Message *>();
 
     using json = nlohmann::json;
+    if (strlen(msgsJson) == 0 ){
+        return msgs;
+    }
     json j = json::parse(msgsJson);
 
-    std::vector<Message *> *msgs = new std::vector<Message *>();
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
         unsigned long msgId = it.value().at("id").get<unsigned long>();
         unsigned long unconsumed_user_count = it.value().at("unconsumed_user_count").get<unsigned long>();
@@ -319,5 +341,9 @@ std::vector<Message *> *ServerTopicRepository::loadMessages(char *topicName) {
         msgs->push_back(msg_o);
     }
     return msgs;
+}
+
+void ServerTopicRepository::setServerConnection(ServerConnection *serverConnection) {
+    ServerTopicRepository::serverConnection = serverConnection;
 }
 

@@ -18,7 +18,7 @@ class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
 protected:
 ConnectAckPacketFactory* _connectAckPacketFactory;
 ServersClientInfoRepository* _sessionRepository;
-ServerConnection* _connectionSession;
+ServerConnection* serverConnection;
 void initServerSession(unsigned char cleanSession, char* clientId);
 void connAck(int errorCode, unsigned char cleanSessionFlag);
 

@@ -40,7 +40,7 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * 
         } else{
             std::cout << "have found session file for client id: " << clientId << ": " << session <<"\n";
         }
-        _connectionSession->serversClientInfo = session;
+        serverConnection->serversClientInfo = session;
     }
 }
 
@@ -50,7 +50,7 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     assertSpecificFlagsZero(packet);
 
     printf("handling connect rawPacket:\n");
-    if (_connectionSession->_packetsReceived->size() != 1){
+    if (serverConnection->_packetsReceived->size() != 1){
         throw IllegalSessionStateException("received more than one Connect Packet");
     }
     if (strcmp(packet->getProtocolName(), "MQTT") != 0){
@@ -115,7 +115,7 @@ ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() cons
 ConnectPacketHandler::ConnectPacketHandler(ServerConnection *connectionSession, PacketIOManager *packetIo,
                                            ConnectAckPacketFactory *connectAckPacketFactory,
                                            ServersClientInfoRepository *sessionRepository) : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
-                                                   sessionRepository), _connectionSession(connectionSession) {}
+                                                   sessionRepository), serverConnection(connectionSession) {}
 
 
 
