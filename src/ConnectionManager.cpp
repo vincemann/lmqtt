@@ -12,6 +12,9 @@
 #include <fcntl.h>
 #include <DisconnectPacketHandler.h>
 #include <SubscribePacketHandler.h>
+#include <UnsubscribePacketFactory.h>
+#include <UnsubAckPacketFactory.h>
+#include <UnsubscribePacketHandler.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -93,7 +96,6 @@ void ConnectionManager::serveClients() {
         // INIT OBJECTS THAT LIVE AS LONG AS CLIENT IS CONNECTED
         ServerConnection* connection = new ServerConnection();
         PacketIOManager* packetIoManager = new PacketIOManager(connection, connFd, _parsers);
-        ServerSessionRepository* serverSessionRepository = new ServerSessionRepository(fileDataManager);
 
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
@@ -105,12 +107,17 @@ void ConnectionManager::serveClients() {
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
         SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,
                                                                                     serverSessionRepository, connection,
-                                                                                    subAckPacketFactory, nullptr);
+                                                                                    subAckPacketFactory, topicRepository);
+        UnsubAckPacketFactory* unsubAckPacketFactory = static_cast<UnsubAckPacketFactory*>(_factories->at(UNSUB_ACK));
+        UnsubscribePacketHandler* unsubscribePacketHandler = new UnsubscribePacketHandler(packetIoManager,
+                                                                                          serverSessionRepository,
+                                                                                          unsubAckPacketFactory, connection, topicRepository);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
         handlers.insert(std::make_pair(DISCONNECT, disconnectPacketHandler));
         handlers.insert(std::make_pair(SUBSCRIBE, subscribePacketHandler));
+        handlers.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketHandler));
 
 
         while(true){
@@ -148,7 +155,6 @@ void ConnectionManager::serveClients() {
             delete any.second;
         }
 
-        delete serverSessionRepository;
         delete packetIoManager;
     }
 }
@@ -159,7 +165,10 @@ void ConnectionManager::disconnectClient() {
 }
 
 ConnectionManager::ConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
-                                     std::map<PacketType, PacketFactory *> *factories, FileDataManager *fileDataManager)
+                                     std::map<PacketType, PacketFactory *> *factories,
+                                     TopicRepository *topicRepository,
+                                     ServerSessionRepository *serverSessionRepository)
         : _port(port), _parsers(parsers),
-                                                                                         _factories(factories), fileDataManager(fileDataManager) {}
+          _factories(factories),  topicRepository(topicRepository),
+          serverSessionRepository(serverSessionRepository) {}
 

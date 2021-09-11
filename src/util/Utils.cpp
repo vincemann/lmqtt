@@ -63,6 +63,7 @@ void Utils::printChars(unsigned char *ptr, int size)
 
 
 
+
 // always starts creating dirs from home
 void Utils::createHomeDirectoryChain(char* dirChain) {
 
@@ -71,24 +72,23 @@ void Utils::createHomeDirectoryChain(char* dirChain) {
     strcpy(dir, home);
     char delim[] = "/";
 
-    int count = 0;
-    char *partialDir = 0;
-    while (1) {
-        if (count > 1) {
-            partialDir = strtok(dirChain, delim);
-            if (partialDir == 0) {
-                break;
-            }
-            printf("'%s'\n", partialDir);
-            char *dirWithSlash = "/";
-            strcat(dirWithSlash, partialDir);
-            strcat(dir, dirWithSlash);
-            Utils::createDirectory(dir);
-        } else {
-            // /home/user
-            strtok(dirChain, delim);
+    char *partialDir;
+
+    /* get the first currDir */
+    partialDir = strtok(strdup(dirChain), delim);
+    partialDir = strtok(NULL, delim);
+
+    /* walk through other tokens */
+    while(1) {
+        partialDir = strtok(NULL, delim);
+        if (partialDir == NULL){
+            break;
         }
-        count += 1;
+        printf("'%s'\n", partialDir);
+        char *slash = "/";
+        strcat(dir, slash);
+        strcat(dir, partialDir);
+        Utils::createDirectory(dir);
     }
 
     delete dir;
@@ -110,7 +110,7 @@ void Utils::createHomeDirectoryChain(char* dirChain) {
 //        strcat(dir,item);
 //        Utils::createDirectory(dir);
 //    }
-}
+//}
 
 char* Utils::toCharP(std::string* s){
     char *cstr = new char[s->length() + 1];
@@ -191,6 +191,15 @@ char *Utils::formatToCharP(const char *format,const char *arg) {
     char* r = new char;
     sprintf(r,format,arg);
     return r;
+}
+
+char *Utils::smartstrcat(const char *s1,const char *s2) {
+    int dstStringLen = strlen(s1) + strlen(s2) + 1;
+    char* dst = (char*) malloc(dstStringLen);
+    memcpy(dst,"\0",1);
+    strcat(dst,s1);
+    strcat(dst,s2);
+    return dst;
 }
 
 

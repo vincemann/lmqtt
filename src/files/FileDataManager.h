@@ -19,6 +19,7 @@ public:
     char* find(const char* startDir, const char* name);
     int store(const char* targetDir,const char* name,const char* content);
     unsigned char exists(char* dir, char* file);
+    void remove(char* file);
 };
 
 #endif // __FILELOCATOR_H__

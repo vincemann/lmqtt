@@ -11,7 +11,7 @@
 
 
 /**
- * Encapsulates server side information about client that is stored permanently
+ * Encapsulates server side information about client that is stored permanently (on disk)
  */
 class ServerSession {
 public:

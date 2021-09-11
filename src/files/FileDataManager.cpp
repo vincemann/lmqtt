@@ -13,8 +13,54 @@
 #include <cstdio>
 #include <Utils.h>
 #include <errno.h>
+#include<stdio.h>
+#include<stdlib.h>
 
 
+
+int remove_directory(const char *path) {
+    DIR *d = opendir(path);
+    size_t path_len = strlen(path);
+    int r = -1;
+
+    if (d) {
+        struct dirent *p;
+
+        r = 0;
+        while (!r && (p=readdir(d))) {
+            int r2 = -1;
+            char *buf;
+            size_t len;
+
+            /* Skip the names "." and ".." as we don't want to recurse on them. */
+            if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, ".."))
+                continue;
+
+            len = path_len + strlen(p->d_name) + 2;
+            buf = (char*) malloc(len);
+
+            if (buf) {
+                struct stat statbuf;
+
+                snprintf(buf, len, "%s/%s", path, p->d_name);
+                if (!stat(buf, &statbuf)) {
+                    if (S_ISDIR(statbuf.st_mode))
+                        r2 = remove_directory(buf);
+                    else
+                        r2 = unlink(buf);
+                }
+                free(buf);
+            }
+            r = r2;
+        }
+        closedir(d);
+    }
+
+    if (!r)
+        r = rmdir(path);
+
+    return r;
+}
 
 char *FileDataManager::find(const char *startDir,const char *name)
 {
@@ -58,12 +104,13 @@ unsigned char FileDataManager::exists(char* dir, char* file){
     struct stat st = {0};
 
     if (stat(filePath, &st) == -1) {
-        if (errno == EFAULT){
-            return 0;
-        }else{
-            printf("%s\n", strerror(errno));
-            throw MsgException("Invalid File exception");
-        }
+        return 0;
+//        if (errno == EFAULT){
+//            return 0;
+//        }else{
+//            printf("%s\n", strerror(errno));
+//            throw MsgException("Invalid File exception");
+//        }
     }else{
         return 1;
     }
@@ -71,7 +118,7 @@ unsigned char FileDataManager::exists(char* dir, char* file){
 
 int FileDataManager::store(const char *targetDir, const char *name,const char *content) {
     char* filePath = FileDataManager::combinePaths(targetDir,name);
-    FILE *fp = fopen(filePath,"a");
+    FILE *fp = fopen(filePath,"w");
     delete filePath;
     if(fp == 0){
         throw MsgException(Utils::formatToCharP("Cant open file %s\n",filePath));
@@ -86,4 +133,8 @@ int FileDataManager::store(const char *targetDir, const char *name,const char *c
 //    write(fp,content,len);
     fclose(fp);
     return 0;
+}
+
+void FileDataManager::remove(char *file) {
+    remove_directory(file);
 }

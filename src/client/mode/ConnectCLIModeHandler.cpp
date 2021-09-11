@@ -27,14 +27,14 @@ void ConnectCLIModeHandler::handle() {
             case 'i': clientId = optarg; break;
             case 'r': cleanSession=1; break;
             default: /* '?' */
-                CLIModes::printUsageInformation(_argv[0],CONNECT);
+            CLIModes::printUsageInformation(_argv[0],CONNECT_MODE);
                 exit(1);
         }
     }
     initRoute();
     if (clientId == 0){
         fprintf(stderr, "Client Id missing");
-        CLIModes::printUsageInformation(_argv[0],CONNECT);
+        CLIModes::printUsageInformation(_argv[0],CONNECT_MODE);
         exit(1);
     }
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, username, password);
@@ -42,9 +42,7 @@ void ConnectCLIModeHandler::handle() {
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
         std::cout << "Successfully _connected to Server!" << "\n";
-//        _clientConnectionManager->closeConnection();
-        // wait for publish packets of server (if any) and ultimately disconnect packet from server
-        _clientConnectionManager->handleIncomingPackets();
+        _clientConnectionManager->closeConnection();
         exit(0);
     } catch (const std::exception &e) {
         std::cout << "exception occurred while creating _connection with server:" << "\n";

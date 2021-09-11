@@ -3,12 +3,17 @@
 //
 
 #include <RawPacket.h>
-#include <SubAckPacket.h>
+#include <SubscribeAckPacket.h>
 #include "SubAckPacketFactory.h"
 
-SubAckPacket* SubAckPacketFactory::create(unsigned short packetId, unsigned char retCode) {
+SubscribeAckPacket* SubAckPacketFactory::create(unsigned short packetId, unsigned char retCode) {
     unsigned char specificFlags = 0;
-    unsigned char *payload = new unsigned char[3];
-    RawPacket *rawPacket = new RawPacket(specificFlags, payload, 3, SUBSCRIBE_ACK);
-    return new SubAckPacket(rawPacket,packetId,retCode);
+    Payload* retCodePayload = new Payload(retCode);
+    Payload* packetIdPayload = new Payload(packetId);
+
+    int payloadLen;
+    const Payload* toMerge[] = {packetIdPayload,retCodePayload};
+    unsigned char* payload = PacketFactory::mergePayloads(&payloadLen, toMerge, 2);
+    RawPacket *rawPacket = new RawPacket(specificFlags, payload, payloadLen, SUBSCRIBE_ACK);
+    return new SubscribeAckPacket(rawPacket, packetId, retCode);
 }

@@ -7,11 +7,11 @@
 
 
 #include "PacketFactory.h"
-#include <SubAckPacket.h>
+#include <SubscribeAckPacket.h>
 
 class SubAckPacketFactory : public PacketFactory{
 public:
-    SubAckPacket* create(unsigned short packetId, unsigned char retCode);
+    SubscribeAckPacket* create(unsigned short packetId, unsigned char retCode);
 };
 
 

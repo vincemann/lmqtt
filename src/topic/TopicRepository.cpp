@@ -15,71 +15,88 @@ TopicRepository::TopicRepository(FileDataManager *fileDataManager) : _fileDataMa
     //    _topics = new std::map<Topic *, std::vector<Message *> *>();
     const char *targetDir = "/.lmqtt/server/topics/";
     char *home = getenv("HOME");
-    char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
-    strcpy(dir, home);
-    strcat(dir, targetDir);
-    this->_topicsDir = dir;
+    _topicsDir = Utils::smartstrcat(home, targetDir);
     Utils::createHomeDirectoryChain(_topicsDir);
 }
 
-void TopicRepository::store(Topic *topic, Message *msg) {
+void TopicRepository::store(char *topic_c, char *msg) {
+
+    initTopicFiles(topic_c);
+
+    char *topicDir = Utils::smartstrcat(_topicsDir, topic_c);
+    char *msgsJson = _fileDataManager->find(topicDir, "messages");
+
+    Topic *topic = loadTopic(topic_c);
+    long msgId = topic->getLastMsgIdPublished() + 1;
+    topic->setLastMsgIdPublished(msgId);
+    Message *message = new Message(msgId, topic->getSubscribedUserCount(), msg);
+
     using json = nlohmann::json;
     json j;
-
-    initTopicFiles(topic->getTopic());
-
-    std::vector<Message *>* msgs = loadMessages(topic->getTopic());
-    msgs->push_back(msg);
-
-    std::vector<json> jsonMsgesVec = std::vector<json>();
-
-    for (const auto &item : *msgs) {
-        json msgObj = {"msg",
-                       {"id", msg->getId()},
-                       {"msg_value", msg->getMsg()},
-                       {"unconsumed_user_count", msg->getUnconsumedUserCount()}
+    if (strlen(msgsJson) == 0) {
+        json jsonMsg = {
+                        {"id", message->getId()},
+                        {"msg_value", message->getMsg()},
+                        {"unconsumed_user_count", message->getUnconsumedUserCount()}
         };
-        jsonMsgesVec.push_back(msgObj);
+        j = {jsonMsg};
+    } else {
+        j = json::parse(msgsJson);
+        json jsonMsg = {
+                {"id", message->getId()},
+                {"msg_value", message->getMsg()},
+                {"unconsumed_user_count", message->getUnconsumedUserCount()}
+        };
+        j.push_back(jsonMsg);
     }
 
 
+    std::string jsonMsgsString = j.dump();
+    char *jsonMsgs_c = Utils::toCharP(&jsonMsgsString);
 
-    j = jsonMsgesVec;
-    std::string jsonString = j.dump();
-    char *pJsonString = new char[jsonString.length() + 1];
-    strcpy(pJsonString, jsonString.c_str());
+    saveTopic(topic);
+    _fileDataManager->store(topicDir, "messages", jsonMsgs_c);
 
 
-//    if (topicExists == 0){
-//        // if topic does not exist, store topic file and its init content
-//        j["topic"] = {
-//                {"topic_value",                  topic->getTopic()},
-//                {"subscribed_users_count", topic->getSubscribedUserCount()},
-//                {"last_msg_id_published",  topic->getLastMsgIdPublished()}
-//        };
-//        // create topics topicDir
-//        std::string jsonString = j.dump();
-//        Utils::createDirectory(topicDir);
-//        _fileDataManager->store(topicDir, "topic", Utils::toCharP(&jsonString));
-//        _fileDataManager->store(topicDir,"messages", Utils::toCharP(""));
-//    } else{
 //
-//        char* topicJson = _fileDataManager->find(topicDir,"topic");
-//        json j = json::parse(topicJson);
-//        for (json::iterator it = j.begin(); it != j.end(); ++it) {
-//            if (it.key() == "last_msg_id_published"){
-//                std::string s = it.value().get<std::string>();
-//                char* last_msg_id_published_s = Utils::toCharP(&s);
-//                long last_msg_id_published = strtol(last_msg_id_published_s,NULL,10);
-//            }
-//        }
-//        auto j2 = j.get<std::string>();
-//        char* last_msg_id_published_string = Utils::toCharP();
-//        j["last_msg_id_published"]
-
-    // create methods for loading topics, creating whole topic objects
-    // the same for msges maybe
-
+//
+//    using json = nlohmann::json;
+//    json j;
+//
+//
+//
+//    initTopicFiles(topic_c);
+//
+//    Topic* topic =  loadTopic(topic_c);
+//    long msgId = topic->getLastMsgIdPublished() + 1;
+//    topic->setLastMsgIdPublished(msgId);
+//
+//    std::vector<Message *>* msgs = loadMessages(topic_c);
+//    Message* message = new Message(msgId,topic->getSubscribedUserCount(),msg);
+//    msgs->push_back(message);
+//
+//    std::vector<json> jsonMsgs = std::vector<json>();
+//
+//    for (const auto &item : *msgs) {
+//        json jsonMsg = {"msg",
+//                        {"id", item->getId()},
+//                        {"msg_value", item->getMsg()},
+//                        {"unconsumed_user_count", item->getUnconsumedUserCount()}
+//        };
+//        jsonMsgs.push_back(jsonMsg);
+//    }
+//
+//
+//
+//    j = jsonMsgs;
+//    std::string jsonMsgsString = j.dump();
+//    // use util function
+//    char* jsonMsgs_c = Utils::toCharP(&jsonMsgsString);
+//    char *topicDir = strdup(_topicsDir);
+//    strcat(topicDir, topic_c);
+//
+//    saveTopic(new Topic(topicDir));
+//    _fileDataManager->store(topicDir, "messages", jsonMsgs_c);
 }
 
 
@@ -98,25 +115,35 @@ void TopicRepository::store(Topic *topic, Message *msg) {
 
 
 /*
- * Vllt msg repo einführen, damit ein laden der topic info nicht immer ein laden aller
- * msges des topics zur folge hat und dann einfach dir structure:
+
  * ~/.lmqtt/server/topics/topicFoo/messages
  * ~/.lmqtt/server/topics/topicFoo/topic
  * ~/.lmqtt/server/topics/topicBar/messages
  * ~/.lmqtt/server/topics/topicBar/topic
  */
-//    j["msgs"] = {
-//            {"msg",
-//             {"id", msg->getId()},
-//             {"msg_value", msg->getMsg()},
-//             {"unconsumed_user_count", msg->getUnconsumedUserCount()}
-//            }
-//    };
-//    std::string jsonString = j.dump();
-//    char *pJsonString = new char[jsonString.length() + 1];
-//    strcpy(pJsonString, jsonString.c_str());
-//    std::cout << "json of topic file: " << pJsonString << "\n";
-//    _fileDataManager->store(_topicsDir, topic->getTopic(), pJsonString);
+
+void TopicRepository::replaceMessages(char *topic, std::vector<Message *> *msgs) {
+    using json = nlohmann::json;
+    std::vector<json> jsonMsgs = std::vector<json>();
+
+    char *topicDir = Utils::smartstrcat(_topicsDir, topic);
+
+
+    for (const auto &message : *msgs) {
+        json jsonMsg = {
+                {"id", message->getId()},
+                {"msg_value", message->getMsg()},
+                {"unconsumed_user_count", message->getUnconsumedUserCount()}
+        };
+        jsonMsgs.push_back(jsonMsg);
+    }
+
+    json j = jsonMsgs;
+    std::string jsonMsgsString = j.dump();
+    char *jsonMsgs_c = Utils::toCharP(&jsonMsgsString);
+    _fileDataManager->
+            store(topicDir,
+                  "messages", jsonMsgs_c);
 }
 
 void TopicRepository::remove(Topic *topic, Message *msg) {
@@ -126,108 +153,153 @@ void TopicRepository::remove(Topic *topic, Message *msg) {
 // expects topic name
 Topic *TopicRepository::loadTopic(char *topic) {
     using json = nlohmann::json;
-    char *pathToTopicDir = strdup(_topicsDir);
-    strcat(pathToTopicDir, topic);
 
+    char *pathToTopicDir = Utils::smartstrcat(_topicsDir, topic);
     //    check file existence
     unsigned char fileExists = _fileDataManager->exists(pathToTopicDir, "topic");
     if (fileExists == 0) {
-        throw IllegalSessionStateException("Connection Refused, unacceptable protocol version");
+        throw IllegalSessionStateException("init topic file was not created");
     }
 
     //    extract values
-    int subscribedUserCount = -1;
-    long lastMsgIdPublished = -1;
     char *topicJson = _fileDataManager->find(pathToTopicDir, "topic");
     json j = json::parse(topicJson);
-    for (json::iterator it = j.begin(); it != j.end(); ++it) {
-        if (it.key() == "subscribed_users_count") {
-            std::string s = it.value().get<std::string>();
-            char *subscribed_users_count_s = Utils::toCharP(&s);
-            subscribedUserCount = strtol(subscribed_users_count_s, NULL, 10);
-        }
-        if (it.key() == "last_msg_id_published") {
-            std::string s = it.value().get<std::string>();
-            char *last_msg_id_published_s = Utils::toCharP(&s);
-            lastMsgIdPublished = strtol(last_msg_id_published_s, NULL, 10);
-        }
-    }
-    return new Topic(lastMsgIdPublished, subscribedUserCount, topic);
+    long subscribedUserCount = j.at("subscribed_users_count").get<unsigned long>();
+    long lastMsgIdPublished = j.at("last_msg_id_published").get<unsigned long>();
+    std::string s = j.at("topic_value").get<std::string>();
+    char *topicValue = Utils::toCharP(&s);
+
+    delete pathToTopicDir;
+    delete topicJson;
+    return new Topic(lastMsgIdPublished, subscribedUserCount, topicValue);
 }
 
 void TopicRepository::saveTopic(Topic *topic) {
     using json = nlohmann::json;
     json j;
 
-    char *topicDir = strdup(_topicsDir);
-    strcat(topicDir, topic->getTopic());
-    j["topic"] = {
+    char *topicDir = Utils::smartstrcat(_topicsDir, topic->getTopic());
+    j = {
             {"topic_value",            topic->getTopic()},
             {"subscribed_users_count", topic->getSubscribedUserCount()},
             {"last_msg_id_published",  topic->getLastMsgIdPublished()}
     };
     std::string jsonString = j.dump();
+    Utils::createDirectory(topicDir);
     _fileDataManager->store(topicDir, "topic", Utils::toCharP(&jsonString));
 }
 
 
-//Topic *TopicRepository::loadTopic(char *topic) {
-//    //
-//
-//    for (auto const &entry : *_topics) {
-//        Topic *cmp_topic = entry.first;
-//        if (strcmp(topic, cmp_topic->getTopic()) == 0) {
-//            return cmp_topic;
-//        }
-//    }
-//    return 0;
+//Message *TopicRepository::loadMessage(Topic *topic, unsigned long msgId) {
+//    return nullptr;
 //}
 
-Message *TopicRepository::loadMessage(Topic *topic, unsigned long msgId) {
-    return nullptr;
-}
 
-void TopicRepository::remove(Topic *topic) {
+std::vector<Message *> *TopicRepository::consumeMessagesStartingFromId(char *topic, unsigned long lastConsumedMsgId) {
+    std::vector<Message *> *msgs = loadMessages(topic);
+    std::vector<Message *> *consumedMsgs = new std::vector<Message *>();
+    std::vector<Message *> *updatedMsgs = new std::vector<Message *>();
 
-}
 
-void TopicRepository::store(Topic *topic) {
+//    std::vector<Message*>::iterator i = msgs->begin();
+//    int count = 0;
+//    while (i != msgs->end()) {
+//        Message *msg = (*i);
+//        if (msg->getId() > lastConsumedMsgId) {
+//            msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
+//            consumedMsgs->push_back(msg);
+//            ++i;
+//        }
+//        if (msg->getId() <= 0) {
+//            msgs->erase(i++);
+//            // get rid of anything < 10
+//            msgs->erase(std::remove_if(msgs->begin(), msgs->end(),
+//                                   [](int i) { return i == count; }), msgs.end());
+//        }
 
-}
+    for (int i = 0; i < msgs->size(); ++i) {
+        auto msg = msgs->at(i);
 
-std::vector<Message*>* TopicRepository::loadMessagesStartingFromIndex(Topic *topic, unsigned long msgId) {
-    return new std::vector<Message *>();
+        if (msg->getId() > lastConsumedMsgId) {
+            msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
+            consumedMsgs->push_back(msg);
+            if (msg->getUnconsumedUserCount() > 0){
+                updatedMsgs->push_back(msg);
+                continue;
+            }else{
+                // msg will be deleted
+                continue;
+            }
+        }
+        updatedMsgs->push_back(msg);
+    }
+//    for (auto &msg : *msgs) {
+//        if (msg->getId() > lastConsumedMsgId) {
+//            msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
+//            consumedMsgs->push_back(msg);
+//            updatedMsgs->push_back(msg);
+//        }
+//        if (msg->getId() <= 0) {
+//            updatedMsgs->erase(msg);
+//        } else {
+//            updatedMsgs->push_back(msg);
+//        }
+//    }
+    // update msges meta data
+    replaceMessages(topic, updatedMsgs);
+    delete updatedMsgs;
+    delete msgs;
+    return consumedMsgs;
 }
 
 void TopicRepository::subscribe(char *topicName) {
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
+    std::vector<Message *> *msgs = loadMessages(topicName);
+    for (const auto &msg : *msgs) {
+        msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() + 1);
+    }
+    replaceMessages(topicName, msgs);
     saveTopic(topic);
 }
 
-void TopicRepository::unsubscribe(char *topicName) {
+void TopicRepository::unsubscribe(char *topicName, unsigned long lastConsumedMsgId) {
+    char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
+
+
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() - 1);
+    if (topic->getSubscribedUserCount() <= 0) {
+        // remove topicFoo dir
+        _fileDataManager->remove(topicDir);
+        return;
+    }
+    std::vector<Message *> *msgs = loadMessages(topicName);
+    for (const auto &msg : *msgs) {
+        if (msg->getId() > lastConsumedMsgId) {
+            msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
+        }
+    }
+    replaceMessages(topicName, msgs);
     saveTopic(topic);
+
 }
 
 void TopicRepository::initTopicFiles(char *topicName) {
-    char *topicDir = strdup(_topicsDir);
-    strcat(topicDir, topicName);
+    char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
     unsigned char topicExists = _fileDataManager->exists(_topicsDir, topicName);
     if (topicExists) {
         delete topicDir;
         return;
     }
     Utils::createDirectory(topicDir);
-    _fileDataManager->store(topicDir, "topic", "");
-    saveTopic(new Topic(topicDir));
+//    _fileDataManager->store(topicDir, "topic", "");
+    saveTopic(new Topic(topicName));
     _fileDataManager->store(topicDir, "messages", "");
 }
 
-std::vector<Message *>* TopicRepository::loadMessages(char *topicName) {
-    char *topicDir = strdup(_topicsDir);
-    strcat(topicDir, topicName);
+std::vector<Message *> *TopicRepository::loadMessages(char *topicName) {
+    char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
     char *msgsJson = _fileDataManager->find(topicDir, "messages");
 
     using json = nlohmann::json;
@@ -235,23 +307,12 @@ std::vector<Message *>* TopicRepository::loadMessages(char *topicName) {
 
     std::vector<Message *> *msgs = new std::vector<Message *>();
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
-        std::cout << it.key() << " : " << it.value() << "\n";
-        if (it.key() == "msg") {
-            json msg = it.value().get<std::string>();
-            std::string id_s = msg.at("id").get<std::string>();
-            std::string msgValue_s = msg.at("value").get<std::string>();
-            std::string unconsumed_user_count_s = msg.at("unconsumed_user_count").get<std::string>();
-
-            char *msgId_c = Utils::toCharP(&id_s);
-            long msgId = strtol(msgId_c, NULL, 10);
-            char* msgValue = Utils::toCharP(&msgValue_s);
-
-            char *unconsumed_user_count_c = Utils::toCharP(&unconsumed_user_count_s);
-            long unconsumed_user_count = strtol(unconsumed_user_count_c, NULL, 10);
-
-            Message* msg_o = new Message(msgId,unconsumed_user_count,msgValue);
-            msgs->push_back(msg_o);
-        }
+        unsigned long msgId = it.value().at("id").get<unsigned long>();
+        unsigned long unconsumed_user_count = it.value().at("unconsumed_user_count").get<unsigned long>();
+        std::string s = it.value().at("msg_value").get<std::string>();
+        char *msgValue = Utils::toCharP(&s);
+        Message *msg_o = new Message(msgId, unconsumed_user_count, msgValue);
+        msgs->push_back(msg_o);
     }
     return msgs;
 }

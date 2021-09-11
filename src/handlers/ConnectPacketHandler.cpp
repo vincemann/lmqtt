@@ -36,11 +36,11 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * 
             char* duplicatedClientId = strdup(clientId);
             session = new ServerSession(duplicatedClientId);
             _sessionRepository->save(session);
-            _connectionSession->_serverSession = session;
             std::cout << "new session: " << session << "\n";
         } else{
             std::cout << "have found session file for client id: " << clientId << ": " << session <<"\n";
         }
+        _connectionSession->_serverSession = session;
     }
 }
 
@@ -103,6 +103,8 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     // init server session
     initServerSession(cleanSession, clientId);
     connAck(0x0, cleanSession);
+
+
 }
 
 ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() const {

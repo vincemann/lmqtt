@@ -23,30 +23,34 @@ void SubscribeCLIModeHandler::handle() {
             case 'i': clientId = optarg; break;
             case 'q': qos = atoi(optarg); break;
             default: /* '?' */
-                CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+            CLIModes::printUsageInformation(_argv[0],SUBSCRIBE_MODE);
                 exit(1);
         }
     }
     initRoute();
     if (clientId == 0){
         fprintf(stderr, "Client Id missing");
-        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE_MODE);
         exit(1);
     }
 
     if (topic == 0){
         fprintf(stderr, "Topic is missing");
-        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE_MODE);
         exit(1);
     }
     if (qos == 0xff){
         fprintf(stderr, "Qos is missing");
-        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE);
+        CLIModes::printUsageInformation(_argv[0],SUBSCRIBE_MODE);
         exit(1);
     }
 
 
     ClientSession* clientSession = clientSessionRepository->load(clientId);
+    if (clientSession == 0 ){
+        printf("You have to call connect to init session before calling subscribe");
+        exit(1);
+    }
 
 
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientSession->_username, clientSession->_password);
