@@ -60,7 +60,6 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
 
 
 //
-//
 //    using json = nlohmann::json;
 //    json j;
 //
