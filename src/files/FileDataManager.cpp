@@ -18,8 +18,7 @@
 
 
 
-//der vincemann ist ein vincemann
-// der gil isn gil
+
 int remove_directory(const char *path) {
     DIR *d = opendir(path);
     size_t path_len = strlen(path);
@@ -64,7 +63,6 @@ int remove_directory(const char *path) {
     return r;
 }
 
-// gil comment
 char *FileDataManager::find(const char *startDir,const char *name)
 {
     dirent *entry = 0;
