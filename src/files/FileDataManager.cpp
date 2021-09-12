@@ -61,7 +61,7 @@ int remove_directory(const char *path) {
 
     return r;
 }
-//gil comment
+
 char *FileDataManager::find(const char *startDir,const char *name)
 {
     dirent *entry = 0;
