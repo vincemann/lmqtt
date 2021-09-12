@@ -19,7 +19,7 @@ public:
 
     unsigned char getQos() const;
 
-    virtual ~SubscribePacket();
+    ~SubscribePacket();
 private:
     // todo remove array initialisations
     unsigned short _packetId;

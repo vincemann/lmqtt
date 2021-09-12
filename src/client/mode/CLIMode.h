@@ -45,11 +45,11 @@ namespace CLIModes {
         if (strcmp(mode, "unsubscribe") == 0) {
             return UNSUBSCRIBE_MODE;
         }
-        fprintf(stderr, "%s", "Invalid cli mode\n");
-        fprintf(stderr, "valid modes are: %s, %s, %s\n", "connect", "subscribe, unsubscribe");
-        if (strcmp(mode,"publish") == 0){
+        if (strcmp(mode, "publish") == 0) {
             return PUBLISH_MODE;
         }
+        fprintf(stderr, "%s", "Invalid cli mode\n");
+        fprintf(stderr, "valid modes are: %s, %s, %s, %s\n", "connect", "subscribe", "unsubscribe", "publish");
         exit(1);
     }
 
