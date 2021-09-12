@@ -250,6 +250,15 @@ std::vector<Message *> *ServerTopicRepository::consumeMessagesStartingFromId(cha
 }
 
 void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
+    // check if subscription already there
+    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
+    for (std::vector<Subscription*>::iterator it = clientInfo->subscriptions->begin(); it != clientInfo->subscriptions->end(); ++it) {
+        Subscription* subscription = *it;
+        if (strcmp(subscription->getTopic(),topicName) == 0){
+            return;
+        }
+    }
+
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
     std::vector<Message *> *msgs = loadMessages(topicName);
