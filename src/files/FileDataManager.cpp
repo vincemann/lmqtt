@@ -16,11 +16,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//additional comment
-//
 
-//der vincemann ist ein vincemann
-// der gil isn gil
+
 int remove_directory(const char *path) {
     DIR *d = opendir(path);
     size_t path_len = strlen(path);
@@ -36,8 +33,10 @@ int remove_directory(const char *path) {
             size_t len;
 
             /* Skip the names "." and ".." as we don't want to recurse on them. */
-//            if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, ".."))
+            if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, "..")){
+                printf("skipping names with dots in it\n");
                 continue;
+            }
 
             len = path_len + strlen(p->d_name) + 2;
             buf = (char*) malloc(len);
@@ -65,7 +64,6 @@ int remove_directory(const char *path) {
     return r;
 }
 
-// gil comment
 char *FileDataManager::find(const char *startDir,const char *name)
 {
     dirent *entry = 0;
