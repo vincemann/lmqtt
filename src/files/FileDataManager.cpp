@@ -16,8 +16,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//additional comment
-
 
 int remove_directory(const char *path) {
     DIR *d = opendir(path);
