@@ -15,7 +15,7 @@ public:
     ServerConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
                             std::map<PacketType, PacketFactory *> *factories,
                             ServerTopicRepository *topicRepository,
-                            ServersClientInfoRepository *serverSessionRepository);
+                            ServersClientInfoRepository *serversClientInfoRepository);
 
     void serveClients();
     void disconnectClient();

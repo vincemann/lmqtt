@@ -11,14 +11,6 @@
 
 #include "../json.hpp"
 
-ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager, ServerConnection *serverConnection)
-        : _fileDataManager(fileDataManager), serverConnection(serverConnection) {
-    //    _topics = new std::map<Topic *, std::vector<Message *> *>();
-    const char *targetDir = "/.lmqtt/server/topics/";
-    char *home = getenv("HOME");
-    _topicsDir = Utils::smartstrcat(home, targetDir);
-    Utils::createHomeDirectoryChain(_topicsDir);
-}
 
 void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
 
@@ -344,5 +336,18 @@ std::vector<Message *> *ServerTopicRepository::loadMessages(char *topicName) {
 
 void ServerTopicRepository::setServerConnection(ServerConnection *serverConnection) {
     ServerTopicRepository::serverConnection = serverConnection;
+}
+
+ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager,
+                                             ServersClientInfoRepository *serversClientInfoRepository,
+                                             ServerConnection *serverConnection) : _fileDataManager(fileDataManager),
+                                                                                   serversClientInfoRepository(
+                                                                                           serversClientInfoRepository),
+                                                                                   serverConnection(serverConnection) {
+    //    _topics = new std::map<Topic *, std::vector<Message *> *>();
+    const char *targetDir = "/.lmqtt/server/topics/";
+    char *home = getenv("HOME");
+    _topicsDir = Utils::smartstrcat(home, targetDir);
+    Utils::createHomeDirectoryChain(_topicsDir);
 }
 
