@@ -64,7 +64,7 @@ int remove_directory(const char *path) {
     return r;
 }
 
-// pr terminal resolved by host
+// gil comment
 char *FileDataManager::find(const char *startDir,const char *name)
 {
     dirent *entry = 0;
