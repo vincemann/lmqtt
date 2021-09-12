@@ -17,6 +17,7 @@
 #include<stdlib.h>
 
 
+
 int remove_directory(const char *path) {
     DIR *d = opendir(path);
     size_t path_len = strlen(path);

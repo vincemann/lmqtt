@@ -34,7 +34,7 @@ public:
     std::vector<Message*>* loadMessages(char* topicName);
     std::vector<Message*>* consumeMessagesStartingFromId(char* topic, unsigned long msgId);
     void subscribe(char* topic, unsigned short qos);
-    void unsubscribe(char* topic, unsigned long lastConsumedMsgId);
+    void unsubscribe(char* topic);
     void replaceMessages(char* topic, std::vector<Message*>* msgs);
 
     void setServerConnection(ServerConnection *serverConnection);

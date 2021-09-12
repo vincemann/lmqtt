@@ -276,15 +276,29 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
     serversClientInfoRepository->save(clientInfo);
 }
 
-void ServerTopicRepository::unsubscribe(char *topicName, unsigned long lastConsumedMsgId) {
+// notes: moved search for subscription up, so that the lastConsumedMsgId can be read
+//        also,
+void ServerTopicRepository::unsubscribe(char *topicName) {
+    unsigned long lastConsumedMsgId;
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
 
+    // update client info
+    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
+    for (std::vector<Subscription*>::iterator it = clientInfo->subscriptions->begin(); it != clientInfo->subscriptions->end(); ++it) {
+        Subscription* subscription = *it;
+        if (strcmp(subscription->getTopic(),topicName) == 0){
+            lastConsumedMsgId = subscription->getLastMsgIdConsumed();
+            clientInfo->subscriptions->erase(it);
+            break;
+        }
+    }
 
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() - 1);
     if (topic->getSubscribedUserCount() <= 0) {
         // remove topicFoo dir
         _fileDataManager->remove(topicDir);
+//        messages will be removed with dir
         return;
     }
     std::vector<Message *> *msgs = loadMessages(topicName);
@@ -296,15 +310,6 @@ void ServerTopicRepository::unsubscribe(char *topicName, unsigned long lastConsu
     replaceMessages(topicName, msgs);
     saveTopic(topic);
 
-    // update client info
-    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
-    for (std::vector<Subscription*>::iterator it = clientInfo->subscriptions->begin(); it != clientInfo->subscriptions->end(); ++it) {
-        Subscription* subscription = *it;
-        if (strcmp(subscription->getTopic(),topicName) == 0){
-            clientInfo->subscriptions->erase(it);
-            break;
-        }
-    }
     serversClientInfoRepository->save(clientInfo);
 }
 
