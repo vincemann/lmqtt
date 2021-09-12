@@ -19,6 +19,8 @@ void ServerPublishPacketHandler::handle(RawPacket *packet) {
     topicRepository->saveMsg(publishPacket->getTopic(), publishPacket->getMsg());
     if (publishPacket->getQos() == 0 ){
         printf("qos of published msg is 0, no response to client\n");
+    } else if (publishPacket->getQos() == 1){
+
     }
     // todo add responses and retransmissions
 }

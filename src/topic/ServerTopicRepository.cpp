@@ -270,7 +270,6 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
 
 
     // update client info
-    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
     Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished(),qos);
     clientInfo->subscriptions->push_back(subscription);
     serversClientInfoRepository->save(clientInfo);
@@ -293,6 +292,8 @@ void ServerTopicRepository::unsubscribe(char *topicName) {
         }
     }
 
+    serversClientInfoRepository->save(clientInfo);
+
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() - 1);
     if (topic->getSubscribedUserCount() <= 0) {
@@ -310,7 +311,7 @@ void ServerTopicRepository::unsubscribe(char *topicName) {
     replaceMessages(topicName, msgs);
     saveTopic(topic);
 
-    serversClientInfoRepository->save(clientInfo);
+
 }
 
 void ServerTopicRepository::initTopicFiles(char *topicName) {

@@ -123,7 +123,7 @@ add_executable(lmqtt__server
         src/packets/parsers/PublishPacketParser.h
         src/handlers/ServerPublishPacketHandler.cpp
         src/handlers/ServerPublishPacketHandler.h
-        src/Subscription.cpp src/Subscription.h)
+        src/Subscription.cpp src/Subscription.h src/packets/PublishAckPacket.cpp src/packets/PublishAckPacket.h src/packets/factories/PublishAckPacketFactory.cpp src/packets/factories/PublishAckPacketFactory.h)
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

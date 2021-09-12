@@ -16,6 +16,7 @@ enum PacketType {
     UNSUB_ACK,
     DISCONNECT,
     PUBLISH,
+    PUB_ACK,
     UNKNOWN
 };
 

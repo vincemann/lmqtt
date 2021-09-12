@@ -43,4 +43,15 @@ Payload::Payload(unsigned short data) {
     _prependSize=false;
 }
 
+Payload::Payload(unsigned long data) {
+    unsigned char* pData = ( unsigned char*) malloc(sizeof (unsigned long));
+    pData[0]= data & 0xff;
+    pData[1]= (data >> 8) & 0xff;
+    pData[2]= (data >> 16) & 0xff;
+    pData[3]= (data >> 24) & 0xff;
+    _data=pData;
+    _dataSize = sizeof (unsigned long );
+    _prependSize= false;
+}
+
 

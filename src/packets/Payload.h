@@ -11,6 +11,7 @@ public:
     Payload(unsigned char *data, unsigned short size, bool prependSize=false);
     Payload(unsigned char data);
     Payload(unsigned short data);
+    Payload(unsigned long data);
     unsigned char* _data;
     unsigned short _dataSize;
     bool _prependSize;

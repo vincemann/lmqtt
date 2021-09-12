@@ -134,7 +134,7 @@ add_executable(lmqtt__client
         ../topic/Topic.h
         ../topic/Topic.cpp
         ../topic/Message.h
-        ../topic/Message.cpp)
+        ../topic/Message.cpp ../packets/PublishAckPacket.cpp ../packets/PublishAckPacket.h ../packets/factories/PublishAckPacketFactory.cpp ../packets/factories/PublishAckPacketFactory.h)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

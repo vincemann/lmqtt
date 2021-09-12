@@ -411,6 +411,14 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/PublishAckPacket.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/PublishAckPacket.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/PublishPacket.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
@@ -476,6 +484,14 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/PacketFactory.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/PublishAckPacketFactory.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/PublishAckPacketFactory.h">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
