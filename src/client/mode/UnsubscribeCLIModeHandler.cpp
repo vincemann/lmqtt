@@ -2,18 +2,11 @@
 // Created by archdoc on 11/09/2021.
 //
 
+#include <ServersClientInfoRepository.h>
 #include "UnsubscribeCLIModeHandler.h"
 #include "CLIMode.h"
 
-UnsubscribeCLIModeHandler::UnsubscribeCLIModeHandler(char **argv1,
-                                                     ClientConnectionManager *clientConnectionManager1,
-                                                     ConnectPacketFactory *connectPacketFactory1, int argc1,
-                                                     ClientSessionRepository *clientSessionRepository,
-                                                     UnsubscribePacketFactory *unsubscribePacketFactory,
-                                                     UnsubAckPacketHandler *unsubAckPacketHandler)
-        : CLIModeHandler(argv1, clientConnectionManager1, connectPacketFactory1, argc1) {
 
-}
 
 void UnsubscribeCLIModeHandler::handle() {
     int opt;
@@ -46,12 +39,12 @@ void UnsubscribeCLIModeHandler::handle() {
         exit(1);
     }
 
-    ClientSession* clientSession = clientSessionRepository->load(clientId);
-    if (clientSession == 0 ){
+    ClientsClientInfo* clientsClientInfo = clientsClientInfoRepository->load(clientId);
+    if (clientsClientInfo == 0 ){
         printf("You have to call connect to init session before calling subscribe");
         exit(1);
     }
-    RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientSession->_username, clientSession->_password);
+    RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientsClientInfo->_username, clientsClientInfo->_password);
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
@@ -73,3 +66,15 @@ void UnsubscribeCLIModeHandler::handle() {
     }
 //    CLIModeHandler::handle();
 }
+
+UnsubscribeCLIModeHandler::UnsubscribeCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
+                                                     ConnectPacketFactory *connectPacketFactory, int argc,
+                                                     ClientsClientInfoRepository *clientsClientInfoRepository,
+                                                     UnsubscribePacketFactory *unsubscribePacketFactory,
+                                                     UnsubAckPacketHandler *unsubAckPacketHandler) : CLIModeHandler(
+        argv, clientConnectionManager, connectPacketFactory, argc), clientsClientInfoRepository(
+        clientsClientInfoRepository), unsubscribePacketFactory(unsubscribePacketFactory), unsubAckPacketHandler(
+        unsubAckPacketHandler) {}
+
+
+

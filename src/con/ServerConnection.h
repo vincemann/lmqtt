@@ -15,15 +15,9 @@ class ServerConnection : public Connection{
 public:
     ServerConnection();
 
-<<<<<<< HEAD
-    ServerConnection(ServerSession *serverSession);
 
-    ServerSession* _serverSession;
-=======
     ServerConnection(ServersClientInfo *serverSession);
-
     ServersClientInfo* serversClientInfo;
->>>>>>> 416b1564649cd1236a49f43d4f035cdf8b45bd30
 };
 
 

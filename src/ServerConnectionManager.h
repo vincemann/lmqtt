@@ -24,7 +24,7 @@ public:
 private:
     int waitForConnection(int serverFd);
     int bindToPort();
-    ServersClientInfoRepository* serverSessionRepository;
+    ServersClientInfoRepository* serversClientInfoRepository;
     ServerTopicRepository* topicRepository;
     int _port;
     unsigned char _clientConnected;

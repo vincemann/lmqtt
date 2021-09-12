@@ -6,24 +6,24 @@
 #define LMQTT__SERVER_UNSUBSCRIBEPACKETHANDLER_H
 
 
-#include <ServerSessionRepository.h>
 #include <ServerConnection.h>
 #include <UnsubAckPacketFactory.h>
-#include "../topic/TopicRepository.h"
+#include <ServersClientInfoRepository.h>
+#include "../topic/ServerTopicRepository.h"
 #include "PacketHandler.h"
+#include "../topic/ServerTopicRepository.h"
 
 class UnsubscribePacketHandler : public PacketHandler{
 private:
-    ServerSessionRepository* _serverSessionRepository;
+    ServersClientInfoRepository* serversClientInfoRepository;
     ServerConnection* _serverConnection;
     UnsubAckPacketFactory* _unsubAckPacketFactory;
-    TopicRepository* topicRepository;
+    ServerTopicRepository* topicRepository;
 public:
-    UnsubscribePacketHandler(PacketIOManager *packetIo,
-                             ServerSessionRepository *serverSessionRepository,
-                             UnsubAckPacketFactory *unsubAckPacketFactory,
-                             ServerConnection *serverConnection,
-                             TopicRepository *topicRepository);
+    UnsubscribePacketHandler(PacketIOManager *packetIo, ServersClientInfoRepository *serversClientInfoRepository,
+                             ServerConnection *serverConnection, UnsubAckPacketFactory *unsubAckPacketFactory,
+                             ServerTopicRepository *topicRepository);
+
     void handle(RawPacket *packet) override;
 };
 

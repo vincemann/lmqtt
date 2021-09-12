@@ -12,15 +12,15 @@
 
 class UnsubscribeCLIModeHandler : public CLIModeHandler{
 private:
-    ClientSessionRepository *clientSessionRepository;
+    ClientsClientInfoRepository *clientsClientInfoRepository;
     UnsubscribePacketFactory *unsubscribePacketFactory;
     UnsubAckPacketHandler* unsubAckPacketHandler;
 
 public:
-    UnsubscribeCLIModeHandler(char **argv1,
-                              ClientConnectionManager *clientConnectionManager1,
-                              ConnectPacketFactory *connectPacketFactory1, int argc1,
-                              ClientSessionRepository *clientSessionRepository,
+
+    UnsubscribeCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
+                              ConnectPacketFactory *connectPacketFactory, int argc,
+                              ClientsClientInfoRepository *clientsClientInfoRepository,
                               UnsubscribePacketFactory *unsubscribePacketFactory,
                               UnsubAckPacketHandler *unsubAckPacketHandler);
 

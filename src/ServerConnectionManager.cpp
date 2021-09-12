@@ -102,18 +102,17 @@ void ServerConnectionManager::serveClients() {
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
         ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNACK));
-        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager, connectAckPacketFactory, serverSessionRepository);
+        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager, connectAckPacketFactory, serversClientInfoRepository);
 
         DisconnectPacketHandler* disconnectPacketHandler = new DisconnectPacketHandler(packetIoManager, this);
 
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
         SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,
-                                                                                    serverSessionRepository, connection,
                                                                                     subAckPacketFactory, topicRepository);
         UnsubAckPacketFactory* unsubAckPacketFactory = static_cast<UnsubAckPacketFactory*>(_factories->at(UNSUB_ACK));
         UnsubscribePacketHandler* unsubscribePacketHandler = new UnsubscribePacketHandler(packetIoManager,
-                                                                                          serverSessionRepository,
-                                                                                          unsubAckPacketFactory, connection, topicRepository);
+                                                                                          serversClientInfoRepository,
+                                                                                          connection, unsubAckPacketFactory , topicRepository);
         ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,topicRepository);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
@@ -172,6 +171,6 @@ ServerConnectionManager::ServerConnectionManager(int port, std::map<PacketType, 
                                                  ServerTopicRepository *topicRepository,
                                                  ServersClientInfoRepository *serverSessionRepository)
         : _port(port), _parsers(parsers),
-          _factories(factories),  topicRepository(topicRepository),
-          serverSessionRepository(serverSessionRepository) {}
+          _factories(factories), topicRepository(topicRepository),
+          serversClientInfoRepository(serverSessionRepository) {}
 

@@ -138,6 +138,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/SubscribeCLIModeHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/UnsubscribeCLIModeHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/UnsubscribeCLIModeHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ClientConnection.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -184,6 +190,12 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/SubscribeAckPacketHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/UnsubAckPacketHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/UnsubAckPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/exception/IllegalSessionStateException.cpp">
@@ -261,6 +273,18 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/SubscribePacket.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/UnsubAckPacket.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/UnsubAckPacket.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/UnsubscribePacket.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/UnsubscribePacket.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/ConnectAckPacketFactory.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -288,6 +312,18 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/SubscribePacketFactory.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/UnsubAckPacketFactory.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/UnsubAckPacketFactory.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/UnsubscribePacketFactory.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/UnsubscribePacketFactory.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/factories/exception/PacketCreationException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -312,19 +348,22 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-<<<<<<< HEAD
-=======
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PublishPacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PublishPacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
->>>>>>> 416b1564649cd1236a49f43d4f035cdf8b45bd30
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/SubscribeAckPacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/SubscribeAckPacketParser.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/UnsubAckPacketParser.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/UnsubAckPacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/exception/PacketParsingException.cpp">

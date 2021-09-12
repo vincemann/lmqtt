@@ -4,19 +4,12 @@
 
 #include <UnsubscribePacket.h>
 #include "UnsubscribePacketHandler.h"
+#include "../topic/ServerTopicRepository.h"
 #include <InvalidPacketException.h>
 #include <SubAckPacketFactory.h>
 
 
-UnsubscribePacketHandler::UnsubscribePacketHandler(PacketIOManager *packetIo,
-                                               ServerSessionRepository *serverSessionRepository,
-                                               UnsubAckPacketFactory *unsubAckPacketFactory,
-                                               ServerConnection *serverConnection,
-                                               TopicRepository *topicRepository): PacketHandler(packetIo),
-                                               _serverSessionRepository(serverSessionRepository),
-                                               _serverConnection(serverConnection),
-                                               _unsubAckPacketFactory(unsubAckPacketFactory),
-                                               topicRepository(topicRepository) {}
+
 
 void UnsubscribePacketHandler::handle(RawPacket *packet) {
     UnsubscribePacket* unsubscribePacket = static_cast<UnsubscribePacket*>(packet);
@@ -32,7 +25,9 @@ void UnsubscribePacketHandler::handle(RawPacket *packet) {
         printf("Topic does not exist");
     }
 
-    ServerSession* serverSession = _serverConnection->_serverSession;
+    ServersClientInfo* currentClient = _serverConnection->serversClientInfo;
+    //todo  for loop over clients subscriptions, find matching topic name, extract last consumed msg id from obj
+//    currentClient->subscriptions
     //    todo: get lastConsumedMsgId from subscription, remove subscription
     unsigned long lastConsumedMsgId;
     topicRepository->unsubscribe(unsubscribePacket->getTopic(), lastConsumedMsgId);
@@ -42,3 +37,18 @@ void UnsubscribePacketHandler::handle(RawPacket *packet) {
 
 
 }
+
+UnsubscribePacketHandler::UnsubscribePacketHandler(PacketIOManager *packetIo,
+                                                   ServersClientInfoRepository *serversClientInfoRepository,
+                                                   ServerConnection *serverConnection,
+                                                   UnsubAckPacketFactory *unsubAckPacketFactory,
+                                                   ServerTopicRepository *topicRepository) : PacketHandler(packetIo),
+                                                                                             serversClientInfoRepository(
+                                                                                                     serversClientInfoRepository),
+                                                                                             _serverConnection(
+                                                                                                     serverConnection),
+                                                                                             _unsubAckPacketFactory(
+                                                                                                     unsubAckPacketFactory),
+                                                                                             topicRepository(
+                                                                                                     topicRepository) {}
+
