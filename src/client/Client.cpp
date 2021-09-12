@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     SubscribeAckPacketParser *subscribePacketParser = new SubscribeAckPacketParser;
     parsers.insert(std::make_pair(SUBSCRIBE_ACK, subscribePacketParser));
     UnsubAckPacketParser *unsubAckPacketParser = new UnsubAckPacketParser;
-    parsers.insert(std::make_pair(UNSUB_ACK, subscribePacketParser));
+    parsers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketParser));
 
     // FACTORIES
     ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();

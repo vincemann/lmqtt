@@ -30,7 +30,7 @@ void UnsubscribePacketHandler::handle(RawPacket *packet) {
 //    currentClient->subscriptions
     //    todo: get lastConsumedMsgId from subscription, remove subscription
     unsigned long lastConsumedMsgId;
-    topicRepository->unsubscribe(unsubscribePacket->getTopic(), lastConsumedMsgId);
+    topicRepository->unsubscribe(unsubscribePacket->getTopic());
     UnsubAckPacket* unsubAckPacket = _unsubAckPacketFactory->create(unsubscribePacket->getPacketId());
     _packetIo->sendPacket(unsubAckPacket);
 
