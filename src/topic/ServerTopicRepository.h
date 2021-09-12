@@ -21,7 +21,9 @@ class ServerTopicRepository {
     char* _topicsDir;
 
 public:
-    ServerTopicRepository(FileDataManager *fileDataManager, ServerConnection *serverConnection);
+    ServerTopicRepository(FileDataManager *fileDataManager, ServersClientInfoRepository *serversClientInfoRepository,
+                          ServerConnection *serverConnection);
+
     void initTopicFiles(char* topicName);
     void saveMsg(char* topic_c, char* msg);
     // es kann duplikate geben, daher brauche ich das msg obj mit der msg id
