@@ -4,7 +4,7 @@
 #include <FileDataManager.h>
 #include "ServersClientInfo.h"
 
-
+// my additional comment
 class ServersClientInfoRepository{
 protected:
 FileDataManager* _fileDataManager;
