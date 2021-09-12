@@ -25,17 +25,9 @@ void UnsubscribePacketHandler::handle(RawPacket *packet) {
         printf("Topic does not exist");
     }
 
-    ServersClientInfo* currentClient = _serverConnection->serversClientInfo;
-    //todo  for loop over clients subscriptions, find matching topic name, extract last consumed msg id from obj
-//    currentClient->subscriptions
-    //    todo: get lastConsumedMsgId from subscription, remove subscription
-    unsigned long lastConsumedMsgId;
     topicRepository->unsubscribe(unsubscribePacket->getTopic());
     UnsubAckPacket* unsubAckPacket = _unsubAckPacketFactory->create(unsubscribePacket->getPacketId());
     _packetIo->sendPacket(unsubAckPacket);
-
-
-
 }
 
 UnsubscribePacketHandler::UnsubscribePacketHandler(PacketIOManager *packetIo,

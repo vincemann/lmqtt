@@ -16,7 +16,7 @@ public:
 
     char *getTopic() const;
 
-    virtual ~UnsubscribePacket();
+    ~UnsubscribePacket();
 private:
     unsigned short _packetId;
     char *topic;
