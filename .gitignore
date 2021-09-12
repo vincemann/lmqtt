@@ -1,8 +1,9 @@
 src/client/cmake-build-debug/
+cmake-build-debug/
 src/client/.idea/
 .idea
 lib/**
-build/**
+build/
 src/client/build/**
 
 
