@@ -36,8 +36,10 @@ int main(int argc, char const *argv[])
 {
     // THESE OBJECTS LIVE AS LONG AS THE SERVER
     FileDataManager* fileDataManager = new FileDataManager();
-    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager, nullptr);
-    ServersClientInfoRepository* serverSessionRepository = new ServersClientInfoRepository(fileDataManager);
+    ServersClientInfoRepository* serversClientInfoRepository = new ServersClientInfoRepository(fileDataManager);
+    // nullpointer is legit, will be set later
+    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager, serversClientInfoRepository,
+                                                                       nullptr);
 
     // PARSERS
     std::map<PacketType,PacketParser*> parsers;
@@ -106,7 +108,7 @@ int main(int argc, char const *argv[])
 
 
     ServerConnectionManager* connectionManager = new ServerConnectionManager(PORT, &parsers, &factories,
-                                                                             topicRepository, serverSessionRepository);
+                                                                             topicRepository, serversClientInfoRepository);
     connectionManager->serveClients();
 }
 
