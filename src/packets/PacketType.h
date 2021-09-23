@@ -25,7 +25,7 @@ namespace PacketTypes {
         switch (PacketType) {
             case CONNECT:
                 return "CONNECT";
-                break;
+                br
             case CONNACK:
                 return "CONNACK";
                 break;

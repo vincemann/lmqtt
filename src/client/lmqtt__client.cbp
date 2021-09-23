@@ -90,6 +90,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ClientRetransmitMsgHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ClientRetransmitMsgHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/MsgException.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -160,6 +166,12 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/files/FileDataManager.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishAckPacketHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishAckPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishPacketHandler.cpp">
@@ -408,10 +420,16 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServersClientInfoRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/Message.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientMessageContainer.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/Message.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientMessageContainer.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ServerMessageContainer.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ServerMessageContainer.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ServerTopicRepository.cpp">

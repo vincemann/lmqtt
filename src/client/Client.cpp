@@ -123,7 +123,9 @@ int main(int argc, char *argv[]) {
         case PUBLISH_MODE:
             printf("publish mode\n");
             PublishCLIModeHandler *publishCliModeHandler = new PublishCLIModeHandler(argv, clientConnectionManager,
-                                                                                     connectPacketFactory, argc, clientSessionRepository,publishPacketFactory);
+                                                                                     connectPacketFactory, argc,
+                                                                                     clientSessionRepository,
+                                                                                     publishPacketFactory, nullptr);
 
             publishCliModeHandler->handle();
     };

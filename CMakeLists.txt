@@ -102,8 +102,8 @@ add_executable(lmqtt__server
         src/topic/ServerTopicRepository.h
         src/topic/Topic.cpp
         src/topic/Topic.h
-        src/topic/Message.cpp
-        src/topic/Message.h
+        src/topic/ServerMessageContainer.cpp
+        src/topic/ServerMessageContainer.h
         src/packets/UnsubscribePacket.cpp
         src/packets/UnsubscribePacket.h
         src/packets/parsers/UnsubscribePacketParser.cpp
@@ -123,7 +123,7 @@ add_executable(lmqtt__server
         src/packets/parsers/PublishPacketParser.h
         src/handlers/ServerPublishPacketHandler.cpp
         src/handlers/ServerPublishPacketHandler.h
-        src/Subscription.cpp src/Subscription.h src/packets/PublishAckPacket.cpp src/packets/PublishAckPacket.h src/packets/factories/PublishAckPacketFactory.cpp src/packets/factories/PublishAckPacketFactory.h)
+        src/Subscription.cpp src/Subscription.h src/packets/PublishAckPacket.cpp src/packets/PublishAckPacket.h src/packets/factories/PublishAckPacketFactory.cpp src/packets/factories/PublishAckPacketFactory.h src/ClientRetransmitMsgHandler.cpp src/ClientRetransmitMsgHandler.h)
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

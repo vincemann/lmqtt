@@ -113,7 +113,9 @@ void ServerConnectionManager::serveClients() {
         UnsubscribePacketHandler* unsubscribePacketHandler = new UnsubscribePacketHandler(packetIoManager,
                                                                                           serversClientInfoRepository,
                                                                                           connection, unsubAckPacketFactory , topicRepository);
-        ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,topicRepository);
+        ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,
+                                                                                                topicRepository,
+                                                                                                nullptr);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));

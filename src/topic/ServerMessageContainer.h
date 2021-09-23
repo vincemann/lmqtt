@@ -2,17 +2,17 @@
 // Created by vince on 14.08.21.
 //
 
-#ifndef LMQTT__SERVER_MESSAGE_H
-#define LMQTT__SERVER_MESSAGE_H
+#ifndef LMQTT__SERVER_SERVERMESSAGECONTAINER_H
+#define LMQTT__SERVER_SERVERMESSAGECONTAINER_H
 
 
-class Message {
+class ServerMessageContainer {
     unsigned long _id;
     unsigned long _unconsumed_user_count;
     char* _msg;
 public:
-    Message(unsigned long id, unsigned long unconsumedUserCount, char *msg);
-    Message(char *msg);
+    ServerMessageContainer(unsigned long id, unsigned long unconsumedUserCount, char *msg);
+    ServerMessageContainer(char *msg);
 
     unsigned long getId() const;
 
@@ -28,4 +28,4 @@ public:
 };
 
 
-#endif //LMQTT__SERVER_MESSAGE_H
+#endif //LMQTT__SERVER_SERVERMESSAGECONTAINER_H

@@ -10,7 +10,7 @@
 #include "PacketFactory.h"
 
 class PublishAckPacketFactory : public PacketFactory{
-
+public:
     PublishAckPacket create(unsigned long packetId);
 
 };

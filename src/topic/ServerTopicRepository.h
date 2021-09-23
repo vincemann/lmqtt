@@ -7,7 +7,7 @@
 
 
 #include <map>
-#include "Message.h"
+#include "ServerMessageContainer.h"
 #include "Topic.h"
 #include <vector>
 #include <FileDataManager.h>
@@ -27,15 +27,15 @@ public:
     void initTopicFiles(char* topicName);
     void saveMsg(char* topic_c, char* msg);
     // es kann duplikate geben, daher brauche ich das msg obj mit der msg id
-    void removeMsg(char* topic, Message* msg);
+    void removeMsg(char* topic, ServerMessageContainer* msg);
     Topic* loadTopic(char* topic);
     void saveTopic(Topic* topic);
 //    Message* loadMessage(Topic* topic, unsigned long msgId);
-    std::vector<Message*>* loadMessages(char* topicName);
-    std::vector<Message*>* consumeMessagesStartingFromId(char* topic, unsigned long msgId);
+    std::vector<ServerMessageContainer*>* loadMessages(char* topicName);
+    std::vector<ServerMessageContainer*>* consumeMessagesStartingFromId(char* topic, unsigned long msgId);
     void subscribe(char* topic, unsigned short qos);
     void unsubscribe(char* topic);
-    void replaceMessages(char* topic, std::vector<Message*>* msgs);
+    void replaceMessages(char* topic, std::vector<ServerMessageContainer*>* msgs);
 
     void setServerConnection(ServerConnection *serverConnection);
 };

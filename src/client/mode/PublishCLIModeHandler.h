@@ -8,15 +8,22 @@
 
 #include <PublishPacketFactory.h>
 #include "CLIModeHandler.h"
+#include "../../ClientRetransmitMsgHandler.h"
 
 class PublishCLIModeHandler : public CLIModeHandler{
     ClientsClientInfoRepository *clientSessionRepository;
     PublishPacketFactory *publishPacketFactory;
+    ClientRetransmitMsgHandler *retransmitMsgHandler;
+protected:
+    void retransmitMsgs();
+    void transmitMsg(ClientMessageContainer* msg);
 
 public:
     PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                           ConnectPacketFactory *connectPacketFactory, int argc,
-                          ClientsClientInfoRepository *clientSessionRepository, PublishPacketFactory *publishPacketFactory);
+                          ClientsClientInfoRepository *clientSessionRepository,
+                          PublishPacketFactory *publishPacketFactory,
+                          ClientRetransmitMsgHandler *retransmitMsgHandler);
 
     void handle() override;
 

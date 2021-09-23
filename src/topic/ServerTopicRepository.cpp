@@ -22,7 +22,7 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
     Topic *topic = loadTopic(topic_c);
     long msgId = topic->getLastMsgIdPublished() + 1;
     topic->setLastMsgIdPublished(msgId);
-    Message *message = new Message(msgId, topic->getSubscribedUserCount(), msg);
+    ServerMessageContainer *message = new ServerMessageContainer(msgId, topic->getSubscribedUserCount(), msg);
 
     using json = nlohmann::json;
     json j;
@@ -114,7 +114,7 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
  * ~/.lmqtt/server/topics/topicBar/topic
  */
 
-void ServerTopicRepository::replaceMessages(char *topic, std::vector<Message *> *msgs) {
+void ServerTopicRepository::replaceMessages(char *topic, std::vector<ServerMessageContainer *> *msgs) {
     using json = nlohmann::json;
     std::vector<json> jsonMsgs = std::vector<json>();
 
@@ -138,7 +138,7 @@ void ServerTopicRepository::replaceMessages(char *topic, std::vector<Message *> 
                   "messages", jsonMsgs_c);
 }
 
-void ServerTopicRepository::removeMsg(char *topic, Message *msg) {
+void ServerTopicRepository::removeMsg(char *topic, ServerMessageContainer *msg) {
 
 }
 
@@ -192,10 +192,10 @@ void ServerTopicRepository::saveTopic(Topic *topic) {
 //}
 
 
-std::vector<Message *> *ServerTopicRepository::consumeMessagesStartingFromId(char *topic, unsigned long lastConsumedMsgId) {
-    std::vector<Message *> *msgs = loadMessages(topic);
-    std::vector<Message *> *consumedMsgs = new std::vector<Message *>();
-    std::vector<Message *> *updatedMsgs = new std::vector<Message *>();
+std::vector<ServerMessageContainer *> *ServerTopicRepository::consumeMessagesStartingFromId(char *topic, unsigned long lastConsumedMsgId) {
+    std::vector<ServerMessageContainer *> *msgs = loadMessages(topic);
+    std::vector<ServerMessageContainer *> *consumedMsgs = new std::vector<ServerMessageContainer *>();
+    std::vector<ServerMessageContainer *> *updatedMsgs = new std::vector<ServerMessageContainer *>();
 
 
 //    std::vector<Message*>::iterator i = msgs->begin();
@@ -261,7 +261,7 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
 
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
-    std::vector<Message *> *msgs = loadMessages(topicName);
+    std::vector<ServerMessageContainer *> *msgs = loadMessages(topicName);
     for (const auto &msg : *msgs) {
         msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() + 1);
     }
@@ -302,7 +302,7 @@ void ServerTopicRepository::unsubscribe(char *topicName) {
 //        messages will be removed with dir
         return;
     }
-    std::vector<Message *> *msgs = loadMessages(topicName);
+    std::vector<ServerMessageContainer *> *msgs = loadMessages(topicName);
     for (const auto &msg : *msgs) {
         if (msg->getId() > lastConsumedMsgId) {
             msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
@@ -327,10 +327,10 @@ void ServerTopicRepository::initTopicFiles(char *topicName) {
     _fileDataManager->store(topicDir, "messages", "");
 }
 
-std::vector<Message *> *ServerTopicRepository::loadMessages(char *topicName) {
+std::vector<ServerMessageContainer *> *ServerTopicRepository::loadMessages(char *topicName) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
     char *msgsJson = _fileDataManager->find(topicDir, "messages");
-    std::vector<Message *> *msgs = new std::vector<Message *>();
+    std::vector<ServerMessageContainer *> *msgs = new std::vector<ServerMessageContainer *>();
 
     using json = nlohmann::json;
     if (strlen(msgsJson) == 0 ){
@@ -343,7 +343,7 @@ std::vector<Message *> *ServerTopicRepository::loadMessages(char *topicName) {
         unsigned long unconsumed_user_count = it.value().at("unconsumed_user_count").get<unsigned long>();
         std::string s = it.value().at("msg_value").get<std::string>();
         char *msgValue = Utils::toCharP(&s);
-        Message *msg_o = new Message(msgId, unconsumed_user_count, msgValue);
+        ServerMessageContainer *msg_o = new ServerMessageContainer(msgId, unconsumed_user_count, msgValue);
         msgs->push_back(msg_o);
     }
     return msgs;

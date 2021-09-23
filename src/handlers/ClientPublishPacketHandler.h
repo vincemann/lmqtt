@@ -11,10 +11,11 @@
 #include "../topic/ServerTopicRepository.h"
 
 class ClientPublishPacketHandler : public PacketHandler {
-    ServerTopicRepository *topicRepository;
+//    ServerTopicRepository *topicRepository;
+
 public:
     void handle(RawPacket *packet) override;
-    ClientPublishPacketHandler(PacketIOManager *packetIo, ServerTopicRepository *topicRepository);
+//    ClientPublishPacketHandler(PacketIOManager *packetIo, ServerTopicRepository *topicRepository);
 };
 
 

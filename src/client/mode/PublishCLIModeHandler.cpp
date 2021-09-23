@@ -10,6 +10,21 @@
 #include <stdio.h>
 #include <PublishPacket.h>
 
+
+void PublishCLIModeHandler::retransmitMsgs() {
+    std::vector<ClientMessageContainer> msgsToRetransmit = retransmitMsgHandler->getMsgsToRetransmit(1);
+    for (const auto &msg : msgsToRetransmit){
+        printf("retransmitting msg : %s with qos: %d\n",msg.getMsg(),1);
+
+
+    }
+
+}
+
+void PublishCLIModeHandler::transmitMsg(ClientMessageContainer *msg) {
+
+}
+
 void PublishCLIModeHandler::handle() {
     int opt;
 
@@ -61,6 +76,8 @@ void PublishCLIModeHandler::handle() {
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
         std::cout << "Successfully _connected to Server!" << "\n";
+        retransmitMsgs();
+        transmitMsg()
         PublishPacket* publishPacket = publishPacketFactory->create(qos, 0,topic,msg,0);
         _clientConnectionManager->_packetIoManager->sendPacket(publishPacket);
 
@@ -82,12 +99,19 @@ void PublishCLIModeHandler::handle() {
 PublishCLIModeHandler::PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                                              ConnectPacketFactory *connectPacketFactory, int argc,
                                              ClientsClientInfoRepository *clientSessionRepository,
-                                             PublishPacketFactory *publishPacketFactory) : CLIModeHandler(argv,
-                                                                                                          clientConnectionManager,
-                                                                                                          connectPacketFactory,
-                                                                                                          argc),
-                                                                                           clientSessionRepository(
+                                             PublishPacketFactory *publishPacketFactory,
+                                             ClientRetransmitMsgHandler *retransmitMsgHandler) : CLIModeHandler(argv,
+                                                                                                                clientConnectionManager,
+                                                                                                                connectPacketFactory,
+                                                                                                                argc),
+                                                                                                 clientSessionRepository(
                                                                                                    clientSessionRepository),
-                                                                                           publishPacketFactory(
-                                                                                                   publishPacketFactory) {}
+                                                                                                 publishPacketFactory(
+                                                                                                   publishPacketFactory),
+                                                                                                 retransmitMsgHandler(
+                                                                                                   retransmitMsgHandler) {}
+
+
+
+
 
