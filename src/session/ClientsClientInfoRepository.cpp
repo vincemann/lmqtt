@@ -59,7 +59,9 @@ ClientsClientInfo *ClientsClientInfoRepository::load(char *clientId) {
 
 ClientsClientInfoRepository::ClientsClientInfoRepository(FileDataManager *fileDataManager) : _fileDataManager(
         fileDataManager) {
-    this->_clientSessionsDir = "/.lmqtt/client/info";
+    char* dir = "/.lmqtt/client/info";
+    char *home = getenv("HOME");
+    this->_clientSessionsDir = Utils::smartstrcat(home,dir);
     Utils::createHomeDirectoryChain(_clientSessionsDir);
 }
 

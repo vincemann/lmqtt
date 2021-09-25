@@ -75,12 +75,18 @@ void Utils::createHomeDirectoryChain(char* dirChain) {
     char *partialDir;
 
     /* get the first currDir */
-    partialDir = strtok(strdup(dirChain), delim);
-    partialDir = strtok(NULL, delim);
+//    partialDir = strtok(strdup(dirChain), delim);
+//    partialDir = strtok(NULL, delim);
 
     /* walk through other tokens */
+    int index = 0;
     while(1) {
-        partialDir = strtok(NULL, delim);
+        if (index == 0){
+            partialDir = strtok(strdup(dirChain), delim);
+            index = 1;
+        } else{
+            partialDir = strtok(NULL, delim);
+        }
         if (partialDir == NULL){
             break;
         }

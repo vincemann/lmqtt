@@ -134,10 +134,10 @@ void ConnectPacketHandler::sendUnconsumedMessages() {
     for (const auto &subscription : *serversClientInfo->subscriptions){
         Topic* topic = topicRepository->loadTopic(subscription->getTopic());
         std::vector<ServerMessageContainer*>* messages=
-                topicRepository->consumeMessagesStartingFromId(topic->getTopic(),subscription->getLastMsgIdConsumed());
+                topicRepository->consumeMessagesStartingFromId(topic->getValue(), subscription->getLastMsgIdConsumed());
         for (const auto &msg : *messages){
             PublishPacket* publishPacket = publishPacketFactory->create(
-                    subscription->getQos(),0,topic->getTopic(),msg->getMsg(),0
+                    subscription->getQos(), 0, topic->getValue(), msg->getMsg(), 0
             );
             if ( subscription->getQos() == 0){
                 _packetIo->sendPacket(publishPacket);

@@ -5,7 +5,7 @@
 #include "Topic.h"
 
 Topic::Topic(unsigned long lastMsgIdPublished, unsigned long subscribedUserCount, char *topic) : _last_msg_id_published(
-        lastMsgIdPublished), _subscribed_users_count(subscribedUserCount), _topic(topic) {}
+        lastMsgIdPublished), _subscribed_users_count(subscribedUserCount), value(topic) {}
 
         long Topic::getLastMsgIdPublished() const {
     return _last_msg_id_published;
@@ -15,8 +15,8 @@ int Topic::getSubscribedUserCount() const {
     return _subscribed_users_count;
 }
 
-char *Topic::getTopic() const {
-    return _topic;
+char *Topic::getValue() const {
+    return value;
 }
 
 void Topic::setLastMsgIdPublished(long lastMsgIdPublished) {
@@ -27,7 +27,7 @@ void Topic::setSubscribedUsersCount(int subscribedUsersCount) {
     _subscribed_users_count = subscribedUsersCount;
 }
 
-Topic::Topic(char *topic) : _topic(topic){
+Topic::Topic(char *topic) : value(topic){
     _subscribed_users_count=0;
     _last_msg_id_published=0;
 }

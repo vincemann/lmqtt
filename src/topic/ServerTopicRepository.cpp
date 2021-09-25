@@ -29,7 +29,7 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
     if (strlen(msgsJson) == 0) {
         json jsonMsg = {
                         {"id", message->getId()},
-                        {"msg_value", message->getMsg()},
+                        {"value", message->getMsg()},
                         {"unconsumed_user_count", message->getUnconsumedUserCount()}
         };
         j = {jsonMsg};
@@ -37,7 +37,7 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
         j = json::parse(msgsJson);
         json jsonMsg = {
                 {"id", message->getId()},
-                {"msg_value", message->getMsg()},
+                {"value", message->getMsg()},
                 {"unconsumed_user_count", message->getUnconsumedUserCount()}
         };
         j.push_back(jsonMsg);
@@ -72,7 +72,7 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
 //    for (const auto &item : *msgs) {
 //        json jsonMsg = {"msg",
 //                        {"id", item->getId()},
-//                        {"msg_value", item->getMsg()},
+//                        {"value", item->getMsg()},
 //                        {"unconsumed_user_count", item->getUnconsumedUserCount()}
 //        };
 //        jsonMsgs.push_back(jsonMsg);
@@ -124,7 +124,7 @@ void ServerTopicRepository::replaceMessages(char *topic, std::vector<ServerMessa
     for (const auto &message : *msgs) {
         json jsonMsg = {
                 {"id", message->getId()},
-                {"msg_value", message->getMsg()},
+                {"value", message->getMsg()},
                 {"unconsumed_user_count", message->getUnconsumedUserCount()}
         };
         jsonMsgs.push_back(jsonMsg);
@@ -160,7 +160,7 @@ Topic *ServerTopicRepository::loadTopic(char *topic) {
     json j = json::parse(topicJson);
     long subscribedUserCount = j.at("subscribed_users_count").get<unsigned long>();
     long lastMsgIdPublished = j.at("last_msg_id_published").get<unsigned long>();
-    std::string s = j.at("topic_value").get<std::string>();
+    std::string s = j.at("value").get<std::string>();
     char *topicValue = Utils::toCharP(&s);
 
     delete pathToTopicDir;
@@ -174,9 +174,9 @@ void ServerTopicRepository::saveTopic(Topic *topic) {
     using json = nlohmann::json;
     json j;
 
-    char *topicDir = Utils::smartstrcat(_topicsDir, topic->getTopic());
+    char *topicDir = Utils::smartstrcat(_topicsDir, topic->getValue());
     j = {
-            {"topic_value",            topic->getTopic()},
+            {"topic_value", topic->getValue()},
             {"subscribed_users_count", topic->getSubscribedUserCount()},
             {"last_msg_id_published",  topic->getLastMsgIdPublished()}
     };
@@ -341,7 +341,7 @@ std::vector<ServerMessageContainer *> *ServerTopicRepository::loadMessages(char 
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
         unsigned long msgId = it.value().at("id").get<unsigned long>();
         unsigned long unconsumed_user_count = it.value().at("unconsumed_user_count").get<unsigned long>();
-        std::string s = it.value().at("msg_value").get<std::string>();
+        std::string s = it.value().at("value").get<std::string>();
         char *msgValue = Utils::toCharP(&s);
         ServerMessageContainer *msg_o = new ServerMessageContainer(msgId, unconsumed_user_count, msgValue);
         msgs->push_back(msg_o);
@@ -359,7 +359,9 @@ ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager,
                                                                                    serversClientInfoRepository(
                                                                                            serversClientInfoRepository),
                                                                                    serverConnection(serverConnection) {
-    _topicsDir = "/.lmqtt/server/topics/";
+    char* dir = "/.lmqtt/server/topics";
+    char *home = getenv("HOME");
+    this->_topicsDir = Utils::smartstrcat(home,dir);
     Utils::createHomeDirectoryChain(_topicsDir);
 }
 

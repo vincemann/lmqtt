@@ -10,6 +10,8 @@
 #include <UnsubAckPacketParser.h>
 #include <UnsubscribePacketFactory.h>
 #include <UnsubAckPacketHandler.h>
+#include <ClientPublishPacketHandler.h>
+#include <PublishPacketParser.h>
 
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/ConnectPacketFactory.h"
@@ -23,22 +25,9 @@
 #include "mode/UnsubscribeCLIModeHandler.h"
 #include "mode/PublishCLIModeHandler.h"
 
-//static void createSessionDirectories() {
-//    const char *targetDir = "/.lmqtt/client/info";
-//    char *home = getenv("HOME");
-//    char *dir = (char *) malloc(strlen(home) + strlen(targetDir) + 1);
-//    strcpy(dir, home);
-//    strcat(dir, "/.lmqtt");
-//    Utils::createDirectory(dir);
-//    strcat(dir, "/client");
-//    Utils::createDirectory(dir);
-//    strcat(dir, "/info");
-//    Utils::createDirectory(dir);
-//}
 
 
 int main(int argc, char *argv[]) {
-//    createSessionDirectories();
 
     // PARSERS
     std::map<PacketType, PacketParser *> parsers;
@@ -48,6 +37,9 @@ int main(int argc, char *argv[]) {
     parsers.insert(std::make_pair(SUBSCRIBE_ACK, subscribePacketParser));
     UnsubAckPacketParser *unsubAckPacketParser = new UnsubAckPacketParser;
     parsers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketParser));
+    PublishPacketParser* publishPacketParser = new PublishPacketParser();
+    parsers.insert(std::make_pair(PUBLISH, publishPacketParser));
+
 
     // FACTORIES
     ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
@@ -57,11 +49,13 @@ int main(int argc, char *argv[]) {
 
 
     FileDataManager *fileDataManager = new FileDataManager();
+    ClientTopicRepository* clientTopicRepository = new ClientTopicRepository(fileDataManager);
     ClientConnection *connection = new ClientConnection();
     ClientsClientInfoRepository *clientSessionRepository = new ClientsClientInfoRepository(fileDataManager);
 
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
+
 
 
 
@@ -73,11 +67,12 @@ int main(int argc, char *argv[]) {
     SubscribeAckPacketHandler* subscribeAckPacketHandler = new SubscribeAckPacketHandler(packetIoManager,connection);
 
     UnsubAckPacketHandler* unsubAckPacketHandler = new UnsubAckPacketHandler(packetIoManager);
-
+    ClientPublishPacketHandler* clientPublishPacketHandler = new ClientPublishPacketHandler(packetIoManager,clientTopicRepository);
 
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
     handlers.insert(std::make_pair(SUBSCRIBE_ACK, subscribeAckPacketHandler));
     handlers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketHandler));
+    handlers.insert(std::make_pair(PUBLISH, clientPublishPacketHandler));
 
 
 
@@ -108,7 +103,7 @@ int main(int argc, char *argv[]) {
                                                                                            clientSessionRepository,
                                                                                            subscribePacketFactory,
                                                                                            subscribeAckPacketHandler,
-                                                                                           nullptr);
+                                                                                           clientTopicRepository);
             subscribeCliModeHandler->handle();
             break;
         }

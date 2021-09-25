@@ -33,7 +33,7 @@ void ClientTopicRepository::saveMsg(char *topic, char *msg) {
     } else {
         j = json::parse(msgsJson);
         json jsonMsg = {
-                {"msg", clientMessageContainer->getMsg()}
+                {"msg", clientMessageContainer->getMsg()},
                 {"id", clientMessageContainer->getId()}
         };
         j.push_back(jsonMsg);
@@ -46,7 +46,9 @@ void ClientTopicRepository::saveMsg(char *topic, char *msg) {
 }
 
 ClientTopicRepository::ClientTopicRepository(FileDataManager *fileDataManager) : fileDataManager(fileDataManager) {
-    this->_topicsDir = "/.lmqtt/client/topics/";
+    char* dir = "/.lmqtt/client/topics";
+    char *home = getenv("HOME");
+    this->_topicsDir = Utils::smartstrcat(home,dir);
     Utils::createHomeDirectoryChain(_topicsDir);
 }
 

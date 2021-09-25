@@ -12,7 +12,7 @@ class Topic {
 public:
     unsigned long _last_msg_id_published;
     unsigned long _subscribed_users_count;
-    char *_topic;
+    char *value;
     Topic(unsigned long lastMsgIdPublished, unsigned long subscribedUserCount, char *topic);
     Topic(char* topic);
 
@@ -20,7 +20,7 @@ public:
 
     int getSubscribedUserCount() const;
 
-    char *getTopic() const;
+    char *getValue() const;
 
     void setLastMsgIdPublished(long lastMsgIdPublished);
 
