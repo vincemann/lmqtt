@@ -9,10 +9,13 @@
 class ClientMessageContainer {
 private:
     char *msg;
+    unsigned long id;
 public:
     ClientMessageContainer(char *msg);
 
     char *getMsg() const;
+
+    unsigned long getId() const;
 
     virtual ~ClientMessageContainer();
 

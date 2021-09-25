@@ -16,7 +16,6 @@ class PublishCLIModeHandler : public CLIModeHandler{
     ClientRetransmitMsgHandler *retransmitMsgHandler;
 protected:
     void retransmitMsgs();
-    void transmitMsg(ClientMessageContainer* msg);
 
 public:
     PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,

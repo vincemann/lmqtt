@@ -31,7 +31,7 @@ void ClientConnectionManager::attemptConnection(RawPacket *connectPacket) {
     }
     _connectAckPacketHandler->handle(packet);
     std::cout << "connack packet handled without errors" << "\n";
-
+    std::cout << "Successfully _connected to Server!" << "\n";
 }
 
 int ClientConnectionManager::connectToServer() {

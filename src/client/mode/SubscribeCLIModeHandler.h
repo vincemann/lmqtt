@@ -9,10 +9,12 @@
 #include <SubscribePacketFactory.h>
 #include <SubscribeAckPacketHandler.h>
 #include "CLIModeHandler.h"
+#include "../../topic/ClientTopicRepository.h"
 
 class SubscribeCLIModeHandler : public CLIModeHandler{
 private:
     ClientsClientInfoRepository *clientSessionRepository;
+    ClientTopicRepository *clientTopicRepository;
     SubscribePacketFactory *subscribePacketFactory;
     SubscribeAckPacketHandler* subscribeAckPacketHandler;
 
@@ -21,7 +23,8 @@ public:
                             ConnectPacketFactory *connectPacketFactory, int argc,
                             ClientsClientInfoRepository *clientSessionRepository,
                             SubscribePacketFactory *subscribePacketFactory,
-                            SubscribeAckPacketHandler* subscribeAckPacketHandler);
+                            SubscribeAckPacketHandler *subscribeAckPacketHandler,
+                            ClientTopicRepository *clientTopicRepository);
 
     void handle() override;
 };

@@ -655,6 +655,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientMessageContainer.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientTopicRepository.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientTopicRepository.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ServerMessageContainer.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>

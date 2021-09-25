@@ -21,9 +21,6 @@ void PublishCLIModeHandler::retransmitMsgs() {
 
 }
 
-void PublishCLIModeHandler::transmitMsg(ClientMessageContainer *msg) {
-
-}
 
 void PublishCLIModeHandler::handle() {
     int opt;
@@ -75,14 +72,12 @@ void PublishCLIModeHandler::handle() {
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-        std::cout << "Successfully _connected to Server!" << "\n";
-        retransmitMsgs();
-        transmitMsg()
+//        retransmitMsgs();
         PublishPacket* publishPacket = publishPacketFactory->create(qos, 0,topic,msg,0);
         _clientConnectionManager->_packetIoManager->sendPacket(publishPacket);
 
         if (qos == 0 ){
-//            _clientConnectionManager->closeConnection();
+            _clientConnectionManager->closeConnection();
         } else{
             // wait for puback/pubrecv
 //        RawPacket* pubResponsePackage = _clientConnectionManager->_packetIoManager->readPacket();

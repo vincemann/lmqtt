@@ -13,3 +13,7 @@ char *ClientMessageContainer::getMsg() const {
 ClientMessageContainer::~ClientMessageContainer() {
     delete msg;
 }
+
+unsigned long ClientMessageContainer::getId() const {
+    return id;
+}

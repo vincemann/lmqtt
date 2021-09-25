@@ -57,7 +57,8 @@ void SubscribeCLIModeHandler::handle() {
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-        std::cout << "Successfully _connected to Server!" << "\n";
+        clientTopicRepository->saveTopic(topic);
+
         srand(time(NULL));   // Initialization, should only be called once.
         unsigned short packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
         printf("packet id:%d\n",packetId);
@@ -78,6 +79,10 @@ void SubscribeCLIModeHandler::handle() {
 SubscribeCLIModeHandler::SubscribeCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                                                  ConnectPacketFactory *connectPacketFactory, int argc,
                                                  ClientsClientInfoRepository *clientSessionRepository,
-                                                 SubscribePacketFactory *subscribePacketFactory, SubscribeAckPacketHandler* subscribeAckPacketHandler) : CLIModeHandler(
+                                                 SubscribePacketFactory *subscribePacketFactory,
+                                                 SubscribeAckPacketHandler *subscribeAckPacketHandler,
+                                                 ClientTopicRepository *clientTopicRepository) : CLIModeHandler(
         argv, clientConnectionManager, connectPacketFactory, argc), clientSessionRepository(clientSessionRepository),
-        subscribePacketFactory(subscribePacketFactory), subscribeAckPacketHandler(subscribeAckPacketHandler) {}
+                                                                                                 subscribePacketFactory(subscribePacketFactory), subscribeAckPacketHandler(subscribeAckPacketHandler),
+                                                                                                 clientTopicRepository(
+                                                                                                         clientTopicRepository) {}

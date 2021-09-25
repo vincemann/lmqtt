@@ -11,6 +11,9 @@
 #include "CLIMode.h"
 #include "ConnectCLIModeHandler.h"
 
+
+
+
 void ConnectCLIModeHandler::handle() {
     int opt;
 
@@ -41,8 +44,11 @@ void ConnectCLIModeHandler::handle() {
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-        std::cout << "Successfully _connected to Server!" << "\n";
-        _clientConnectionManager->closeConnection();
+        // wait for publish packets & disconnect packet from server
+        _clientConnectionManager->handleIncomingPackets();
+
+
+//        _clientConnectionManager->closeConnection();
         exit(0);
     } catch (const std::exception &e) {
         std::cout << "exception occurred while creating _connection with server:" << "\n";
@@ -59,3 +65,5 @@ ConnectCLIModeHandler::ConnectCLIModeHandler(char **argv, ClientConnectionManage
  {
 
  }
+
+

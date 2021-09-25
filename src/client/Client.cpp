@@ -106,7 +106,9 @@ int main(int argc, char *argv[]) {
                                                                                            clientConnectionManager,
                                                                                            connectPacketFactory, argc,
                                                                                            clientSessionRepository,
-                                                                                           subscribePacketFactory,subscribeAckPacketHandler);
+                                                                                           subscribePacketFactory,
+                                                                                           subscribeAckPacketHandler,
+                                                                                           nullptr);
             subscribeCliModeHandler->handle();
             break;
         }
