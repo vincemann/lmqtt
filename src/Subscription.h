@@ -19,6 +19,9 @@ public:
     unsigned long getLastMsgIdConsumed() const;
 
     unsigned short getQos() const;
+
+
+    void setLastMsgIdConsumed(unsigned long lastMsgIdConsumed);
 };
 
 

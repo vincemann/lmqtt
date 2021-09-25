@@ -79,9 +79,7 @@ ServersClientInfo *ServersClientInfoRepository::load(char *clientId) {
 
 ServersClientInfoRepository::ServersClientInfoRepository(FileDataManager *fileDataManager) : _fileDataManager(
         fileDataManager) {
-    const char* targetDir = "/.lmqtt/server/client-info";
-    char* home = getenv("HOME");
-    serversClientInfoDir = Utils::smartstrcat(home, targetDir);
+    this->serversClientInfoDir = "/.lmqtt/server/client-info";
     Utils::createHomeDirectoryChain(serversClientInfoDir);
 }
 

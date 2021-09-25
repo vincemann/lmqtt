@@ -104,6 +104,14 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     initServerSession(cleanSession, clientId);
     connAck(0x0, cleanSession);
 
+    if (packet->getCleanSession() == 0){
+        // sending all updates
+        sendUnconsumedMessages();
+    } else{
+        // todo impl removal
+    }
+
+
 
 }
 
@@ -114,8 +122,33 @@ ConnectAckPacketFactory *ConnectPacketHandler::getConnectAckPacketFactory() cons
 
 ConnectPacketHandler::ConnectPacketHandler(ServerConnection *connectionSession, PacketIOManager *packetIo,
                                            ConnectAckPacketFactory *connectAckPacketFactory,
-                                           ServersClientInfoRepository *sessionRepository) : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
-                                                   sessionRepository), serverConnection(connectionSession) {}
+                                           ServersClientInfoRepository *sessionRepository,
+                                           ServerTopicRepository *topicRepository,
+                                           PublishPacketFactory *publishPacketFactory)
+        : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
+                                                   sessionRepository), serverConnection(connectionSession),
+          topicRepository(topicRepository), publishPacketFactory(publishPacketFactory) {}
+
+void ConnectPacketHandler::sendUnconsumedMessages() {
+    ServersClientInfo* serversClientInfo = serverConnection->serversClientInfo;
+    for (const auto &subscription : *serversClientInfo->subscriptions){
+        Topic* topic = topicRepository->loadTopic(subscription->getTopic());
+        std::vector<ServerMessageContainer*>* messages=
+                topicRepository->consumeMessagesStartingFromId(topic->getTopic(),subscription->getLastMsgIdConsumed());
+        for (const auto &msg : *messages){
+            PublishPacket* publishPacket = publishPacketFactory->create(
+                    subscription->getQos(),0,topic->getTopic(),msg->getMsg(),0
+            );
+            if ( subscription->getQos() == 0){
+                _packetIo->sendPacket(publishPacket);
+                subscription->setLastMsgIdConsumed(subscription->getLastMsgIdConsumed() +1 );
+            } else if(subscription->getQos() == 1){
+                // todo impl with Retransmission Handler
+                // put logic for subscription update into puback handler
+            }
+        }
+    }
+}
 
 
 

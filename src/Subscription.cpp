@@ -20,3 +20,7 @@ unsigned long Subscription::getLastMsgIdConsumed() const {
 unsigned short Subscription::getQos() const {
     return qos;
 }
+
+void Subscription::setLastMsgIdConsumed(unsigned long lastMsgIdConsumed) {
+    last_msg_id_consumed = lastMsgIdConsumed;
+}

@@ -1,11 +1,3 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/socket.h>
-#include <stdlib.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <iostream>
-#include <fcntl.h>
 #include <DisconnectPacketParser.h>
 #include <SubscribePacketParser.h>
 #include <SubAckPacketFactory.h>
@@ -20,8 +12,6 @@
 #include "packets/parsers/PacketParser.h"
 #include "packets/parsers/ConnectPacketParser.h"
 #include "handlers/ConnectPacketHandler.h"
-#include "handlers/PacketHandler.h"
-#include "con/ServerConnection.h"
 #include "util/Utils.h"
 #include "files/FileDataManager.h"
 #include "ServerConnectionManager.h"
@@ -71,10 +61,11 @@ int main(int argc, char const *argv[])
 
 //    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager);
 
+// todo write python test
     // CREATE DUMMY DATA
-    char* testTopic = "jeffseid";
-
-    topicRepository->saveTopic(new Topic(testTopic));
+//    char* testTopic = "jeffseid";
+//
+//    topicRepository->saveTopic(new Topic(testTopic));
 //    char* testMessage = "jeff seid trains biceps in mecca";
 //    char* testMessage2 = "jeff seid trains biceps in mecca2";
 //    char* testMessage3 = "jeff seid trains biceps in mecca3";
@@ -82,17 +73,17 @@ int main(int argc, char const *argv[])
 //    topicRepository->saveMsg(testTopic, testMessage2);
 //    topicRepository->saveMsg(testTopic, testMessage3);
 //
-//    std::vector<Message *>* msgs = topicRepository->loadMessages(testTopic);
+//    std::vector<ServerMessageContainer *>* msgs = topicRepository->loadMessages(testTopic);
 //
-//    topicRepository->subscribe(testTopic);
-//    topicRepository->subscribe(testTopic);
+//    topicRepository->subscribe(testTopic,0);
+//    topicRepository->subscribe(testTopic,0);
 //
-//    std::vector<Message *>* msgsAfterSub = topicRepository->loadMessages(testTopic);
+//    std::vector<ServerMessageContainer* *>* msgsAfterSub = topicRepository->loadMessages(testTopic);
 //
 //
-//    std::vector<Message *>* consumedMsgs = topicRepository->consumeMessagesStartingFromId(testTopic,1);
-//    std::vector<Message *>* consumedMsgs2 = topicRepository->consumeMessagesStartingFromId(testTopic,1);
-//
+//    std::vector<ServerMessageContainer *>* consumedMsgs = topicRepository->consumeMessagesStartingFromId(testTopic,1);
+//    std::vector<ServerMessageContainer *>* consumedMsgs2 = topicRepository->consumeMessagesStartingFromId(testTopic,1);
+
 ////    topicRepository->unsubscribe(testTopic,1);
 ////    topicRepository->unsubscribe(testTopic,1);
 //

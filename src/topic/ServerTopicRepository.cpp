@@ -359,10 +359,7 @@ ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager,
                                                                                    serversClientInfoRepository(
                                                                                            serversClientInfoRepository),
                                                                                    serverConnection(serverConnection) {
-    //    _topics = new std::map<Topic *, std::vector<Message *> *>();
-//    const char *targetDir = "/.lmqtt/server/topics/";
     _topicsDir = "/.lmqtt/server/topics/";
-//    char *home = getenv("HOME");
     Utils::createHomeDirectoryChain(_topicsDir);
 }
 

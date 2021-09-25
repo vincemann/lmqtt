@@ -7,25 +7,33 @@
 
 #include <ServersClientInfoRepository.h>
 #include <ServerConnection.h>
+#include <PublishPacketFactory.h>
 #include "PacketHandler.h"
 #include "../packets/ConnectPacket.h"
 #include "../con/ServerConnection.h"
 #include "../packets/factories/ConnectAckPacketFactory.h"
 #include "../files/FileDataManager.h"
 #include "../session/ServersClientInfo.h"
+#include "../topic/ServerTopicRepository.h"
 
 class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
 protected:
 ConnectAckPacketFactory* _connectAckPacketFactory;
 ServersClientInfoRepository* _sessionRepository;
 ServerConnection* serverConnection;
+ServerTopicRepository* topicRepository;
+PublishPacketFactory* publishPacketFactory;
 void initServerSession(unsigned char cleanSession, char* clientId);
 void connAck(int errorCode, unsigned char cleanSessionFlag);
+void sendUnconsumedMessages();
 
 
 public:
     ConnectPacketHandler(ServerConnection *connectionSession, PacketIOManager *packetIo,
-                         ConnectAckPacketFactory *connectAckPacketFactory, ServersClientInfoRepository *sessionRepository);
+                         ConnectAckPacketFactory *connectAckPacketFactory,
+                         ServersClientInfoRepository *sessionRepository,
+                         ServerTopicRepository *topicRepository,
+                         PublishPacketFactory *publishPacketFactory);
 
     void handle(RawPacket *rawPacket) override;
     ConnectAckPacketFactory *getConnectAckPacketFactory() const;

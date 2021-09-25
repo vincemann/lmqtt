@@ -102,7 +102,10 @@ void ServerConnectionManager::serveClients() {
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
         ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNACK));
-        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager, connectAckPacketFactory, serversClientInfoRepository);
+        ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager,
+                                                                              connectAckPacketFactory,
+                                                                              serversClientInfoRepository, nullptr,
+                                                                              nullptr);
 
         DisconnectPacketHandler* disconnectPacketHandler = new DisconnectPacketHandler(packetIoManager, this);
 
