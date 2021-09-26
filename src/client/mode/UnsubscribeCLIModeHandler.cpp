@@ -44,7 +44,7 @@ void UnsubscribeCLIModeHandler::handle() {
         printf("You have to call connect to init session before calling subscribe");
         exit(1);
     }
-    RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientsClientInfo->_username, clientsClientInfo->_password);
+    RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientsClientInfo->_username, clientsClientInfo->_password,0);
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);

@@ -142,15 +142,18 @@ void ServerTopicRepository::removeMsg(char *topic, ServerMessageContainer *msg) 
 
 }
 
+bool ServerTopicRepository::topicExists(char *topic) {
+    return _fileDataManager->exists(_topicsDir,topic);
+}
 
 
-// expects topic name
+// expects topic name, returns meta data topic file content
 Topic *ServerTopicRepository::loadTopic(char *topic) {
     using json = nlohmann::json;
 
     char *pathToTopicDir = Utils::smartstrcat(_topicsDir, topic);
     //    check file existence
-    unsigned char fileExists = _fileDataManager->exists(pathToTopicDir, "topic");
+    bool fileExists = _fileDataManager->exists(pathToTopicDir, "topic");
     if (fileExists == 0) {
         throw IllegalSessionStateException("init topic file was not created");
     }
@@ -176,7 +179,7 @@ void ServerTopicRepository::saveTopic(Topic *topic) {
 
     char *topicDir = Utils::smartstrcat(_topicsDir, topic->getValue());
     j = {
-            {"topic_value", topic->getValue()},
+            {"value", topic->getValue()},
             {"subscribed_users_count", topic->getSubscribedUserCount()},
             {"last_msg_id_published",  topic->getLastMsgIdPublished()}
     };
@@ -270,7 +273,8 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
 
 
     // update client info
-    Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished(),qos);
+    // todo is -1 correct here? should be, bc we always start at 1 with last msg id published
+    Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished()-1,qos);
     clientInfo->subscriptions->push_back(subscription);
     serversClientInfoRepository->save(clientInfo);
 }
@@ -316,7 +320,7 @@ void ServerTopicRepository::unsubscribe(char *topicName) {
 
 void ServerTopicRepository::initTopicFiles(char *topicName) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
-    unsigned char topicExists = _fileDataManager->exists(_topicsDir, topicName);
+    bool topicExists = _fileDataManager->exists(_topicsDir, topicName);
     if (topicExists) {
         delete topicDir;
         return;
@@ -359,9 +363,7 @@ ServerTopicRepository::ServerTopicRepository(FileDataManager *fileDataManager,
                                                                                    serversClientInfoRepository(
                                                                                            serversClientInfoRepository),
                                                                                    serverConnection(serverConnection) {
-    char* dir = "/.lmqtt/server/topics";
-    char *home = getenv("HOME");
-    this->_topicsDir = Utils::smartstrcat(home,dir);
-    Utils::createHomeDirectoryChain(_topicsDir);
+    char* dir = "/.lmqtt/server/topics/";
+    this->_topicsDir = Utils::createHomeDirectoryChain(dir);
 }
 

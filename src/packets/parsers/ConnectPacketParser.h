@@ -12,8 +12,8 @@
 
 class ConnectPacketParser : public PacketParser/*<ConnectPacket>*/{
 public:
-//    ConnectPacket* parse(RawPacket* pRawPacket);
-    RawPacket* parse(RawPacket* pRawPacket);
+//    ConnectPacket* parse(RawPacket* rawPacket);
+    RawPacket* parse(RawPacket* rawPacket);
 };
 
 

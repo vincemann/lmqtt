@@ -12,6 +12,8 @@
 #include <UnsubAckPacketHandler.h>
 #include <ClientPublishPacketHandler.h>
 #include <PublishPacketParser.h>
+#include <DisconnectPacketParser.h>
+#include <ClientDisconnectPacketHandler.h>
 
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/ConnectPacketFactory.h"
@@ -39,6 +41,8 @@ int main(int argc, char *argv[]) {
     parsers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketParser));
     PublishPacketParser* publishPacketParser = new PublishPacketParser();
     parsers.insert(std::make_pair(PUBLISH, publishPacketParser));
+    DisconnectPacketParser* disconnectPacketParser = new DisconnectPacketParser();
+    parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
 
 
     // FACTORIES
@@ -55,7 +59,6 @@ int main(int argc, char *argv[]) {
 
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
-
 
 
 
@@ -80,6 +83,8 @@ int main(int argc, char *argv[]) {
     ClientConnectionManager *clientConnectionManager = new ClientConnectionManager(packetIoManager,
                                                                                    connectAckPacketHandler, connection,
                                                                                    &parsers,&handlers);
+    ClientDisconnectPacketHandler* clientDisconnectPacketHandler = new ClientDisconnectPacketHandler(packetIoManager,clientConnectionManager);
+    handlers.insert(std::make_pair(DISCONNECT, clientDisconnectPacketHandler));
 
     // MODE HANDLERS
     CLIMode mode = CLIModes::findCliMode(argv[1]);

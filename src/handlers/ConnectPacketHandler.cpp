@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <DisconnectPacket.h>
 
 
 #include "../con/Connection.h"
@@ -47,9 +48,13 @@ void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * 
 
 void ConnectPacketHandler::handle(RawPacket *rawPacket) {
     ConnectPacket* packet = static_cast<ConnectPacket*>(rawPacket);
-    assertSpecificFlagsZero(packet);
-
     printf("handling connect rawPacket:\n");
+
+    if (rawPacket->getSpecificFlags() > 1 || rawPacket->getSpecificFlags() < 0) {
+        // all specific flags must be 0
+        throw PacketParsingException("invalid specific flags, can be either 0 or 1 and indicates consume flag");
+    }
+
     if (serverConnection->_packetsReceived->size() != 1){
         throw IllegalSessionStateException("received more than one Connect Packet");
     }
@@ -106,7 +111,10 @@ void ConnectPacketHandler::handle(RawPacket *rawPacket) {
 
     if (packet->getCleanSession() == 0){
         // sending all updates
-        sendUnconsumedMessages();
+        if (packet->getConsume()){
+            sendUnconsumedMessages();
+            _packetIo->sendPacket(new DisconnectPacket());
+        }
     } else{
         // todo impl removal
     }

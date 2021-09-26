@@ -18,7 +18,7 @@ static char* combinePaths(const char* s1,const char* s2){
 public:
     char* find(const char* startDir, const char* name);
     int store(const char* targetDir,const char* name,const char* content);
-    unsigned char exists(char* dir, char* file);
+    bool exists(char* dir, char* file);
     void remove(char* file);
 };
 

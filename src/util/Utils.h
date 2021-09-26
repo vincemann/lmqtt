@@ -22,7 +22,7 @@ namespace Utils {
     char* formatToCharP(const char* format,const char* arg);
     void* vec_to_array(std::vector<void*> * vector);
     char* vec_to_deref_array(std::vector<char*> * vector);
-    void createHomeDirectoryChain(char* dirChain);
+    char* createHomeDirectoryChain(char* dirChain,bool del=false);
     char* smartstrcat(const char* s1,const char* s2);
 };
 

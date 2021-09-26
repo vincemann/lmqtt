@@ -14,6 +14,7 @@
 //template <class P>
 class PacketHandler{
 protected:
+    // todo remove?
     PacketIOManager* _packetIo;
     void assertSpecificFlagsZero(RawPacket* packet);
 public:

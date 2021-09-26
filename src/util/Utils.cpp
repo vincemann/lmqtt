@@ -65,7 +65,7 @@ void Utils::printChars(unsigned char *ptr, int size)
 
 
 // always starts creating dirs from home
-void Utils::createHomeDirectoryChain(char* dirChain) {
+char* Utils::createHomeDirectoryChain(char* dirChain,bool del) {
 
     char *home = getenv("HOME");
     char *dir = (char *) malloc(strlen(home) + strlen(dirChain) + 1);
@@ -96,8 +96,14 @@ void Utils::createHomeDirectoryChain(char* dirChain) {
         strcat(dir, partialDir);
         Utils::createDirectory(dir);
     }
-
-    delete dir;
+    if(del){
+        delete dir;
+        return 0;
+    }else{
+        char* finalDir = Utils::smartstrcat(dir,"/");
+        delete dir;
+        return finalDir;
+    }
 }
 
 

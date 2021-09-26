@@ -13,10 +13,10 @@ public:
     ConnectPacket *create(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
                           unsigned char willRetain,
                           char *clientId, char *willTopic, char *willMsg, char *username,
-                          char *password);
+                          char *password,unsigned char consume);
     ConnectPacket *create(unsigned char cleanSession,char *clientId,
                           char *username,
-                          char *password);
+                          char *password,unsigned char consume);
 };
 
 

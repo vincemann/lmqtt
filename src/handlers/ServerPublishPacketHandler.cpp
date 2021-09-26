@@ -13,8 +13,10 @@ void ServerPublishPacketHandler::handle(RawPacket *packet) {
     if (publishPacket->getQos() > 2){
         throw InvalidPacketException("qos must be between 0 and 2");
     }
-    Topic* topic = topicRepository->loadTopic(publishPacket->getTopic());
-    if (topic == 0){
+
+    bool topicExists = topicRepository->topicExists(publishPacket->getTopic());
+    if (topicExists == 0){
+        printf("topic %s does not exist yet, creating..\n", publishPacket->getTopic());
         topicRepository->saveTopic(new Topic(publishPacket->getTopic()));
     }
     topicRepository->saveMsg(publishPacket->getTopic(), publishPacket->getMsg());

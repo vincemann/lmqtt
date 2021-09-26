@@ -53,7 +53,7 @@ void SubscribeCLIModeHandler::handle() {
     }
 
 
-    RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientSession->_username, clientSession->_password);
+    RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientSession->_username, clientSession->_password,0);
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);

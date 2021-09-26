@@ -14,7 +14,7 @@ public:
                   unsigned char reservedBit, unsigned char cleanSession, unsigned char willFlag,
                   unsigned char willQos, unsigned char willRetain, unsigned char passwordFlag,
                   unsigned char usernameFlag, unsigned short keepAlive, char *clientId, char *willTopic,
-                  char *willMsg, char *username, char *password);
+                  char *willMsg, char *username, char *password, unsigned char consume);
 
     char *getProtocolName() const;
 
@@ -46,6 +46,8 @@ public:
 
     char *getPassword() const;
 
+    unsigned char getConsume() const;
+
 //    ~ConnectPacket();
 
 
@@ -59,6 +61,7 @@ private:
     unsigned char willRetain;
     unsigned char passwordFlag;
     unsigned char usernameFlag;
+    unsigned char consume;
     unsigned short keepAlive;
     char *clientId;
     char *willTopic;

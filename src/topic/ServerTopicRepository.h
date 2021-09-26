@@ -38,6 +38,8 @@ public:
     void replaceMessages(char* topic, std::vector<ServerMessageContainer*>* msgs);
 
     void setServerConnection(ServerConnection *serverConnection);
+
+    bool topicExists(char *topic);
 };
 
 

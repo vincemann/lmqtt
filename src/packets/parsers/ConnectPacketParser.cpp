@@ -11,13 +11,14 @@
 #include <string.h>
 
 
-RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
+RawPacket *ConnectPacketParser::parse(RawPacket *rawPacket) {
     // todo move to handler
-    if (pRawPacket->getSpecificFlags() != 0) {
+    if (rawPacket->getSpecificFlags() > 1 || rawPacket->getSpecificFlags() < 0) {
         // all specific flags must be 0
-        throw PacketParsingException("invalid specific flags");
+        throw PacketParsingException("invalid specific flags, can be either 0 or 1");
     }
-    unsigned char *data = pRawPacket->getData();
+    unsigned char consume = rawPacket->getSpecificFlags();
+    unsigned char *data = rawPacket->getData();
     // extract variable header
     char *protocolName = extractUtf8Payload(&data, false);
     printf("protocolName:%s\n", protocolName);
@@ -75,8 +76,8 @@ RawPacket *ConnectPacketParser::parse(RawPacket *pRawPacket) {
     }
 
 
-    return new ConnectPacket(pRawPacket, protocolName, protocolLevel, reservedBit,
+    return new ConnectPacket(rawPacket, protocolName, protocolLevel, reservedBit,
                              cleanSessionFlag, willFlag, willQos,
                              willRetainFlag, passwordFlag, usernameFlag, keepAlive,
-                             clientId, willTopic, willMsg, username, password);
+                             clientId, willTopic, willMsg, username, password, consume);
 }

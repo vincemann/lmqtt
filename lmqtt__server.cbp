@@ -285,6 +285,12 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientDisconnectPacketHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientDisconnectPacketHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishAckPacketHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -311,12 +317,6 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/DisconnectPacketHandler.cpp">
-			<Option target="lmqtt__server"/>
-		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/DisconnectPacketHandler.h">
-			<Option target="lmqtt__server"/>
-		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PacketHandler.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
@@ -324,6 +324,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PacketHandler.h">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ServerDisconnectPacketHandler.cpp">
+			<Option target="lmqtt__server"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ServerDisconnectPacketHandler.h">
+			<Option target="lmqtt__server"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ServerPublishPacketHandler.cpp">
 			<Option target="lmqtt__server"/>
@@ -567,9 +573,11 @@
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/DisconnectPacketParser.cpp">
 			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/DisconnectPacketParser.h">
 			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PacketParser.cpp">
 			<Option target="lmqtt__server"/>

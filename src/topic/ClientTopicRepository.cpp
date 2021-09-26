@@ -11,8 +11,9 @@
 void ClientTopicRepository::saveTopic(char *topic) {
     // store dir for topic
     char *topicsDir = Utils::smartstrcat(_topicsDir, topic);
-    Utils::createHomeDirectoryChain(topicsDir);
+    Utils::createDirectory(topicsDir);
     fileDataManager->store(topicsDir, "messages", "");
+    delete topicsDir;
 }
 
 void ClientTopicRepository::saveMsg(char *topic, char *msg) {
@@ -46,10 +47,8 @@ void ClientTopicRepository::saveMsg(char *topic, char *msg) {
 }
 
 ClientTopicRepository::ClientTopicRepository(FileDataManager *fileDataManager) : fileDataManager(fileDataManager) {
-    char* dir = "/.lmqtt/client/topics";
-    char *home = getenv("HOME");
-    this->_topicsDir = Utils::smartstrcat(home,dir);
-    Utils::createHomeDirectoryChain(_topicsDir);
+    char* dir = "/.lmqtt/client/topics/";
+    this->_topicsDir = Utils::createHomeDirectoryChain(dir);
 }
 
 bool ClientTopicRepository::topicExists(char* topic) {

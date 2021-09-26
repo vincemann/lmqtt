@@ -14,7 +14,7 @@ ConnectPacket::ConnectPacket(RawPacket *rawPacket, char *protocolName, unsigned 
                              unsigned char reservedBit, unsigned char cleanSession, unsigned char willFlag,
                              unsigned char willQos, unsigned char willRetain, unsigned char passwordFlag,
                              unsigned char usernameFlag, unsigned short keepAlive, char *clientId, char *willTopic,
-                             char *willMsg, char *username, char *password)
+                             char *willMsg, char *username, char *password, unsigned char consume)
         : RawPacket(rawPacket),
           protocolName(protocolName),
           protocolLevel(protocolLevel),
@@ -26,7 +26,7 @@ ConnectPacket::ConnectPacket(RawPacket *rawPacket, char *protocolName, unsigned 
           usernameFlag(usernameFlag),
           keepAlive(keepAlive), clientId(clientId),
           willTopic(willTopic), willMsg(willMsg),
-          username(username), password(password) {}
+          username(username), password(password), consume(consume) {}
 
 char *ConnectPacket::getProtocolName() const {
     return protocolName;
@@ -86,6 +86,10 @@ char *ConnectPacket::getUsername() const {
 
 char *ConnectPacket::getPassword() const {
     return password;
+}
+
+unsigned char ConnectPacket::getConsume() const {
+    return consume;
 }
 
 

@@ -101,7 +101,7 @@ char *FileDataManager::find(const char *startDir,const char *name)
     return 0;
 }
 
-unsigned char FileDataManager::exists(char* dir, char* file){
+bool FileDataManager::exists(char* dir, char* file){
     char* filePath = FileDataManager::combinePaths(dir,file);
     struct stat st = {0};
 

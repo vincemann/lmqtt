@@ -86,8 +86,8 @@ add_executable(lmqtt__server
         src/packets/DisconnectPacket.h
         src/packets/parsers/DisconnectPacketParser.cpp
         src/packets/parsers/DisconnectPacketParser.h
-        src/handlers/DisconnectPacketHandler.cpp
-        src/handlers/DisconnectPacketHandler.h
+        src/handlers/ServerDisconnectPacketHandler.cpp
+        src/handlers/ServerDisconnectPacketHandler.h
         src/packets/parsers/SubscribePacketParser.h
         src/packets/parsers/SubscribePacketParser.cpp
         src/packets/SubscribePacket.h

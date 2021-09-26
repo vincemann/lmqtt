@@ -10,7 +10,7 @@
 #include <string.h>
 #include <iostream>
 #include <fcntl.h>
-#include <DisconnectPacketHandler.h>
+#include <ServerDisconnectPacketHandler.h>
 #include <SubscribePacketHandler.h>
 #include <UnsubscribePacketFactory.h>
 #include <UnsubAckPacketFactory.h>
@@ -107,7 +107,7 @@ void ServerConnectionManager::serveClients() {
                                                                               serversClientInfoRepository, nullptr,
                                                                               nullptr);
 
-        DisconnectPacketHandler* disconnectPacketHandler = new DisconnectPacketHandler(packetIoManager, this);
+        ServerDisconnectPacketHandler* disconnectPacketHandler = new ServerDisconnectPacketHandler(packetIoManager, this);
 
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
         SubscribePacketHandler* subscribePacketHandler = new SubscribePacketHandler(packetIoManager,

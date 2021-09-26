@@ -168,6 +168,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/files/FileDataManager.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientDisconnectPacketHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientDisconnectPacketHandler.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishAckPacketHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -364,6 +370,12 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/ConnectPacketParser.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/DisconnectPacketParser.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/DisconnectPacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PacketParser.cpp">

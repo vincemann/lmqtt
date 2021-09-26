@@ -14,16 +14,17 @@
 
 
 ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, char *clientId, char *username,
-                                            char *password) {
-    return create(cleanSession,0,0,0,clientId,0,0,username,password);
+                                            char *password,unsigned char consume) {
+    return create(cleanSession,0,0,0,clientId,0,0,username,password,consume);
 }
 
 ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned char willFlag, unsigned char willQos,
                                         unsigned char willRetain,
                                         char *clientId, char *willTopic, char *willMsg, char *username,
-                                        char *password) {
+                                        char *password,unsigned char consume) {
 
-    unsigned char specificFlags = 0;
+    // either 1 or 0
+    unsigned char specificFlags = consume;
 
     unsigned char passwordFlag = 0;
     if (password != 0){
@@ -84,7 +85,8 @@ ConnectPacket *ConnectPacketFactory::create(unsigned char cleanSession, unsigned
     RawPacket *rawPacket = new RawPacket(specificFlags,payload,payloadLen,CONNECT);
     return new ConnectPacket(rawPacket, protocolName, protocolLevel, reservedBit, cleanSession, willFlag, willQos,
                              willRetain,
-                             passwordFlag, usernameFlag, keepAlive, clientId, willTopic, willMsg, username, password);
+                             passwordFlag, usernameFlag, keepAlive, clientId, willTopic, willMsg, username, password,
+                             0);
 }
 
 

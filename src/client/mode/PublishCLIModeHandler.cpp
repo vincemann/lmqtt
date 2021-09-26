@@ -68,7 +68,7 @@ void PublishCLIModeHandler::handle() {
     char* msg = _argv[optind++];
     initRoute();
 
-    RawPacket *connectPacket = _connectPacketFactory->create(0, clientId, clientSession->_username, clientSession->_password);
+    RawPacket *connectPacket = _connectPacketFactory->create(0, clientId, clientSession->_username, clientSession->_password,0);
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
@@ -77,6 +77,7 @@ void PublishCLIModeHandler::handle() {
         _clientConnectionManager->_packetIoManager->sendPacket(publishPacket);
 
         if (qos == 0 ){
+            printf("Closing Connection\n");
             _clientConnectionManager->closeConnection();
         } else{
             // wait for puback/pubrecv
