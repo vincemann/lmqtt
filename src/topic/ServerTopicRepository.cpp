@@ -274,7 +274,7 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
 
     // update client info
     // todo is -1 correct here? should be, bc we always start at 1 with last msg id published
-    Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished()-1,qos);
+    Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished(),qos);
     clientInfo->subscriptions->push_back(subscription);
     serversClientInfoRepository->save(clientInfo);
 }
