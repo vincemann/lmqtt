@@ -10,19 +10,18 @@ src/client/build/**
 src/client/CMakeLists.txt.user
 src/client/CMakeFiles
 src/client/CMakeScripts
-src/client/Testing
 src/client/Makefile
 src/client/cmake_install.cmake
 src/client/install_manifest.txt
 src/client/compile_commands.json
 src/client/CTestTestfile.cmake
 src/client/_deps
+venv
 
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
-Testing
 Makefile
 cmake_install.cmake
 install_manifest.txt
