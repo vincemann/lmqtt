@@ -264,16 +264,17 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
 
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
-    std::vector<ServerMessageContainer *> *msgs = loadMessages(topicName);
-    for (const auto &msg : *msgs) {
-        msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() + 1);
-    }
-    replaceMessages(topicName, msgs);
+//    std::vector<ServerMessageContainer *> *msgs = loadMessages(topicName);
+//    for (const auto &msg : *msgs) {
+//        msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() + 1);
+//    }
+//    replaceMessages(topicName, msgs);
     saveTopic(topic);
 
 
     // update client info
-    // todo is -1 correct here? should be, bc we always start at 1 with last msg id published
+    // todo is -1 correct here? should be, bc we always start at 1 with last msg id published, should not be correct
+    // bc we only want msges after sub not also last msg published
     Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished(),qos);
     clientInfo->subscriptions->push_back(subscription);
     serversClientInfoRepository->save(clientInfo);
