@@ -3,13 +3,18 @@ from engine import *
 start_server()
 
 
-j = connect(username, password, clientId)
-assert j["subscriptions"] == []
+connect(username, password, clientId)
+connect(username, password, clientId2)
+
 
 # CREATE TOPIC
-server_topic_meta_j, servers_topic_msgs_j = publish(topic1, clientId, 0, "init")
+publish(topic1, clientId, 0, "init")
+# should create topic by publishing msg
+server_topic_meta_j = get_servers_topic_info(topic1)
+assert server_topic_meta_j["value"] == topic1
 assert server_topic_meta_j["last_msg_id_published"] == 1
 assert server_topic_meta_j["subscribed_users_count"] == 0
+servers_topic_msgs_j = get_servers_topic_msgs(topic1)
 msg = servers_topic_msgs_j[0]
 assert msg["id"] == 1
 assert msg["unconsumed_user_count"] == 0
@@ -17,26 +22,32 @@ assert msg["value"] == "init"
 
 
 # init msges from publish are removed when first subscriber subscribes
-server_topic_meta_j, clients_topic_msgs_j = subscribe(topic1, clientId, 0)
-assert server_topic_meta_j["last_msg_id_published"] == 1
-assert server_topic_meta_j["subscribed_users_count"] == 1
+subscribe(topic1, clientId, 0)
+clients_topic_msgs_j = get_clients_topic_msgs(clientId, topic1, empty=True)
 #
 assert clients_topic_msgs_j is None
 
 
-
-server_topic_meta_j, servers_topic_msgs_j = publish(topic1, clientId, 0, topic1_msg3)
+publish(topic1, clientId2, 0, topic1_msg1)
+# should create topic by publishing msg
+server_topic_meta_j = get_servers_topic_info(topic1)
+assert server_topic_meta_j["value"] == topic1
 assert server_topic_meta_j["last_msg_id_published"] == 2
 assert server_topic_meta_j["subscribed_users_count"] == 1
-#
+servers_topic_msgs_j = get_servers_topic_msgs(topic1)
 msg = servers_topic_msgs_j[0]
 assert msg["id"] == 2
 assert msg["unconsumed_user_count"] == 1
-assert msg["value"] == topic1_msg3
+assert msg["value"] == topic1_msg1
 
 
-j = connect(username, password, clientId)
-assert j["subscriptions"] == []
+consume(username, password, clientId)
+clients_topic_msgs_j = get_clients_topic_msgs(clientId, topic1)
+msg = clients_topic_msgs_j[0]
+assert msg["msg"] == topic1_msg1
+
+servers_topic_msgs_j = get_servers_topic_msgs(topic1)
+assert servers_topic_msgs_j == []
 
 
 stop_server()

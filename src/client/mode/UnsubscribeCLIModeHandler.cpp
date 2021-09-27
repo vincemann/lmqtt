@@ -52,9 +52,9 @@ void UnsubscribeCLIModeHandler::handle() {
         unsigned short packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
         printf("packet id:%d\n",packetId);
         UnsubscribePacket* unsubscribePacket = unsubscribePacketFactory->create(packetId,topic);
-        _clientConnectionManager->_packetIoManager->sendPacket(unsubscribePacket);
+        _clientConnectionManager->packetIoManager->sendPacket(unsubscribePacket);
         // wait for unsuback
-        RawPacket* unsubackPacket = _clientConnectionManager->_packetIoManager->readPacket();
+        RawPacket* unsubackPacket = _clientConnectionManager->packetIoManager->readPacket();
         unsubAckPacketHandler->handle(unsubackPacket);
         _clientConnectionManager->closeConnection();
         exit(0);

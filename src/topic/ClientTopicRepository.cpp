@@ -46,11 +46,17 @@ void ClientTopicRepository::saveMsg(char *topic, char *msg) {
     fileDataManager->store(topicDir, "messages", jsonMsgs_c);
 }
 
-ClientTopicRepository::ClientTopicRepository(FileDataManager *fileDataManager) : fileDataManager(fileDataManager) {
-    char* dir = "/.lmqtt/client/topics/";
-    this->_topicsDir = Utils::createHomeDirectoryChain(dir);
+ClientTopicRepository::ClientTopicRepository(FileDataManager *fileDataManager)
+        : fileDataManager(fileDataManager) {
 }
 
 bool ClientTopicRepository::topicExists(char* topic) {
     return fileDataManager->exists(_topicsDir,topic);
+}
+
+void ClientTopicRepository::initTopicsDir(char *clientId) {
+    char* dir = Utils::smartstrcat("/.lmqtt/client/",clientId);
+    dir = Utils::smartstrcat(dir,"/topics/");
+    this->_topicsDir = Utils::createHomeDirectoryChain(dir);
+    delete dir;
 }

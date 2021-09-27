@@ -9,6 +9,7 @@
 #include <PacketIOManager.h>
 #include <ConnectAckPacketHandler.h>
 #include "ClientConnectionManager.h"
+#include "../topic/ClientTopicRepository.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -25,16 +26,21 @@ public:
     char _connected = 0;
     char* _ip;
     int _port;
-    PacketIOManager *_packetIoManager;
+    PacketIOManager *packetIoManager;
     ConnectAckPacketHandler *_connectAckPacketHandler;
     ClientConnection *_connection;
+    ClientTopicRepository* clientTopicRepository;
     std::map<PacketType, PacketParser *> *parsers;
     std::map<PacketType, PacketHandler *>* handlers;
 
-    ClientConnectionManager(PacketIOManager *packetIoManager, ConnectAckPacketHandler *connectAckPacketHandler,
-                            ClientConnection *connection, std::map<PacketType, PacketParser *> *parsers,std::map<PacketType, PacketHandler *>* handlers);
+    ClientConnectionManager(PacketIOManager *packetIoManager,
+                            ConnectAckPacketHandler *connectAckPacketHandler,
+                            ClientConnection *connection,
+                            std::map<PacketType, PacketParser *> *parsers,
+                            std::map<PacketType, PacketHandler *> *handlers,
+                            ClientTopicRepository *clientTopicRepository);
 
-    void attemptConnection(RawPacket *connectPacket);
+    void attemptConnection(RawPacket *rawPacket);
     int connectToServer();
     void handleIncomingPackets();
     void closeConnection();

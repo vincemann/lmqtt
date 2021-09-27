@@ -74,14 +74,14 @@ void PublishCLIModeHandler::handle() {
         _clientConnectionManager->attemptConnection(connectPacket);
 //        retransmitMsgs();
         PublishPacket* publishPacket = publishPacketFactory->create(qos, 0,topic,msg,0);
-        _clientConnectionManager->_packetIoManager->sendPacket(publishPacket);
+        _clientConnectionManager->packetIoManager->sendPacket(publishPacket);
 
         if (qos == 0 ){
             printf("Closing Connection\n");
             _clientConnectionManager->closeConnection();
         } else{
             // wait for puback/pubrecv
-//        RawPacket* pubResponsePackage = _clientConnectionManager->_packetIoManager->readPacket();
+//        RawPacket* pubResponsePackage = _clientConnectionManager->packetIoManager->readPacket();
 //        subscribeAckPacketHandler->handle(pubResponsePackage);
         }
         exit(0);

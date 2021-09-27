@@ -63,9 +63,9 @@ void SubscribeCLIModeHandler::handle() {
         unsigned short packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
         printf("packet id:%d\n",packetId);
         SubscribePacket* subscribePacket = subscribePacketFactory->create(packetId,topic,qos);
-        _clientConnectionManager->_packetIoManager->sendPacket(subscribePacket);
+        _clientConnectionManager->packetIoManager->sendPacket(subscribePacket);
         // wait for suback
-        RawPacket* subackPacket = _clientConnectionManager->_packetIoManager->readPacket();
+        RawPacket* subackPacket = _clientConnectionManager->packetIoManager->readPacket();
         subscribeAckPacketHandler->handle(subackPacket);
         _clientConnectionManager->closeConnection();
         exit(0);

@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
     // CONNECTION PROCESS ENCAPSULATED
     ClientConnectionManager *clientConnectionManager = new ClientConnectionManager(packetIoManager,
                                                                                    connectAckPacketHandler, connection,
-                                                                                   &parsers,&handlers);
+                                                                                   &parsers, &handlers, clientTopicRepository);
     ClientDisconnectPacketHandler* clientDisconnectPacketHandler = new ClientDisconnectPacketHandler(packetIoManager,clientConnectionManager);
     handlers.insert(std::make_pair(DISCONNECT, clientDisconnectPacketHandler));
 
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
 //    while (true) {
 //        try {
 //            std::cout << "waiting for new packet" << "\n";
-//            RawPacket *packet = _packetIoManager->readPacket();
+//            RawPacket *packet = packetIoManager->readPacket();
 //            PacketHandler *handler = handlers[packet->getType()];
 //            handler->handle(packet);
 //            std::cout << "packet handled without errors" << "\n";

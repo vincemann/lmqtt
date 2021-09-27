@@ -17,6 +17,7 @@ client_binary = "/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/lm
 server_binary = "/home/vince/projekte/important/mqtt/lmqtt+-server/lmqtt__server"
 DONE = False
 
+
 def run_server():
     global DONE
     io = process([server_binary])
@@ -47,15 +48,6 @@ def stop_server():
 def connect(username, password, clientId):
     r = process(client_binary + " connect -u "+username+" -p "+password+" -i "+clientId+" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
-    # checking client side
-    clients_client_info_j = get_clients_client_info(clientId)
-    assert clients_client_info_j["clientId"] == clientId
-    assert clients_client_info_j["password"] == password
-    assert clients_client_info_j["username"] == username
-    # checking server side
-    server_client_info_j = get_servers_client_info(clientId)
-    assert server_client_info_j["clientId"] == clientId
-    return server_client_info_j
 
 
 def consume(username, password, clientId):
@@ -65,42 +57,25 @@ def consume(username, password, clientId):
 
 def publish(topic, clientId, qos, msg):
     r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \""+msg+"\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
-    # should create topic by publishing msg
     log.info(r)
-    server_topic_meta_j = get_servers_topic_info(topic)
-    assert server_topic_meta_j["value"] == topic
-
-    servers_topic_msgs = readf(lmqtt_path + "/server/topics/" + topic1 + "/messages")
-    assert msg in servers_topic_msgs
-    servers_topic_msgs_j = json.loads(servers_topic_msgs)
-
-    return server_topic_meta_j, servers_topic_msgs_j
 
 
-def subscribe(topic, clientId, qos, fresh=True):
+def subscribe(topic, clientId, qos):
     r = process(client_binary + " subscribe -t "+topic+" -i " + clientId + " -q " + str(qos) + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
-    # client side
-    clients_topic_msgs_j = get_clients_topic_msgs(topic, empty=fresh)
-
-    # checking server side
-    server_topic_meta_j = get_servers_topic_info(topic)
-    assert server_topic_meta_j["value"] == topic
-
-    return server_topic_meta_j, clients_topic_msgs_j
 
 
 # HELPERS
 
 
-def get_servers_topic_msgs(topic, empty=True):
-    clients_topic_msgs = readf(lmqtt_path + "/server/topics/" + topic + "/messages")
+def get_servers_topic_msgs(topic, empty=False):
+    servers_topic_msgs = readf(lmqtt_path + "/server/topics/" + topic + "/messages")
     if not empty:
-        return json.loads(clients_topic_msgs)
+        return json.loads(servers_topic_msgs)
 
 
-def get_clients_topic_msgs(topic, empty=True):
-    clients_topic_msgs = readf(lmqtt_path + "/client/topics/" + topic + "/messages")
+def get_clients_topic_msgs(clientId, topic, empty=False):
+    clients_topic_msgs = readf(lmqtt_path + "/client/" + clientId + "/topics/" + topic + "/messages")
     if not empty:
         return json.loads(clients_topic_msgs)
 

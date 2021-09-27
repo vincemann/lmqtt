@@ -16,16 +16,18 @@
 #include <DisconnectPacket.h>
 
 
-void ClientConnectionManager::attemptConnection(RawPacket *connectPacket) {
+void ClientConnectionManager::attemptConnection(RawPacket *rawPacket) {
+    ConnectPacket* connectPacket = static_cast<ConnectPacket*>(rawPacket);
     int connFd = connectToServer();
-    _packetIoManager->_connFd = connFd;
-    _packetIoManager->_connectionSession = _connection;
-    _packetIoManager->_packetParsers = parsers;
+    packetIoManager->_connFd = connFd;
+    packetIoManager->_connectionSession = _connection;
+    packetIoManager->_packetParsers = parsers;
+    clientTopicRepository->initTopicsDir(connectPacket->getClientId());
 
     std::cout << "Sending Connect packet" << "\n";
-    _packetIoManager->sendPacket(connectPacket);
+    packetIoManager->sendPacket(rawPacket);
     std::cout << "waiting for ConnAck packet" << "\n";
-    RawPacket *packet = _packetIoManager->readPacket();
+    RawPacket *packet = packetIoManager->readPacket();
     if (packet->getType() != CONNACK) {
         throw MsgException("Did not recv Connack packet, terminating");
     }
@@ -64,8 +66,12 @@ int ClientConnectionManager::connectToServer() {
 ClientConnectionManager::ClientConnectionManager(PacketIOManager *packetIoManager,
                                                  ConnectAckPacketHandler *connectAckPacketHandler,
                                                  ClientConnection *connection,
-                                                 std::map<PacketType, PacketParser *> *parsers, std::map<PacketType, PacketHandler *>* handlers) : _packetIoManager(
-        packetIoManager), _connectAckPacketHandler(connectAckPacketHandler), _connection(connection), parsers(parsers), handlers(handlers) {}
+                                                 std::map<PacketType, PacketParser *> *parsers,
+                                                 std::map<PacketType, PacketHandler *> *handlers,
+                                                 ClientTopicRepository *clientTopicRepository) : packetIoManager(
+        packetIoManager), _connectAckPacketHandler(connectAckPacketHandler), _connection(connection), parsers(parsers), handlers(handlers),
+                                                                                                 clientTopicRepository(
+                                                                                                         clientTopicRepository) {}
 
 void ClientConnectionManager::setIp(char *ip) {
     _ip = ip;
@@ -76,8 +82,8 @@ void ClientConnectionManager::setPort(int port) {
 }
 
 void ClientConnectionManager::closeConnection() {
-    _packetIoManager->sendPacket(new DisconnectPacket());
-    _packetIoManager->closeConnection();
+    packetIoManager->sendPacket(new DisconnectPacket());
+    packetIoManager->closeConnection();
     _connected = 0;
 }
 
@@ -86,7 +92,7 @@ void ClientConnectionManager::handleIncomingPackets() {
         try{
             std::cout << "waiting for new packet" << "\n";
             if (_connected){
-                RawPacket* packet = _packetIoManager->readPacket();
+                RawPacket* packet = packetIoManager->readPacket();
                 PacketHandler* handler = handlers->at(packet->getType());
                 handler->handle(packet);
                 std::cout << "packet handled without errors" << "\n";

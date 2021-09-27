@@ -102,11 +102,12 @@ void ServerConnectionManager::serveClients() {
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
         ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNACK));
+        PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
+        PublishAckPacketFactory* publishAckPacketFactory = new PublishAckPacketFactory();
         ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager,
                                                                               connectAckPacketFactory,
-                                                                              serversClientInfoRepository, nullptr,
-                                                                              nullptr);
-
+                                                                              serversClientInfoRepository, topicRepository,
+                                                                              publishPacketFactory);
         ServerDisconnectPacketHandler* disconnectPacketHandler = new ServerDisconnectPacketHandler(packetIoManager, this);
 
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
@@ -118,7 +119,7 @@ void ServerConnectionManager::serveClients() {
                                                                                           connection, unsubAckPacketFactory , topicRepository);
         ServerPublishPacketHandler* serverPublishPacketHandler = new ServerPublishPacketHandler(packetIoManager,
                                                                                                 topicRepository,
-                                                                                                nullptr);
+                                                                                                publishAckPacketFactory);
 
         // todo maybe impl delegating packethandler that registers specific packethandlers
         handlers.insert(std::make_pair(CONNECT, connectPacketHandler));
