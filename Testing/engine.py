@@ -48,24 +48,26 @@ def connect(username, password, clientId):
     r = process(client_binary + " connect -u "+username+" -p "+password+" -i "+clientId+" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
     # checking client side
-    clients_client_info = readf(lmqtt_path + "/client/info/gilsClientId")
-    j = json.loads(clients_client_info)
-    assert j["clientId"] == clientId
-    assert j["password"] == password
-    assert j["username"] == username
+    clients_client_info_j = get_clients_client_info(clientId)
+    assert clients_client_info_j["clientId"] == clientId
+    assert clients_client_info_j["password"] == password
+    assert clients_client_info_j["username"] == username
     # checking server side
-    servers_client_info = readf(lmqtt_path + "/server/client-info/gilsClientId")
-    j = json.loads(servers_client_info)
-    assert j["clientId"] == clientId
-    return j
+    server_client_info_j = get_servers_client_info(clientId)
+    assert server_client_info_j["clientId"] == clientId
+    return server_client_info_j
+
+
+def consume(username, password, clientId):
+    r = process(client_binary + " connect -u "+username+" -p "+password+" -i "+clientId+" -m 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    log.info(r)
 
 
 def publish(topic, clientId, qos, msg):
     r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \""+msg+"\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     # should create topic by publishing msg
     log.info(r)
-    servers_topic_info = readf(lmqtt_path + "/server/topics/" + topic1 + "/topic")
-    server_topic_meta_j = json.loads(servers_topic_info)
+    server_topic_meta_j = get_servers_topic_info(topic)
     assert server_topic_meta_j["value"] == topic
 
     servers_topic_msgs = readf(lmqtt_path + "/server/topics/" + topic1 + "/messages")
@@ -78,21 +80,41 @@ def publish(topic, clientId, qos, msg):
 def subscribe(topic, clientId, qos, fresh=True):
     r = process(client_binary + " subscribe -t "+topic+" -i " + clientId + " -q " + str(qos) + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
-
     # client side
-    clients_topic_msgs = readf(lmqtt_path + "/client/topics/" + topic1 + "/messages")
-    if fresh:
-        clients_topic_msgs_j = None
-    else:
-        clients_topic_msgs_j = json.loads(clients_topic_msgs)
+    clients_topic_msgs_j = get_clients_topic_msgs(topic, empty=fresh)
 
     # checking server side
-    servers_topic_info = readf(lmqtt_path + "/server/topics/" + topic1 + "/topic")
-    server_topic_meta_j = json.loads(servers_topic_info)
+    server_topic_meta_j = get_servers_topic_info(topic)
     assert server_topic_meta_j["value"] == topic
 
     return server_topic_meta_j, clients_topic_msgs_j
 
 
+# HELPERS
 
 
+def get_servers_topic_msgs(topic, empty=True):
+    clients_topic_msgs = readf(lmqtt_path + "/server/topics/" + topic + "/messages")
+    if not empty:
+        return json.loads(clients_topic_msgs)
+
+
+def get_clients_topic_msgs(topic, empty=True):
+    clients_topic_msgs = readf(lmqtt_path + "/client/topics/" + topic + "/messages")
+    if not empty:
+        return json.loads(clients_topic_msgs)
+
+
+def get_servers_topic_info(topic):
+    servers_topic_info = readf(lmqtt_path + "/server/topics/" + topic + "/topic")
+    return json.loads(servers_topic_info)
+
+
+def get_clients_client_info(clientId):
+    clients_client_info = readf(lmqtt_path + "/client/info/"+clientId)
+    return json.loads(clients_client_info)
+
+
+def get_servers_client_info(clientId):
+    servers_client_info = readf(lmqtt_path + "/server/client-info/"+clientId)
+    return json.loads(servers_client_info)
