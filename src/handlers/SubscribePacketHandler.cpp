@@ -38,6 +38,6 @@ void SubscribePacketHandler::handle(RawPacket *packet) {
         SubscribeAckPacket *successPacket = _subAckPacketFactory->create(subscribePacket->getPacketId(),
                                                                          (unsigned char) subscribePacket->getQos());
         _packetIo->sendPacket(successPacket);
-        // todo send publish msg'es to let client consume all msges of topic
+        // todo send publish value'es to let client consume all msges of topic
     }
 }

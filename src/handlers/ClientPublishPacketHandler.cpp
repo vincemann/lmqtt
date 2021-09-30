@@ -22,7 +22,7 @@ void ClientPublishPacketHandler::handle(RawPacket *packet) {
             throw InvalidPacketException("Topic, for which publish packet is received, does not exist");
         }
         topicRepository->saveMsg(publishPacket->getTopic(),publishPacket->getMsg());
-        printf("successfully saved msg: %s for topic: %s\n",publishPacket->getTopic(),publishPacket->getMsg());
+        printf("successfully saved value: %s for topic: %s\n",publishPacket->getTopic(),publishPacket->getMsg());
         return;
     } else if(publishPacket->getQos() == 1){
         // todo add responses and retransmissions

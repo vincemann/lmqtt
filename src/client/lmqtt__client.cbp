@@ -432,10 +432,16 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/session/ServersClientInfoRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientMessageContainer.cpp">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosMessageContainer.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientMessageContainer.h">
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosMessageContainer.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosTopicRepository.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosTopicRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientTopicRepository.cpp">

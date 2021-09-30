@@ -10,15 +10,19 @@
 
 class ClientTopicRepository {
     char* clientId;
-    FileDataManager *fileDataManager;
+protected:
     char* _topicsDir;
+    FileDataManager *fileDataManager;
 public:
     ClientTopicRepository(FileDataManager *fileDataManager);
 
     void saveTopic( char* topic);
-    void saveMsg( char* topic, char* msg);
+
+    virtual void saveMsg( char* topic, char* msg);
     bool topicExists( char *topic);
-    void initTopicsDir(char* clientId);
+
+    virtual void initTopicsDir(char* clientId);
+
 };
 
 

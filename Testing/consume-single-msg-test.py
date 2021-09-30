@@ -44,7 +44,7 @@ assert msg["value"] == topic1_msg1
 consume(username, password, clientId)
 clients_topic_msgs_j = get_clients_topic_msgs(clientId, topic1)
 msg = clients_topic_msgs_j[0]
-assert msg["msg"] == topic1_msg1
+assert msg["value"] == topic1_msg1
 
 servers_topic_msgs_j = get_servers_topic_msgs(topic1)
 assert servers_topic_msgs_j == []

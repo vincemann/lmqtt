@@ -8,13 +8,13 @@
 
 #include <vector>
 #include "topic/ServerMessageContainer.h"
-#include "topic/ClientMessageContainer.h"
+#include "topic/ClientQosMessageContainer.h"
 
 class ClientRetransmitMsgHandler {
     char* qosPath;
 
 public:
-    std::vector<ClientMessageContainer> getMsgsToRetransmit(unsigned char qos);
+    std::vector<ClientQosMessageContainer> getMsgsToRetransmit(unsigned char qos);
 
 };
 

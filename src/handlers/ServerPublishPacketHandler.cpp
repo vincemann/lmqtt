@@ -21,12 +21,12 @@ void ServerPublishPacketHandler::handle(RawPacket *packet) {
     }
     topicRepository->saveMsg(publishPacket->getTopic(), publishPacket->getMsg());
     if (publishPacket->getQos() == 0 ){
-        printf("qos of published msg is 0, no response to client\n");
+        printf("qos of published value is 0, no response to client\n");
     } else if (publishPacket->getQos() == 1){
         if (publishPacket->getDupFlag() != 0){
             throw InvalidPacketException("when qos is 1, dup must be 0\n");
         }
-        printf("qos of published msg is 1, sending one puback to client\n");
+        printf("qos of published value is 1, sending one puback to client\n");
         publishAckPacketFactory->create(publishPacket->getPacketId());
     }
     // todo add responses and retransmissions

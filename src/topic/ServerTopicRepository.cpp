@@ -64,15 +64,15 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
 //    topic->setLastMsgIdPublished(msgId);
 //
 //    std::vector<Message *>* msgs = loadMessages(topic_c);
-//    Message* message = new Message(msgId,topic->getSubscribedUserCount(),msg);
+//    Message* message = new Message(msgId,topic->getSubscribedUserCount(),value);
 //    msgs->push_back(message);
 //
 //    std::vector<json> jsonMsgs = std::vector<json>();
 //
 //    for (const auto &item : *msgs) {
-//        json jsonMsg = {"msg",
+//        json jsonMsg = {"value",
 //                        {"id", item->getId()},
-//                        {"value", item->getMsg()},
+//                        {"value", item->getValue()},
 //                        {"unconsumed_user_count", item->getUnconsumedUserCount()}
 //        };
 //        jsonMsgs.push_back(jsonMsg);
@@ -84,7 +84,7 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
 //    std::string jsonMsgsString = j.dump();
 //    // use util function
 //    char* jsonMsgs_c = Utils::toCharP(&jsonMsgsString);
-//    char *topicDir = strdup(_topicsDir);
+//    char *topicDir = strdup(retransmitDir);
 //    strcat(topicDir, topic_c);
 //
 //    saveTopic(new Topic(topicDir));
@@ -96,9 +96,9 @@ void ServerTopicRepository::saveMsg(char *topic_c, char *msg) {
 
 /*
  *  topic json nur erstellen, wenn es den file namens topic noch nicht gibt
- *  msg json an liste von msg json obj anfügen
+ *  value json an liste von value json obj anfügen
  *  evtl aus performance gründen, die letzte zeile(n) : "]"
- *  kurz löschen, dann einfach den msg json eintrag ran cat'n und
+ *  kurz löschen, dann einfach den value json eintrag ran cat'n und
  *  letzte zeile(n) wieder anfügen
  *
  *  ist wahrscheinlich schneller als alle msges zu laden, die map zu konstruieren, das über die
@@ -204,13 +204,13 @@ std::vector<ServerMessageContainer *> *ServerTopicRepository::consumeMessagesSta
 //    std::vector<Message*>::iterator i = msgs->begin();
 //    int count = 0;
 //    while (i != msgs->end()) {
-//        Message *msg = (*i);
-//        if (msg->getId() > lastConsumedMsgId) {
-//            msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
-//            consumedMsgs->push_back(msg);
+//        Message *value = (*i);
+//        if (value->getId() > lastConsumedMsgId) {
+//            value->setUnconsumedUserCount(value->getUnconsumedUserCount() - 1);
+//            consumedMsgs->push_back(value);
 //            ++i;
 //        }
-//        if (msg->getId() <= 0) {
+//        if (value->getId() <= 0) {
 //            msgs->erase(i++);
 //            // get rid of anything < 10
 //            msgs->erase(std::remove_if(msgs->begin(), msgs->end(),
@@ -227,22 +227,22 @@ std::vector<ServerMessageContainer *> *ServerTopicRepository::consumeMessagesSta
                 updatedMsgs->push_back(msg);
                 continue;
             }else{
-                // msg will be deleted
+                // value will be deleted
                 continue;
             }
         }
         updatedMsgs->push_back(msg);
     }
-//    for (auto &msg : *msgs) {
-//        if (msg->getId() > lastConsumedMsgId) {
-//            msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
-//            consumedMsgs->push_back(msg);
-//            updatedMsgs->push_back(msg);
+//    for (auto &value : *msgs) {
+//        if (value->getId() > lastConsumedMsgId) {
+//            value->setUnconsumedUserCount(value->getUnconsumedUserCount() - 1);
+//            consumedMsgs->push_back(value);
+//            updatedMsgs->push_back(value);
 //        }
-//        if (msg->getId() <= 0) {
-//            updatedMsgs->erase(msg);
+//        if (value->getId() <= 0) {
+//            updatedMsgs->erase(value);
 //        } else {
-//            updatedMsgs->push_back(msg);
+//            updatedMsgs->push_back(value);
 //        }
 //    }
     // update msges meta data
@@ -265,16 +265,16 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
     Topic *topic = loadTopic(topicName);
     topic->setSubscribedUsersCount(topic->getSubscribedUserCount() + 1);
 //    std::vector<ServerMessageContainer *> *msgs = loadMessages(topicName);
-//    for (const auto &msg : *msgs) {
-//        msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() + 1);
+//    for (const auto &value : *msgs) {
+//        value->setUnconsumedUserCount(value->getUnconsumedUserCount() + 1);
 //    }
 //    replaceMessages(topicName, msgs);
     saveTopic(topic);
 
 
     // update client info
-    // todo is -1 correct here? should be, bc we always start at 1 with last msg id published, should not be correct
-    // bc we only want msges after sub not also last msg published
+    // todo is -1 correct here? should be, bc we always start at 1 with last value id published, should not be correct
+    // bc we only want msges after sub not also last value published
     Subscription* subscription = new Subscription(topicName,topic->getLastMsgIdPublished(),qos);
     clientInfo->subscriptions->push_back(subscription);
     serversClientInfoRepository->save(clientInfo);

@@ -29,7 +29,7 @@ namespace CLIModes {
             case SUBSCRIBE_MODE:
                 fprintf(stderr, "Usage: %s %s -t topic -i clientId -q qos ip port\n", programName, CLIModes::toString(mode));
             case PUBLISH_MODE:
-                fprintf(stderr, "Usage: %s %s -t topic -i clientId msg ip port\n", programName, CLIModes::toString(mode));
+                fprintf(stderr, "Usage: %s %s -t topic -i clientId value ip port\n", programName, CLIModes::toString(mode));
             case UNSUBSCRIBE_MODE:
                 fprintf(stderr, "Usage: %s %s -t topic -i clientId ip port\n", programName, CLIModes::toString(mode));
         }

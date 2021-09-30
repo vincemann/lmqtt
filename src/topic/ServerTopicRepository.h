@@ -26,7 +26,7 @@ public:
 
     void initTopicFiles(char* topicName);
     void saveMsg(char* topic_c, char* msg);
-    // es kann duplikate geben, daher brauche ich das msg obj mit der msg id
+    // es kann duplikate geben, daher brauche ich das value obj mit der value id
     void removeMsg(char* topic, ServerMessageContainer* msg);
     Topic* loadTopic(char* topic);
     void saveTopic(Topic* topic);

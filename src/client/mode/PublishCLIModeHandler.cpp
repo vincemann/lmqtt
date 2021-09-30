@@ -12,9 +12,9 @@
 
 
 void PublishCLIModeHandler::retransmitMsgs() {
-    std::vector<ClientMessageContainer> msgsToRetransmit = retransmitMsgHandler->getMsgsToRetransmit(1);
+    std::vector<ClientQosMessageContainer> msgsToRetransmit = retransmitMsgHandler->getMsgsToRetransmit(1);
     for (const auto &msg : msgsToRetransmit){
-        printf("retransmitting msg : %s with qos: %d\n",msg.getMsg(),1);
+        printf("retransmitting value : %s with qos: %d\n", msg.getValue(), 1);
 
 
     }

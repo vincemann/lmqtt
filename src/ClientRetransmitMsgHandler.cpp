@@ -4,6 +4,6 @@
 
 #include "ClientRetransmitMsgHandler.h"
 
-std::vector<ClientMessageContainer> ClientRetransmitMsgHandler::getMsgsToRetransmit(unsigned char qos) {
-    return std::vector<ClientMessageContainer>();
+std::vector<ClientQosMessageContainer> ClientRetransmitMsgHandler::getMsgsToRetransmit(unsigned char qos) {
+    return std::vector<ClientQosMessageContainer>();
 }

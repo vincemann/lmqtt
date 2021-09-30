@@ -6,7 +6,7 @@
 #include <Utils.h>
 #include "ClientTopicRepository.h"
 #include "../json.hpp"
-#include "ClientMessageContainer.h"
+#include "ClientQosMessageContainer.h"
 
 void ClientTopicRepository::saveTopic(char *topic) {
     // store dir for topic
@@ -21,21 +21,18 @@ void ClientTopicRepository::saveMsg(char *topic, char *msg) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topic);
     char *msgsJson = fileDataManager->find(topicDir, "messages");
 
-    ClientMessageContainer *clientMessageContainer = new ClientMessageContainer(msg);
     using json = nlohmann::json;
     json j;
     if (strlen(msgsJson) == 0) {
         json jsonMsg = {
-                {"msg", clientMessageContainer->getMsg()},
-                {"id", clientMessageContainer->getId()}
+                {"value", msg},
 
         };
         j = {jsonMsg};
     } else {
         j = json::parse(msgsJson);
         json jsonMsg = {
-                {"msg", clientMessageContainer->getMsg()},
-                {"id", clientMessageContainer->getId()}
+                {"value", msg},
         };
         j.push_back(jsonMsg);
     }
