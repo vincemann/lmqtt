@@ -7,8 +7,10 @@
 
 
 #include "PacketHandler.h"
+#include "../topic/ClientQosTopicRepository.h"
 
 class ClientPublishAckPacketHandler : public PacketHandler{
+    ClientQosTopicRepository* clientQosTopicRepository;
 public:
     void handle(RawPacket *packet) override;
 

@@ -127,7 +127,8 @@ int main(int argc, char *argv[]) {
             PublishCLIModeHandler *publishCliModeHandler = new PublishCLIModeHandler(argv, clientConnectionManager,
                                                                                      connectPacketFactory, argc,
                                                                                      clientSessionRepository,
-                                                                                     publishPacketFactory, nullptr);
+                                                                                     publishPacketFactory, nullptr,
+                                                                                     nullptr, nullptr);
 
             publishCliModeHandler->handle();
     };

@@ -54,8 +54,8 @@ void ConnectCLIModeHandler::handle() {
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-        // wait for publish packets & disconnect packet from server
         if (consume) {
+            // wait for publish packets & disconnect packet from server
             _clientConnectionManager->handleIncomingPackets();
         } else {
             _clientConnectionManager->closeConnection();

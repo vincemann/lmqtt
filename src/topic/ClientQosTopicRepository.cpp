@@ -74,3 +74,28 @@ std::vector<ClientQosMessageContainer*> *ClientQosTopicRepository::loadMessages(
 }
 
 
+void ClientQosTopicRepository::replaceMessages(std::vector<ClientQosMessageContainer *> *msgs) {
+    using json = nlohmann::json;
+    std::vector<json> jsonMsgs = std::vector<json>();
+
+
+    for (const auto &msg : *msgs) {
+        json jsonMsg = {
+                {"value", msg->getValue()},
+                {"id", msg->getId()},
+                {"qos", msg->getQos()},
+                {"topic", msg->getTopic()}
+
+        };
+        jsonMsgs.push_back(jsonMsg);
+    }
+
+    json j = jsonMsgs;
+    std::string jsonMsgsString = j.dump();
+    char *jsonMsgs_c = Utils::toCharP(&jsonMsgsString);
+    fileDataManager->
+            store(retransmitDir,
+                  "messages", jsonMsgs_c);
+}
+
+

@@ -11,75 +11,72 @@
 #include <PublishPacket.h>
 
 
-void PublishCLIModeHandler::retransmitMsgs() {
-    std::vector<ClientQosMessageContainer> msgsToRetransmit = retransmitMsgHandler->getMsgsToRetransmit(1);
-    for (const auto &msg : msgsToRetransmit){
-        printf("retransmitting value : %s with qos: %d\n", msg.getValue(), 1);
-
-
-    }
-
-}
-
 
 void PublishCLIModeHandler::handle() {
     int opt;
 
     char *clientId = 0;
-    char* topic = 0;
+    char *topic = 0;
     unsigned char qos = 0xff;
     // i = clientId, u = username, p = _password, r=removeSession
     //todo learn to make args obsolete (i is needed, i think it was '!' or smth)
     while ((opt = getopt(_argc, _argv, "t:i:q:")) != -1) {
         switch (opt) {
-            case 't': topic = optarg; break;
-            case 'i': clientId = optarg; break;
-            case 'q': qos = atoi(optarg); break;
+            case 't':
+                topic = optarg;
+                break;
+            case 'i':
+                clientId = optarg;
+                break;
+            case 'q':
+                qos = atoi(optarg);
+                break;
             default: /* '?' */
-                CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
+                CLIModes::printUsageInformation(_argv[0], PUBLISH_MODE);
                 exit(1);
         }
     }
 
-    if (clientId == 0){
+    if (clientId == 0) {
         fprintf(stderr, "Client Id missing");
-        CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
+        CLIModes::printUsageInformation(_argv[0], PUBLISH_MODE);
         exit(1);
     }
 
-    if (topic == 0){
+    if (topic == 0) {
         fprintf(stderr, "Topic is missing");
-        CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
+        CLIModes::printUsageInformation(_argv[0], PUBLISH_MODE);
         exit(1);
     }
-    if (qos == 0xff){
+    if (qos == 0xff) {
         fprintf(stderr, "Qos is missing");
-        CLIModes::printUsageInformation(_argv[0],PUBLISH_MODE);
+        CLIModes::printUsageInformation(_argv[0], PUBLISH_MODE);
         exit(1);
     }
 
 
-    ClientsClientInfo* clientSession = clientSessionRepository->load(clientId);
-    if (clientSession == 0 ){
+    ClientsClientInfo *clientSession = clientSessionRepository->load(clientId);
+    if (clientSession == 0) {
         printf("You have to call connect to init session before calling subscribe");
         exit(1);
     }
 
-    char* msg = _argv[optind++];
+    char *msg = _argv[optind++];
     initRoute();
 
-    RawPacket *connectPacket = _connectPacketFactory->create(0, clientId, clientSession->_username, clientSession->_password,0);
+    RawPacket *connectPacket = _connectPacketFactory->create(0, clientId, clientSession->_username,
+                                                             clientSession->_password, 0);
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-//        retransmitMsgs();
-        PublishPacket* publishPacket = publishPacketFactory->create(qos, 0,topic,msg,0);
+        clientRetransmitMsgHandler->retransmitMsgs();
+        PublishPacket *publishPacket = publishPacketFactory->create(qos, 0, topic, msg, 0);
         _clientConnectionManager->packetIoManager->sendPacket(publishPacket);
 
-        if (qos == 0 ){
+        if (qos == 0) {
             printf("Closing Connection\n");
             _clientConnectionManager->closeConnection();
-        } else{
+        } else {
             // wait for puback/pubrecv
 //        RawPacket* pubResponsePackage = _clientConnectionManager->packetIoManager->readPacket();
 //        subscribeAckPacketHandler->handle(pubResponsePackage);
@@ -96,16 +93,15 @@ PublishCLIModeHandler::PublishCLIModeHandler(char **argv, ClientConnectionManage
                                              ConnectPacketFactory *connectPacketFactory, int argc,
                                              ClientsClientInfoRepository *clientSessionRepository,
                                              PublishPacketFactory *publishPacketFactory,
-                                             ClientRetransmitMsgHandler *retransmitMsgHandler) : CLIModeHandler(argv,
-                                                                                                                clientConnectionManager,
-                                                                                                                connectPacketFactory,
-                                                                                                                argc),
-                                                                                                 clientSessionRepository(
-                                                                                                   clientSessionRepository),
-                                                                                                 publishPacketFactory(
-                                                                                                   publishPacketFactory),
-                                                                                                 retransmitMsgHandler(
-                                                                                                   retransmitMsgHandler) {}
+                                             ClientRetransmitMsgHandler *clientRetransmitMsgHandler)
+        : CLIModeHandler(argv,
+                         clientConnectionManager,
+                         connectPacketFactory,
+                         argc),
+          clientSessionRepository(
+                  clientSessionRepository),
+          publishPacketFactory(
+                  publishPacketFactory),clientRetransmitMsgHandler(clientRetransmitMsgHandler) {}
 
 
 

@@ -7,14 +7,22 @@
 
 
 #include <vector>
+#include <ClientPublishAckPacketHandler.h>
+#include <PublishPacketFactory.h>
 #include "topic/ServerMessageContainer.h"
 #include "topic/ClientQosMessageContainer.h"
+#include "topic/ClientQosTopicRepository.h"
 
 class ClientRetransmitMsgHandler {
-    char* qosPath;
+private:
+    PacketIOManager *packetIoManager;
+    PublishPacketFactory *publishPacketFactory;
+    ClientPublishAckPacketHandler *clientPublishAckPacketHandler;
+    ClientQosTopicRepository *clientQosTopicRepository;
+
 
 public:
-    std::vector<ClientQosMessageContainer> getMsgsToRetransmit(unsigned char qos);
+    void retransmitMsgs();
 
 };
 

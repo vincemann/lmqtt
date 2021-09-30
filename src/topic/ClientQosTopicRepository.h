@@ -15,10 +15,13 @@ private:
     FileDataManager* fileDataManager;
 public:
     void initTopicsDir(char *clientId);
-    void saveMsg(char *topic, ClientQosMessageContainer *msg);
     std::vector<ClientQosMessageContainer *> *loadMessages();
-
+    void removeMsg(unsigned long msgId);
     void saveMsg(ClientQosMessageContainer *msg);
+
+    void replaceMessages(char *topic, std::vector<ClientQosMessageContainer *> *msgs);
+
+    void replaceMessages(std::vector<ClientQosMessageContainer *> *msgs);
 };
 
 
