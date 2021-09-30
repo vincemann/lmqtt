@@ -63,7 +63,7 @@ void PublishCLIModeHandler::handle() {
 
     char *msg = _argv[optind++];
     initRoute();
-
+    clientQosTopicRepository->initTopicsDir(clientId);
     RawPacket *connectPacket = _connectPacketFactory->create(0, clientId, clientSession->_username,
                                                              clientSession->_password, 0);
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);

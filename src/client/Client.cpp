@@ -28,7 +28,6 @@
 #include "mode/PublishCLIModeHandler.h"
 
 
-
 int main(int argc, char *argv[]) {
 
     // PARSERS
@@ -39,9 +38,9 @@ int main(int argc, char *argv[]) {
     parsers.insert(std::make_pair(SUBSCRIBE_ACK, subscribePacketParser));
     UnsubAckPacketParser *unsubAckPacketParser = new UnsubAckPacketParser;
     parsers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketParser));
-    PublishPacketParser* publishPacketParser = new PublishPacketParser();
+    PublishPacketParser *publishPacketParser = new PublishPacketParser();
     parsers.insert(std::make_pair(PUBLISH, publishPacketParser));
-    DisconnectPacketParser* disconnectPacketParser = new DisconnectPacketParser();
+    DisconnectPacketParser *disconnectPacketParser = new DisconnectPacketParser();
     parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
 
 
@@ -49,11 +48,11 @@ int main(int argc, char *argv[]) {
     ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
     SubscribePacketFactory *subscribePacketFactory = new SubscribePacketFactory();
     UnsubscribePacketFactory *unsubscribePacketFactory = new UnsubscribePacketFactory();
-    PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
+    PublishPacketFactory *publishPacketFactory = new PublishPacketFactory();
 
 
     FileDataManager *fileDataManager = new FileDataManager();
-    ClientTopicRepository* clientTopicRepository = new ClientTopicRepository(fileDataManager);
+    ClientTopicRepository *clientTopicRepository = new ClientTopicRepository(fileDataManager);
     ClientConnection *connection = new ClientConnection();
     ClientsClientInfoRepository *clientSessionRepository = new ClientsClientInfoRepository(fileDataManager);
 
@@ -67,10 +66,11 @@ int main(int argc, char *argv[]) {
     ConnectAckPacketHandler *connectAckPacketHandler = new ConnectAckPacketHandler(packetIoManager,
                                                                                    clientSessionRepository, connection);
 
-    SubscribeAckPacketHandler* subscribeAckPacketHandler = new SubscribeAckPacketHandler(packetIoManager,connection);
+    SubscribeAckPacketHandler *subscribeAckPacketHandler = new SubscribeAckPacketHandler(packetIoManager, connection);
 
-    UnsubAckPacketHandler* unsubAckPacketHandler = new UnsubAckPacketHandler(packetIoManager);
-    ClientPublishPacketHandler* clientPublishPacketHandler = new ClientPublishPacketHandler(packetIoManager,clientTopicRepository);
+    UnsubAckPacketHandler *unsubAckPacketHandler = new UnsubAckPacketHandler(packetIoManager);
+    ClientPublishPacketHandler *clientPublishPacketHandler = new ClientPublishPacketHandler(packetIoManager,
+                                                                                            clientTopicRepository);
 
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
     handlers.insert(std::make_pair(SUBSCRIBE_ACK, subscribeAckPacketHandler));
@@ -82,9 +82,13 @@ int main(int argc, char *argv[]) {
     // CONNECTION PROCESS ENCAPSULATED
     ClientConnectionManager *clientConnectionManager = new ClientConnectionManager(packetIoManager,
                                                                                    connectAckPacketHandler, connection,
-                                                                                   &parsers, &handlers, clientTopicRepository);
-    ClientDisconnectPacketHandler* clientDisconnectPacketHandler = new ClientDisconnectPacketHandler(packetIoManager,clientConnectionManager);
+                                                                                   &parsers, &handlers,
+                                                                                   clientTopicRepository);
+    ClientDisconnectPacketHandler *clientDisconnectPacketHandler = new ClientDisconnectPacketHandler(packetIoManager,
+                                                                                                     clientConnectionManager);
     handlers.insert(std::make_pair(DISCONNECT, clientDisconnectPacketHandler));
+
+
 
     // MODE HANDLERS
     CLIMode mode = CLIModes::findCliMode(argv[1]);
@@ -115,20 +119,26 @@ int main(int argc, char *argv[]) {
         case UNSUBSCRIBE_MODE: {
             printf("unsubscribe mode\n");
             UnsubscribeCLIModeHandler *unsubscribeCliModeHandler = new UnsubscribeCLIModeHandler(argv,
-                                                                                           clientConnectionManager,
-                                                                                           connectPacketFactory, argc,
-                                                                                           clientSessionRepository,
-                                                                                           unsubscribePacketFactory,unsubAckPacketHandler);
+                                                                                                 clientConnectionManager,
+                                                                                                 connectPacketFactory,
+                                                                                                 argc,
+                                                                                                 clientSessionRepository,
+                                                                                                 unsubscribePacketFactory,
+                                                                                                 unsubAckPacketHandler);
             unsubscribeCliModeHandler->handle();
             break;
         }
         case PUBLISH_MODE:
+            ClientQosTopicRepository *clientQosTopicRepository = new ClientQosTopicRepository(fileDataManager);
+            ClientRetransmitMsgHandler *clientRetransmitMsgHandler = new ClientRetransmitMsgHandler(packetIoManager,
+                                                                                                    publishPacketFactory,
+                                                                                                    clientQosTopicRepository);
             printf("publish mode\n");
             PublishCLIModeHandler *publishCliModeHandler = new PublishCLIModeHandler(argv, clientConnectionManager,
                                                                                      connectPacketFactory, argc,
                                                                                      clientSessionRepository,
-                                                                                     publishPacketFactory, nullptr,
-                                                                                     nullptr, nullptr);
+                                                                                     publishPacketFactory,
+                                                                                     clientRetransmitMsgHandler);
 
             publishCliModeHandler->handle();
     };

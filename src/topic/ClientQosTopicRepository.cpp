@@ -98,4 +98,7 @@ void ClientQosTopicRepository::replaceMessages(std::vector<ClientQosMessageConta
                   "messages", jsonMsgs_c);
 }
 
+ClientQosTopicRepository::ClientQosTopicRepository(FileDataManager *fileDataManager)
+        :  fileDataManager(fileDataManager) {}
+
 

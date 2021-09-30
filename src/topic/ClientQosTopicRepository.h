@@ -14,13 +14,12 @@ private:
     char* retransmitDir;
     FileDataManager* fileDataManager;
 public:
+    ClientQosTopicRepository(FileDataManager *fileDataManager);
+
+
     void initTopicsDir(char *clientId);
     std::vector<ClientQosMessageContainer *> *loadMessages();
-    void removeMsg(unsigned long msgId);
     void saveMsg(ClientQosMessageContainer *msg);
-
-    void replaceMessages(char *topic, std::vector<ClientQosMessageContainer *> *msgs);
-
     void replaceMessages(std::vector<ClientQosMessageContainer *> *msgs);
 };
 

@@ -38,3 +38,9 @@ void ClientRetransmitMsgHandler::retransmitMsgs() {
     clientQosTopicRepository->replaceMessages(untransmitted);
 
 }
+
+ClientRetransmitMsgHandler::ClientRetransmitMsgHandler(PacketIOManager *packetIoManager,
+                                                       PublishPacketFactory *publishPacketFactory,
+                                                       ClientQosTopicRepository *clientQosTopicRepository)
+        : packetIoManager(packetIoManager), publishPacketFactory(publishPacketFactory),
+          clientQosTopicRepository(clientQosTopicRepository) {}

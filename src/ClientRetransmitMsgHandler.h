@@ -17,12 +17,15 @@ class ClientRetransmitMsgHandler {
 private:
     PacketIOManager *packetIoManager;
     PublishPacketFactory *publishPacketFactory;
-    ClientPublishAckPacketHandler *clientPublishAckPacketHandler;
+//    ClientPublishAckPacketHandler *clientPublishAckPacketHandler;
     ClientQosTopicRepository *clientQosTopicRepository;
 
 
 public:
     void retransmitMsgs();
+
+    ClientRetransmitMsgHandler(PacketIOManager *packetIoManager, PublishPacketFactory *publishPacketFactory,
+                               ClientQosTopicRepository *clientQosTopicRepository);
 
 };
 
