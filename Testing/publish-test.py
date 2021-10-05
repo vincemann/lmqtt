@@ -17,7 +17,6 @@ assert msg["unconsumed_user_count"] == 0
 assert msg["value"] == topic1_msg1
 
 
-
 publish(topic1, clientId, 0, topic1_msg2)
 server_topic_meta_j = get_servers_topic_info(topic1)
 assert server_topic_meta_j["last_msg_id_published"] == 2

@@ -27,6 +27,8 @@ public:
     ClientRetransmitMsgHandler(PacketIOManager *packetIoManager, PublishPacketFactory *publishPacketFactory,
                                ClientQosTopicRepository *clientQosTopicRepository);
 
+    ClientQosTopicRepository *getClientQosTopicRepository();
+
 };
 
 

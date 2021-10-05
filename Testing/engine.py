@@ -56,7 +56,7 @@ def consume(username, password, clientId):
 
 
 def publish(topic, clientId, qos, msg):
-    r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \""+msg+"\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
 
 

@@ -1,6 +1,6 @@
 from engine import *
 
-# start_server()
+start_server()
 
 
 connect(username, password, clientId)

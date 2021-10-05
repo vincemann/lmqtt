@@ -15,7 +15,6 @@
 class PublishCLIModeHandler : public CLIModeHandler{
     ClientsClientInfoRepository *clientSessionRepository;
     PublishPacketFactory *publishPacketFactory;
-    ClientQosTopicRepository *clientQosTopicRepository;
     ClientRetransmitMsgHandler* clientRetransmitMsgHandler;
 
 public:
