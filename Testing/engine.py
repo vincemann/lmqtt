@@ -8,6 +8,8 @@ password = "pass123"
 lmqtt_path = "/home/vince/.lmqtt"
 clientId = "gilsClientId"
 clientId2 = "vincemannsClientId"
+clientId3 = "gülClientId"
+
 topic1 = "jeffseid"
 topic1_msg1 = "my name is jeff"
 topic1_msg2 = "my name is not jeff anymore"
