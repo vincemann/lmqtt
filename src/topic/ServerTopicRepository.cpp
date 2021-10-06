@@ -186,7 +186,9 @@ void ServerTopicRepository::saveTopic(Topic *topic) {
     std::string jsonString = j.dump();
     Utils::createDirectory(topicDir);
     _fileDataManager->store(topicDir, "topic", Utils::toCharP(&jsonString));
-    _fileDataManager->store(topicDir, "messages", "");
+    if (_fileDataManager->exists(topicDir,"messages") == 0 ){
+        _fileDataManager->store(topicDir, "messages", "[]");
+    }
 }
 
 

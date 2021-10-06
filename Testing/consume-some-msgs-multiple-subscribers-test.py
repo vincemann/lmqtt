@@ -47,7 +47,7 @@ assert msg["value"] == topic1_msg1
 # todo this subscribe deletes second publish msg on publish below
 subscribe(topic1, clientId2, 0)
 clients_topic_msgs_j = get_clients_topic_msgs(clientId2, topic1, empty=True)
-#
+
 assert clients_topic_msgs_j is None
 
 # PUBLISH SECOND REAL MSG
