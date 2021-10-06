@@ -29,6 +29,7 @@ void Topic::setSubscribedUsersCount(int subscribedUsersCount) {
 
 Topic::Topic(char *topic) : value(topic){
     _subscribed_users_count=0;
-    _last_msg_id_published=0;
+    // set to one bc first msg is always discarded
+    _last_msg_id_published=1;
 }
 

@@ -327,11 +327,12 @@ void ServerTopicRepository::initTopicFiles(char *topicName) {
     if (topicExists) {
         delete topicDir;
         return;
+    }else{
+        // topic does not exist
+        Utils::createDirectory(topicDir);
+        saveTopic(new Topic(topicName));
+        _fileDataManager->store(topicDir, "messages", "[]");
     }
-    Utils::createDirectory(topicDir);
-//    _fileDataManager->saveMsg(topicDir, "topic", "");
-    saveTopic(new Topic(topicName));
-    _fileDataManager->store(topicDir, "messages", "");
 }
 
 std::vector<ServerMessageContainer *> *ServerTopicRepository::loadMessages(char *topicName) {

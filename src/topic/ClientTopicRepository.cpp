@@ -12,7 +12,9 @@ void ClientTopicRepository::saveTopic(char *topic) {
     // store dir for topic
     char *topicsDir = Utils::smartstrcat(_topicsDir, topic);
     Utils::createDirectory(topicsDir);
-    fileDataManager->store(topicsDir, "messages", "");
+    if (fileDataManager->exists(topicsDir,"messages") == 0 ){
+        fileDataManager->store(topicsDir, "messages", "[]");
+    }
     delete topicsDir;
 }
 

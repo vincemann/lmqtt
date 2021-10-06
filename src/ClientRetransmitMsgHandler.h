@@ -17,7 +17,6 @@ class ClientRetransmitMsgHandler {
 private:
     PacketIOManager *packetIoManager;
     PublishPacketFactory *publishPacketFactory;
-//    ClientPublishAckPacketHandler *clientPublishAckPacketHandler;
     ClientQosTopicRepository *clientQosTopicRepository;
 
 

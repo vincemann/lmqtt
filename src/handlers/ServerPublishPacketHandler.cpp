@@ -17,7 +17,11 @@ void ServerPublishPacketHandler::handle(RawPacket *packet) {
     bool topicExists = topicRepository->topicExists(publishPacket->getTopic());
     if (topicExists == 0){
         printf("topic %s does not exist yet, creating..\n", publishPacket->getTopic());
+        printf("init msg %s will be dismissed\n",publishPacket->getMsg());
         topicRepository->saveTopic(new Topic(publishPacket->getTopic()));
+        // if topic did not exist yet, there cant be any subscribers, so the msg will be lost intentionally
+        // and this will solely be used to create the topic
+        return;
     }
     topicRepository->saveMsg(publishPacket->getTopic(), publishPacket->getMsg());
     if (publishPacket->getQos() == 0 ){
