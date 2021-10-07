@@ -22,7 +22,7 @@ assert len(clients_topic_msgs_j) == 0
 # PULISH FIRST REAL MSG
 log.info("FIRST PUB WITH REAL MSG")
 publish(topic1, clientId2, 0, topic1_msg1)
-# should create topic by publishing msg
+#
 server_topic_info_j = get_servers_topic_info(topic1)
 assert server_topic_info_j["value"] == topic1
 assert server_topic_info_j["last_msg_id_published"] == 2
@@ -43,7 +43,7 @@ assert len(clients_topic_msgs_j) == 0
 # PUBLISH SECOND REAL MSG
 log.info("SECOND PUBLISH WITH REAL MSG")
 publish(topic1, clientId2, 0, topic1_msg2)
-# should create topic by publishing msg
+#
 server_topic_info_j = get_servers_topic_info(topic1)
 assert server_topic_info_j["value"] == topic1
 assert server_topic_info_j["last_msg_id_published"] == 3

@@ -22,7 +22,7 @@ assert len(clients_topic_msgs_j) == 0
 
 
 publish(topic1, clientId, 0, topic1_msg2)
-# should create topic by publishing msg
+#
 server_topic_meta_j = get_servers_topic_info(topic1)
 assert server_topic_meta_j["value"] == topic1
 assert server_topic_meta_j["last_msg_id_published"] == 2
@@ -36,7 +36,7 @@ assert msg["value"] == topic1_msg2
 
 
 publish(topic1, clientId, 0, topic1_msg3)
-# should create topic by publishing msg
+#
 server_topic_meta_j = get_servers_topic_info(topic1)
 assert server_topic_meta_j["value"] == topic1
 assert server_topic_meta_j["last_msg_id_published"] == 3
