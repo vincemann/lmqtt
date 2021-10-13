@@ -69,17 +69,20 @@ void PublishCLIModeHandler::handle() {
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
-        clientRetransmitMsgHandler->retransmitMsgs();
         PublishPacket *publishPacket = publishPacketFactory->create(qos, 0, topic, msg, 0);
         _clientConnectionManager->packetIoManager->sendPacket(publishPacket);
 
         if (qos == 0) {
             printf("Closing Connection\n");
             _clientConnectionManager->closeConnection();
-        } else {
-            // wait for puback/pubrecv
-//        RawPacket* pubResponsePackage = _clientConnectionManager->packetIoManager->readPacket();
-//        subscribeAckPacketHandler->handle(pubResponsePackage);
+        } else if (qos ==1){
+            clientRetransmitMsgHandler->getClientQosTopicRepository()->saveMsg(new ClientQosMessageContainer(publishPacket));
+            // wait for puback
+            RawPacket* pubResponsePackage = _clientConnectionManager->packetIoManager->readPacket();
+            clientPublishAckPacketHandler->handle(pubResponsePackage);
+            _clientConnectionManager->closeConnection();
+        } else{
+            printf("invalid qos\n");
         }
         exit(0);
     } catch (const std::exception &e) {
@@ -93,7 +96,7 @@ PublishCLIModeHandler::PublishCLIModeHandler(char **argv, ClientConnectionManage
                                              ConnectPacketFactory *connectPacketFactory, int argc,
                                              ClientsClientInfoRepository *clientSessionRepository,
                                              PublishPacketFactory *publishPacketFactory,
-                                             ClientRetransmitMsgHandler *clientRetransmitMsgHandler)
+                                             ClientPublishAckPacketHandler *clientPublishAckPacketHandler)
         : CLIModeHandler(argv,
                          clientConnectionManager,
                          connectPacketFactory,
@@ -101,7 +104,8 @@ PublishCLIModeHandler::PublishCLIModeHandler(char **argv, ClientConnectionManage
           clientSessionRepository(
                   clientSessionRepository),
           publishPacketFactory(
-                  publishPacketFactory),clientRetransmitMsgHandler(clientRetransmitMsgHandler) {}
+                  publishPacketFactory),
+          clientPublishAckPacketHandler(clientPublishAckPacketHandler) {}
 
 
 

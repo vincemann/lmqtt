@@ -9,12 +9,15 @@ RawPacket *PublishPacketParser::parse(RawPacket *raw_packet) {
     unsigned char* data = raw_packet->getData();
 
     unsigned char specificFlags = raw_packet->getSpecificFlags();
+    Utils::printBits(specificFlags);
 
     unsigned char mask = Utils::createBitMask(3, 3);
     unsigned char dupFlag = mask & specificFlags;
 
     mask = Utils::createBitMask(1, 2);
-    unsigned char qos = mask & specificFlags;
+    Utils::printBits(mask);
+    // todo dont know why mask is not working as expected here and i have to shift
+    unsigned char qos = (mask >> 1) & (specificFlags >> 1);
 
     mask = Utils::createBitMask(0, 0);
     unsigned char retainFlag = mask & specificFlags;

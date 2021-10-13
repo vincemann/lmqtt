@@ -14,6 +14,7 @@ class ClientPublishAckPacketHandler : public PacketHandler{
 public:
     void handle(RawPacket *packet) override;
 
+    ClientPublishAckPacketHandler(PacketIOManager *packetIo, ClientQosTopicRepository *clientQosTopicRepository);
 };
 
 

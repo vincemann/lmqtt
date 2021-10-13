@@ -7,12 +7,16 @@
 
 
 #include "CLIModeHandler.h"
+#include "../../ClientRetransmitMsgHandler.h"
 
 class ConnectCLIModeHandler : public CLIModeHandler{
+    ClientRetransmitMsgHandler* clientRetransmitMsgHandler;
 public:
     void handle() override;
+
     ConnectCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
-                          ConnectPacketFactory *connectPacketFactory, int argc);
+                          ConnectPacketFactory *connectPacketFactory, int argc,
+                          ClientRetransmitMsgHandler *clientRetransmitMsgHandler);
 };
 
 

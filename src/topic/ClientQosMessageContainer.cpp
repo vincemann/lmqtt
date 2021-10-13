@@ -26,3 +26,10 @@ unsigned char ClientQosMessageContainer::getQos() const {
 char *ClientQosMessageContainer::getTopic() const {
     return topic;
 }
+
+ClientQosMessageContainer::ClientQosMessageContainer(PublishPacket *publishPacket)
+        : value(publishPacket->getMsg()), qos(publishPacket->getQos()), id(publishPacket->getPacketId()), topic(publishPacket->getTopic())
+{
+
+
+}

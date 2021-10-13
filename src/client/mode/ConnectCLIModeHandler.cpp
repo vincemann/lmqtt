@@ -10,6 +10,7 @@
 #include <DisconnectPacket.h>
 #include "CLIMode.h"
 #include "ConnectCLIModeHandler.h"
+#include "../../ClientRetransmitMsgHandler.h"
 
 
 void ConnectCLIModeHandler::handle() {
@@ -20,7 +21,7 @@ void ConnectCLIModeHandler::handle() {
     char *password = 0;
     unsigned char cleanSession = 0;
     unsigned char consume = 0;
-    // i = clientId, u = username, p = _password, r=removeSession
+    // i = clientId, u = username, p = password, r=removeSession, m= consume msgs
     //todo learn to make args obsolete (i is needed, i think it was '!' or smth)
     while ((opt = getopt(_argc, _argv, "u:p:i:rm")) != -1) {
         switch (opt) {
@@ -54,6 +55,7 @@ void ConnectCLIModeHandler::handle() {
     _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         _clientConnectionManager->attemptConnection(connectPacket);
+        clientRetransmitMsgHandler->retransmitMsgs();
         if (consume) {
             // wait for publish packets & disconnect packet from server
             _clientConnectionManager->handleIncomingPackets();
@@ -69,12 +71,13 @@ void ConnectCLIModeHandler::handle() {
 }
 
 ConnectCLIModeHandler::ConnectCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
-                                             ConnectPacketFactory *connectPacketFactory, int argc) : CLIModeHandler(
-        argv,
-        clientConnectionManager,
-        connectPacketFactory,
-        argc) {
+                                             ConnectPacketFactory *connectPacketFactory, int argc,
+                                             ClientRetransmitMsgHandler *clientRetransmitMsgHandler) : CLIModeHandler(
+        argv, clientConnectionManager, connectPacketFactory, argc), clientRetransmitMsgHandler(
+        clientRetransmitMsgHandler) {}
 
-}
+
+
+
 
 

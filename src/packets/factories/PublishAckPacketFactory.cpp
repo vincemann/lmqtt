@@ -4,7 +4,7 @@
 
 #include "PublishAckPacketFactory.h"
 
-PublishAckPacket PublishAckPacketFactory::create(unsigned long packetId) {
+PublishAckPacket *PublishAckPacketFactory::create(unsigned long packetId) {
     unsigned char specificFlags = 4;
     Payload* packetIdPayload = new Payload(packetId);
 
@@ -12,5 +12,5 @@ PublishAckPacket PublishAckPacketFactory::create(unsigned long packetId) {
     const Payload* toMerge[] = {packetIdPayload};
     unsigned char* payload = PacketFactory::mergePayloads(&payloadLen, toMerge, 1);
     RawPacket *rawPacket = new RawPacket(specificFlags, payload, payloadLen, PUB_ACK);
-    return PublishAckPacket(rawPacket, packetId);
+    return new PublishAckPacket(rawPacket, packetId);
 }

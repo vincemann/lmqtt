@@ -58,7 +58,8 @@ int main(int argc, char *argv[]) {
 
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
-
+    ClientQosTopicRepository* clientQosTopicRepository = new ClientQosTopicRepository(fileDataManager);
+    ClientRetransmitMsgHandler* clientRetransmitMsgHandler = new  ClientRetransmitMsgHandler(packetIoManager,publishPacketFactory,clientQosTopicRepository);
 
 
     // HANDLERS
@@ -71,6 +72,7 @@ int main(int argc, char *argv[]) {
     UnsubAckPacketHandler *unsubAckPacketHandler = new UnsubAckPacketHandler(packetIoManager);
     ClientPublishPacketHandler *clientPublishPacketHandler = new ClientPublishPacketHandler(packetIoManager,
                                                                                             clientTopicRepository);
+    ClientPublishAckPacketHandler* clientPublishAckPacketHandler = new ClientPublishAckPacketHandler(packetIoManager,clientQosTopicRepository);
 
     handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
     handlers.insert(std::make_pair(SUBSCRIBE_ACK, subscribeAckPacketHandler));
@@ -99,7 +101,7 @@ int main(int argc, char *argv[]) {
         case CONNECT_MODE: {
             printf("connect mode\n");
             ConnectCLIModeHandler *connectCliModeHandler = new ConnectCLIModeHandler(argv, clientConnectionManager,
-                                                                                     connectPacketFactory, argc);
+                                                                                     connectPacketFactory, argc,clientRetransmitMsgHandler);
             connectCliModeHandler->handle();
             break;
         }
@@ -138,7 +140,7 @@ int main(int argc, char *argv[]) {
                                                                                      connectPacketFactory, argc,
                                                                                      clientSessionRepository,
                                                                                      publishPacketFactory,
-                                                                                     clientRetransmitMsgHandler);
+                                                                                     clientPublishAckPacketHandler);
 
             publishCliModeHandler->handle();
     };

@@ -6,6 +6,8 @@
 #define LMQTT__SERVER_CLIENTQOSMESSAGECONTAINER_H
 
 
+#include <PublishPacket.h>
+
 class ClientQosMessageContainer {
 private:
     char *value;
@@ -14,6 +16,7 @@ private:
     char* topic;
 public:
     ClientQosMessageContainer(char *msg, unsigned char qos, unsigned long id, char *topic);
+    ClientQosMessageContainer(PublishPacket* publishPacket);
 
     char *getValue() const;
 

@@ -16,13 +16,14 @@ class PublishCLIModeHandler : public CLIModeHandler{
     ClientsClientInfoRepository *clientSessionRepository;
     PublishPacketFactory *publishPacketFactory;
     ClientRetransmitMsgHandler* clientRetransmitMsgHandler;
+    ClientPublishAckPacketHandler* clientPublishAckPacketHandler;
 
 public:
     PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                           ConnectPacketFactory *connectPacketFactory, int argc,
                           ClientsClientInfoRepository *clientSessionRepository,
                           PublishPacketFactory *publishPacketFactory,
-                          ClientRetransmitMsgHandler *clientRetransmitMsgHandler);
+                          ClientPublishAckPacketHandler *clientPublishAckPacketHandler);
 
     void handle() override;
 

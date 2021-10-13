@@ -24,9 +24,9 @@ server_binary = "/home/vince/projekte/important/mqtt/lmqtt+-server/lmqtt__server
 DONE = False
 
 
-def run_server():
+def run_server(no_publish_ack_count=0, no_publish_ack_start=0):
     global DONE
-    io = process([server_binary])
+    io = process([server_binary, "--no-publish-ack-count="+str(no_publish_ack_count), "--no-publish-ack-start="+str(no_publish_ack_start), ])
     while True:
         server_output = io.recv(timeout=2).decode("utf-8")
         log.warn(f"server_output: {server_output}")
@@ -34,9 +34,9 @@ def run_server():
             break
 
 
-def start_server():
+def start_server(no_publish_ack_count=0, no_publish_ack_start=0):
     process(["rm", "-rf", lmqtt_path]).recvall()
-    server_thread = threading.Thread(target=run_server)
+    server_thread = threading.Thread(target=run_server, args=(no_publish_ack_count, no_publish_ack_start,))
     server_thread.start()
 
     time.sleep(1.5)
@@ -63,6 +63,11 @@ def consume(username, password, clientId):
 
 def publish(topic, clientId, qos, msg):
     r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    log.info(r)
+
+
+def publish_no_ack(topic, clientId, qos, msg):
+    r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall(timeout=3).decode("utf-8")
     log.info(r)
 
 
@@ -93,6 +98,11 @@ def get_servers_topic_msgs(topic):
 def get_clients_topic_msgs(clientId, topic):
     clients_topic_msgs = readf(lmqtt_path + "/client/" + clientId + "/topics/" + topic + "/messages")
     # if not empty:
+    return json.loads(clients_topic_msgs)
+
+
+def get_clients_retransmission_msgs(clientId):
+    clients_topic_msgs = readf(lmqtt_path + "/client/" + clientId + "/retransmit/messages")
     return json.loads(clients_topic_msgs)
 
 
