@@ -28,7 +28,7 @@ void ClientConnectionManager::attemptConnection(RawPacket *rawPacket) {
     packetIoManager->sendPacket(rawPacket);
     std::cout << "waiting for ConnAck packet" << "\n";
     RawPacket *packet = packetIoManager->readPacket();
-    if (packet->getType() != CONNACK) {
+    if (packet->getType() != CONNECT_ACK) {
         throw MsgException("Did not recv Connack packet, terminating");
     }
     _connectAckPacketHandler->handle(packet);

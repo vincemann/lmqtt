@@ -161,8 +161,8 @@ Topic *ServerTopicRepository::loadTopic(char *topic) {
     //    extract values
     char *topicJson = _fileDataManager->find(pathToTopicDir, "topic");
     json j = json::parse(topicJson);
-    long subscribedUserCount = j.at("subscribed_users_count").get<unsigned long>();
-    long lastMsgIdPublished = j.at("last_msg_id_published").get<unsigned long>();
+    long subscribedUserCount = j.at("subscribed_users_count").get<long int>();
+    long lastMsgIdPublished = j.at("last_msg_id_published").get<long int>();
     std::string s = j.at("value").get<std::string>();
     char *topicValue = Utils::toCharP(&s);
 
@@ -192,12 +192,12 @@ void ServerTopicRepository::saveTopic(Topic *topic) {
 }
 
 
-//Message *ServerTopicRepository::loadMessage(Topic *topic, unsigned long msgId) {
+//Message *ServerTopicRepository::loadMessage(Topic *topic, long int msgId) {
 //    return nullptr;
 //}
 
 
-std::vector<ServerMessageContainer *> *ServerTopicRepository::consumeMessagesStartingFromId(char *topic, unsigned long lastConsumedMsgId) {
+std::vector<ServerMessageContainer *> *ServerTopicRepository::consumeMessagesStartingFromId(char *topic, long int lastConsumedMsgId) {
     std::vector<ServerMessageContainer *> *msgs = loadMessages(topic);
     std::vector<ServerMessageContainer *> *consumedMsgs = new std::vector<ServerMessageContainer *>();
     std::vector<ServerMessageContainer *> *updatedMsgs = new std::vector<ServerMessageContainer *>();
@@ -285,7 +285,7 @@ void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
 // notes: moved search for subscription up, so that the lastConsumedMsgId can be read
 //        also,
 void ServerTopicRepository::unsubscribe(char *topicName) {
-    unsigned long lastConsumedMsgId;
+    long int lastConsumedMsgId;
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
 
     // update client info
@@ -347,8 +347,8 @@ std::vector<ServerMessageContainer *> *ServerTopicRepository::loadMessages(char 
     json j = json::parse(msgsJson);
 
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
-        unsigned long msgId = it.value().at("id").get<unsigned long>();
-        unsigned long unconsumed_user_count = it.value().at("unconsumed_user_count").get<unsigned long>();
+        long int msgId = it.value().at("id").get<long int>();
+        long int unconsumed_user_count = it.value().at("unconsumed_user_count").get<long int>();
         std::string s = it.value().at("value").get<std::string>();
         char *msgValue = Utils::toCharP(&s);
         ServerMessageContainer *msg_o = new ServerMessageContainer(msgId, unconsumed_user_count, msgValue);

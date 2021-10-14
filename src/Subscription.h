@@ -8,20 +8,20 @@
 
 class Subscription {
     char* topic;
-    unsigned long last_msg_id_consumed;
+    long int last_msg_id_consumed;
     unsigned short qos;
 
 public:
-    Subscription(char *topic, unsigned long lastMsgIdConsumed, unsigned short qos);
+    Subscription(char *topic, long int lastMsgIdConsumed, unsigned short qos);
 
     char *getTopic() const;
 
-    unsigned long getLastMsgIdConsumed() const;
+    long int getLastMsgIdConsumed() const;
 
     unsigned short getQos() const;
 
 
-    void setLastMsgIdConsumed(unsigned long lastMsgIdConsumed);
+    void setLastMsgIdConsumed(long int lastMsgIdConsumed);
 };
 
 

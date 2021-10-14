@@ -5,7 +5,7 @@
 #include "PublishPacket.h"
 
 PublishPacket::PublishPacket(RawPacket *rawPacket, unsigned char dupFlag, unsigned short qos,
-                             unsigned char retainFlag, char *topic, unsigned short packetId, char *msg) : RawPacket(rawPacket), dupFlag(dupFlag),
+                             unsigned char retainFlag, char *topic, long int packetId, char *msg) : RawPacket(rawPacket), dupFlag(dupFlag),
                                                                  qos(qos), retainFlag(retainFlag),
                                                                  topic(topic), packetId(packetId),
                                                                  msg(msg) {}
@@ -26,7 +26,7 @@ char *PublishPacket::getTopic() const {
     return topic;
 }
 
-unsigned short PublishPacket::getPacketId() const {
+long int PublishPacket::getPacketId() const {
     return packetId;
 }
 

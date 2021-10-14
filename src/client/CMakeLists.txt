@@ -151,7 +151,7 @@ add_executable(lmqtt__client
         ../handlers/ClientDisconnectPacketHandler.h
         ../packets/parsers/DisconnectPacketParser.h
         ../packets/parsers/DisconnectPacketParser.cpp
-        ../topic/ClientQosTopicRepository.cpp ../topic/ClientQosTopicRepository.h)
+        ../topic/ClientQosTopicRepository.cpp ../topic/ClientQosTopicRepository.h ../packets/parsers/PublishAckPacketParser.cpp ../packets/parsers/PublishAckPacketParser.h)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

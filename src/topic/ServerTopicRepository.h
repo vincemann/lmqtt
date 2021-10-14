@@ -30,9 +30,9 @@ public:
     void removeMsg(char* topic, ServerMessageContainer* msg);
     Topic* loadTopic(char* topic);
     void saveTopic(Topic* topic);
-//    Message* loadMessage(Topic* topic, unsigned long msgId);
+//    Message* loadMessage(Topic* topic, long int msgId);
     std::vector<ServerMessageContainer*>* loadMessages(char* topicName);
-    std::vector<ServerMessageContainer*>* consumeMessagesStartingFromId(char* topic, unsigned long msgId);
+    std::vector<ServerMessageContainer*>* consumeMessagesStartingFromId(char* topic, long int msgId);
     void subscribe(char* topic, unsigned short qos);
     void unsubscribe(char* topic);
     void replaceMessages(char* topic, std::vector<ServerMessageContainer*>* msgs);

@@ -23,7 +23,7 @@ public:
                           ConnectPacketFactory *connectPacketFactory, int argc,
                           ClientsClientInfoRepository *clientSessionRepository,
                           PublishPacketFactory *publishPacketFactory,
-                          ClientPublishAckPacketHandler *clientPublishAckPacketHandler);
+                          ClientPublishAckPacketHandler *clientPublishAckPacketHandler, ClientRetransmitMsgHandler* clientRetransmitMsgHandler);
 
     void handle() override;
 

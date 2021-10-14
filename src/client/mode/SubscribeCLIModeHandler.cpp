@@ -54,20 +54,20 @@ void SubscribeCLIModeHandler::handle() {
 
 
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientSession->_username, clientSession->_password,0);
-    _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
+    clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
-        _clientConnectionManager->attemptConnection(connectPacket);
+        clientConnectionManager->attemptConnection(connectPacket);
         clientTopicRepository->saveTopic(topic);
 
         srand(time(NULL));   // Initialization, should only be called once.
         unsigned short packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
         printf("packet id:%d\n",packetId);
         SubscribePacket* subscribePacket = subscribePacketFactory->create(packetId,topic,qos);
-        _clientConnectionManager->packetIoManager->sendPacket(subscribePacket);
+        clientConnectionManager->packetIoManager->sendPacket(subscribePacket);
         // wait for suback
-        RawPacket* subackPacket = _clientConnectionManager->packetIoManager->readPacket();
+        RawPacket* subackPacket = clientConnectionManager->packetIoManager->readPacket();
         subscribeAckPacketHandler->handle(subackPacket);
-        _clientConnectionManager->closeConnection();
+        clientConnectionManager->closeConnection();
         exit(0);
     } catch (const std::exception &e) {
         std::cout << "exception occurred while creating _connection with server:" << "\n";

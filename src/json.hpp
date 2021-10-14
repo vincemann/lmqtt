@@ -12434,7 +12434,7 @@ class json_pointer
         }
 
         std::size_t processed_chars = 0;
-        unsigned long long res = 0;  // NOLINT(runtime/int)
+        long int long res = 0;  // NOLINT(runtime/int)
         JSON_TRY
         {
             res = std::stoull(s, &processed_chars);
@@ -12452,7 +12452,7 @@ class json_pointer
 
         // only triggered on special platforms (like 32bit), see also
         // https://github.com/nlohmann/json/pull/2203
-        if (res >= static_cast<unsigned long long>((std::numeric_limits<size_type>::max)()))  // NOLINT(runtime/int)
+        if (res >= static_cast<long int long>((std::numeric_limits<size_type>::max)()))  // NOLINT(runtime/int)
         {
             JSON_THROW(detail::out_of_range::create(410, "array index " + s + " exceeds size_type", BasicJsonType())); // LCOV_EXCL_LINE
         }

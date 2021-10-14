@@ -17,6 +17,7 @@
 #include "ServerConnectionManager.h"
 #include "topic/ServerTopicRepository.h"
 #include <getopt.h>
+#include <PublishAckPacketParser.h>
 
 
 #define PORT 8080
@@ -78,17 +79,19 @@ int main(int argc, char *argv[]) {
     PublishPacketParser *publishPacketParser = new PublishPacketParser;
     UnsubscribePacketParser *unsubscribePacketParser = new UnsubscribePacketParser;
     UnsubAckPacketParser *unsubAckPacketParser = new UnsubAckPacketParser;
+    PublishAckPacketParser* publishAckPacketParser = new PublishAckPacketParser();
     parsers.insert(std::make_pair(CONNECT, connectPacketParser));
     parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
     parsers.insert(std::make_pair(SUBSCRIBE, subscribePacketParser));
     parsers.insert(std::make_pair(PUBLISH, publishPacketParser));
+    parsers.insert(std::make_pair(PUBLISH_ACK, publishAckPacketParser));
     parsers.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketParser));
     parsers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketParser));
 
     // FACTORIES
     std::map<PacketType, PacketFactory *> factories;
     ConnectAckPacketFactory *connectAckPacketFactory = new ConnectAckPacketFactory();
-    factories.insert(std::make_pair(CONNACK, connectAckPacketFactory));
+    factories.insert(std::make_pair(CONNECT_ACK, connectAckPacketFactory));
     SubAckPacketFactory *subAckPacketFactory = new SubAckPacketFactory();
     factories.insert(std::make_pair(SUBSCRIBE_ACK, subAckPacketFactory));
     UnsubscribePacketFactory *unsubscribePacketFactory = new UnsubscribePacketFactory();

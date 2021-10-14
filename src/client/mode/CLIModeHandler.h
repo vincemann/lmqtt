@@ -12,7 +12,7 @@ class CLIModeHandler{
 public:
     int _argc;
     char **_argv;
-    ClientConnectionManager* _clientConnectionManager;
+    ClientConnectionManager* clientConnectionManager;
     ConnectPacketFactory* _connectPacketFactory;
 
     CLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,

@@ -52,15 +52,16 @@ void ConnectCLIModeHandler::handle() {
         exit(1);
     }
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, username, password, consume);
-    _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
+    clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
-        _clientConnectionManager->attemptConnection(connectPacket);
+        clientConnectionManager->attemptConnection(connectPacket);
+        clientRetransmitMsgHandler->getClientQosTopicRepository()->initTopicsDir(clientId);
         clientRetransmitMsgHandler->retransmitMsgs();
         if (consume) {
             // wait for publish packets & disconnect packet from server
-            _clientConnectionManager->handleIncomingPackets();
+            clientConnectionManager->handleIncomingPackets();
         } else {
-            _clientConnectionManager->closeConnection();
+            clientConnectionManager->closeConnection();
             exit(0);
         }
     } catch (const std::exception &e) {

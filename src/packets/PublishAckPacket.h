@@ -9,11 +9,11 @@
 #include "RawPacket.h"
 
 class PublishAckPacket : public RawPacket{
-    unsigned long packetId;
+    long int packetId;
 public:
-    PublishAckPacket(RawPacket *rawPacket, unsigned long packetId);
+    PublishAckPacket(RawPacket *rawPacket, long int packetId);
 
-    unsigned long getPacketId() const;
+    long int getPacketId() const;
 };
 
 

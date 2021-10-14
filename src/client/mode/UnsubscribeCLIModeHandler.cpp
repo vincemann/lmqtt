@@ -45,18 +45,18 @@ void UnsubscribeCLIModeHandler::handle() {
         exit(1);
     }
     RawPacket *connectPacket = _connectPacketFactory->create(cleanSession, clientId, clientsClientInfo->_username, clientsClientInfo->_password,0);
-    _clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
+    clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
-        _clientConnectionManager->attemptConnection(connectPacket);
+        clientConnectionManager->attemptConnection(connectPacket);
         srand(time(NULL));   // Initialization, should only be called once.
         unsigned short packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
         printf("packet id:%d\n",packetId);
         UnsubscribePacket* unsubscribePacket = unsubscribePacketFactory->create(packetId,topic);
-        _clientConnectionManager->packetIoManager->sendPacket(unsubscribePacket);
+        clientConnectionManager->packetIoManager->sendPacket(unsubscribePacket);
         // wait for unsuback
-        RawPacket* unsubackPacket = _clientConnectionManager->packetIoManager->readPacket();
+        RawPacket* unsubackPacket = clientConnectionManager->packetIoManager->readPacket();
         unsubAckPacketHandler->handle(unsubackPacket);
-        _clientConnectionManager->closeConnection();
+        clientConnectionManager->closeConnection();
         exit(0);
     } catch (const std::exception &e) {
         std::cout << "exception occurred while creating _connection with server:" << "\n";

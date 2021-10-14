@@ -4,9 +4,9 @@
 
 #include "PublishAckPacket.h"
 
-PublishAckPacket::PublishAckPacket(RawPacket *rawPacket, unsigned long packetId) : RawPacket(rawPacket),
+PublishAckPacket::PublishAckPacket(RawPacket *rawPacket, long int packetId) : RawPacket(rawPacket),
                                                                                    packetId(packetId) {}
 
-unsigned long PublishAckPacket::getPacketId() const {
+long int PublishAckPacket::getPacketId() const {
     return packetId;
 }

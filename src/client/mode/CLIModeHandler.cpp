@@ -10,18 +10,18 @@
 
 
 void CLIModeHandler::initRoute(){
-    _clientConnectionManager->setIp(_argv[optind]);
-    _clientConnectionManager->setPort(strtol(_argv[optind+1],nullptr,10));
-    printf("route: %s:%d\n",_clientConnectionManager->_ip,_clientConnectionManager->_port);
+    clientConnectionManager->setIp(_argv[optind]);
+    clientConnectionManager->setPort(strtol(_argv[optind + 1], nullptr, 10));
+    printf("route: %s:%d\n", clientConnectionManager->_ip, clientConnectionManager->_port);
 }
 
 
 CLIModeHandler::CLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                                ConnectPacketFactory *connectPacketFactory, int argc) : _argv(argv),
-                                                                                 _clientConnectionManager(
+                                                                                       clientConnectionManager(
                                                                                                   clientConnectionManager),
-                                                                                 _connectPacketFactory(connectPacketFactory),
-                                                                                 _argc(argc) {}
+                                                                                       _connectPacketFactory(connectPacketFactory),
+                                                                                       _argc(argc) {}
 
 void CLIModeHandler::handle() {
 

@@ -21,6 +21,7 @@ private:
 
 
 public:
+    void saveMsg(ClientQosMessageContainer* msg);
     void retransmitMsgs();
 
     ClientRetransmitMsgHandler(PacketIOManager *packetIoManager, PublishPacketFactory *publishPacketFactory,

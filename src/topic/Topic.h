@@ -10,10 +10,10 @@ class Topic {
 
 
 public:
-    unsigned long _last_msg_id_published;
-    unsigned long _subscribed_users_count;
+    long int _last_msg_id_published;
+    long int _subscribed_users_count;
     char *value;
-    Topic(unsigned long lastMsgIdPublished, unsigned long subscribedUserCount, char *topic);
+    Topic(long int lastMsgIdPublished, long int subscribedUserCount, char *topic);
     Topic(char* topic);
 
     long getLastMsgIdPublished() const;

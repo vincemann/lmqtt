@@ -7,22 +7,22 @@
 
 
 class ServerMessageContainer {
-    unsigned long _id;
-    unsigned long _unconsumed_user_count;
+    long int _id;
+    long int _unconsumed_user_count;
     char* _msg;
 public:
-    ServerMessageContainer(unsigned long id, unsigned long unconsumedUserCount, char *msg);
+    ServerMessageContainer(long int id, long int unconsumedUserCount, char *msg);
     ServerMessageContainer(char *msg);
 
-    unsigned long getId() const;
+    long int getId() const;
 
     int getUnconsumedUserCount() const;
 
     char *getMsg() const;
 
-    void setId(unsigned long id);
+    void setId(long int id);
 
-    void setUnconsumedUserCount(unsigned long unconsumedUserCount);
+    void setUnconsumedUserCount(long int unconsumedUserCount);
 
     void setMsg(char *msg);
 };

@@ -384,6 +384,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PacketParser.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PublishAckPacketParser.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PublishAckPacketParser.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/packets/parsers/PublishPacketParser.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>

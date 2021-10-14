@@ -101,7 +101,7 @@ void ServerConnectionManager::serveClients() {
 
         // HANDLERS
         std::map<PacketType,PacketHandler*> handlers;
-        ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNACK));
+        ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNECT_ACK));
         PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
         PublishAckPacketFactory* publishAckPacketFactory = new PublishAckPacketFactory();
         ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager,

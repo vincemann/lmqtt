@@ -14,6 +14,7 @@
 #include <PublishPacketParser.h>
 #include <DisconnectPacketParser.h>
 #include <ClientDisconnectPacketHandler.h>
+#include <PublishAckPacketParser.h>
 
 #include "../io/PacketIOManager.h"
 #include "../packets/factories/ConnectPacketFactory.h"
@@ -33,7 +34,7 @@ int main(int argc, char *argv[]) {
     // PARSERS
     std::map<PacketType, PacketParser *> parsers;
     ConnAckPacketParser *connAckPacketParser = new ConnAckPacketParser;
-    parsers.insert(std::make_pair(CONNACK, connAckPacketParser));
+    parsers.insert(std::make_pair(CONNECT_ACK, connAckPacketParser));
     SubscribeAckPacketParser *subscribePacketParser = new SubscribeAckPacketParser;
     parsers.insert(std::make_pair(SUBSCRIBE_ACK, subscribePacketParser));
     UnsubAckPacketParser *unsubAckPacketParser = new UnsubAckPacketParser;
@@ -42,7 +43,8 @@ int main(int argc, char *argv[]) {
     parsers.insert(std::make_pair(PUBLISH, publishPacketParser));
     DisconnectPacketParser *disconnectPacketParser = new DisconnectPacketParser();
     parsers.insert(std::make_pair(DISCONNECT, disconnectPacketParser));
-
+    PublishAckPacketParser* publishAckPacketParser = new PublishAckPacketParser();
+    parsers.insert(std::make_pair(PUBLISH_ACK, publishAckPacketParser));
 
     // FACTORIES
     ConnectPacketFactory *connectPacketFactory = new ConnectPacketFactory();
@@ -74,10 +76,11 @@ int main(int argc, char *argv[]) {
                                                                                             clientTopicRepository);
     ClientPublishAckPacketHandler* clientPublishAckPacketHandler = new ClientPublishAckPacketHandler(packetIoManager,clientQosTopicRepository);
 
-    handlers.insert(std::make_pair(CONNACK, connectAckPacketHandler));
+    handlers.insert(std::make_pair(CONNECT_ACK, connectAckPacketHandler));
     handlers.insert(std::make_pair(SUBSCRIBE_ACK, subscribeAckPacketHandler));
     handlers.insert(std::make_pair(UNSUB_ACK, unsubAckPacketHandler));
     handlers.insert(std::make_pair(PUBLISH, clientPublishPacketHandler));
+    handlers.insert(std::make_pair(PUBLISH_ACK, clientPublishAckPacketHandler));
 
 
 
@@ -131,7 +134,6 @@ int main(int argc, char *argv[]) {
             break;
         }
         case PUBLISH_MODE:
-            ClientQosTopicRepository *clientQosTopicRepository = new ClientQosTopicRepository(fileDataManager);
             ClientRetransmitMsgHandler *clientRetransmitMsgHandler = new ClientRetransmitMsgHandler(packetIoManager,
                                                                                                     publishPacketFactory,
                                                                                                     clientQosTopicRepository);
@@ -140,7 +142,7 @@ int main(int argc, char *argv[]) {
                                                                                      connectPacketFactory, argc,
                                                                                      clientSessionRepository,
                                                                                      publishPacketFactory,
-                                                                                     clientPublishAckPacketHandler);
+                                                                                     clientPublishAckPacketHandler,clientRetransmitMsgHandler);
 
             publishCliModeHandler->handle();
     };

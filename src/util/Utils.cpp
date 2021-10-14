@@ -214,4 +214,13 @@ char *Utils::smartstrcat(const char *s1,const char *s2) {
     return dst;
 }
 
+long Utils::lrand()
+{
+    if (sizeof(int) < sizeof(long))
+        return (static_cast<long>(rand()) << (sizeof(int) * 8)) |
+               rand();
+
+    return rand();
+}
+
 

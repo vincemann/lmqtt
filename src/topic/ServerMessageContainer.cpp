@@ -4,10 +4,10 @@
 
 #include "ServerMessageContainer.h"
 
-ServerMessageContainer::ServerMessageContainer(unsigned long id, unsigned long unconsumedUserCount, char *msg) : _id(id), _unconsumed_user_count(unconsumedUserCount),
+ServerMessageContainer::ServerMessageContainer(long int id, long int unconsumedUserCount, char *msg) : _id(id), _unconsumed_user_count(unconsumedUserCount),
                                                                                                                  _msg(msg) {}
 
-unsigned long ServerMessageContainer::getId() const {
+long int ServerMessageContainer::getId() const {
     return _id;
 }
 
@@ -29,10 +29,10 @@ void ServerMessageContainer::setMsg(char *msg) {
     _msg = msg;
 }
 
-void ServerMessageContainer::setId(unsigned long id) {
+void ServerMessageContainer::setId(long int id) {
     _id = id;
 }
 
-void ServerMessageContainer::setUnconsumedUserCount(unsigned long unconsumedUserCount) {
+void ServerMessageContainer::setUnconsumedUserCount(long int unconsumedUserCount) {
     _unconsumed_user_count = unconsumedUserCount;
 }

@@ -48,3 +48,8 @@ ClientRetransmitMsgHandler::ClientRetransmitMsgHandler(PacketIOManager *packetIo
 ClientQosTopicRepository *ClientRetransmitMsgHandler::getClientQosTopicRepository(){
     return clientQosTopicRepository;
 }
+
+void ClientRetransmitMsgHandler::saveMsg(ClientQosMessageContainer* msg) {
+    this->clientQosTopicRepository->saveMsg(msg);
+
+}

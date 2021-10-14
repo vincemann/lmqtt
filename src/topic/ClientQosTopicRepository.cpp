@@ -18,15 +18,14 @@ void ClientQosTopicRepository::initTopicsDir(char *clientId) {
 }
 
 void ClientQosTopicRepository::saveMsg(ClientQosMessageContainer *msg) {
-    char *topicDir = Utils::smartstrcat(retransmitDir, msg->getTopic());
-    char *msgsJson = fileDataManager->find(topicDir, "messages");
+    char *msgsJson = fileDataManager->find(retransmitDir, "messages");
 
     using json = nlohmann::json;
     json j;
     if (strlen(msgsJson) == 0) {
         json jsonMsg = {
                 {"value", msg->getValue()},
-                {"id", msg->getId()},
+                {"packet-id", msg->getId()},
                 {"qos", msg->getQos()},
                 {"topic", msg->getTopic()}
 
@@ -36,7 +35,7 @@ void ClientQosTopicRepository::saveMsg(ClientQosMessageContainer *msg) {
         j = json::parse(msgsJson);
         json jsonMsg = {
                 {"value", msg->getValue()},
-                {"id", msg->getId()},
+                {"packet-id", msg->getId()},
                 {"qos", msg->getQos()},
                 {"topic", msg->getTopic()}
         };
@@ -46,7 +45,7 @@ void ClientQosTopicRepository::saveMsg(ClientQosMessageContainer *msg) {
     std::string jsonMsgsString = j.dump();
     char *jsonMsgs_c = Utils::toCharP(&jsonMsgsString);
 
-    fileDataManager->store(topicDir, "messages", jsonMsgs_c);
+    fileDataManager->store(retransmitDir, "messages", jsonMsgs_c);
 }
 
 std::vector<ClientQosMessageContainer*> *ClientQosTopicRepository::loadMessages() {
@@ -60,7 +59,7 @@ std::vector<ClientQosMessageContainer*> *ClientQosTopicRepository::loadMessages(
     json j = json::parse(msgsJson);
 
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
-        unsigned long id = it.value().at("id").get<unsigned long>();
+        long int id = it.value().at("packet-id").get<long int>();
         unsigned char qos = it.value().at("qos").get<unsigned char>();
         std::string value_s = it.value().at("value").get<std::string>();
         std::string topic_s = it.value().at("topic").get<std::string>();
@@ -82,7 +81,7 @@ void ClientQosTopicRepository::replaceMessages(std::vector<ClientQosMessageConta
     for (const auto &msg : *msgs) {
         json jsonMsg = {
                 {"value", msg->getValue()},
-                {"id", msg->getId()},
+                {"packet-id", msg->getId()},
                 {"qos", msg->getQos()},
                 {"topic", msg->getTopic()}
 

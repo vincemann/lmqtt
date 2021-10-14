@@ -11,17 +11,19 @@ PublishPacketFactory::create(unsigned short qos, unsigned char retainFlag, char 
 
 
     unsigned char specificFlags = (dupFlag << 3) | (qos << 1) | retainFlag;
+//    specificFlags = specificFlags | (3 << 4);
     printf("specific flags:\n");
     Utils::printBits(specificFlags);
 
     Payload* topicPayload = createUtf8Payload(topic);
 
     Payload* packetIdPayload = 0;
-    unsigned short packetId = -1;
+    long int packetId = -1;
     if (qos > 0){
-        srand(time(NULL));   // Initialization, should only be called once.
-        packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
-        printf("qos is > 0 so gen packet id:%d\n",packetId);
+//        srand48(time(NULL));   // Initialization, should only be called once.
+//        packetId = lrand48();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+        packetId = Utils::lrand();    // Returns a pseudo-random integer between 0 and RAND_MAX.
+        printf("qos is > 0 so gen packet id:%ld\n",packetId);
         packetIdPayload = new Payload(packetId);
     }
 

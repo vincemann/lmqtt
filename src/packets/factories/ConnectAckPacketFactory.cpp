@@ -18,6 +18,6 @@ ConnectAckPacket *ConnectAckPacketFactory::create(unsigned char returnCode, unsi
         throw PacketCreationException("invalid ret code");
     }
     payload[1]= returnCode;
-    RawPacket *rawPacket = new RawPacket(specificFlags, payload, payloadLen, CONNACK);
+    RawPacket *rawPacket = new RawPacket(specificFlags, payload, payloadLen, CONNECT_ACK);
     return new ConnectAckPacket(rawPacket,sessionPresent,returnCode);
 }
