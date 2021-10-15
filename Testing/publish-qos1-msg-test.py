@@ -21,3 +21,5 @@ assert msg["value"] == topic1_msg1
 # was acked, thus msg deleted
 clients_topic_msgs_j = get_clients_retransmission_msgs(clientId)
 assert len(clients_topic_msgs_j) == 0
+
+stop_server()

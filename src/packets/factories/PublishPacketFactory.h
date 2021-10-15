@@ -13,7 +13,7 @@ class PublishPacketFactory : public PacketFactory {
 public:
 
     PublishPacket *create(unsigned short qos, unsigned char retainFlag, char *topic, char *msg,
-                          unsigned char dupFlag);
+                          unsigned char dupFlag, int packetId=-1);
 };
 
 

@@ -4,7 +4,7 @@
 
 #include "Topic.h"
 
-Topic::Topic(long int lastMsgIdPublished, long int subscribedUserCount, char *topic) : _last_msg_id_published(
+Topic::Topic(int lastMsgIdPublished, int subscribedUserCount, char *topic) : _last_msg_id_published(
         lastMsgIdPublished), _subscribed_users_count(subscribedUserCount), value(topic) {}
 
         long Topic::getLastMsgIdPublished() const {

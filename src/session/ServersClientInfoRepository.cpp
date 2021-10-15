@@ -64,7 +64,7 @@ ServersClientInfo *ServersClientInfoRepository::load(char *clientId) {
             // el should be a json object as well
             json jsonSubscriptions = it.value();
             for (json::iterator it = jsonSubscriptions.begin(); it != jsonSubscriptions.end(); ++it) {
-                long int last_msg_id_consumed = it.value().at("last_msg_id_consumed").get<long int>();
+                int last_msg_id_consumed = it.value().at("last_msg_id_consumed").get<int>();
                 unsigned short qos = it.value().at("qos").get<unsigned short>();
                 std::string s_topic = it.value().at("topic").get<std::string>();
                 char *topic = Utils::toCharP(&s_topic);

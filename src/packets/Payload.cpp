@@ -3,6 +3,7 @@
 //
 
 #include "Payload.h"
+#include "../MsgException.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -23,8 +24,18 @@ int Payload::getSize() const {
     return size;
 }
 
+static unsigned char checkNullByte(unsigned char c){
+//    if(c != '\0'){
+//        return c;
+//    } else{
+//        throw MsgException("must not contain nullbyte");
+//    }
+    return c;
+}
+
 // for payloads that consist of only one byte
 Payload::Payload(unsigned char data) {
+    checkNullByte(data);
     unsigned short size = sizeof(unsigned char);
     unsigned char* pData = ( unsigned char*) malloc(size);
     memcpy(pData,&data,size);
@@ -36,21 +47,21 @@ Payload::Payload(unsigned char data) {
 // for payloads that consist of only two byte
 Payload::Payload(unsigned short data) {
     unsigned char* pData = ( unsigned char*) malloc(sizeof (unsigned short));
-    pData[0]= data & 0xff;
-    pData[1]= (data >> 8) & 0xff;
+    pData[0]= checkNullByte(data & 0xff);
+    pData[1]= checkNullByte((data >> 8) & 0xff);
     _data=pData;
     _dataSize = sizeof (unsigned short);
     _prependSize=false;
 }
 
-Payload::Payload(long int data) {
-    unsigned char* pData = ( unsigned char*) malloc(sizeof (long int));
-    pData[0]= data & 0xff;
-    pData[1]= (data >> 8) & 0xff;
-    pData[2]= (data >> 16) & 0xff;
-    pData[3]= (data >> 24) & 0xff;
+Payload::Payload(int data) {
+    unsigned char* pData = ( unsigned char*) malloc(sizeof (int));
+    pData[0]= checkNullByte(data & 0xff);
+    pData[1]= checkNullByte((data >> 8) & 0xff);
+    pData[2]= checkNullByte((data >> 16) & 0xff);
+    pData[3]= checkNullByte((data >> 24) & 0xff);
     _data=pData;
-    _dataSize = sizeof (long int );
+    _dataSize = sizeof (int );
     _prependSize= false;
 }
 

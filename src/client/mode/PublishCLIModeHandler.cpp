@@ -75,7 +75,7 @@ void PublishCLIModeHandler::handle() {
         if (qos == 0) {
             printf("Closing Connection\n");
             clientConnectionManager->closeConnection();
-        } else if (qos ==1){
+        } else if (qos == 1){
             clientRetransmitMsgHandler->saveMsg(new ClientQosMessageContainer(publishPacket));
             // wait for puback
             RawPacket* pubResponsePackage = clientConnectionManager->packetIoManager->readPacket();

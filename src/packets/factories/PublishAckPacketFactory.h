@@ -11,7 +11,7 @@
 
 class PublishAckPacketFactory : public PacketFactory{
 public:
-    PublishAckPacket* create(long int packetId);
+    PublishAckPacket* create(int packetId);
 
 };
 

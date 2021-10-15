@@ -7,8 +7,8 @@
 
 RawPacket *PublishAckPacketParser::parse(RawPacket *raw_packet) {
     unsigned char* data = raw_packet->getData();
-    long int packetId = 0;
-    memcpy(&packetId,data, sizeof(long int));
-    printf("packetId: %ld\n",packetId);
+    int packetId = 0;
+    memcpy(&packetId,data, sizeof(int));
+    printf("packetId: %d\n",packetId);
     return new PublishAckPacket(raw_packet,packetId);
 }

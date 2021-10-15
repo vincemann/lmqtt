@@ -18,14 +18,17 @@ private:
     PacketIOManager *packetIoManager;
     PublishPacketFactory *publishPacketFactory;
     ClientQosTopicRepository *clientQosTopicRepository;
+    ClientPublishAckPacketHandler* publishAckPacketHandler;
 
 
 public:
     void saveMsg(ClientQosMessageContainer* msg);
     void retransmitMsgs();
 
-    ClientRetransmitMsgHandler(PacketIOManager *packetIoManager, PublishPacketFactory *publishPacketFactory,
-                               ClientQosTopicRepository *clientQosTopicRepository);
+    ClientRetransmitMsgHandler(PacketIOManager *packetIoManager,
+                               PublishPacketFactory *publishPacketFactory,
+                               ClientQosTopicRepository *clientQosTopicRepository,
+                               ClientPublishAckPacketHandler *publishAckPacketHandler);
 
     ClientQosTopicRepository *getClientQosTopicRepository();
 

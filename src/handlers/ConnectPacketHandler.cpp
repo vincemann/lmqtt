@@ -145,8 +145,7 @@ void ConnectPacketHandler::sendUnconsumedMessages() {
                 topicRepository->consumeMessagesStartingFromId(topic->getValue(), subscription->getLastMsgIdConsumed());
         for (const auto &msg : *messages){
             PublishPacket* publishPacket = publishPacketFactory->create(
-                    subscription->getQos(), 0, topic->getValue(), msg->getMsg(), 0
-            );
+                    subscription->getQos(), 0, topic->getValue(), msg->getMsg(), 0,msg->getId());
             if ( subscription->getQos() == 0){
                 _packetIo->sendPacket(publishPacket);
                 subscription->setLastMsgIdConsumed(subscription->getLastMsgIdConsumed() +1 );

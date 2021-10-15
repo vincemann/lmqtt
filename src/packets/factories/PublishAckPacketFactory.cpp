@@ -4,7 +4,7 @@
 
 #include "PublishAckPacketFactory.h"
 
-PublishAckPacket *PublishAckPacketFactory::create(long int packetId) {
+PublishAckPacket *PublishAckPacketFactory::create(int packetId) {
     unsigned char specificFlags = 0;
     Payload* packetIdPayload = new Payload(packetId);
 

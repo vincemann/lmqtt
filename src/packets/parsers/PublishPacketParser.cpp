@@ -25,10 +25,10 @@ RawPacket *PublishPacketParser::parse(RawPacket *raw_packet) {
     char* topic = extractUtf8Payload(&data,true);
 
 
-    unsigned short packetId = -1;
+    int packetId = -1;
     if(qos > 0){
-        memcpy(&packetId, data, sizeof(unsigned short));
-        data += sizeof(unsigned short);
+        memcpy(&packetId, data, sizeof(int));
+        data += sizeof(int);
     }
 
     char* msg = extractUtf8Payload(&data,true);

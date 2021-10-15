@@ -59,7 +59,7 @@ std::vector<ClientQosMessageContainer*> *ClientQosTopicRepository::loadMessages(
     json j = json::parse(msgsJson);
 
     for (json::iterator it = j.begin(); it != j.end(); ++it) {
-        long int id = it.value().at("packet-id").get<long int>();
+        int id = it.value().at("packet-id").get<int>();
         unsigned char qos = it.value().at("qos").get<unsigned char>();
         std::string value_s = it.value().at("value").get<std::string>();
         std::string topic_s = it.value().at("topic").get<std::string>();

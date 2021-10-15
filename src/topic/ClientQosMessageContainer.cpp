@@ -4,7 +4,7 @@
 
 #include "ClientQosMessageContainer.h"
 
-ClientQosMessageContainer::ClientQosMessageContainer(char *msg, unsigned char qos, long int id, char *topic)
+ClientQosMessageContainer::ClientQosMessageContainer(char *msg, unsigned char qos, int id, char *topic)
         : value(msg), qos(qos), id(id), topic(topic) {}
 
 char *ClientQosMessageContainer::getValue() const {
@@ -15,7 +15,7 @@ ClientQosMessageContainer::~ClientQosMessageContainer() {
     delete value;
 }
 
-long int ClientQosMessageContainer::getId() const {
+int ClientQosMessageContainer::getId() const {
     return id;
 }
 

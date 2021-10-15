@@ -9,7 +9,7 @@
 
 
 namespace Utils {
-    long int lrand();
+//    int lrand();
     unsigned char reverse_bits(unsigned char num);
     void printBits(unsigned char val);
     unsigned createBitMask(unsigned a, unsigned b);

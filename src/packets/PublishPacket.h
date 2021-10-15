@@ -13,12 +13,12 @@ class PublishPacket : public RawPacket{
     unsigned short qos;
     unsigned char retainFlag;
     char* topic;
-    long int packetId;
+    int packetId;
     char* msg;
 
 public:
     PublishPacket(RawPacket *rawPacket, unsigned char dupFlag, unsigned short qos,
-                  unsigned char retainFlag, char *topic, long int packetId, char *msg);
+                  unsigned char retainFlag, char *topic, int packetId, char *msg);
 
     unsigned char getDupFlag() const;
 
@@ -28,7 +28,7 @@ public:
 
     char *getTopic() const;
 
-    long int getPacketId() const;
+    int getPacketId() const;
 
     char *getMsg() const;
 };

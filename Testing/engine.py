@@ -34,8 +34,9 @@ def run_server(no_publish_ack_count=0, no_publish_ack_start=0):
             break
 
 
-def start_server(no_publish_ack_count=0, no_publish_ack_start=0):
-    process(["rm", "-rf", lmqtt_path]).recvall()
+def start_server(no_publish_ack_count=0, no_publish_ack_start=0, rm=True):
+    if rm:
+        process(["rm", "-rf", lmqtt_path]).recvall()
     server_thread = threading.Thread(target=run_server, args=(no_publish_ack_count, no_publish_ack_start,))
     server_thread.start()
 
@@ -49,6 +50,7 @@ def readf(path):
 def stop_server():
     global DONE
     DONE = True
+    # time.sleep(2.5)
 
 
 def connect(username, password, clientId):
@@ -74,7 +76,7 @@ def publish_no_ack(topic, clientId, qos, msg):
 def init_topic(topic, clientId):
     r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(0) + " \"" + topic_init_msg + "\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
-    servers_topic_msgs_j = get_servers_topic_msgs(topic1)
+    servers_topic_msgs_j = get_servers_topic_msgs(topic)
     assert len(servers_topic_msgs_j) == 0
     server_topic_meta_j = get_servers_topic_info(topic)
     assert server_topic_meta_j["value"] == topic
@@ -99,6 +101,8 @@ def get_clients_topic_msgs(clientId, topic):
     clients_topic_msgs = readf(lmqtt_path + "/client/" + clientId + "/topics/" + topic + "/messages")
     # if not empty:
     return json.loads(clients_topic_msgs)
+
+# def assert_no_clients_topic():
 
 
 def get_clients_retransmission_msgs(clientId):

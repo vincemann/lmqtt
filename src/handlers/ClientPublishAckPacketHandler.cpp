@@ -8,19 +8,21 @@
 void ClientPublishAckPacketHandler::handle(RawPacket *packet) {
     PublishAckPacket* publishAckPacket = static_cast<PublishAckPacket*>(packet);
     std::vector<ClientQosMessageContainer*> * msgs = clientQosTopicRepository->loadMessages();
-    std::vector<ClientQosMessageContainer*> * remainingUnsentMsgs = new std::vector<ClientQosMessageContainer*>();
+    std::vector<ClientQosMessageContainer*> * remainingUnAckedMsgs = new std::vector<ClientQosMessageContainer*>();
+    printf("checking if saved retransmit msg has id: %d, thus is to delete\n",publishAckPacket->getPacketId());
     for (const auto &msg : *msgs){
+        printf("checking saved retransmit msg with id: %d\n",msg->getId());
         if (msg->getId() == publishAckPacket->getPacketId()){
-            printf("got ack for packet with id: %ld, %s \n",msg->getId(),msg->getValue());
+            printf("got ack for packet with id: %d, %s \n",msg->getId(),msg->getValue());
             printf("removing retransmission msg file\n");
             continue;
         } else{
-            remainingUnsentMsgs->push_back(msg);
+            remainingUnAckedMsgs->push_back(msg);
         }
     }
-    if (msgs->size() != remainingUnsentMsgs->size()){
+    if (msgs->size() != remainingUnAckedMsgs->size()){
         // remove acked msg from list
-        clientQosTopicRepository->replaceMessages(remainingUnsentMsgs);
+        clientQosTopicRepository->replaceMessages(remainingUnAckedMsgs);
     }
 
 

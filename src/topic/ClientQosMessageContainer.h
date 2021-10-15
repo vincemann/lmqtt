@@ -11,16 +11,16 @@
 class ClientQosMessageContainer {
 private:
     char *value;
-    long int id;
+    int id;
     unsigned char qos;
     char* topic;
 public:
-    ClientQosMessageContainer(char *msg, unsigned char qos, long int id, char *topic);
+    ClientQosMessageContainer(char *msg, unsigned char qos, int id, char *topic);
     ClientQosMessageContainer(PublishPacket* publishPacket);
 
     char *getValue() const;
 
-    long int getId() const;
+    int getId() const;
 
     unsigned char getQos() const;
 

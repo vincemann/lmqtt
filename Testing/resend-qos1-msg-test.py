@@ -29,13 +29,13 @@ assert len(servers_topic_msgs_j) == 1
 
 
 # client stores qos 1 msg for retransmission
-clients_topic_msgs_j = get_clients_retransmission_msgs(clientId)
-msg = clients_topic_msgs_j[0]
+clients_retransmit_msgs = get_clients_retransmission_msgs(clientId)
+msg = clients_retransmit_msgs[0]
 assert msg["value"] == topic1_msg2
-assert len(clients_topic_msgs_j) == 1
+assert len(clients_retransmit_msgs) == 1
 
 # server works again
-start_server()
+start_server(rm=False)
 
 
 connect(username, password, clientId)
@@ -52,8 +52,8 @@ assert msg["value"] == topic1_msg2
 assert len(servers_topic_msgs_j) == 2
 
 # client has removed qos1 msg from retransmission folder
-clients_topic_msgs_j = get_clients_topic_msgs(clientId, topic1)
-assert len(clients_topic_msgs_j) == 0
+clients_retransmit_msgs = get_clients_retransmission_msgs(clientId)
+assert len(clients_retransmit_msgs) == 0
 
 
 stop_server()

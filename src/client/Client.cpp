@@ -61,7 +61,11 @@ int main(int argc, char *argv[]) {
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
     ClientQosTopicRepository* clientQosTopicRepository = new ClientQosTopicRepository(fileDataManager);
-    ClientRetransmitMsgHandler* clientRetransmitMsgHandler = new  ClientRetransmitMsgHandler(packetIoManager,publishPacketFactory,clientQosTopicRepository);
+    ClientPublishAckPacketHandler* clientPublishAckPacketHandler = new ClientPublishAckPacketHandler(packetIoManager,clientQosTopicRepository);
+    ClientRetransmitMsgHandler* clientRetransmitMsgHandler = new ClientRetransmitMsgHandler(packetIoManager,
+                                                                                            publishPacketFactory,
+                                                                                            clientQosTopicRepository,
+                                                                                            clientPublishAckPacketHandler);
 
 
     // HANDLERS
@@ -74,7 +78,6 @@ int main(int argc, char *argv[]) {
     UnsubAckPacketHandler *unsubAckPacketHandler = new UnsubAckPacketHandler(packetIoManager);
     ClientPublishPacketHandler *clientPublishPacketHandler = new ClientPublishPacketHandler(packetIoManager,
                                                                                             clientTopicRepository);
-    ClientPublishAckPacketHandler* clientPublishAckPacketHandler = new ClientPublishAckPacketHandler(packetIoManager,clientQosTopicRepository);
 
     handlers.insert(std::make_pair(CONNECT_ACK, connectAckPacketHandler));
     handlers.insert(std::make_pair(SUBSCRIBE_ACK, subscribeAckPacketHandler));
@@ -134,9 +137,6 @@ int main(int argc, char *argv[]) {
             break;
         }
         case PUBLISH_MODE:
-            ClientRetransmitMsgHandler *clientRetransmitMsgHandler = new ClientRetransmitMsgHandler(packetIoManager,
-                                                                                                    publishPacketFactory,
-                                                                                                    clientQosTopicRepository);
             printf("publish mode\n");
             PublishCLIModeHandler *publishCliModeHandler = new PublishCLIModeHandler(argv, clientConnectionManager,
                                                                                      connectPacketFactory, argc,
