@@ -54,28 +54,27 @@ def stop_server():
 
 
 def connect(username, password, clientId):
-    r = process(client_binary + " connect -u "+username+" -p "+password+" -i "+clientId+" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    r = process(client_binary + " connect --user "+username+" --password "+password+" --id "+clientId+" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
 
 
 def consume(username, password, clientId):
-    r = process(client_binary + " connect -u "+username+" -p "+password+" -i "+clientId+" -m 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    r = process(client_binary + " connect --user "+username+" --password "+password+" --id "+clientId+" --consume-messages 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
 
 
 def publish(topic, clientId, qos, msg):
-    r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    r = process(client_binary + " publish --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
 
 
 def publish_no_ack(topic, clientId, qos, msg):
-    r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall(timeout=3).decode("utf-8")
+    r = process(client_binary + " publish --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall(timeout=3).decode("utf-8")
     log.info(r)
 
 
 def init_topic(topic, clientId):
-    r = process(client_binary + " publish -t "+topic+" -i " + clientId + " -q " + str(0) + " \"" + topic_init_msg + "\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
-    log.info(r)
+    publish(topic, clientId, 0, topic_init_msg)
     servers_topic_msgs_j = get_servers_topic_msgs(topic)
     assert len(servers_topic_msgs_j) == 0
     server_topic_meta_j = get_servers_topic_info(topic)
@@ -85,9 +84,13 @@ def init_topic(topic, clientId):
 
 
 def subscribe(topic, clientId, qos):
-    r = process(client_binary + " subscribe -t "+topic+" -i " + clientId + " -q " + str(qos) + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    r = process(client_binary + " subscribe --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
     log.info(r)
 
+
+def unsubscribe(topic, clientId, qos):
+    r = process(client_binary + " unsubscribe --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    log.info(r)
 
 # HELPERS
 

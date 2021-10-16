@@ -21,30 +21,70 @@ void ConnectCLIModeHandler::handle() {
     char *password = 0;
     unsigned char cleanSession = 0;
     unsigned char consume = 0;
-    // i = clientId, u = username, p = password, r=removeSession, m= consume msgs
-    //todo learn to make args obsolete (i is needed, i think it was '!' or smth)
-    while ((opt = getopt(_argc, _argv, "u:p:i:rm")) != -1) {
+
+    //
+    int this_option_optind = optind ? optind : 1;
+    int option_index = 0;
+    static struct option long_options[] = {
+            {"id", required_argument, 0, 0},
+            {"user", required_argument, 0, 0},
+            {"password", required_argument, 0, 0},
+            {"clean-session", no_argument, 0, 0},
+            {"consume-messages", no_argument, 0, 0},
+            {0, 0,0, 0}
+    };
+
+
+    while ((opt = getopt_long(_argc, _argv, "", long_options, &option_index)) != -1) {
         switch (opt) {
-            case 'u':
-                username = optarg;
-                break;
-            case 'p':
-                password = optarg;
-                break;
-            case 'i':
-                clientId = optarg;
-                break;
-            case 'r':
-                cleanSession = 1;
-                break;
-            case 'm':
-                consume = 1;
-                break;
-            default: /* '?' */
-                CLIModes::printUsageInformation(_argv[0], CONNECT_MODE);
-                exit(1);
+            case 0:
+                printf("option %s", long_options[option_index].name);
+                if (optarg)
+                    printf(" with arg %s", optarg);
+                printf("\n");
+
+
+                if (strcmp(long_options[option_index].name, "id") == 0) {
+                     clientId = optarg;
+                } else if (strcmp(long_options[option_index].name, "user") == 0) {
+                    username = optarg;
+                }else if (strcmp(long_options[option_index].name, "password") == 0) {
+                    password = optarg;
+                }else if (strcmp(long_options[option_index].name, "clean-session") == 0) {
+                    cleanSession = 1;
+                }
+                else if (strcmp(long_options[option_index].name, "consume-messages") == 0) {
+                    consume = 1;
+                } else{
+                    CLIModes::printUsageInformation(_argv[0], CONNECT_MODE);
+                    exit(1);
+                }
         }
     }
+
+
+//    while ((opt = getopt(_argc, _argv, "u:p:i:rm")) != -1) {
+//        switch (opt) {
+//            case 'u':
+//                username = optarg;
+//                break;
+//            case 'p':
+//                password = optarg;
+//                break;
+//            case 'i':
+//                clientId = optarg;
+//                break;
+//            case 'r':
+//                cleanSession = 1;
+//                break;
+//            case 'm':
+//                consume = 1;
+//                break;
+//            default: /* '?' */
+//                CLIModes::printUsageInformation(_argv[0], CONNECT_MODE);
+//                exit(1);
+//        }
+//    }
     initRoute();
     if (clientId == 0) {
         fprintf(stderr, "Client Id missing");
