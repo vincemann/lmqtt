@@ -7,9 +7,9 @@
 
 RawPacket *UnsubscribePacketParser::parse(RawPacket *raw_packet) {
     unsigned char *data = raw_packet->getData();
-    unsigned short packetId;
-    memcpy(&packetId, data, sizeof(unsigned short));
-    data += sizeof(unsigned short);
+    int packetId;
+    memcpy(&packetId, data, sizeof(int));
+    data += sizeof(int);
     char *topic = extractUtf8Payload(&data, true);
     return new UnsubscribePacket(raw_packet, packetId, topic);
 }

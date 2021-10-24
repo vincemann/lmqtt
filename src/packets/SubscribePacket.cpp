@@ -12,7 +12,7 @@ SubscribePacket::~SubscribePacket() {
     delete topic;
 }
 
-unsigned short SubscribePacket::getPacketId() const {
+int SubscribePacket::getPacketId() const {
     return _packetId;
 }
 
@@ -24,6 +24,6 @@ unsigned char SubscribePacket::getQos() const {
     return qos;
 }
 
-SubscribePacket::SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned char qos)
+SubscribePacket::SubscribePacket(RawPacket *rawPacket, int packetId, char *topic, unsigned char qos)
         : RawPacket(rawPacket), _packetId(packetId), topic(topic), qos(qos) {}
 

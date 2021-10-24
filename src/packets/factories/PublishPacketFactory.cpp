@@ -6,12 +6,7 @@
 #include "PublishPacketFactory.h"
 
 
-static int gen_random_packet_id() {
-    srand(time(NULL));   // Initialization, should only be called once.
-    int packetId = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
-    printf("qos is > 0 so gen packet id:%d\n", packetId);
-    return packetId;
-}
+
 
 PublishPacket *
 PublishPacketFactory::create(unsigned short qos, unsigned char retainFlag, char *topic,
@@ -29,7 +24,7 @@ PublishPacketFactory::create(unsigned short qos, unsigned char retainFlag, char 
     int finalPacketId = packetId;
     if (qos > 0) {
         if (packetId == -1) {
-            finalPacketId = gen_random_packet_id();
+            finalPacketId = Utils::gen_random_packet_id();
         } else {
             printf("packet id supplied: %d, not generating new one\n", finalPacketId);
         }

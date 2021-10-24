@@ -4,6 +4,7 @@ import threading
 import time
 
 username = "gil"
+username2 = "vincemann"
 password = "pass123"
 lmqtt_path = "/home/vince/.lmqtt"
 clientId = "gilsClientId"
@@ -60,16 +61,19 @@ def connect(username, password, clientId):
 
 def consume(username, password, clientId):
     r = process(client_binary + " connect --user "+username+" --password "+password+" --id "+clientId+" --consume-messages 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    time.sleep(0.5)
     log.info(r)
 
 
 def publish(topic, clientId, qos, msg):
     r = process(client_binary + " publish --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    time.sleep(0.5)
     log.info(r)
 
 
 def publish_no_ack(topic, clientId, qos, msg):
     r = process(client_binary + " publish --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " \"" + msg + "\" 127.0.0.1 8080", shell=True).recvall(timeout=3).decode("utf-8")
+    time.sleep(0.5)
     log.info(r)
 
 
@@ -85,11 +89,13 @@ def init_topic(topic, clientId):
 
 def subscribe(topic, clientId, qos):
     r = process(client_binary + " subscribe --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    time.sleep(0.5)
     log.info(r)
 
 
-def unsubscribe(topic, clientId, qos):
-    r = process(client_binary + " unsubscribe --topic "+topic+" --id " + clientId + " --qos " + str(qos) + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+def unsubscribe(topic, clientId):
+    r = process(client_binary + " unsubscribe --topic "+topic+" --id " + clientId + " 127.0.0.1 8080", shell=True).recvall().decode("utf-8")
+    time.sleep(0.5)
     log.info(r)
 
 # HELPERS
@@ -102,7 +108,6 @@ def get_servers_topic_msgs(topic):
 
 def get_clients_topic_msgs(clientId, topic):
     clients_topic_msgs = readf(lmqtt_path + "/client/" + clientId + "/topics/" + topic + "/messages")
-    # if not empty:
     return json.loads(clients_topic_msgs)
 
 # def assert_no_clients_topic():

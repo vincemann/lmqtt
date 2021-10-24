@@ -3,8 +3,19 @@
 //
 
 #include "ServerConnection.h"
+#include "ServersClientInfoRepository.h"
 
-ServerConnection::ServerConnection() : Connection() {}
 
 
-ServerConnection::ServerConnection(ServersClientInfo *serverSession) : serversClientInfo(serverSession) {}
+ServersClientInfo *ServerConnection::loadServersClientInfo() const {
+    return serversClientInfoRepository->load(serversClientInfo->getClientId());
+}
+
+void ServerConnection::setServersClientInfo(ServersClientInfo *serversClientInfo) {
+    ServerConnection::serversClientInfo = serversClientInfo;
+}
+
+ServerConnection::ServerConnection(ServersClientInfoRepository *serversClientInfoRepository)
+        : serversClientInfoRepository(serversClientInfoRepository) {}
+
+

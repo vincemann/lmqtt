@@ -99,7 +99,7 @@ void PublishCLIModeHandler::handle() {
 
     ClientsClientInfo *clientSession = clientSessionRepository->load(clientId);
     if (clientSession == 0) {
-        printf("You have to call connect to init session before calling subscribe");
+        printf("You have to call connect to init session before calling publish");
         exit(1);
     }
 

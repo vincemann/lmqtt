@@ -8,7 +8,7 @@ UnsubscribePacket::~UnsubscribePacket() {
     delete topic;
 }
 
-unsigned short UnsubscribePacket::getPacketId() const {
+int UnsubscribePacket::getPacketId() const {
     return _packetId;
 }
 
@@ -16,5 +16,5 @@ char *UnsubscribePacket::getTopic() const {
     return topic;
 }
 
-UnsubscribePacket::UnsubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic)
+UnsubscribePacket::UnsubscribePacket(RawPacket *rawPacket, int packetId, char *topic)
 : RawPacket(rawPacket), _packetId(packetId), topic(topic) {}

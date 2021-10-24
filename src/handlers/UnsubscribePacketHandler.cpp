@@ -31,14 +31,8 @@ void UnsubscribePacketHandler::handle(RawPacket *packet) {
 }
 
 UnsubscribePacketHandler::UnsubscribePacketHandler(PacketIOManager *packetIo,
-                                                   ServersClientInfoRepository *serversClientInfoRepository,
-                                                   ServerConnection *serverConnection,
                                                    UnsubAckPacketFactory *unsubAckPacketFactory,
                                                    ServerTopicRepository *topicRepository) : PacketHandler(packetIo),
-                                                                                             serversClientInfoRepository(
-                                                                                                     serversClientInfoRepository),
-                                                                                             _serverConnection(
-                                                                                                     serverConnection),
                                                                                              _unsubAckPacketFactory(
                                                                                                      unsubAckPacketFactory),
                                                                                              topicRepository(

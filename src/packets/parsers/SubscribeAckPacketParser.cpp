@@ -9,9 +9,13 @@
 
 RawPacket *SubscribeAckPacketParser::parse(RawPacket *raw_packet) {
     unsigned char* data = raw_packet->getData();
-    unsigned short packetId;
-    memcpy(&packetId,data,2);
+
+    int packetId;
+    memcpy(&packetId,data,sizeof(int));
+    data = data + sizeof(int);
+
     unsigned char retCode;
-    memcpy(&retCode,data+sizeof(unsigned short),1);
+    memcpy(&retCode,data,sizeof(unsigned char));
+
     return new SubscribeAckPacket(raw_packet, packetId, retCode);
 }

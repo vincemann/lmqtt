@@ -20,8 +20,8 @@ void SubscribeAckPacketHandler::handle(RawPacket *packet) {
     }
 
     SubscribePacket* subscribePacket = static_cast<SubscribePacket*>(clientConnection->_packetsSent->back());
-    printf("subscribe packet id%d\n", subscribePacket->getPacketId());
-    printf("subscribe ack packet id%d\n", subAckPacket->getPacketId());
+    printf("subscribe packet id: %d\n", subscribePacket->getPacketId());
+    printf("subscribe ack packet id: %d\n", subAckPacket->getPacketId());
 
 
     if (subscribePacket->getPacketId() != subAckPacket->getPacketId()){

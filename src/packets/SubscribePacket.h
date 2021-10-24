@@ -11,9 +11,9 @@
 class SubscribePacket : public RawPacket{
 public:
 
-    SubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic, unsigned char qos);
+    SubscribePacket(RawPacket *rawPacket, int packetId, char *topic, unsigned char qos);
 
-    unsigned short getPacketId() const;
+    int getPacketId() const;
 
     char *getTopic() const;
 
@@ -21,8 +21,7 @@ public:
 
     ~SubscribePacket();
 private:
-    // todo remove array initialisations
-    unsigned short _packetId;
+    int _packetId;
     char *topic;
 
     unsigned short qos;

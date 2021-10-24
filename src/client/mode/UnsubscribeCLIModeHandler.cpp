@@ -15,7 +15,6 @@ void UnsubscribeCLIModeHandler::handle() {
 
     char *clientId = 0;
     char *topic = 0;
-    unsigned char qos = 0xff;
 
     //
     int this_option_optind = optind ? optind : 1;
@@ -23,7 +22,6 @@ void UnsubscribeCLIModeHandler::handle() {
     static struct option long_options[] = {
             {"id", required_argument, 0, 0},
             {"topic", required_argument, 0, 0},
-            {"qos", required_argument, 0, 0},
             {0, 0,0, 0}
     };
 
@@ -41,10 +39,8 @@ void UnsubscribeCLIModeHandler::handle() {
                     clientId = optarg;
                 } else if (strcmp(long_options[option_index].name, "topic") == 0) {
                     topic = optarg;
-                }else if (strcmp(long_options[option_index].name, "qos") == 0) {
-                    qos = atoi(optarg);
                 } else{
-                    CLIModes::printUsageInformation(_argv[0], SUBSCRIBE_MODE);
+                    CLIModes::printUsageInformation(_argv[0], UNSUBSCRIBE_MODE);
                     exit(1);
                 }
         }
@@ -78,16 +74,14 @@ void UnsubscribeCLIModeHandler::handle() {
 
     ClientsClientInfo* clientsClientInfo = clientsClientInfoRepository->load(clientId);
     if (clientsClientInfo == 0 ){
-        printf("You have to call connect to init session before calling subscribe");
+        printf("You have to call connect to init session before calling unsubscribe");
         exit(1);
     }
     RawPacket *connectPacket = _connectPacketFactory->create(0, clientId, clientsClientInfo->_username, clientsClientInfo->_password,0);
     clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
-        // todo impl qos
         clientConnectionManager->attemptConnection(connectPacket);
-        srand(time(NULL));   // Initialization, should only be called once.
-        int packetId = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+        int packetId = Utils::gen_random_packet_id();
         printf("packet id:%d\n",packetId);
         UnsubscribePacket* unsubscribePacket = unsubscribePacketFactory->create(packetId,topic);
         clientConnectionManager->packetIoManager->sendPacket(unsubscribePacket);

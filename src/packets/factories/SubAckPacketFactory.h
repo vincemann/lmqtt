@@ -11,7 +11,7 @@
 
 class SubAckPacketFactory : public PacketFactory{
 public:
-    SubscribeAckPacket* create(unsigned short packetId, unsigned char retCode);
+    SubscribeAckPacket* create(int packetId, unsigned char retCode);
 };
 
 

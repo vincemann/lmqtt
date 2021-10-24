@@ -15,13 +15,10 @@
 
 class UnsubscribePacketHandler : public PacketHandler{
 private:
-    ServersClientInfoRepository* serversClientInfoRepository;
-    ServerConnection* _serverConnection;
     UnsubAckPacketFactory* _unsubAckPacketFactory;
     ServerTopicRepository* topicRepository;
 public:
-    UnsubscribePacketHandler(PacketIOManager *packetIo, ServersClientInfoRepository *serversClientInfoRepository,
-                             ServerConnection *serverConnection, UnsubAckPacketFactory *unsubAckPacketFactory,
+    UnsubscribePacketHandler(PacketIOManager *packetIo, UnsubAckPacketFactory *unsubAckPacketFactory,
                              ServerTopicRepository *topicRepository);
 
     void handle(RawPacket *packet) override;

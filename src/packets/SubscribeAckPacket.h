@@ -9,13 +9,13 @@
 #include "RawPacket.h"
 
 class SubscribeAckPacket : public RawPacket{
-    unsigned short _packetId;
+    int _packetId;
     unsigned char _retCode;
 
 public:
-    SubscribeAckPacket(RawPacket *rawPacket, unsigned short packetId, unsigned char retCode);
+    SubscribeAckPacket(RawPacket *rawPacket, int packetId, unsigned char retCode);
 
-    unsigned short getPacketId() const;
+    int getPacketId() const;
 
     unsigned char getRetCode() const;
 };

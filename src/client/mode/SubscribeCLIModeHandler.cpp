@@ -98,9 +98,7 @@ void SubscribeCLIModeHandler::handle() {
         clientConnectionManager->attemptConnection(connectPacket);
         clientTopicRepository->saveTopic(topic);
 
-        srand(time(NULL));   // Initialization, should only be called once.
-        unsigned short packetId = (unsigned short) rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
-        printf("packet id:%d\n",packetId);
+        int packetId = Utils::gen_random_packet_id();   // Returns a pseudo-random integer between 0 and RAND_MAX.
         SubscribePacket* subscribePacket = subscribePacketFactory->create(packetId,topic,qos);
         clientConnectionManager->packetIoManager->sendPacket(subscribePacket);
         // wait for suback

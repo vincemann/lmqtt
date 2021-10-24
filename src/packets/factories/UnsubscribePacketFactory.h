@@ -11,7 +11,7 @@
 
 class UnsubscribePacketFactory : public PacketFactory{
 public:
-    UnsubscribePacket* create(unsigned short packetId, char *topic);
+    UnsubscribePacket* create(int packetId, char *topic);
 };
 
 

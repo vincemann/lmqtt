@@ -6,7 +6,7 @@
 #include "PacketType.h"
 #include <string.h>
 
-SubscribePacket *SubscribePacketFactory::create(unsigned short packetId,
+SubscribePacket *SubscribePacketFactory::create(int packetId,
                                char *topic, unsigned char qos) {
     unsigned char specificFlags = 2;
 

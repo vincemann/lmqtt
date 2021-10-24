@@ -273,9 +273,11 @@
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ServerConnection.cpp">
 			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/con/ServerConnection.h">
 			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/files/FileDataManager.cpp">
 			<Option target="lmqtt__server"/>

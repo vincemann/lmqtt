@@ -10,15 +10,15 @@
 class UnsubscribePacket : public RawPacket{
 public:
 
-    UnsubscribePacket(RawPacket *rawPacket, unsigned short packetId, char *topic);
+    UnsubscribePacket(RawPacket *rawPacket, int packetId, char *topic);
 
-    unsigned short getPacketId() const;
+    int getPacketId() const;
 
     char *getTopic() const;
 
     ~UnsubscribePacket();
 private:
-    unsigned short _packetId;
+    int _packetId;
     char *topic;
 
 

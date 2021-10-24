@@ -6,7 +6,7 @@
 #include <SubscribeAckPacket.h>
 #include "SubAckPacketFactory.h"
 
-SubscribeAckPacket* SubAckPacketFactory::create(unsigned short packetId, unsigned char retCode) {
+SubscribeAckPacket* SubAckPacketFactory::create(int packetId, unsigned char retCode) {
     unsigned char specificFlags = 0;
     Payload* retCodePayload = new Payload(retCode);
     Payload* packetIdPayload = new Payload(packetId);

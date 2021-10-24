@@ -25,13 +25,13 @@ namespace CLIModes {
     static void printUsageInformation(char* programName, CLIMode mode){
         switch (mode) {
             case CONNECT_MODE:
-                fprintf(stderr, "Usage: %s %s -u username -p password -i clientId [-r (reset)] ip port\n", programName, CLIModes::toString(mode));
+                fprintf(stderr, "Usage: %s %s --user username --password password --id clientId [--clean-session] [--consume-messages] ip port\n", programName, CLIModes::toString(mode));
             case SUBSCRIBE_MODE:
-                fprintf(stderr, "Usage: %s %s -t topic -i clientId -q qos ip port\n", programName, CLIModes::toString(mode));
+                fprintf(stderr, "Usage: %s %s --topic topic --id clientId --qos qos ip port\n", programName, CLIModes::toString(mode));
             case PUBLISH_MODE:
-                fprintf(stderr, "Usage: %s %s -t topic -i clientId value ip port\n", programName, CLIModes::toString(mode));
+                fprintf(stderr, "Usage: %s %s --topic topic --id clientId msg ip port\n", programName, CLIModes::toString(mode));
             case UNSUBSCRIBE_MODE:
-                fprintf(stderr, "Usage: %s %s -t topic -i clientId ip port\n", programName, CLIModes::toString(mode));
+                fprintf(stderr, "Usage: %s %s --topic topic --id clientId ip port\n", programName, CLIModes::toString(mode));
         }
     }
 

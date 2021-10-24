@@ -133,7 +133,9 @@ add_executable(lmqtt__server
         src/topic/ClientQosTopicRepository.cpp
         src/topic/ClientQosMessageContainer.h
         src/topic/ClientQosMessageContainer.cpp
-        src/packets/parsers/PublishAckPacketParser.cpp src/packets/parsers/PublishAckPacketParser.h)
+        src/packets/parsers/PublishAckPacketParser.cpp
+        src/packets/parsers/PublishAckPacketParser.h
+        )
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

@@ -25,6 +25,10 @@ public:
 
 //    friend std::ostream &operator<<(std::ostream &os, const ServerSession &session);
     friend std::ostream &operator<<(std::ostream &os, const ServersClientInfo &session);
+
+    char *getClientId() const;
+
+    std::vector<Subscription *> *getSubscriptions() const;
 };
 
 

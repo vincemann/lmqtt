@@ -15,6 +15,13 @@
 #include <unistd.h>
 
 
+int Utils::gen_random_packet_id() {
+    srand(time(NULL));   // Initialization, should only be called once.
+    int packetId = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+    printf("gen packet id:%d\n", packetId);
+    return packetId;
+}
+
 /* Function to reverse bits of num */
 unsigned char Utils::reverse_bits(unsigned char num) {
     unsigned int NO_OF_BITS = 8;

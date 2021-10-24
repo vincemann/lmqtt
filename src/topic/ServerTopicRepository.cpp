@@ -256,7 +256,7 @@ std::vector<ServerMessageContainer *> *ServerTopicRepository::consumeMessagesSta
 
 void ServerTopicRepository::subscribe(char *topicName, unsigned short qos) {
     // check if subscription already there
-    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
+    ServersClientInfo *clientInfo = serverConnection->loadServersClientInfo();
     for (std::vector<Subscription*>::iterator it = clientInfo->subscriptions->begin(); it != clientInfo->subscriptions->end(); ++it) {
         Subscription* subscription = *it;
         if (strcmp(subscription->getTopic(),topicName) == 0){
@@ -289,7 +289,7 @@ void ServerTopicRepository::unsubscribe(char *topicName) {
     char *topicDir = Utils::smartstrcat(_topicsDir, topicName);
 
     // update client info
-    ServersClientInfo *clientInfo = serverConnection->serversClientInfo;
+    ServersClientInfo *clientInfo = serverConnection->loadServersClientInfo();
     for (std::vector<Subscription*>::iterator it = clientInfo->subscriptions->begin(); it != clientInfo->subscriptions->end(); ++it) {
         Subscription* subscription = *it;
         if (strcmp(subscription->getTopic(),topicName) == 0){

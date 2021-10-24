@@ -29,19 +29,19 @@ void ConnectPacketHandler::connAck(int errorCode, unsigned char cleanSessionFlag
 void ConnectPacketHandler::initServerSession(unsigned char cleanSession, char * clientId){
     if (cleanSession == 0)
     {
-        ServersClientInfo* session = _sessionRepository->load(clientId);
-        if (session == nullptr)
+        ServersClientInfo* clientInfo = _sessionRepository->load(clientId);
+        if (clientInfo == 0)
         {
-            std::cout << "did not find session file for client id" << clientId << "\n";
+            std::cout << "did not find clientInfo file for client id" << clientId << "\n";
             std::cout << "creating it" << "\n";
             char* duplicatedClientId = strdup(clientId);
-            session = new ServersClientInfo(duplicatedClientId);
-            _sessionRepository->save(session);
-            std::cout << "new session: " << session << "\n";
+            clientInfo = new ServersClientInfo(duplicatedClientId);
+            _sessionRepository->save(clientInfo);
+            std::cout << "new clientInfo: " << clientInfo << "\n";
         } else{
-            std::cout << "have found session file for client id: " << clientId << ": " << session <<"\n";
+            std::cout << "have found clientInfo file for client id: " << clientId << ": " << clientInfo << "\n";
         }
-        serverConnection->serversClientInfo = session;
+        serverConnection->setServersClientInfo(clientInfo);
     }
 }
 
@@ -138,7 +138,7 @@ ConnectPacketHandler::ConnectPacketHandler(ServerConnection *connectionSession, 
           topicRepository(topicRepository), publishPacketFactory(publishPacketFactory) {}
 
 void ConnectPacketHandler::sendUnconsumedMessages() {
-    ServersClientInfo* serversClientInfo = serverConnection->serversClientInfo;
+    ServersClientInfo* serversClientInfo = serverConnection->loadServersClientInfo();
     for (const auto &subscription : *serversClientInfo->subscriptions){
         Topic* topic = topicRepository->loadTopic(subscription->getTopic());
         std::vector<ServerMessageContainer*>* messages=

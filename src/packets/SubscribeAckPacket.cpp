@@ -4,11 +4,11 @@
 
 #include "SubscribeAckPacket.h"
 
-SubscribeAckPacket::SubscribeAckPacket(RawPacket *rawPacket, unsigned short packetId, unsigned char retCode) : RawPacket(rawPacket),
+SubscribeAckPacket::SubscribeAckPacket(RawPacket *rawPacket, int packetId, unsigned char retCode) : RawPacket(rawPacket),
                                                                                                                _packetId(packetId),
                                                                                                                _retCode(retCode) {}
 
-unsigned short SubscribeAckPacket::getPacketId() const {
+int SubscribeAckPacket::getPacketId() const {
     return _packetId;
 }
 

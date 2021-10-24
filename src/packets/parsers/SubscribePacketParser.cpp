@@ -15,9 +15,9 @@ RawPacket *SubscribePacketParser::parse(RawPacket *rawPacket) {
     }
 
     unsigned char *data = rawPacket->getData();
-    unsigned short packetId;
-    memcpy(&packetId, data, sizeof(unsigned short));
-    data += sizeof(unsigned short);
+    int packetId;
+    memcpy(&packetId, data, sizeof(int));
+    data += sizeof(int);
 
     printf("_packetId:%d\n", packetId);
 //    unsigned short topicLength;

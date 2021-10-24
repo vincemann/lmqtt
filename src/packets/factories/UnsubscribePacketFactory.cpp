@@ -4,7 +4,7 @@
 
 #include "UnsubscribePacketFactory.h"
 
-UnsubscribePacket* UnsubscribePacketFactory::create(unsigned short packetId, char *topic) {
+UnsubscribePacket* UnsubscribePacketFactory::create(int packetId, char *topic) {
     unsigned char specificFlags = 2;
     Payload* packetIdPayload = new Payload(packetId);
     Payload* topicPayload = createUtf8Payload(topic);
