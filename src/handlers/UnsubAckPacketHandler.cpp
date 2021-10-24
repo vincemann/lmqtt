@@ -11,5 +11,5 @@ UnsubAckPacketHandler::UnsubAckPacketHandler(PacketIOManager *packetIo): PacketH
 void UnsubAckPacketHandler::handle(RawPacket *rawPacket) {
     auto *packet = static_cast<UnsubAckPacket *>(rawPacket);
 //    unsub_ack packetId is the same as the unsub package that is being acknowledged
-    printf("Received unsub_ack package %hu", packet->getPacketId());
+    printf("Received unsub_ack package %d\n", packet->getPacketId());
 }

@@ -310,12 +310,31 @@ void ServerTopicRepository::unsubscribe(char *topicName) {
         return;
     }
     std::vector<ServerMessageContainer *> *msgs = loadMessages(topicName);
-    for (const auto &msg : *msgs) {
+    std::vector<ServerMessageContainer *> *updatedMsgs = new std::vector<ServerMessageContainer *>();
+
+    for (std::vector<ServerMessageContainer*>::iterator it = msgs->begin(); it != msgs->end(); ++it) {
+        ServerMessageContainer* msg = *it;
+
         if (msg->getId() > lastConsumedMsgId) {
             msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
+            if (msg->getUnconsumedUserCount() <= 0){
+                // value will be deleted
+                continue;
+            }else{
+                updatedMsgs->push_back(msg);
+                continue;
+            }
         }
+        updatedMsgs->push_back(msg);
+
+//        if (msg->getId() > lastConsumedMsgId) {
+//            msg->setUnconsumedUserCount(msg->getUnconsumedUserCount() - 1);
+//            if (msg->getUnconsumedUserCount() <= 0){
+//                msgs->erase(it);
+//            }
+//        }
     }
-    replaceMessages(topicName, msgs);
+    replaceMessages(topicName, updatedMsgs);
     saveTopic(topic);
 
 

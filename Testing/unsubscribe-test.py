@@ -57,7 +57,7 @@ assert len(servers_topic_msgs_j) == 2
 
 
 # UNSUB FIRST USER -> FIRST MSG DELETED
-unsubscribe(username, clientId)
+unsubscribe(topic1, clientId)
 server_topic_meta_j = get_servers_topic_info(topic1)
 assert server_topic_meta_j["last_msg_id_published"] == 3
 assert server_topic_meta_j["subscribed_users_count"] == 1
