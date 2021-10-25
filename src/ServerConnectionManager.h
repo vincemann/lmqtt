@@ -9,13 +9,15 @@
 #include <FileDataManager.h>
 #include <ServersClientInfoRepository.h>
 #include "topic/ServerTopicRepository.h"
+#include "ServerQosTopicRepository.h"
 
 class ServerConnectionManager {
 public:
     ServerConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
                             std::map<PacketType, PacketFactory *> *factories,
                             ServerTopicRepository *topicRepository,
-                            ServersClientInfoRepository *serversClientInfoRepository);
+                            ServersClientInfoRepository *serversClientInfoRepository,
+                            ServerQosTopicRepository *serverQosTopicRepository);
 
     void serveClients();
     void disconnectClient();
@@ -30,6 +32,7 @@ private:
     unsigned char _clientConnected;
     std::map<PacketType,PacketParser*>* _parsers;
     std::map<PacketType,PacketFactory*>* _factories;
+    ServerQosTopicRepository* serverQosTopicRepository;
 };
 
 

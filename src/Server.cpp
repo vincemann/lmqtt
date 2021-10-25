@@ -16,6 +16,7 @@
 #include "files/FileDataManager.h"
 #include "ServerConnectionManager.h"
 #include "topic/ServerTopicRepository.h"
+#include "ServerQosTopicRepository.h"
 #include <getopt.h>
 #include <PublishAckPacketParser.h>
 
@@ -98,6 +99,12 @@ int main(int argc, char *argv[]) {
     factories.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketFactory));
     UnsubAckPacketFactory *unsubAckPacketFactory = new UnsubAckPacketFactory();
     factories.insert(std::make_pair(UNSUB_ACK, unsubAckPacketFactory));
+    PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
+    factories.insert(std::make_pair(PUBLISH, unsubAckPacketFactory));
+
+
+    ServerQosTopicRepository* serverQosTopicRepository = new ServerQosTopicRepository(fileDataManager);
+
 
 
 //    ServerTopicRepository* topicRepository = new ServerTopicRepository(fileDataManager);
@@ -141,7 +148,7 @@ int main(int argc, char *argv[]) {
 
     ServerConnectionManager *connectionManager = new ServerConnectionManager(PORT, &parsers, &factories,
                                                                              topicRepository,
-                                                                             serversClientInfoRepository);
+                                                                             serversClientInfoRepository, serverQosTopicRepository);
     connectionManager->serveClients();
 }
 

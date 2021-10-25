@@ -132,12 +132,17 @@ ConnectPacketHandler::ConnectPacketHandler(ServerConnection *connectionSession, 
                                            ConnectAckPacketFactory *connectAckPacketFactory,
                                            ServersClientInfoRepository *sessionRepository,
                                            ServerTopicRepository *topicRepository,
-                                           PublishPacketFactory *publishPacketFactory)
+                                           PublishPacketFactory *publishPacketFactory,
+                                           RetransmitMsgHandler *retransmitMsgHandler)
         : PacketHandler(packetIo), _connectAckPacketFactory(connectAckPacketFactory), _sessionRepository(
                                                    sessionRepository), serverConnection(connectionSession),
-          topicRepository(topicRepository), publishPacketFactory(publishPacketFactory) {}
+          topicRepository(topicRepository), publishPacketFactory(publishPacketFactory),
+          retransmitMsgHandler(retransmitMsgHandler) {}
 
 void ConnectPacketHandler::sendUnconsumedMessages() {
+    printf("retransmitting msgs first, if any\n");
+    retransmitMsgHandler->retransmitMsgs();
+
     ServersClientInfo* serversClientInfo = serverConnection->loadServersClientInfo();
     for (const auto &subscription : *serversClientInfo->subscriptions){
         Topic* topic = topicRepository->loadTopic(subscription->getTopic());
@@ -150,11 +155,15 @@ void ConnectPacketHandler::sendUnconsumedMessages() {
                 _packetIo->sendPacket(publishPacket);
                 subscription->setLastMsgIdConsumed(subscription->getLastMsgIdConsumed() +1 );
             } else if(subscription->getQos() == 1){
+                retransmitMsgHandler->saveMsg(new QosMessageContainer(publishPacket));
+                _packetIo->sendPacket(publishPacket);
+
                 // todo impl with Retransmission Handler
                 // put logic for subscription update into puback handler
             }
         }
     }
+    // clientRepository->save(serversClientInfo); ??
 }
 
 

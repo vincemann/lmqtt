@@ -182,19 +182,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ClientRetransmitMsgHandler.cpp">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ClientRetransmitMsgHandler.h">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/MsgException.cpp">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/MsgException.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/RetransmitMsgHandler.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/RetransmitMsgHandler.h">
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -205,6 +205,12 @@
 			<Option target="lmqtt__server"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ServerConnectionManager.h">
+			<Option target="lmqtt__server"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ServerRetransmissionMsgHandler.cpp">
+			<Option target="lmqtt__server"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ServerRetransmissionMsgHandler.h">
 			<Option target="lmqtt__server"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/Subscription.cpp">
@@ -293,12 +299,6 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientDisconnectPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishAckPacketHandler.cpp">
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishAckPacketHandler.h">
-			<Option target="lmqtt__client"/>
-		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ClientPublishPacketHandler.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -325,6 +325,12 @@
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PacketHandler.h">
 			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PublishAckPacketHandler.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/PublishAckPacketHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/handlers/ServerDisconnectPacketHandler.cpp">
@@ -667,26 +673,26 @@
 			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosMessageContainer.cpp">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosMessageContainer.h">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosTopicRepository.cpp">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
-		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientQosTopicRepository.h">
-			<Option target="lmqtt__server"/>
-			<Option target="lmqtt__client"/>
-		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientTopicRepository.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ClientTopicRepository.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/QosMessageContainer.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/QosMessageContainer.h">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/QosTopicRepository.cpp">
+			<Option target="lmqtt__server"/>
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/QosTopicRepository.h">
+			<Option target="lmqtt__server"/>
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/topic/ServerMessageContainer.cpp">

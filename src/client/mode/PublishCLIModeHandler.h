@@ -7,23 +7,23 @@
 
 
 #include <PublishPacketFactory.h>
-#include <ClientPublishAckPacketHandler.h>
+#include <PublishAckPacketHandler.h>
 #include "CLIModeHandler.h"
-#include "../../ClientRetransmitMsgHandler.h"
-#include "../../topic/ClientQosTopicRepository.h"
+#include "../../RetransmitMsgHandler.h"
+#include "../../topic/QosTopicRepository.h"
 
 class PublishCLIModeHandler : public CLIModeHandler{
     ClientsClientInfoRepository *clientSessionRepository;
     PublishPacketFactory *publishPacketFactory;
-    ClientRetransmitMsgHandler* clientRetransmitMsgHandler;
-    ClientPublishAckPacketHandler* clientPublishAckPacketHandler;
+    RetransmitMsgHandler* clientRetransmitMsgHandler;
+    PublishAckPacketHandler* clientPublishAckPacketHandler;
 
 public:
     PublishCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                           ConnectPacketFactory *connectPacketFactory, int argc,
                           ClientsClientInfoRepository *clientSessionRepository,
                           PublishPacketFactory *publishPacketFactory,
-                          ClientPublishAckPacketHandler *clientPublishAckPacketHandler, ClientRetransmitMsgHandler* clientRetransmitMsgHandler);
+                          PublishAckPacketHandler *clientPublishAckPacketHandler, RetransmitMsgHandler* clientRetransmitMsgHandler);
 
     void handle() override;
 

@@ -25,10 +25,15 @@ void ClientPublishPacketHandler::handle(RawPacket *packet) {
         printf("successfully saved value: %s for topic: %s\n",publishPacket->getTopic(),publishPacket->getMsg());
         return;
     } else if(publishPacket->getQos() == 1){
-        // todo add responses and retransmissions
+        PublishAckPacket* publishAckPacket = publishAckPacketFactory->create(publishPacket->getPacketId());
+        _packetIo->sendPacket(publishAckPacket);
+    } else if (publishPacket->getQos() == 2){
+        // todo impl
     }
 }
 
 ClientPublishPacketHandler::ClientPublishPacketHandler(PacketIOManager *packetIo,
-                                                       ClientTopicRepository *topicRepository) : PacketHandler(
-        packetIo), topicRepository(topicRepository) {}
+                                                       PublishAckPacketFactory *publishAckPacketFactory,
+                                                       ClientTopicRepository *topicRepository)
+        : PacketHandler(packetIo), publishAckPacketFactory(publishAckPacketFactory), topicRepository(topicRepository) {}
+

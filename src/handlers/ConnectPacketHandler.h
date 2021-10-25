@@ -15,6 +15,7 @@
 #include "../files/FileDataManager.h"
 #include "../session/ServersClientInfo.h"
 #include "../topic/ServerTopicRepository.h"
+#include "../RetransmitMsgHandler.h"
 
 class ConnectPacketHandler : public PacketHandler/*<ConnectPacket>*/{
 protected:
@@ -23,6 +24,7 @@ ServersClientInfoRepository* _sessionRepository;
 ServerConnection* serverConnection;
 ServerTopicRepository* topicRepository;
 PublishPacketFactory* publishPacketFactory;
+RetransmitMsgHandler* retransmitMsgHandler;
 void initServerSession(unsigned char cleanSession, char* clientId);
 void connAck(int errorCode, unsigned char cleanSessionFlag);
 void sendUnconsumedMessages();
@@ -33,7 +35,8 @@ public:
                          ConnectAckPacketFactory *connectAckPacketFactory,
                          ServersClientInfoRepository *sessionRepository,
                          ServerTopicRepository *topicRepository,
-                         PublishPacketFactory *publishPacketFactory);
+                         PublishPacketFactory *publishPacketFactory,
+                         RetransmitMsgHandler *retransmitMsgHandler);
 
     void handle(RawPacket *rawPacket) override;
     ConnectAckPacketFactory *getConnectAckPacketFactory() const;

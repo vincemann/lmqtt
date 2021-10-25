@@ -139,26 +139,26 @@ add_executable(lmqtt__client
         ../packets/PublishAckPacket.h
         ../packets/factories/PublishAckPacketFactory.cpp
         ../packets/factories/PublishAckPacketFactory.h
-        ../handlers/ClientPublishAckPacketHandler.cpp
-        ../handlers/ClientPublishAckPacketHandler.h
-        ../ClientRetransmitMsgHandler.cpp
-        ../ClientRetransmitMsgHandler.h
-        ../topic/ClientQosMessageContainer.cpp
-        ../topic/ClientQosMessageContainer.h
+        ../handlers/PublishAckPacketHandler.cpp
+        ../handlers/PublishAckPacketHandler.h
+        ../RetransmitMsgHandler.cpp
+        ../RetransmitMsgHandler.h
+        ../topic/QosMessageContainer.cpp
+        ../topic/QosMessageContainer.h
         ../topic/ClientTopicRepository.cpp
         ../topic/ClientTopicRepository.h
         ../handlers/ClientDisconnectPacketHandler.cpp
         ../handlers/ClientDisconnectPacketHandler.h
         ../packets/parsers/DisconnectPacketParser.h
         ../packets/parsers/DisconnectPacketParser.cpp
-        ../topic/ClientQosTopicRepository.cpp
-        ../topic/ClientQosTopicRepository.h
+        ../topic/QosTopicRepository.cpp
+        ../topic/QosTopicRepository.h
         ../packets/parsers/PublishAckPacketParser.cpp
         ../packets/parsers/PublishAckPacketParser.h
 
         ../con/ServerConnection.h
         ../con/ServerConnection.cpp
-        )
+        ClientQosTopicRepository.cpp ClientQosTopicRepository.h)
 
 # target_include_directories(lmqtt__client PRIVATE ../handlers ../io ../packets
 # ../packet_factories)

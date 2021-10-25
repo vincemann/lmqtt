@@ -10,7 +10,7 @@
 #include <DisconnectPacket.h>
 #include "CLIMode.h"
 #include "ConnectCLIModeHandler.h"
-#include "../../ClientRetransmitMsgHandler.h"
+#include "../../RetransmitMsgHandler.h"
 
 
 void ConnectCLIModeHandler::handle() {
@@ -113,7 +113,7 @@ void ConnectCLIModeHandler::handle() {
 
 ConnectCLIModeHandler::ConnectCLIModeHandler(char **argv, ClientConnectionManager *clientConnectionManager,
                                              ConnectPacketFactory *connectPacketFactory, int argc,
-                                             ClientRetransmitMsgHandler *clientRetransmitMsgHandler) : CLIModeHandler(
+                                             RetransmitMsgHandler *clientRetransmitMsgHandler) : CLIModeHandler(
         argv, clientConnectionManager, connectPacketFactory, argc), clientRetransmitMsgHandler(
         clientRetransmitMsgHandler) {}
 

@@ -28,6 +28,7 @@
 #include "files/FileDataManager.h"
 
 #include "ServerConnectionManager.h"
+#include "ServerQosTopicRepository.h"
 
 
 int ServerConnectionManager::waitForConnection(int serverFd){
@@ -104,10 +105,20 @@ void ServerConnectionManager::serveClients() {
         ConnectAckPacketFactory* connectAckPacketFactory = static_cast<ConnectAckPacketFactory*>(_factories->at(CONNECT_ACK));
         PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
         PublishAckPacketFactory* publishAckPacketFactory = new PublishAckPacketFactory();
+
+        PublishAckPacketHandler* serverPublishAckPacketHandler = new PublishAckPacketHandler(packetIoManager, serverQosTopicRepository);
+        RetransmitMsgHandler* serverRetransmitMsgHandler = new RetransmitMsgHandler(packetIoManager,
+                                                                                    publishPacketFactory,
+                                                                                    serverQosTopicRepository,
+                                                                                    serverPublishAckPacketHandler);
+
+
         ConnectPacketHandler* connectPacketHandler = new ConnectPacketHandler(connection, packetIoManager,
                                                                               connectAckPacketFactory,
-                                                                              serversClientInfoRepository, topicRepository,
-                                                                              publishPacketFactory);
+                                                                              serversClientInfoRepository,
+                                                                              topicRepository,
+                                                                              publishPacketFactory,
+                                                                              serverRetransmitMsgHandler);
         ServerDisconnectPacketHandler* disconnectPacketHandler = new ServerDisconnectPacketHandler(packetIoManager, this);
 
         SubAckPacketFactory* subAckPacketFactory = static_cast<SubAckPacketFactory*>(_factories->at(SUBSCRIBE_ACK));
@@ -126,6 +137,7 @@ void ServerConnectionManager::serveClients() {
         handlers.insert(std::make_pair(SUBSCRIBE, subscribePacketHandler));
         handlers.insert(std::make_pair(UNSUBSCRIBE, unsubscribePacketHandler));
         handlers.insert(std::make_pair(PUBLISH, serverPublishPacketHandler));
+        handlers.insert(std::make_pair(PUBLISH_ACK, serverPublishAckPacketHandler));
 
         while(true){
             try{
@@ -174,8 +186,9 @@ void ServerConnectionManager::disconnectClient() {
 ServerConnectionManager::ServerConnectionManager(int port, std::map<PacketType, PacketParser *> *parsers,
                                                  std::map<PacketType, PacketFactory *> *factories,
                                                  ServerTopicRepository *topicRepository,
-                                                 ServersClientInfoRepository *serversClientInfoRepository)
+                                                 ServersClientInfoRepository *serversClientInfoRepository,
+                                                 ServerQosTopicRepository *serverQosTopicRepository)
         : _port(port), _parsers(parsers),
           _factories(factories), topicRepository(topicRepository),
-          serversClientInfoRepository(serversClientInfoRepository) {}
+          serversClientInfoRepository(serversClientInfoRepository), serverQosTopicRepository(serverQosTopicRepository) {}
 

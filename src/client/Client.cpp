@@ -27,6 +27,7 @@
 #include "mode/SubscribeCLIModeHandler.h"
 #include "mode/UnsubscribeCLIModeHandler.h"
 #include "mode/PublishCLIModeHandler.h"
+#include "ClientQosTopicRepository.h"
 
 
 int main(int argc, char *argv[]) {
@@ -51,6 +52,7 @@ int main(int argc, char *argv[]) {
     SubscribePacketFactory *subscribePacketFactory = new SubscribePacketFactory();
     UnsubscribePacketFactory *unsubscribePacketFactory = new UnsubscribePacketFactory();
     PublishPacketFactory *publishPacketFactory = new PublishPacketFactory();
+    PublishAckPacketFactory* publishAckPacketFactory = new PublishAckPacketFactory();
 
 
     FileDataManager *fileDataManager = new FileDataManager();
@@ -61,11 +63,11 @@ int main(int argc, char *argv[]) {
     // gets initialized by attemptConnection
     PacketIOManager *packetIoManager = new PacketIOManager();
     ClientQosTopicRepository* clientQosTopicRepository = new ClientQosTopicRepository(fileDataManager);
-    ClientPublishAckPacketHandler* clientPublishAckPacketHandler = new ClientPublishAckPacketHandler(packetIoManager,clientQosTopicRepository);
-    ClientRetransmitMsgHandler* clientRetransmitMsgHandler = new ClientRetransmitMsgHandler(packetIoManager,
-                                                                                            publishPacketFactory,
-                                                                                            clientQosTopicRepository,
-                                                                                            clientPublishAckPacketHandler);
+    PublishAckPacketHandler* clientPublishAckPacketHandler = new PublishAckPacketHandler(packetIoManager, clientQosTopicRepository);
+    RetransmitMsgHandler* clientRetransmitMsgHandler = new RetransmitMsgHandler(packetIoManager,
+                                                                                publishPacketFactory,
+                                                                                clientQosTopicRepository,
+                                                                                clientPublishAckPacketHandler);
 
 
     // HANDLERS
@@ -76,7 +78,7 @@ int main(int argc, char *argv[]) {
     SubscribeAckPacketHandler *subscribeAckPacketHandler = new SubscribeAckPacketHandler(packetIoManager, connection);
 
     UnsubAckPacketHandler *unsubAckPacketHandler = new UnsubAckPacketHandler(packetIoManager);
-    ClientPublishPacketHandler *clientPublishPacketHandler = new ClientPublishPacketHandler(packetIoManager,
+    ClientPublishPacketHandler *clientPublishPacketHandler = new ClientPublishPacketHandler(packetIoManager,publishAckPacketFactory,
                                                                                             clientTopicRepository);
 
     handlers.insert(std::make_pair(CONNECT_ACK, connectAckPacketHandler));

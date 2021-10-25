@@ -118,7 +118,7 @@ void PublishCLIModeHandler::handle() {
             printf("Closing Connection\n");
             clientConnectionManager->closeConnection();
         } else if (qos == 1){
-            clientRetransmitMsgHandler->saveMsg(new ClientQosMessageContainer(publishPacket));
+            clientRetransmitMsgHandler->saveMsg(new QosMessageContainer(publishPacket));
             // wait for puback
             RawPacket* pubResponsePackage = clientConnectionManager->packetIoManager->readPacket();
             clientPublishAckPacketHandler->handle(pubResponsePackage);
@@ -138,7 +138,7 @@ PublishCLIModeHandler::PublishCLIModeHandler(char **argv, ClientConnectionManage
                                              ConnectPacketFactory *connectPacketFactory, int argc,
                                              ClientsClientInfoRepository *clientSessionRepository,
                                              PublishPacketFactory *publishPacketFactory,
-                                             ClientPublishAckPacketHandler *clientPublishAckPacketHandler,ClientRetransmitMsgHandler* clientRetransmitMsgHandler)
+                                             PublishAckPacketHandler *clientPublishAckPacketHandler, RetransmitMsgHandler* clientRetransmitMsgHandler)
         : CLIModeHandler(argv,
                          clientConnectionManager,
                          connectPacketFactory,

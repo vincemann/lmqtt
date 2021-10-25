@@ -127,15 +127,15 @@ add_executable(lmqtt__server
         src/packets/PublishAckPacket.h
         src/packets/factories/PublishAckPacketFactory.cpp
         src/packets/factories/PublishAckPacketFactory.h
-        src/ClientRetransmitMsgHandler.cpp
-        src/ClientRetransmitMsgHandler.h
-        src/topic/ClientQosTopicRepository.h
-        src/topic/ClientQosTopicRepository.cpp
-        src/topic/ClientQosMessageContainer.h
-        src/topic/ClientQosMessageContainer.cpp
+        src/RetransmitMsgHandler.cpp
+        src/RetransmitMsgHandler.h
+        src/topic/QosTopicRepository.h
+        src/topic/QosTopicRepository.cpp
+        src/topic/QosMessageContainer.h
+        src/topic/QosMessageContainer.cpp
         src/packets/parsers/PublishAckPacketParser.cpp
         src/packets/parsers/PublishAckPacketParser.h
-        )
+        src/ServerRetransmissionMsgHandler.cpp src/ServerRetransmissionMsgHandler.h src/ServerQosTopicRepository.cpp src/ServerQosTopicRepository.h src/handlers/ServerPublishAckPacketHandler.cpp src/handlers/ServerPublishAckPacketHandler.h)
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

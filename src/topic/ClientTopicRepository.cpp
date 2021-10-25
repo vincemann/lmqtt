@@ -6,7 +6,7 @@
 #include <Utils.h>
 #include "ClientTopicRepository.h"
 #include "../json.hpp"
-#include "ClientQosMessageContainer.h"
+#include "QosMessageContainer.h"
 
 void ClientTopicRepository::saveTopic(char *topic) {
     // store dir for topic
