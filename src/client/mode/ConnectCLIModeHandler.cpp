@@ -95,7 +95,7 @@ void ConnectCLIModeHandler::handle() {
     clientConnectionManager->_connection->_connectPacket = static_cast<ConnectPacket *>(connectPacket);
     try {
         clientConnectionManager->attemptConnection(connectPacket);
-        clientRetransmitMsgHandler->getClientQosTopicRepository()->initTopicsDir(clientId);
+        clientRetransmitMsgHandler->getQosTopicRepository()->initTopicsDir(clientId);
         clientRetransmitMsgHandler->retransmitMsgs();
         if (consume) {
             // wait for publish packets & disconnect packet from server

@@ -123,7 +123,8 @@ add_executable(lmqtt__server
         src/packets/parsers/PublishPacketParser.h
         src/handlers/ServerPublishPacketHandler.cpp
         src/handlers/ServerPublishPacketHandler.h
-        src/Subscription.cpp src/Subscription.h src/packets/PublishAckPacket.cpp
+        src/Subscription.cpp src/Subscription.h
+        src/packets/PublishAckPacket.cpp
         src/packets/PublishAckPacket.h
         src/packets/factories/PublishAckPacketFactory.cpp
         src/packets/factories/PublishAckPacketFactory.h
@@ -135,7 +136,17 @@ add_executable(lmqtt__server
         src/topic/QosMessageContainer.cpp
         src/packets/parsers/PublishAckPacketParser.cpp
         src/packets/parsers/PublishAckPacketParser.h
-        src/ServerRetransmissionMsgHandler.cpp src/ServerRetransmissionMsgHandler.h src/ServerQosTopicRepository.cpp src/ServerQosTopicRepository.h src/handlers/ServerPublishAckPacketHandler.cpp src/handlers/ServerPublishAckPacketHandler.h)
+        src/ServerQosTopicRepository.cpp
+        src/ServerQosTopicRepository.h
+
+        src/client/ClientQosTopicRepository.cpp
+        src/client/ClientQosTopicRepository.h
+        
+        src/handlers/ServerPublishAckPacketHandler.cpp
+        src/handlers/ServerPublishAckPacketHandler.h
+        src/handlers/PublishAckPacketHandler.cpp
+        src/handlers/PublishAckPacketHandler.h
+        )
 
 
 # find_package(nlohmann_json CONFIG REQUIRED)

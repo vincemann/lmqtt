@@ -16,6 +16,7 @@
 #include <UnsubAckPacketFactory.h>
 #include <UnsubscribePacketHandler.h>
 #include <ServerPublishPacketHandler.h>
+#include <ServerPublishAckPacketHandler.h>
 
 #include "io/PacketIOManager.h"
 #include "packets/ConnectPacket.h"
@@ -106,7 +107,7 @@ void ServerConnectionManager::serveClients() {
         PublishPacketFactory* publishPacketFactory = new PublishPacketFactory();
         PublishAckPacketFactory* publishAckPacketFactory = new PublishAckPacketFactory();
 
-        PublishAckPacketHandler* serverPublishAckPacketHandler = new PublishAckPacketHandler(packetIoManager, serverQosTopicRepository);
+        PublishAckPacketHandler* serverPublishAckPacketHandler = new ServerPublishAckPacketHandler(packetIoManager, serverQosTopicRepository);
         RetransmitMsgHandler* serverRetransmitMsgHandler = new RetransmitMsgHandler(packetIoManager,
                                                                                     publishPacketFactory,
                                                                                     serverQosTopicRepository,

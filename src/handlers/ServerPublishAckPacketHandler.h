@@ -12,7 +12,9 @@
 
 class ServerPublishAckPacketHandler : public PublishAckPacketHandler{
 public:
+    ServerPublishAckPacketHandler(PacketIOManager *packetIo, QosTopicRepository *clientQosTopicRepository);
     void onAck(QosMessageContainer* msg) override;
+    void handle(RawPacket *packet) override;
 };
 
 

@@ -102,6 +102,12 @@
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/RetransmitMsgHandler.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ServerQosTopicRepository.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/ServerQosTopicRepository.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/Subscription.cpp">
 			<Option target="lmqtt__client"/>
 		</Unit>
@@ -115,6 +121,12 @@
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/ClientConnectionManager.h">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/ClientQosTopicRepository.cpp">
+			<Option target="lmqtt__client"/>
+		</Unit>
+		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/ClientQosTopicRepository.h">
 			<Option target="lmqtt__client"/>
 		</Unit>
 		<Unit filename="/home/vince/projekte/important/mqtt/lmqtt+-server/src/client/mode/CLIMode.h">

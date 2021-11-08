@@ -30,7 +30,7 @@ public:
                          QosTopicRepository *clientQosTopicRepository,
                          PublishAckPacketHandler *publishAckPacketHandler);
 
-    QosTopicRepository *getClientQosTopicRepository();
+    QosTopicRepository *getQosTopicRepository();
 
 };
 

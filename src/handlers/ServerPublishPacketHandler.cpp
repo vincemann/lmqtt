@@ -48,7 +48,6 @@ void ServerPublishPacketHandler::handle(RawPacket *packet) {
         _packetIo->sendPacket(ackPacket);
     }
     PUB_ACK_COUNT+=1;
-    // todo add responses and retransmissions
 }
 
 ServerPublishPacketHandler::ServerPublishPacketHandler(PacketIOManager *packetIo,

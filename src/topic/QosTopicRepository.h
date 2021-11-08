@@ -8,9 +8,10 @@
 
 #include "ClientTopicRepository.h"
 #include "QosMessageContainer.h"
+#include <vector>
 
 class QosTopicRepository {
-private:
+protected:
     char* retransmitDir;
     FileDataManager* fileDataManager;
 public:

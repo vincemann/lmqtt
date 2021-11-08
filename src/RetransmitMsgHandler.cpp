@@ -39,7 +39,7 @@ RetransmitMsgHandler::RetransmitMsgHandler(PacketIOManager *packetIoManager,
         : packetIoManager(packetIoManager), publishPacketFactory(publishPacketFactory),
           qosTopicRepository(clientQosTopicRepository), publishAckPacketHandler(publishAckPacketHandler) {}
 
-QosTopicRepository *RetransmitMsgHandler::getClientQosTopicRepository(){
+QosTopicRepository *RetransmitMsgHandler::getQosTopicRepository(){
     return qosTopicRepository;
 }
 

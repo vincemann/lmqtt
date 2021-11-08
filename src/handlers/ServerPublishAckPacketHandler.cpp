@@ -8,11 +8,13 @@ void ServerPublishAckPacketHandler::handle(RawPacket *packet) {
     PublishAckPacketHandler::handle(packet);
 }
 
-ServerPublishAckPacketHandler::ServerPublishAckPacketHandler(PacketIOManager *packetIo,
-                                                             QosTopicRepository *qosTopicRepository) : PacketHandler(
-        packetIo), qosTopicRepository(qosTopicRepository) {}
 
 void ServerPublishAckPacketHandler::onAck(QosMessageContainer *msg) {
     printf("updating subscription data bc ack arrived for msg\n");
 
 }
+
+ServerPublishAckPacketHandler::ServerPublishAckPacketHandler(PacketIOManager *packetIo,
+                                                             QosTopicRepository *clientQosTopicRepository)
+        : PublishAckPacketHandler(packetIo, clientQosTopicRepository) {}
+

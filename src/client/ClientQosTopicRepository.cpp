@@ -2,6 +2,7 @@
 // Created by vince on 25.10.21.
 //
 
+#include <Utils.h>
 #include "ClientQosTopicRepository.h"
 
 void QosTopicRepository::initTopicsDir(char *clientId) {
